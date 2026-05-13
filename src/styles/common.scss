@@ -133,3 +133,18 @@ button{background-color: unset; border: unset;}
 .display-s{font-size: 96px; line-height: 1.2;}
 .display-m{font-size: 128px; line-height: 1.1;}
 .display-l{font-size: 160px; line-height: 1.1;}
+
+@media (max-width:1024px){
+  .body-s{font-size: 10px;}
+  .body-m{font-size: 11px;}
+  .body-l{font-size: 12px;}
+  
+  .heade-s{font-size: 16px;}
+  .heade-m{font-size: 18px;}
+  .heade-l{font-size: 20px;}
+
+  .display-xs{font-size: 24px;}
+  .display-s{font-size: 32px;}
+  .display-m{font-size: 40px;}
+  .display-l{font-size: 48px;}
+}
