@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
-import AniProvider from "./components/AniProvider";
+import AniProvider from "./components/Aniprovider";
 
 import Main from "./pages/Main";
 import About from "./pages/About";
