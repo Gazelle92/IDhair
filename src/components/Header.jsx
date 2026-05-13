@@ -40,7 +40,7 @@ function Header() {
         </a>
       </div>
 
-      <div className="header_inner">
+      <div className="header_inner test">
         <div className="gnb">
           <a href="/about"><span>ABOUT</span></a>
           <a href="/academy"><span>id ACADEMY</span></a>
