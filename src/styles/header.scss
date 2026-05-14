@@ -2,21 +2,22 @@
   .logo_w{mix-blend-mode: difference; filter: invert(1); width: 170px; height: 48px; position: fixed; top: 64px; left: 60px; z-index: 9;
     a{position: absolute; left: 0; top: 0; width: 100%; height: 100%;}
   }
+  .gnb{display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 80px; justify-items: start; position: fixed; right: 324px; top: 64px; mix-blend-mode: difference;
+    a{font-weight: bold; overflow: hidden;
+      span{display: block; transform: translateY(110%); transition: ease 0.5s transform; font-weight: 500; color: #fff;
+        
+      }
+      &:nth-child(1) span, &:nth-child(2) span{transition-delay: 0.1s;}
+      &:nth-child(3) span, &:nth-child(4) span{transition-delay: 0.00s;}
+    }
+  }
   .header_inner{position: fixed; top: 64px; right: 60px; display: flex; gap: 60px;
     .lang{position: absolute; right: 0; bottom: calc(100% + 20px); font-weight: 600; line-height: 1.7; display: flex; gap: 8px; transition: ease 0.3s transform, ease 0.3s opacity; transform: translateY(0); opacity: 1;
       div{cursor: pointer; font-weight: 500;
         &:hover, &:active{font-weight:700;}
       }
     }
-    .gnb{display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 80px; justify-items: start;
-      a{font-weight: bold; overflow: hidden;
-        span{display: block; transform: translateY(110%); transition: ease 0.5s transform; font-weight: 500;
-          
-        }
-        &:nth-child(1) span, &:nth-child(2) span{transition-delay: 0.1s;}
-        &:nth-child(3) span, &:nth-child(4) span{transition-delay: 0.00s;}
-      }
-    }
+    
     .right_w{display: flex; width: 204px; height: 56px; border-radius: 4px; 
       .menu_btn{display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 6px; width:100px; height: 100%; padding: 0 37px; cursor: pointer;
         span{background-color: #fff; height: 2px; border-radius: 1px; 
@@ -62,23 +63,25 @@
     
   }
   &.active{ 
-    .header_inner{
-      .gnb{
-        a{
-          span{transform: translateY(0);}
-        }
+    .gnb{
+      a{
+        span{transform: translateY(0);}
       }
+    }
+    .header_inner{
+      
     } 
   }
   &.nav_hide{ 
-    .header_inner{
-      .gnb{
-        a{
-          span{transform: translateY(-110%);}
-          &:nth-child(1) span, &:nth-child(2) span{transition-delay: 0.00s;}
-          &:nth-child(3) span, &:nth-child(4) span{transition-delay: 0.10s;}
-        }
+    .gnb{
+      a{
+        span{transform: translateY(-110%);}
+        &:nth-child(1) span, &:nth-child(2) span{transition-delay: 0.00s;}
+        &:nth-child(3) span, &:nth-child(4) span{transition-delay: 0.10s;}
       }
+    }
+    .header_inner{
+      
       .lang{transform: translateY(-110%); opacity: 0;}
     } 
   }
@@ -89,8 +92,9 @@
     .logo_w{top:20px; left: 20px; width: 100px; height: 17px;
       img{width: 100%;}
     }
+    .gnb{display: none;}
     .header_inner{ top:12px; right: 12px;
-      .gnb{display: none;}
+      
       .lang{display: none;}
       .right_w{ width: 124px; height: 38px; border-radius: 2px;
         .salon_btn{width: 60px;  border-radius: 2px;}

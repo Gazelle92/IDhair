@@ -40,13 +40,15 @@ function Header() {
         </a>
       </div>
 
+      <div className="gnb body-l">
+        <a href="/about"><span>ABOUT</span></a>
+        <a href="/academy"><span>id ACADEMY</span></a>
+        <a href="/magazine"><span>id MAGAZINE</span></a>
+        <a href="/recruit"><span>RECRUIT</span></a>
+      </div>
+      
       <div className="header_inner test">
-        <div className="gnb body-l">
-          <a href="/about"><span>ABOUT</span></a>
-          <a href="/academy"><span>id ACADEMY</span></a>
-          <a href="/magazine"><span>id MAGAZINE</span></a>
-          <a href="/recruit"><span>RECRUIT</span></a>
-        </div>
+        
 
         <div className="lang body-s">
           <span>(</span>
