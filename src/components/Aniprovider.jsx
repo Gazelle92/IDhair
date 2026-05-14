@@ -9,56 +9,63 @@ function AniProvider() {
 
     if (!aniItems.length) return;
 
-    const isInView = (el) => {
-      const rect = el.getBoundingClientRect();
+    const runExtraAnimation = (item) => {
+      if (item.classList.contains("svg")) {
+        const animate = item.querySelector("animate");
+        if (animate) animate.beginElement();
+      }
 
-      return (
-        rect.top < window.innerHeight * 0.85 &&
-        rect.bottom > 0
-      );
+      if (item.classList.contains("count")) {
+        const value = parseInt(item.getAttribute("data-count"), 10);
+        let current = 0;
+        const duration = 600;
+        const step = value / (duration / 10);
+
+        const animateCount = () => {
+          current += step;
+
+          if (current < value) {
+            item.textContent = Math.ceil(current);
+            setTimeout(animateCount, 10);
+          } else {
+            item.textContent = value;
+          }
+        };
+
+        animateCount();
+      }
     };
 
-    // 페이지 바뀌거나 새로고침됐을 때 기존 active 제거
+    const checkAnimation = () => {
+      const windowBottom = window.scrollY + window.innerHeight;
+
+      aniItems.forEach((item) => {
+        const aniPoint =
+          item.getBoundingClientRect().top +
+          window.scrollY +
+          window.innerHeight / 4;
+
+        if (windowBottom > aniPoint) {
+          if (!item.classList.contains("active")) {
+            item.classList.add("active");
+            runExtraAnimation(item);
+          }
+        }
+      });
+    };
+
     aniItems.forEach((item) => {
       item.classList.remove("active");
     });
 
-    // 처음 화면 안에 보이는 애들
-    const firstViewItems = aniItems.filter((item) => isInView(item));
+    setTimeout(checkAnimation, 300);
 
-    // 처음 화면 밖에 있는 애들
-    const scrollItems = aniItems.filter((item) => !isInView(item));
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-
-          entry.target.classList.add("active");
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    // 화면 밖에 있는 애들은 바로 감시 시작
-    // 그래서 스크롤할 때는 딜레이 없음
-    scrollItems.forEach((item) => {
-      observer.observe(item);
-    });
-
-    // 처음 보이는 애들만 0.3초 후 active
-    const timer = setTimeout(() => {
-      firstViewItems.forEach((item) => {
-        item.classList.add("active");
-      });
-    }, 300);
+    window.addEventListener("scroll", checkAnimation);
+    window.addEventListener("resize", checkAnimation);
 
     return () => {
-      clearTimeout(timer);
-      observer.disconnect();
+      window.removeEventListener("scroll", checkAnimation);
+      window.removeEventListener("resize", checkAnimation);
     };
   }, [location.pathname]);
 
