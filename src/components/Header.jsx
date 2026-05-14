@@ -41,14 +41,14 @@ function Header() {
       </div>
 
       <div className="header_inner test">
-        <div className="gnb">
+        <div className="gnb body-l">
           <a href="/about"><span>ABOUT</span></a>
           <a href="/academy"><span>id ACADEMY</span></a>
           <a href="/magazine"><span>id MAGAZINE</span></a>
           <a href="/recruit"><span>RECRUIT</span></a>
         </div>
 
-        <div className="lang">
+        <div className="lang body-s">
           <span>(</span>
           <div className="active">KR</div>
           <div>EN</div>
@@ -65,7 +65,7 @@ function Header() {
             <span></span>
           </button>
 
-          <a href="/salon" className="salon_btn bg-ac-1">
+          <a href="/salon" className="salon_btn bg-ac-1 body-m">
             SALON
           </a>
         </div>
