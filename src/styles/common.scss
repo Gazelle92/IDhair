@@ -85,6 +85,7 @@ a{text-decoration: none; color: #000;}
 li{list-style: none;}
 img{max-width: 100%;}
 .apprael{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200;}
+.apprael_all, .apprael_all *{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200;}
 .gt{font-family: 'GT Walsheim', 'Pretendard', serif; font-weight:400;}
 .gt_all, .gt_all *{font-family: 'GT Walsheim', 'Pretendard', serif;}
 
@@ -203,9 +204,10 @@ button{background-color: unset; border: unset; cursor: pointer;}
 }
 .ani{
   .b-t::before, .b-b::before{width: 0; transition: ease 0.8s width;}
-
+  &.b-t::before, &.b-b::before{width: 0; transition: ease 0.8s width;}
   &.active{
     .b-t::before, .b-b::before{width: 100%;}
+    &.b-t::before, &.b-b::before{width: 100%;}
   }
 }
 
@@ -226,4 +228,33 @@ button{background-color: unset; border: unset; cursor: pointer;}
     .cursor-txt-view{opacity: 1;}
   }
   &.cursor_close, &.hidden{display: none;}
+}
+
+.fade-slice{display: block; width: 100%;
+  .line{overflow: hidden; display: block; width: auto;
+    .inner{transform: translateY(100%); transition: transform 0.6s ease; display: inline-block; white-space: nowrap;}
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) .inner{
+        transition-delay: $i * 0.1s; // 0.1s, 0.2s, 0.3s ...
+      }
+    }
+  }
+}
+.ani.active{
+  .fade-slice{
+    .line{overflow: hidden; display: block;
+      .inner{transform: translateY(0);}
+    }
+  }
+  &.fade-slice{
+    .line{overflow: hidden; display: block;
+      .inner{transform: translateY(0);}
+    }
+  }
+}
+
+.fade-cw{overflow: hidden;}
+@for $i from 1 through 20 {
+  .fadeY-#{$i}{display:block; opacity:0; transform:translateY(130%); transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s;}
+  .ani.active .fadeY-#{$i}{transform:translateY(0); opacity:1;}
 }
