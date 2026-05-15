@@ -11,15 +11,16 @@
       
       
     }
-    .mg_nav{display: flex; justify-content: space-between; font-size: 0; padding: 8px;
+    .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 8px; position: relative; gap: 8px;
+      
       button{background-color: #fff; border-radius: 4px; padding: 5px 20px 3px; cursor: pointer; transition: ease 0.3s all; position: relative; overflow: hidden;
         span{position: relative; color: #000; transition: ease 0.3s color;}
         &::before{content: ''; display: block; background-color: var(--bg-ac-1); left: 0; bottom: 0; width: 100%; height: 0; transition: ease 0.3s height; position: absolute;}
         &.active::before, &:hover::before{height: 100%;}
         &.active span, &:hover span{color: #fff;}
-        
+
       }
-      ul{display: flex; gap: 8px;}
+      .btn_all{position: absolute; left: 8px; top: 8px;}
     }
   }
 
@@ -47,9 +48,11 @@
     }
     .mg_list_normal{display: grid; grid-template-columns: repeat(3, 1fr); grid-column-gap: 40px; grid-row-gap: 80px; padding: 40px 0;
       .mg_li{padding: 0 0; position: relative;
-        &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -40px; left: 0;height: 1px; background-color: #000; width: 0; transition: ease 1.2s width;}
         
-        &.active:nth-child(3n + 1)::before{width: calc(100vw - 120px);}
+        @media(min-width:1025px){
+          &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -40px; left: 0;height: 1px; background-color: #000; width: 0; transition: ease 1.2s width;}  
+          &.active:nth-child(3n + 1)::before{width: calc(100vw - 120px);}
+        }
       }
     }
 
@@ -64,5 +67,40 @@
       }
       
     }
+  }
+}
+@media(max-width:1024px){
+  .page_magazine{padding: 90px 20px 120px;
+    .mg_head{padding: 20px 0 60px;
+      
+      .mg_title{flex-direction: column; border-bottom:0;
+        h1{text-align: center;}
+        .mg_title_right{gap: 12px; padding-top: 30px; border-top: 1px dashed rgb(0, 0, 0, 0.25); margin-top: 20px;}
+      }
+      .mg_nav{gap: 4px; margin-left: -20px; overflow-x: scroll; width: calc(100% + 40px); justify-content: unset;
+        .btn_all{position: unset;}
+        button{padding: 5px 12px 3px; white-space: nowrap;
+        }
+        
+      }
+    }
+    .mg_body{padding: 0; width: 100%; left: 0;
+      .mg_list{grid-template-columns: 1fr; gap: 20px; background-color: unset;
+        .mg_li{padding: 0 0 20px; font-size: 0;position: relative;
+          &::before{content: ''; display: block; width:0%; height: 1px; background-color: #000; position: absolute; left: 0; bottom: 0; transition: ease 0.5s width;}
+          &.active::before{width: 100%;}
+          a{font-size: 0;
+            span{font-size: 9px;}
+            h1{padding: 8px 0 12px; font-size: 12px;}
+          }
+
+        }
+      }
+      .pagenation {
+        li{ 
+          a{font-size: 10px;}
+        }
+      }
+    } 
   }
 }

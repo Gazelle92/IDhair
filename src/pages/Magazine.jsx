@@ -15,16 +15,16 @@ function Magazine() {
           </div>
         </div>
 
-        <div className="mg_nav bg-gray-1">
-          <button className="body-m active"><span>Our PICKS</span></button>
-          <ul>
+        <ul className="mg_nav bg-gray-1">
+
+            <li className="btn_all"><button className="body-m active "><span>Our PICKS</span></button></li>
             <li><button className="body-m"><span>id NEWS</span></button></li>
             <li><button className="body-m"><span>id EVENT</span></button></li>
             <li><button className="body-m"><span>id FAMILY</span></button></li>
             <li><button className="body-m"><span>id GALLERY</span></button></li>
             <li><button className="body-m"><span>id PLAY</span></button></li>
-          </ul>
-        </div>
+   
+        </ul>
 
       </section>
       <section className="mg_body">
