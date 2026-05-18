@@ -209,6 +209,11 @@ button{background-color: unset; border: unset; cursor: pointer;}
     .b-t::before, .b-b::before{width: 100%;}
     &.b-t::before, &.b-b::before{width: 100%;}
   }
+
+  @for $i from 1 through 20 {
+    .b-delay-#{$i}::before{transition-delay: $i * 0.1s;}
+  }
+  
 }
 
 

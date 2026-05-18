@@ -49,18 +49,18 @@ function Magazine() {
   return (
     <main className="page_magazine">
       <section className="mg_head b-t b-4 ani">
-        <div className="mg_title ">
+        <div className="mg_title b-b b-delay-14 ">
           <h1 className="display-l apprael effect17-title" data-splitting data-effect17 apprael_all>ID MAGAZINE</h1>
           <div className="mg_title_right">
-            <h4 className="gt display-xs">id NEWS</h4>
+            <h4 className="gt display-xs fadeY-9">id NEWS</h4>
             <span className="body-m">
-              id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해<br/>
-              라이프스타일을 담은 이야기를 전합니다.
+              <div className="fadeY-11">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
+              <div className="fadeY-12">라이프스타일을 담은 이야기를 전합니다.</div>
             </span>
           </div>
         </div>
 
-        <ul className="mg_nav bg-gray-1">
+        <ul className="mg_nav b-t">
 
             <li className="btn_all"><button className="body-m active "><span>Our PICKS</span></button></li>
             <li><button className="body-m"><span>id NEWS</span></button></li>
