@@ -18,8 +18,9 @@ function App() {
   useFadeSlice();
   return (
     <BrowserRouter>
-    <LenisProvider />
     <AniProvider />
+    <LenisProvider />
+    
     <CursorFollower />
 
       <Header />

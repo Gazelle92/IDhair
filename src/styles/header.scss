@@ -4,7 +4,7 @@
   }
   .gnb{display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 80px; justify-items: start; position: fixed; right: 324px; top: 64px; mix-blend-mode: difference;
     a{font-weight: bold; overflow: hidden;
-      span{display: block; transform: translateY(110%); transition: ease 0.5s transform; font-weight: 500; color: #fff;
+      span{display: block; transform: translateY(110%); transition: ease 0.5s transform; font-weight: 400; color: #fff;
         
       }
       &:nth-child(1) span, &:nth-child(2) span{transition-delay: 0.1s;}

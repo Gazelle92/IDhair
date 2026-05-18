@@ -153,6 +153,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
 }
 */
 
+
 .caption-s{font-size: 9px; line-height: 1.6;}
 .caption-m{font-size: 11px; line-height: 1.6;}
 
@@ -183,6 +184,40 @@ button{background-color: unset; border: unset; cursor: pointer;}
   .display-m{font-size: 40px;}
   .display-l{font-size: 48px;}
 }
+  
+/*
+.caption-s{font-size: 0.545vw; line-height: 1.6;}
+.caption-m{font-size: 0.667vw; line-height: 1.6;}
+
+.body-s{font-size: 0.788vw; line-height: 1.7;}
+.body-m{font-size: 0.909vw; line-height: 1.7;}
+.body-l{font-size: 1.030vw; line-height: 1.7;}
+
+.head-s{font-size: 1.152vw; line-height: 1.7;}
+.head-m{font-size: 1.394vw; line-height: 1.7;}
+.head-l{font-size: 1.818vw; line-height: 1.7;}
+
+.display-xs{font-size: 2.727vw; line-height: 1.2;}
+.display-s{font-size: 5.455vw; line-height: 1.2;}
+.display-m{font-size: 7.273vw; line-height: 1.1;}
+.display-l{font-size: 9.091vw; line-height: 1.1;}
+
+@media (max-width:1024px){
+  .body-s{font-size: 10px;}
+  .body-m{font-size: 11px;}
+  .body-l{font-size: 12px;}
+  
+  .head-s{font-size: 16px;}
+  .head-m{font-size: 18px;}
+  .head-l{font-size: 20px;}
+
+  .display-xs{font-size: 24px;}
+  .display-s{font-size: 32px;}
+  .display-m{font-size: 40px;}
+  .display-l{font-size: 48px;}
+}
+*/
+
 .fw-r{font-weight: 400;}
 .fw-m{font-weight: 500;}
 .fw-sb{font-weight: 600;}
@@ -210,7 +245,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
     &.b-t::before, &.b-b::before{width: 100%;}
   }
 
-  @for $i from 1 through 20 {
+  @for $i from 1 through 30 {
     .b-delay-#{$i}::before{transition-delay: $i * 0.1s;}
   }
   
@@ -236,12 +271,28 @@ button{background-color: unset; border: unset; cursor: pointer;}
 }
 
 .fade-slice{display: block; width: 100%;
-  .line{overflow: hidden; display: block; width: auto;
+  .line{overflow: hidden; display: block; width: auto; transition: width 0.6s ease;
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}){
+        transition-delay: $i * 0.1s; // 0.1s, 0.2s, 0.3s ...
+      }
+    }
     .inner{transform: translateY(100%); transition: transform 0.6s ease; display: inline-block; white-space: nowrap;}
-    @for $i from 1 through 10 {
+    @for $i from 1 through 20 {
       &:nth-child(#{$i}) .inner{
         transition-delay: $i * 0.1s; // 0.1s, 0.2s, 0.3s ...
       }
+    }
+  }
+  
+  &.fadeX{
+    .line{width: 0; transition: width 1.0s ease-out;
+      @for $i from 1 through 20 {
+        &:nth-child(#{$i}){
+          transition-delay: $i * 0.1s; // 0.1s, 0.2s, 0.3s ...
+        }
+      }
+      .inner{transform: translateY(000%); transition: transform 1s ease;}
     }
   }
 }
@@ -250,16 +301,31 @@ button{background-color: unset; border: unset; cursor: pointer;}
     .line{overflow: hidden; display: block;
       .inner{transform: translateY(0);}
     }
+    &.fadeX{
+      .line{width: 100%;}
+    }
   }
   &.fade-slice{
     .line{overflow: hidden; display: block;
       .inner{transform: translateY(0);}
     }
+    &.fadeX{
+      .line{width: 100%;}
+    }
   }
 }
 
 .fade-cw{overflow: hidden;}
-@for $i from 1 through 20 {
+@for $i from 1 through 30 {
   .fadeY-#{$i}{display:block; opacity:0; transform:translateY(130%); transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s;}
   .ani.active .fadeY-#{$i}{transform:translateY(0); opacity:1;}
+  .fadeX-#{$i}{ transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);}
+  .ani.active {
+    .fadeX-#{$i}{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+    }
+  }
+}
+@for $i from 1 through 30 {
+  .fade-#{$i}{display:block; opacity:0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s;}
+  .ani.active .fade-#{$i}{opacity:1;}
 }

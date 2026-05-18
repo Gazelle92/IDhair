@@ -1,13 +1,24 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function AniProvider() {
   const location = useLocation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const aniItems = Array.from(document.querySelectorAll(".ani"));
+    const scAniItems = Array.from(document.querySelectorAll(".sc_ani"));
 
-    if (!aniItems.length) return;
+    if (!aniItems.length && !scAniItems.length) return;
+
+    let canStart = false;
+
+    aniItems.forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    scAniItems.forEach((item) => {
+      item.classList.remove("active");
+    });
 
     const runExtraAnimation = (item) => {
       if (item.classList.contains("svg")) {
@@ -36,14 +47,14 @@ function AniProvider() {
       }
     };
 
-    const checkAnimation = () => {
+    const activeAnimation = (items) => {
       const windowBottom = window.scrollY + window.innerHeight;
 
-      aniItems.forEach((item) => {
+      items.forEach((item) => {
         const aniPoint =
           item.getBoundingClientRect().top +
           window.scrollY +
-          window.innerHeight / 4;
+          window.innerHeight / 3;
 
         if (windowBottom > aniPoint) {
           if (!item.classList.contains("active")) {
@@ -54,18 +65,33 @@ function AniProvider() {
       });
     };
 
-    aniItems.forEach((item) => {
-      item.classList.remove("active");
-    });
+    const checkAniAnimation = () => {
+      if (!canStart) return;
+      activeAnimation(aniItems);
+    };
 
-    setTimeout(checkAnimation, 300);
+    const checkScAnimation = () => {
+      activeAnimation(scAniItems);
+    };
 
-    window.addEventListener("scroll", checkAnimation);
-    window.addEventListener("resize", checkAnimation);
+    const timer = setTimeout(() => {
+      canStart = true;
+      checkAniAnimation();
+    }, 500);
+
+    window.addEventListener("scroll", checkAniAnimation);
+    window.addEventListener("resize", checkAniAnimation);
+
+    window.addEventListener("scroll", checkScAnimation);
+    window.addEventListener("resize", checkScAnimation);
 
     return () => {
-      window.removeEventListener("scroll", checkAnimation);
-      window.removeEventListener("resize", checkAnimation);
+      clearTimeout(timer);
+      window.removeEventListener("scroll", checkAniAnimation);
+      window.removeEventListener("resize", checkAniAnimation);
+
+      window.removeEventListener("scroll", checkScAnimation);
+      window.removeEventListener("resize", checkScAnimation);
     };
   }, [location.pathname]);
 

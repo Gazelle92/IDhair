@@ -49,53 +49,51 @@ function Magazine() {
   return (
     <main className="page_magazine">
       <section className="mg_head b-t b-4 ani">
-        <div className="mg_title b-b b-delay-14 ">
-          <h1 className="display-l apprael effect17-title" data-splitting data-effect17 apprael_all>ID MAGAZINE</h1>
+        <div className="mg_title b-b b-delay-10 ">
+          <h1 className="display-l apprael effect17-title apprael_all" data-splitting data-effect17 >ID MAGAZINE</h1>
           <div className="mg_title_right">
-            <h4 className="gt display-xs fadeY-9">id NEWS</h4>
-            <span className="body-m">
-              <div className="fadeY-11">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
-              <div className="fadeY-12">라이프스타일을 담은 이야기를 전합니다.</div>
-            </span>
+            <h4 className="gt display-xs fadeX-6">id NEWS</h4>
+            <div className="body-m fadeX-7 txt">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
+            <div className="body-m fadeX-8 txt">라이프스타일을 담은 이야기를 전합니다.</div>
           </div>
         </div>
 
-        <ul className="mg_nav b-t">
+        <ul className="mg_nav b-t b-delay-15">
 
-            <li className="btn_all"><button className="body-m active "><span>Our PICKS</span></button></li>
-            <li><button className="body-m"><span>id NEWS</span></button></li>
-            <li><button className="body-m"><span>id EVENT</span></button></li>
-            <li><button className="body-m"><span>id FAMILY</span></button></li>
-            <li><button className="body-m"><span>id GALLERY</span></button></li>
-            <li><button className="body-m"><span>id PLAY</span></button></li>
+            <li className="btn_all fadeY-16"><button className="body-m active"><span>Our PICKS</span></button></li>
+            <li className="fadeY-17"><button className="body-m"><span>id NEWS</span></button></li>
+            <li className="fadeY-18"><button className="body-m"><span>id EVENT</span></button></li>
+            <li className="fadeY-19"><button className="body-m"><span>id FAMILY</span></button></li>
+            <li className="fadeY-20"><button className="body-m"><span>id GALLERY</span></button></li>
+            <li className="fadeY-21"><button className="body-m"><span>id PLAY</span></button></li>
    
         </ul>
 
       </section>
       <section className="mg_body">
-        <ul className="mg_list mg_list_new">
-          <li className="mg_li ani">
+        <ul className="mg_list mg_list_new ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
@@ -105,84 +103,84 @@ function Magazine() {
         </ul>
 
         <ul className="mg_list mg_list_normal">
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_4.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_4.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
             <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
             </a>
           </li>
-          <li className="mg_li ani">
+          <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>
             <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
