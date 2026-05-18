@@ -38,19 +38,22 @@
       .mg_li{
         h1{padding: 8px 0 20px; }
         img{aspect-ratio: 16 / 9; width: 100%; object-fit: cover;}
-        .date{transition: ease 0.7s clip-path; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); display: block;}
-        h1{transition: ease 0.8s clip-path; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); display: block; transition-duration: 0.2;}
+        .date, h1{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); display: block; letter-spacing: -1px;}
+        .date{transition: ease 0.7s clip-path, ease 0.7s letter-spacing; }
+        h1{transition: ease 0.8s clip-path, ease 0.7s letter-spacing; transition-duration: 0.2;}
         img{transition: ease 1.4s transform, ease 1.4s opacity; transform: scale(1.05); opacity: 0;}
         
         &.active{
-          .date,h1{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);}
+          .date,h1{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);  letter-spacing: 0px;}
           img{transform: scale(1); opacity: 1;}
         }
       }
     }
     .mg_list_new{display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; position: relative;
       &::before{content: ''; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay: 1.7s;}
-      &::after{content: ''; display: block; height: 0; width: 1px; background-color: #000; position: absolute; left: 50%; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06);transition-delay: 2s;}
+      @media(min-width:1025px){
+        &::after{content: ''; display: block; height: 0; width: 1px; background-color: #000; position: absolute; left: 50%; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06);transition-delay: 2s;}
+      }
       &.active{
         &::before{width: 100%;}
         &::after{height: 100%;}
@@ -107,7 +110,9 @@
       
       .mg_title{flex-direction: column; border-bottom:0;
         h1{text-align: center;}
-        .mg_title_right{gap: 12px; padding-top: 30px; border-top: 1px dashed rgb(0, 0, 0, 0.25); margin-top: 20px;}
+        .mg_title_right{gap: 0px; padding-top: 30px; border-top: 1px dashed rgb(0, 0, 0, 0.25); margin-top: 20px;
+          h4{margin-bottom: 12px;}
+        }
       }
       .mg_nav{gap: 4px; margin-left: -20px; overflow-x: scroll; width: calc(100% + 40px); justify-content: unset;
         .btn_all{position: unset;}
@@ -117,6 +122,7 @@
       }
     }
     .mg_body{padding: 0; width: 100%; left: 0;
+      .mg_list_new{padding-top: 20px;}
       .mg_list{grid-template-columns: 1fr; gap: 20px; background-color: unset;
         .mg_li{padding: 0 0 20px; font-size: 0;position: relative;
           &::before{content: ''; display: block; width:0%; height: 1px; background-color: #000; position: absolute; left: 0; bottom: 0; transition: ease 0.5s width;}

@@ -71,7 +71,7 @@ function Magazine() {
 
       </section>
       <section className="mg_body">
-        <ul className="mg_list mg_list_new ani">
+        <ul className="mg_list mg_list_new init_ani">
           <li className="mg_li sc_ani">
             <a href="/magazine_detail" className="mg_a">
             <span className="date txt-gray caption-m">2026.03.10</span>

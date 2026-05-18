@@ -1,4 +1,4 @@
-footer{padding: 60px;
+footer{padding: 60px; position: fixed; width: 100%; bottom: 0; left: 0; z-index: -1;
   .footer_inner{position: relative;
     .footer_logo{display: block;width: 133px;}
     .f_link{position: absolute; top: 6px; left: 50%; transform: translateX(-50%); display: flex; gap: 40px; font-weight: 600; width: 100%; justify-content: center;

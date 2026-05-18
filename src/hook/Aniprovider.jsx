@@ -7,8 +7,9 @@ function AniProvider() {
   useLayoutEffect(() => {
     const aniItems = Array.from(document.querySelectorAll(".ani"));
     const scAniItems = Array.from(document.querySelectorAll(".sc_ani"));
+    const initAniItems = Array.from(document.querySelectorAll(".init_ani"));
 
-    if (!aniItems.length && !scAniItems.length) return;
+    if (!aniItems.length && !scAniItems.length && !initAniItems.length) return;
 
     let canStart = false;
 
@@ -17,6 +18,10 @@ function AniProvider() {
     });
 
     scAniItems.forEach((item) => {
+      item.classList.remove("active");
+    });
+
+    initAniItems.forEach((item) => {
       item.classList.remove("active");
     });
 
@@ -46,6 +51,15 @@ function AniProvider() {
         animateCount();
       }
     };
+
+ 
+
+    setTimeout(() => {
+      initAniItems.forEach((item) => {
+        item.classList.add("active");
+        runExtraAnimation(item);
+      })
+    }, 500);
 
     const activeAnimation = (items) => {
       const windowBottom = window.scrollY + window.innerHeight;
