@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -27,7 +27,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/about" element={<About />} />
-        <Route path="/magazine" element={<Magazine />} />
+        <Route path="/magazine" element={<Navigate to="/magazine/our-picks" replace />} />
+        <Route path="/magazine/:category" element={<Magazine />} />
+        <Route path="/magazine/:category/:pageSlug" element={<Magazine />} />
+        <Route path="/magazine/:category/post-:id" element={<MagazineDetail />} />
         <Route path="/magazine_detail" element={<MagazineDetail />} />
       </Routes>
       <Footer />

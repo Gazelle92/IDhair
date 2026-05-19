@@ -1,12 +1,47 @@
-import { useEffect, useRef } from "react";
 import { useLayoutEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { gsap } from "gsap";
 import Splitting from "splitting";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
+import OurPicks from "./magazine/OurPicks";
+import IdNews from "./magazine/IdNews";
+import IdEvent from "./magazine/IdEvent";
+import IdFamily from "./magazine/IdFamily";
+import IdGallery from "./magazine/IdGallery";
+import IdPlay from "./magazine/IdPlay";
+import { getTotalPages } from "./magazine/magazineConfig";
 import "../styles/magazine.scss";
 
 function Magazine() {
+  const tabs = [
+    { name: "Our PICKS", path: "our-picks" },
+    { name: "id NEWS", path: "id-news" },
+    { name: "id EVENT", path: "id-event" },
+    { name: "id FAMILY", path: "id-family" },
+    { name: "id GALLERY", path: "id-gallery" },
+    { name: "id PLAY", path: "id-play" },
+  ];
+
+  const { category, pageSlug } = useParams();
+
+  const currentCategory = category || "our-picks";
+  const currentPage = Number(pageSlug?.replace("list-", "") || 1);
+  const totalPages = getTotalPages(currentCategory);
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  const listComponents = {
+    "our-picks": <OurPicks currentPage={currentPage} />,
+    "id-news": <IdNews currentPage={currentPage} />,
+    "id-event": <IdEvent currentPage={currentPage} />,
+    "id-family": <IdFamily currentPage={currentPage} />,
+    "id-gallery": <IdGallery currentPage={currentPage} />,
+    "id-play": <IdPlay currentPage={currentPage} />,
+  };
+
+  const getListUrl = (category, page = 1) => {
+    return page === 1 ? `/magazine/${category}` : `/magazine/${category}/list-${page}`;
+  };
 
   useLayoutEffect(() => {
   Splitting();
@@ -59,144 +94,44 @@ function Magazine() {
         </div>
 
         <ul className="mg_nav b-t b-delay-15">
-
-            <li className="btn_all fadeY-16"><button className="body-m "><span>Our PICKS</span></button></li>
-            <li className="fadeY-17"><button className="body-m active"><span>id NEWS</span></button></li>
-            <li className="fadeY-18"><button className="body-m"><span>id EVENT</span></button></li>
-            <li className="fadeY-19"><button className="body-m"><span>id FAMILY</span></button></li>
-            <li className="fadeY-20"><button className="body-m"><span>id GALLERY</span></button></li>
-            <li className="fadeY-21"><button className="body-m"><span>id PLAY</span></button></li>
-   
+          {tabs.map((tab, i) => (
+            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fadeY-${16 + i}`}>
+              <Link
+                to={getListUrl(tab.path)}
+                className={`body-m ${currentCategory === tab.path ? "active" : ""}`}
+              >
+                <span>{tab.name}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
-
       </section>
       <section className="mg_body">
-        <ul className="mg_list mg_list_new init_ani">
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="head-s">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_4.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-        </ul>
-
-        <ul className="mg_list mg_list_normal">
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_4.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_4.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_1.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-          <li className="mg_li sc_ani">
-            <a href="/magazine_detail" className="mg_a">
-            <span className="date txt-gray caption-m">2026.03.10</span>
-            <h1 className="body-m">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</h1>
-            <img src="/img/mg_list_4.jpg" alt="Magazine Image" />
-            </a>
-          </li>
-        </ul>
+        {listComponents[currentCategory] || listComponents["our-picks"]}
 
         <ul className="pagenation body-s txt-gray">
-          <li><a><img src="/img/arrow_pg_left.svg" alt="" /></a></li>
-          <li><a>1</a></li>
-          <li><a>2</a></li>
-          <li><a>3</a></li>
-          <li><a>4</a></li>
-          <li><a>5</a></li>
-          <li><a><img src="/img/arrow_pg_right.svg" alt="" /></a></li>
+          <li>
+            <Link to={getListUrl(currentCategory, Math.max(currentPage - 1, 1))}>
+              <img src="/img/arrow_pg_left.svg" alt="" />
+            </Link>
+          </li>
+
+          {pageNumbers.map((num) => (
+            <li key={num}>
+              <Link
+                to={getListUrl(currentCategory, num)}
+                className={currentPage === num ? "active" : ""}
+              >
+                {num}
+              </Link>
+            </li>
+          ))}
+
+          <li>
+            <Link to={getListUrl(currentCategory, Math.min(currentPage + 1, totalPages))}>
+              <img src="/img/arrow_pg_right.svg" alt="" />
+            </Link>
+          </li>
         </ul>
 
       </section>
