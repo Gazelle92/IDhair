@@ -60,8 +60,8 @@ function Magazine() {
 
         <ul className="mg_nav b-t b-delay-15">
 
-            <li className="btn_all fadeY-16"><button className="body-m active"><span>Our PICKS</span></button></li>
-            <li className="fadeY-17"><button className="body-m"><span>id NEWS</span></button></li>
+            <li className="btn_all fadeY-16"><button className="body-m "><span>Our PICKS</span></button></li>
+            <li className="fadeY-17"><button className="body-m active"><span>id NEWS</span></button></li>
             <li className="fadeY-18"><button className="body-m"><span>id EVENT</span></button></li>
             <li className="fadeY-19"><button className="body-m"><span>id FAMILY</span></button></li>
             <li className="fadeY-20"><button className="body-m"><span>id GALLERY</span></button></li>
