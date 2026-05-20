@@ -2,7 +2,7 @@ export const ROWS_PER_PAGE = 5;
 
 export const magazinePageSettings = {
   "our-picks": { columns: 3, totalItems: 4 },
-  "id-news": { columns: 3, totalItems: 40 },
+  "id-news": { columns: 3, totalItems: 40, firstPageItems: 13 },
   "id-event": { columns: 4, totalItems: 31 },
   "id-family": { columns: 2, totalItems: 24 },
   "id-gallery": { columns: 3, totalItems: 35 },
@@ -16,11 +16,29 @@ export const getItemsPerPage = (category) => {
 
 export const getTotalPages = (category) => {
   const setting = magazinePageSettings[category] || magazinePageSettings["our-picks"];
+  const itemsPerPage = getItemsPerPage(category);
+
+  if (setting.firstPageItems) {
+    const remainingItems = Math.max(setting.totalItems - setting.firstPageItems, 0);
+    return 1 + Math.ceil(remainingItems / itemsPerPage);
+  }
+
   return Math.ceil(setting.totalItems / getItemsPerPage(category));
 };
 
 export const getPageItems = (items, currentPage, category) => {
+  const setting = magazinePageSettings[category] || magazinePageSettings["our-picks"];
   const itemsPerPage = getItemsPerPage(category);
+
+  if (setting.firstPageItems) {
+    if (currentPage === 1) {
+      return items.slice(0, setting.firstPageItems);
+    }
+
+    const startIndex = setting.firstPageItems + (currentPage - 2) * itemsPerPage;
+    return items.slice(startIndex, startIndex + itemsPerPage);
+  }
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   return items.slice(startIndex, startIndex + itemsPerPage);
 };

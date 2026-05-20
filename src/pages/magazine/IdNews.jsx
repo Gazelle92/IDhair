@@ -11,22 +11,25 @@ const ITEMS = makeMagazineItems(
 
 function IdNews({ currentPage = 1 }) {
   const pageItems = getPageItems(ITEMS, currentPage, CATEGORY);
-  const featuredItems = pageItems.slice(0, FEATURED_COUNT);
-  const normalItems = pageItems.slice(FEATURED_COUNT);
+  const isFirstPage = currentPage === 1;
+  const featuredItems = isFirstPage ? pageItems.slice(0, FEATURED_COUNT) : [];
+  const normalItems = isFirstPage ? pageItems.slice(FEATURED_COUNT) : pageItems;
 
   return (
     <>
-      <ul className="mg_list mg_list_new_post init_ani">
-        {featuredItems.map((item) => (
-          <li className="mg_li ani" key={item.id}>
-            <Link to={`/magazine/${CATEGORY}/post-${item.id}`} className="mg_a">
-              <span className="date txt-gray caption-m">{item.date}</span>
-              <h1 className="body-m">{item.title}</h1>
-              <img src={item.img} alt="Magazine Image" />
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {isFirstPage && (
+        <ul className="mg_list mg_list_new_post init_ani">
+          {featuredItems.map((item) => (
+            <li className="mg_li ani" key={item.id}>
+              <Link to={`/magazine/${CATEGORY}/post-${item.id}`} className="mg_a">
+                <span className="date txt-gray caption-m">{item.date}</span>
+                <h1 className="body-m">{item.title}</h1>
+                <img src={item.img} alt="Magazine Image" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <ul className="mg_list mg_list_news init_ani">
         {normalItems.map((item) => (
