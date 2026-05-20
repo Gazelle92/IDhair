@@ -1,12 +1,25 @@
+import { Link, useParams } from "react-router-dom";
 import "../styles/MagazineDetail.scss";
 
 function MagazineDetail() {
+  const { category = "our-picks" } = useParams();
+  const categoryNames = {
+    "our-picks": "Our PICKS",
+    "id-news": "id NEWS",
+    "id-event": "id EVENT",
+    "id-family": "id FAMILY",
+    "id-gallery": "id GALLERY",
+    "id-play": "id PLAY",
+  };
+  const listUrl = `/magazine/${category}`;
+  const pageName = categoryNames[category] || categoryNames["our-picks"];
+
   return (
     <main className="page_magazine_detail">
       <section className="md_head b-t b-4 ani">
         <div className="md_head_1 ani b-b">
-          <a href="/magazine"><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></a>
-          <div className="page_name body-s">id NEWS</div>
+          <Link to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></Link>
+          <div className="page_name body-s">{pageName}</div>
         </div>
         <div className="md_head_2 ani b-b">
           <h1 className="fade-cw head-l fw-sb"><span className="fadeY-1">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</span></h1>
@@ -47,7 +60,7 @@ function MagazineDetail() {
         
       </section>
       <div className="md_body_b b-t ani">
-        <a href="/Magazine"><img src="/img/icon_list.svg" alt="to list" /><span className="body-m">LIST</span></a>
+        <Link to={listUrl}><img src="/img/icon_list.svg" alt="to list" /><span className="body-m">LIST</span></Link>
       </div>
       
     </main>
