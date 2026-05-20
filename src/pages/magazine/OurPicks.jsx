@@ -12,7 +12,7 @@ function OurPicks({ currentPage = 1 }) {
   const pageItems = getPageItems(ITEMS, currentPage, CATEGORY);
 
   return (
-    <ul className="mg_list mg_list_picks init_ani">
+    <ul className="mg_list mg_list_picks mg_list_new_post init_ani">
       {pageItems.map((item) => (
         <li className="mg_li sc_ani" key={item.id}>
           <Link to={`/magazine/${CATEGORY}/post-${item.id}`} className="mg_a">

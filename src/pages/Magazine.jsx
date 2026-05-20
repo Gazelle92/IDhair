@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { gsap } from "gsap";
 import Splitting from "splitting";
 import "splitting/dist/splitting.css";
@@ -23,9 +23,11 @@ function Magazine() {
     { name: "id PLAY", path: "id-play" },
   ];
 
+  const location = useLocation();
   const { category, pageSlug } = useParams();
 
   const currentCategory = category || "our-picks";
+  const isTabMove = location.state?.fromMagazineTab === true;
   const currentPage = Number(pageSlug?.replace("list-", "") || 1);
   const totalPages = getTotalPages(currentCategory);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -83,9 +85,9 @@ function Magazine() {
 }, []);
 
   return (
-    <main className="page_magazine">
+    <main className={`page_magazine ${isTabMove ? "tab_move" : ""}`}>
       <section className="mg_head b-t b-4 ani" data-keep-active-on-route>
-        <div className="mg_title b-b b-delay-10 ">
+        <div className="mg_title b-b b-delay-2 ">
           <h1 className="display-l apprael effect17-title apprael_all" data-splitting data-effect17 >ID MAGAZINE</h1>
           <div className="mg_title_right">
             <h4 className="gt display-xs fadeX-6">{currentTabName}</h4>
@@ -94,11 +96,12 @@ function Magazine() {
           </div>
         </div>
 
-        <ul className="mg_nav b-t b-delay-15">
+        <ul className="mg_nav b-t b-delay-4">
           {tabs.map((tab, i) => (
-            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fadeY-${16 + i}`}>
+            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fadeY-${6 + i}`}>
               <Link
                 to={getListUrl(tab.path)}
+                state={{ fromMagazineTab: true }}
                 className={`body-m ${currentCategory === tab.path ? "active" : ""}`}
               >
                 <span>{tab.name}</span>

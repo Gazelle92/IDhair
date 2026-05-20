@@ -44,7 +44,7 @@
         &.mg_list_play{}
 
       }
-      &::before{content: ""; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition: all 1s cubic-bezier(0, 0, 0.43, 1.06); transition-delay: 1.7s;}
+      &::before{content: ""; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition: all 1s cubic-bezier(0, 0, 0.43, 1.06); transition-delay: 0.6s;}
       &.active::before{width: 100%;}
       
       .mg_li{
@@ -63,9 +63,9 @@
     }
     .mg_list + .mg_list.active::before{content: none;}
     .mg_list_new_post{
-      &::before{content: ''; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay: 1.7s;}
+      &::before{content: ''; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay: 0.8s;}
       @media(min-width:1025px){
-        &::after{content: ''; display: block; height: 0; width: 1px; background-color: #000; position: absolute; left: 50%; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06);transition-delay: 2s;}
+        &::after{content: ''; display: block; height: 0; width: 1px; background-color: #000; position: absolute; left: 50%; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06);transition-delay: 1.2s;}
       }
       &.active{
         &::before{width: 100%;}
@@ -144,6 +144,13 @@
           img{width: 1.455vw; height: 1.455vw;}
         }
         &:first-child a, &:last-child a{font-size: 0;}
+      }
+    }
+  }
+  &.tab_move {
+    .mg_body{
+      .mg_list{
+        &::before{transition-delay: 0s;}
       }
     }
   }
