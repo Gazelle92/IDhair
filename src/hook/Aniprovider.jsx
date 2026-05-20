@@ -14,6 +14,7 @@ function AniProvider() {
     let canStart = false;
 
     aniItems.forEach((item) => {
+      if (item.hasAttribute("data-keep-active-on-route") && item.classList.contains("active")) return;
       item.classList.remove("active");
     });
 

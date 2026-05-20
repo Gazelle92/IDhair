@@ -18,7 +18,7 @@ function IdNews({ currentPage = 1 }) {
     <>
       <ul className="mg_list mg_list_new_post init_ani">
         {featuredItems.map((item) => (
-          <li className="mg_li sc_ani" key={item.id}>
+          <li className="mg_li ani" key={item.id}>
             <Link to={`/magazine/${CATEGORY}/post-${item.id}`} className="mg_a">
               <span className="date txt-gray caption-m">{item.date}</span>
               <h1 className="body-m">{item.title}</h1>
@@ -30,7 +30,7 @@ function IdNews({ currentPage = 1 }) {
 
       <ul className="mg_list mg_list_news init_ani">
         {normalItems.map((item) => (
-          <li className="mg_li sc_ani" key={item.id}>
+          <li className="mg_li ani" key={item.id}>
             <Link to={`/magazine/${CATEGORY}/post-${item.id}`} className="mg_a">
               <span className="date txt-gray caption-m">{item.date}</span>
               <h1 className="body-m">{item.title}</h1>

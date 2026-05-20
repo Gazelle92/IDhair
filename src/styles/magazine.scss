@@ -27,6 +27,9 @@
       }
       .btn_all{position: absolute; left: 0.485vw; top: 0.485vw;}
     }
+    &.ani.active{
+      .mg_nav::before{width: 100%;}
+    }
   }
 
   .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw;

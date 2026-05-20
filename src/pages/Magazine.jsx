@@ -83,7 +83,7 @@ function Magazine() {
 
   return (
     <main className="page_magazine">
-      <section className="mg_head b-t b-4 ani">
+      <section className="mg_head b-t b-4 ani" data-keep-active-on-route>
         <div className="mg_title b-b b-delay-10 ">
           <h1 className="display-l apprael effect17-title apprael_all" data-splitting data-effect17 >ID MAGAZINE</h1>
           <div className="mg_title_right">
