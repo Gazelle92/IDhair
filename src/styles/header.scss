@@ -157,7 +157,7 @@
         }
       }
       
-      .salon_btn{display: flex; align-items: center; justify-content: center; width: 6.061vw; height: calc(100% - 0.485vw); border-radius: 0.242vw; color: #fff; font-weight: 500; top: 0.242vw; position: relative; padding-top: 0.121vw;}
+      .salon_btn{display: flex; align-items: center; justify-content: center; width: 6.061vw; height: calc(100% - 8px); border-radius: 0.242vw; color: #fff; font-weight: 500; top: 4px; position: relative; padding-top: 0.121vw;}
     }
     
   }
@@ -229,7 +229,7 @@
       
       .lang{display: none;}
       .right_w{ width: 34.444vw; height: 10.556vw; border-radius: 0.556vw;
-        .salon_btn{width: 16.667vw;  border-radius: 0.556vw;}
+        .salon_btn{width: calc(17.667vw - 4px);  border-radius: 0.556vw;}
         .menu_btn{width: 16.667vw; padding: 0 6.667vw; gap: 0.833vw;
           span{
             &:nth-child(1){width: 4.167vw;}
