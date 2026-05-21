@@ -76,8 +76,8 @@ function TransitionLink({
     }
 
     document.body.classList.remove("page-enter");
-    document.body.classList.remove("page-leave");
-
+    //document.body.classList.remove("page-leave");
+document.body.classList.add("page-leave");
     setTimeout(() => {
       document.body.classList.add("page-leave");
 

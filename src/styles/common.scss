@@ -346,3 +346,11 @@ button{background-color: unset; border: unset; cursor: pointer;}
     &.fade-cw, .fade-cw .fadeY-#{$i}{ transition:all 0.2s linear; transition-delay: 0.0s;}
   }
 }
+
+.logo_w, .header_inner{opacity: 1;}
+body main{position: relative;}
+body main::before{content: ''; display: block; opacity: 0; transition: ease 0.3s opacity; position: absolute; width: 100%; height: 100%; top: 0; left: 0; background-color: #fff; z-index: 8; pointer-events: none; transition-delay: 0.2s;}
+.page-leave{ 
+  .logo_w, .header_inner{opacity: 0;}
+  main::before{opacity: 1;}
+}
