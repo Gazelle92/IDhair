@@ -29,6 +29,14 @@ function AniProvider() {
       });
     }
 
+    if (isMagazineTabMove) {
+      aniItems.forEach((item) => {
+        if (item.classList.contains("fade-slice")) {
+          item.classList.remove("active");
+        }
+      });
+    }
+
     const runExtraAnimation = (item) => {
       if (item.classList.contains("svg")) {
         const animate = item.querySelector("animate");
@@ -56,6 +64,13 @@ function AniProvider() {
       }
     };
 
+    const initTimer = setTimeout(() => {
+      initAniItems.forEach((item) => {
+        item.classList.add("active");
+        runExtraAnimation(item);
+      });
+    }, 1000);
+
     const activeAnimation = (items) => {
       const windowBottom = window.scrollY + window.innerHeight;
 
@@ -63,7 +78,7 @@ function AniProvider() {
         const aniPoint =
           item.getBoundingClientRect().top +
           window.scrollY +
-          window.innerHeight / 4;
+          window.innerHeight / 3;
 
         if (windowBottom > aniPoint) {
           if (!item.classList.contains("active")) {
@@ -80,21 +95,12 @@ function AniProvider() {
     };
 
     const checkScAnimation = () => {
-      if (!canStart) return;
       activeAnimation(scAniItems);
     };
-
-    const initTimer = setTimeout(() => {
-      initAniItems.forEach((item) => {
-        item.classList.add("active");
-        runExtraAnimation(item);
-      });
-    }, 1000);
 
     const timer = setTimeout(() => {
       canStart = true;
       checkAniAnimation();
-      checkScAnimation();
     }, 1000);
 
     window.addEventListener("scroll", checkAniAnimation);
