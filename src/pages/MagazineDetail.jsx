@@ -1,4 +1,5 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import TransitionLink from "../components/TransitionLink";
 import "../styles/MagazineDetail.scss";
 
 function MagazineDetail() {
@@ -18,7 +19,7 @@ function MagazineDetail() {
     <main className="page_magazine_detail">
       <section className="md_head b-t b-4 ani">
         <div className="md_head_1 ani b-b">
-          <Link to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></Link>
+          <TransitionLink to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></TransitionLink>
           <div className="page_name body-s">{pageName}</div>
         </div>
         <div className="md_head_2 ani b-b">
@@ -60,7 +61,7 @@ function MagazineDetail() {
         
       </section>
       <div className="md_body_b b-t ani">
-        <Link to={listUrl}><img src="/img/icon_list.svg" alt="to list" /><span className="body-m">LIST</span></Link>
+        <TransitionLink to={listUrl}><img src="/img/icon_list.svg" alt="to list" /><span className="body-m">LIST</span></TransitionLink>
       </div>
       
     </main>

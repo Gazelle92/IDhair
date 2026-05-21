@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import TransitionLink from "./TransitionLink";
 import "../styles/header.scss";
 
 function Header() {
@@ -35,16 +36,16 @@ function Header() {
   return (
     <header className={`header ani ${headerActive ? "active" : ""} ${navHide ? "nav_hide" : ""}`}>
       <div className="logo_w">
-        <a href="/" className="logo">
+        <TransitionLink to="/" className="logo">
           <img src="/img/h_logo.svg" alt="IDhair" />
-        </a>
+        </TransitionLink>
       </div>
 
       <div className="gnb body-l">
-        <a href="/about"><span>ABOUT</span></a>
-        <a href="/academy"><span>id ACADEMY</span></a>
-        <a href="/magazine"><span>id MAGAZINE</span></a>
-        <a href="/recruit"><span>RECRUIT</span></a>
+        <TransitionLink to="/about"><span>ABOUT</span></TransitionLink>
+        <TransitionLink to="/academy"><span>id ACADEMY</span></TransitionLink>
+        <TransitionLink to="/magazine"><span>id MAGAZINE</span></TransitionLink>
+        <TransitionLink to="/recruit"><span>RECRUIT</span></TransitionLink>
       </div>
       
       <div className="header_inner test">
@@ -67,9 +68,9 @@ function Header() {
             <span></span>
           </button>
 
-          <a href="/salon" className="salon_btn bg-ac-1 body-m">
+          <TransitionLink to="/salon" className="salon_btn bg-ac-1 body-m">
             SALON
-          </a>
+          </TransitionLink>
         </div>
       </div>
 
@@ -87,10 +88,10 @@ function Header() {
           </button>
 
           <div className="h_nav_group_1 gt_all display-xs">
-            <a href="/salon">Salon</a>
-            <a href="/hair">id Hair</a>
-            <a href="/academy">id Academy</a>
-            <a href="/recruit">Recruit</a>
+            <TransitionLink to="/salon" onClick={() => setNavOpen(false)}>Salon</TransitionLink>
+            <TransitionLink to="/hair" onClick={() => setNavOpen(false)}>id Hair</TransitionLink>
+            <TransitionLink to="/academy" onClick={() => setNavOpen(false)}>id Academy</TransitionLink>
+            <TransitionLink to="/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>
           </div>
 
           <div className="h_nav_group_2 body-m">
@@ -101,11 +102,11 @@ function Header() {
           <div className="h_nav_group_3">
             <span className="gt display-xs">id Magazine</span>
             <ul className="body-s">
-              <li><a href="/magazine/news">id NEWS</a></li>
-              <li><a href="/magazine/event">id EVENT</a></li>
-              <li><a href="/magazine/family">id FAMILY</a></li>
-              <li><a href="/magazine/gallery">id GALLERY</a></li>
-              <li><a href="/magazine/play">id PLAY</a></li>
+              <li><TransitionLink to="/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
+              <li><TransitionLink to="/magazine/id-event" onClick={() => setNavOpen(false)}>id EVENT</TransitionLink></li>
+              <li><TransitionLink to="/magazine/id-family" onClick={() => setNavOpen(false)}>id FAMILY</TransitionLink></li>
+              <li><TransitionLink to="/magazine/id-gallery" onClick={() => setNavOpen(false)}>id GALLERY</TransitionLink></li>
+              <li><TransitionLink to="/magazine/id-play" onClick={() => setNavOpen(false)}>id PLAY</TransitionLink></li>
             </ul>
           </div>
 

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import TransitionLink from "./TransitionLink";
 import "../styles/footer.scss";
 
 function Footer() {
@@ -51,13 +52,13 @@ function Footer() {
   return (
     <footer className="bg-ac-1 ani">
         <div className="footer_inner">
-            <a className="footer_logo" href="/"><img src="/img/f_logo.svg"/></a>
+            <TransitionLink className="footer_logo" to="/"><img src="/img/f_logo.svg"/></TransitionLink>
             <ul className="f_link head-m">
-                <li><a href="">ABOUT</a></li>
-                <li><a href="">SALON</a></li>
-                <li><a href="">id MAGAZINE</a></li>
-                <li><a href="">id ACADEMY</a></li>
-                <li><a href="">RECRUIT</a></li>
+                <li><TransitionLink to="/about">ABOUT</TransitionLink></li>
+                <li><TransitionLink to="/salon">SALON</TransitionLink></li>
+                <li><TransitionLink to="/magazine">id MAGAZINE</TransitionLink></li>
+                <li><TransitionLink to="/academy">id ACADEMY</TransitionLink></li>
+                <li><TransitionLink to="/recruit">RECRUIT</TransitionLink></li>
             </ul>
             <div className="icon_w">
                 <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>

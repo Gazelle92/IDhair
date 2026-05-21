@@ -5,6 +5,7 @@ function AniProvider() {
   const location = useLocation();
 
   useLayoutEffect(() => {
+    const isMagazineTabMove = location.state?.fromMagazineTab === true;
     const aniItems = Array.from(document.querySelectorAll(".ani"));
     const scAniItems = Array.from(document.querySelectorAll(".sc_ani"));
     const initAniItems = Array.from(document.querySelectorAll(".init_ani"));
@@ -13,18 +14,20 @@ function AniProvider() {
 
     let canStart = false;
 
-    aniItems.forEach((item) => {
-      if (item.hasAttribute("data-keep-active-on-route") && item.classList.contains("active")) return;
-      item.classList.remove("active");
-    });
+    if (!isMagazineTabMove) {
+      aniItems.forEach((item) => {
+        if (item.hasAttribute("data-keep-active-on-route") && item.classList.contains("active")) return;
+        item.classList.remove("active");
+      });
 
-    scAniItems.forEach((item) => {
-      item.classList.remove("active");
-    });
+      scAniItems.forEach((item) => {
+        item.classList.remove("active");
+      });
 
-    initAniItems.forEach((item) => {
-      item.classList.remove("active");
-    });
+      initAniItems.forEach((item) => {
+        item.classList.remove("active");
+      });
+    }
 
     const runExtraAnimation = (item) => {
       if (item.classList.contains("svg")) {
