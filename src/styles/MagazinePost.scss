@@ -111,7 +111,7 @@
     }
     .md_body{padding-top: 0; position: unset;
       .md_body_inner{
-        article{width: 100%; max-width: calc(((100% / 12) * 10) - 11.111vw); min-width: unset; font-size: 3.056vw; padding-bottom: 16.667vw;
+        article{width: 100%; max-width: calc((100% / 12) * 10); min-width: unset; font-size: 3.056vw; padding-bottom: 16.667vw;
           &>*:not(:last-child){margin-bottom: 8.889vw;}
         }
       }

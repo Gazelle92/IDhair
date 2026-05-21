@@ -1,17 +1,21 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
+import { useLocation } from "react-router-dom";
 import TransitionLink from "./TransitionLink";
 import "../styles/footer.scss";
 
 function Footer() {
+  const location = useLocation();
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
   const footer = document.querySelector("footer");
-  const wrapper = document.querySelector("main");
 
-  if (!footer || !wrapper) return;
+  if (!footer) return;
 
   const setFooterHeight = () => {
+    const wrapper = document.querySelector("main");
+    if (!wrapper) return;
+
     wrapper.style.setProperty("--footer-height", `${footer.offsetHeight}px`);
   };
 
@@ -30,6 +34,11 @@ function Footer() {
   setFooterHeight();
   checkFooterActive();
 
+  const frameId = requestAnimationFrame(() => {
+    setFooterHeight();
+    checkFooterActive();
+  });
+
   const observer = new ResizeObserver(() => {
     setFooterHeight();
     checkFooterActive();
@@ -42,12 +51,13 @@ function Footer() {
   window.addEventListener("scroll", checkFooterActive);
 
   return () => {
+    cancelAnimationFrame(frameId);
     observer.disconnect();
     window.removeEventListener("resize", setFooterHeight);
     window.removeEventListener("resize", checkFooterActive);
     window.removeEventListener("scroll", checkFooterActive);
   };
-}, []);
+}, [location.pathname]);
 
   return (
     <footer className="bg-ac-1 ani">

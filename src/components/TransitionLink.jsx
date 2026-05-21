@@ -87,6 +87,8 @@ document.body.classList.add("page-leave");
     }, activeResetDelay);
   };
 
+  
+
   return (
     <Link
       to={nextTo}
