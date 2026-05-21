@@ -204,7 +204,10 @@
     } 
   }
   &.nav_hide{ 
-    .logo_w{top:1.2vw;}
+    
+    @media(min-width:1025px){
+      .logo_w{top:1.2vw;}  
+    }
     .gnb{
       a{
         span{transform: translateY(-110%);}
@@ -212,10 +215,13 @@
         &:nth-child(3) span, &:nth-child(4) span{transition-delay: 0.10s;}
       }
     }
-    .header_inner{top:1.2vw;
+    @media(min-width:1025px){
+      .header_inner{top:1.2vw;
+    
       
-      .lang{transform: translateY(-110%); opacity: 0;}
-    } 
+        .lang{transform: translateY(-110%); opacity: 0;}
+      } 
+    }
   }
 }
 

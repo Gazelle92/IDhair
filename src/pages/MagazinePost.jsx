@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
-import "../styles/MagazineDetail.scss";
+import "../styles/MagazinePost.scss";
 
 function MagazinePost() {
   const { category = "our-picks" } = useParams();
