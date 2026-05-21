@@ -36,7 +36,7 @@ function MagazinePost() {
         </div>
         <div className="md_body_inner">
           <article>
-            <img className="ani fade-img" src="/img/mg_list_2.jpg" alt="Magazine Image" />
+            {/*<img className="ani fade-img" src="/img/mg_list_2.jpg" alt="Magazine Image" />*/}
             <div className="fade-slice fadeX ani">
               이번 캠페인은 id HAIR가 추구하는 ‘대중적인 프리미엄’의 새로운 기준을 시각적으로 제안하는 프로젝트입니다.<br/>
               단순히 스타일 결과를 보여주는 것을 넘어, 고객이 브랜드를 경험하는 모든 순간에 자연스럽게 스며드는 감도와 태도를 하나의 비주얼 언어로 풀어냈습니다.<br/><br/>

@@ -56,15 +56,6 @@ function AniProvider() {
       }
     };
 
- 
-
-    setTimeout(() => {
-      initAniItems.forEach((item) => {
-        item.classList.add("active");
-        runExtraAnimation(item);
-      })
-    }, 500);
-
     const activeAnimation = (items) => {
       const windowBottom = window.scrollY + window.innerHeight;
 
@@ -72,7 +63,7 @@ function AniProvider() {
         const aniPoint =
           item.getBoundingClientRect().top +
           window.scrollY +
-          window.innerHeight / 3;
+          window.innerHeight / 4;
 
         if (windowBottom > aniPoint) {
           if (!item.classList.contains("active")) {
@@ -89,13 +80,22 @@ function AniProvider() {
     };
 
     const checkScAnimation = () => {
+      if (!canStart) return;
       activeAnimation(scAniItems);
     };
+
+    const initTimer = setTimeout(() => {
+      initAniItems.forEach((item) => {
+        item.classList.add("active");
+        runExtraAnimation(item);
+      });
+    }, 1000);
 
     const timer = setTimeout(() => {
       canStart = true;
       checkAniAnimation();
-    }, 500);
+      checkScAnimation();
+    }, 1000);
 
     window.addEventListener("scroll", checkAniAnimation);
     window.addEventListener("resize", checkAniAnimation);
@@ -105,13 +105,15 @@ function AniProvider() {
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(initTimer);
+
       window.removeEventListener("scroll", checkAniAnimation);
       window.removeEventListener("resize", checkAniAnimation);
 
       window.removeEventListener("scroll", checkScAnimation);
       window.removeEventListener("resize", checkScAnimation);
     };
-  }, [location.pathname]);
+  }, [location.pathname, location.state]);
 
   return null;
 }
