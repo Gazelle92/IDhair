@@ -80,9 +80,9 @@
       &>*:not(:last-child){margin-bottom: 2.424vw;}
       img{width: 100%;}
     }
-    .md_body_nav_w{position: absolute; left:0; top: 0; height: 100%; width: 100%;
+    .md_body_nav_w{position: absolute; left:0; top: 0; height: 100%; width: 100%; pointer-events: none;
       .md_body_nav{top: 50%; position: sticky; padding-bottom: 12.121vw; display: flex; justify-content: space-between;
-        a{}
+        a{pointer-events:all;}
       }
     }
     

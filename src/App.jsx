@@ -12,12 +12,15 @@ import MagazineDetail from "./pages/MagazinePost";
 import "./styles/common.scss";
 import LenisProvider from "./lib/Lenis";
 
+function FadeSliceProvider() {
+  useFadeSlice();
+  return null;
+}
 
 function App() {
-
-  useFadeSlice();
   return (
     <BrowserRouter>
+    <FadeSliceProvider />
     <AniProvider />
     <LenisProvider />
     
@@ -29,7 +32,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/magazine" element={<Navigate to="/magazine/our-picks" replace />} />
         <Route path="/magazine/:category" element={<Magazine />} />
-        {/*<Route path="/magazine/:category/post/:id" element={<MagazineDetail />} />/*/}        
+        <Route path="/magazine/:category/post/:id" element={<MagazineDetail />} />
         <Route path="/magazine/:category/:pageSlug" element={<Magazine />} />
         <Route path="/magazine-post" element={<MagazineDetail />} />
       </Routes>

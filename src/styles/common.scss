@@ -321,7 +321,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
     }
   }
 }
-
+.ani:not(.active) .fade-slice, .ani:not(.active).fade-slice{opacity: 0;}
 .fade-cw{overflow: hidden;}
 @for $i from 1 through 30 {
   .fadeY-#{$i}{display:block; opacity:0; transform:translateY(130%); 

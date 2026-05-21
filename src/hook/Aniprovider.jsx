@@ -33,9 +33,13 @@ function AniProvider() {
       aniItems.forEach((item) => {
         if (item.classList.contains("fade-slice")) {
           item.classList.remove("active");
+
+          // 강제로 브라우저가 active 제거를 인식하게 함
+          void item.offsetWidth;
         }
       });
     }
+
 
     const runExtraAnimation = (item) => {
       if (item.classList.contains("svg")) {
@@ -100,6 +104,14 @@ function AniProvider() {
 
     const timer = setTimeout(() => {
       canStart = true;
+
+      aniItems.forEach((item) => {
+        if (isMagazineTabMove && item.classList.contains("fade-slice")) {
+          item.classList.add("active");
+          runExtraAnimation(item);
+        }
+      });
+
       checkAniAnimation();
     }, 1000);
 
