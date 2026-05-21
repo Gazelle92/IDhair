@@ -21,7 +21,8 @@ function IdNews({ currentPage = 1 }) {
         <ul className="mg_list mg_list_new_post init_ani">
           {featuredItems.map((item) => (
             <li className="mg_li ani" key={item.id}>
-              <TransitionLink to={`/magazine/${CATEGORY}/post/${item.id}`} className="mg_a">
+              {/*<TransitionLink to={`/magazine/${CATEGORY}/post/${item.id}`} className="mg_a">*/}
+              <TransitionLink to={`/magazine-post`} className="mg_a">
                 <span className="date txt-gray caption-m">{item.date}</span>
                 <h1 className="body-m">{item.title}</h1>
                 <img src={item.img} alt="Magazine Image" />

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
 import "../styles/MagazineDetail.scss";
 
-function MagazineDetail() {
+function MagazinePost() {
   const { category = "our-picks" } = useParams();
   const categoryNames = {
     "our-picks": "Our PICKS",
@@ -18,25 +18,25 @@ function MagazineDetail() {
   return (
     <main className="page_magazine_detail">
       <section className="md_head b-t b-4 ani">
-        <div className="md_head_1 ani b-b">
-          <TransitionLink to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></TransitionLink>
-          <div className="page_name body-s">{pageName}</div>
+        <div className="md_head_1 ani b-b b-delay-2">
+          <TransitionLink className="fadeX-2" to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></TransitionLink>
+          <div className="page_name body-s fadeX-4">{pageName}</div>
         </div>
-        <div className="md_head_2 ani b-b">
-          <h1 className="fade-cw head-l fw-sb"><span className="fadeY-1">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</span></h1>
-          <span className="body-s txt-gray fade-cw"><span className="fadeY-2">2026.03.10</span></span>
+        <div className="md_head_2 ani b-b b-delay-4">
+          <h1 className="fade-cw head-l fw-sb"><span className="fadeX-1">새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각</span></h1>
+          <span className="body-s txt-gray fade-cw"><span className="fadeX-2">2026.03.10</span></span>
         </div>
       </section>
       <section className="md_body">
         <div className="md_body_nav_w">
-          <div className="md_body_nav head-s fw-sb">
-            <a href="#">Prev.</a>
-            <a href="#">Next.</a>
+          <div className="md_body_nav head-s fw-sb   ani">
+            <a className="fadeX-6" href="#">Prev.</a>
+            <a className="fadeX-8" href="#">Next.</a>
           </div>
         </div>
         <div className="md_body_inner">
           <article>
-            <img src="/img/mg_list_2.jpg" alt="Magazine Image" />
+            <img className="ani fade-img" src="/img/mg_list_2.jpg" alt="Magazine Image" />
             <div className="fade-slice fadeX ani">
               이번 캠페인은 id HAIR가 추구하는 ‘대중적인 프리미엄’의 새로운 기준을 시각적으로 제안하는 프로젝트입니다.<br/>
               단순히 스타일 결과를 보여주는 것을 넘어, 고객이 브랜드를 경험하는 모든 순간에 자연스럽게 스며드는 감도와 태도를 하나의 비주얼 언어로 풀어냈습니다.<br/><br/>
@@ -49,7 +49,7 @@ function MagazineDetail() {
 
               브랜드의 36년 DNA를 기반으로, 이번 프로젝트는 단순한 시즌 룩 제안이 아닌 살롱이 고객과 관계를 맺는 방식, 디자이너가 무드를 설계하는 방식, 그리고 스타일이 라이프스타일로 확장되는 과정까지 하나의 스토리로 연결합니다.
             </div>
-            <img src="/img/mg_list_3.jpg" alt="Magazine Image" />
+            <img className="ani fade-img" src="/img/mg_list_3.jpg" alt="Magazine Image" />
             <div className="fade-slice fadeX ani">
               캠페인 전반에는 절제된 타이포그래피와 여백 중심의 레이아웃, 뉴트럴 톤 기반의 컬러 시스템, 그리고 감정선을 살리는 인물 중심 컷을 적용하여 브랜드가 지향하는 프리미엄 무드를 보다 직관적으로 경험할 수 있도록 구성했습니다.<br/><br/>
 
@@ -68,4 +68,4 @@ function MagazineDetail() {
   );
 }
 
-export default MagazineDetail;
+export default MagazinePost;

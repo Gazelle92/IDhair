@@ -332,9 +332,9 @@ button{background-color: unset; border: unset; cursor: pointer;}
   }
   .fadeX-#{$i}{ transition: all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); }
   .ani.active {
-    .fadeX-#{$i}{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
-    }
+    .fadeX-#{$i}{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);}
   }
+  .ani.active.fadeX-#{$i}{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);}
 }
 @for $i from 1 through 30 {
   .fade-#{$i}{display:block; opacity:0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s;}
@@ -346,6 +346,8 @@ button{background-color: unset; border: unset; cursor: pointer;}
     &.fade-cw, .fade-cw .fadeY-#{$i}{ transition:all 0.2s linear; transition-delay: 0.0s;}
   }
 }
+.fade-img{transition: ease 1.4s transform, ease 1.4s opacity; transform: scale(1.05);opacity: 0;}
+.active .fade-img, .active.fade-img{opacity: 1; transform: scale(1);}
 
 .logo_w, .header_inner{opacity: 1;}
 body main{position: relative;}
