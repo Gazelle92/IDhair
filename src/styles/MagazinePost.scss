@@ -102,12 +102,17 @@
 @media(max-width:1024px){
   .page_magazine_detail{padding: 25vw 5.556vw 33.333vw; position: relative;
     .md_head{padding-bottom: 11.111vw;
-      .md_head_1{padding: 6.667vw 0 5.556vw;}
+      .md_head_1{padding: 6.667vw 0 5.556vw;
+        a{gap: 4.444vw;
+          img{width: 5.556vw; height: 6.667vw;}
+          span{line-height: 1;}
+        }
+        .page_name{border-radius: 11.111vw; padding: 1.389vw 5.556vw 0.833vw;}
+      }
       .md_head_2{padding: 5.556vw 0 11.111vw;
         h1{font-size: 3.333vw;}
         & > span{display: none;}
       }
-       
     }
     .md_body{padding-top: 0; position: unset;
       .md_body_inner{
