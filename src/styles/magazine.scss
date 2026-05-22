@@ -7,8 +7,15 @@
         span.char{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200; opacity: 0;}
       }
       .mg_title_right{text-align: right; padding-top:1.8vw; display: flex; flex-direction: column; align-items: flex-end; opacity: 1; transition: ease 0.3s opacity;
-        &.tab_out{opacity: 0;}
-        h4{position: relative; display: flex; align-items: center; justify-content: flex-end; font-weight: 300; margin-bottom: 0.727vw;
+        &.tab_out{opacity: 0;  transition-delay: 0;  transition: ease 0.3s opacity;
+          h4{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.3s ease all;}
+          .txt{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.4s ease all;}
+        }
+        &:not(.tab_out){
+          h4{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); transition-delay: 0.6s;}
+          .txt{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); transition-delay: 0.3s;}
+        }
+        h4{position: relative; display: flex; align-items: center; justify-content: flex-end; font-weight: 300; margin-bottom: 0.727vw; transition: clip-path 0.6s ease; transition-delay: 0.4s;
           &::before{content: ''; display: block; width: 0.727vw; height: 0.727vw; border-radius: 100%; background-color: var(--bg-ac-1); margin-right: 1.212vw;}
         }
 
@@ -158,26 +165,30 @@
 }
 @media(max-width:1024px){
   .page_magazine{padding: 25vw 5.556vw 33.333vw;
-    .mg_head{padding: 5.556vw 0 16.667vw;
+    .mg_head{padding: 5.556vw 0 0;
       
       .mg_title{flex-direction: column; border-bottom:0;
+        &::before{content: none;}
         h1{text-align: center;}
         .mg_title_right{gap: 0px; padding-top: 8.333vw; margin-top: 5.556vw; position: relative;
           &::before{content: ''; width: 0; height: 1px; left: 0; top: 0; position: absolute; border-top: 1px dashed rgb(0, 0, 0, 0.25); transition: ease 0.8s width; transition-delay: 0.25s;}
-          h4{margin-bottom: 3.333vw;}
+          h4{margin-bottom: 3.333vw;
+            &::before{width: 2.222vw; height: 2.222vw; margin-right: 3.333vw;}
+          }
           .txt{width: unset;}
         }
       }
-      .mg_nav{gap: 1.111vw; margin-left: -5.556vw; overflow-x: scroll; width: calc(100% + 11.111vw); justify-content: unset; background-color: var(--bg-gray-1);
+      .mg_nav{gap: 4px; padding: 4px; margin-left: -5.556vw; overflow-x: scroll; width: calc(100% + 11.111vw); justify-content: unset; background-color: var(--bg-gray-1);
         .btn_all{position: unset;}
-        a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap;
+        a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
         }
       }
       &.active .mg_title_right::before{width: 100%;}
     }
     .mg_body{padding: 0; width: 100%; left: 0;
-      .mg_list_new_post{padding-top: 5.556vw;}
+      
       .mg_list{grid-template-columns: 1fr; gap: 5.556vw; background-color: unset;
+        &::before{content: none;}
         .mg_li{padding: 0 0 5.556vw; font-size: 0;position: relative;
           &::before{content: ''; display: block; width:0%; height: 1px; background-color: #000; position: absolute; left: 0; bottom: 0; transition: ease 0.5s width;}
           &.active::before{width: 100%;}
@@ -186,10 +197,33 @@
             h1{padding: 2.222vw 0 3.333vw; font-size: 3.333vw;}
           }
         }
+        /*
+        &.mg_list_new_post{padding-top:60px;}
+        &.mg_list_event{grid-template-columns: 1fr 1fr; gap: 11.111vw; padding-top: 40px; margin-top: 40px;
+          &.active::before{content: '';}
+          .mg_li{padding-bottom: 0;
+            &::before{content: none;}
+          }
+        }
+        &.mg_list_family{padding-top:20px; margin-top: 40px;
+          &.active::before{content: '';}
+        }*/
+        &.mg_list_new_post{padding-top:16.667vw;}
+        &.mg_list_event{grid-template-columns: 1fr 1fr; gap: 11.111vw; padding-top: 11.111vw; margin-top: 11.111vw;
+          &::before{content: '';}
+          .mg_li{padding-bottom: 0;
+            &::before{content: none;}
+          }
+        }
+        &.mg_list_family{padding-top:5.556vw; margin-top: 11.111vw;
+          &::before{content: ''; transition: width 0.5s ease;}
+        }
       }
-      .pagenation {
-        li{ 
-          a{font-size: 2.778vw;}
+      .pagenation { margin-top: 12.222vw;  gap: 6.667vw;         
+        li {  display: flex;  align-items: center;          
+          a {font-size: 2.778vw;             
+            img {width: 6.667vw; height: 6.667vw;}
+          }
         }
       }
     } 
