@@ -68,12 +68,15 @@ function Magazine() {
   }, [currentCategory, currentTabName, isTabMove]);
 
   useLayoutEffect(() => {
-  Splitting();
+    Splitting();
 
-  const timer = setTimeout(() => {
-    const titles = document.querySelectorAll("[data-effect17]");
+    const observers = [];
 
-    titles.forEach((title) => {
+    const runEffect17 = (title) => {
+      if (title.hasAttribute("data-effect17-ready")) return;
+
+      title.setAttribute("data-effect17-ready", "true");
+
       const chars = title.querySelectorAll(".char");
 
       chars.forEach((char) => {
@@ -97,13 +100,45 @@ function Magazine() {
           stagger: 0.02,
         }
       );
-    });
-  }, 500); // 0.5초 후 시작
+    };
 
-  return () => {
-    clearTimeout(timer);
-  };
-}, []);
+    const timer = setTimeout(() => {
+      const titles = document.querySelectorAll("[data-effect17]:not([data-effect17-ready])");
+
+      titles.forEach((title) => {
+        const chars = title.querySelectorAll(".char");
+        gsap.set(chars, { opacity: 0 });
+
+        const trigger = title.classList.contains("text-effect")
+          ? title
+          : title.closest(".ani") || title;
+
+        if (trigger.classList.contains("active")) {
+          runEffect17(title);
+          return;
+        }
+
+        const observer = new MutationObserver(() => {
+          if (!trigger.classList.contains("active")) return;
+
+          runEffect17(title);
+          observer.disconnect();
+        });
+
+        observer.observe(trigger, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+
+        observers.push(observer);
+      });
+    }, 30);
+
+    return () => {
+      clearTimeout(timer);
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, [currentCategory, currentPage]);
 
   return (
     <main className={`page_magazine ${isTabMove ? "tab_move" : ""}`}>

@@ -3,7 +3,7 @@
     .mg_title{display: flex; justify-content: space-between; margin-bottom: 1.939vw; padding-bottom: 1.939vw; 
       &::before{background-color: unset; border-bottom: 1px dashed rgb(0, 0, 0, 0.25);}
     
-      h1{
+      h1{white-space: nowrap;
         span.char{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200; opacity: 0;}
       }
       .mg_title_right{text-align: right; padding-top:1.8vw; display: flex; flex-direction: column; align-items: flex-end; opacity: 1; transition: ease 0.3s opacity;
@@ -48,7 +48,8 @@
         &.mg_list_news{grid-template-columns: repeat(3, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}
         &.mg_list_event{grid-template-columns: repeat(4, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}
         &.mg_list_family{grid-template-columns: repeat(2, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}
-        &.mg_list_gallery{}
+        &.mg_list_gallery_featured{grid-template-columns: 1fr; padding-bottom: 2.424vw;}
+        &.mg_list_gallery{grid-template-columns: repeat(3, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}
         &.mg_list_play{}
 
       }
@@ -61,15 +62,15 @@
         .date, h1{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); display: block; letter-spacing: -1px;}
         .date{transition: ease 0.7s clip-path, ease 0.7s letter-spacing; }
         h1{transition: ease 0.8s clip-path, ease 0.7s letter-spacing; transition-duration: 0.2;}
-        img{transition: ease 1.4s transform, ease 1.4s opacity; transform: scale(1.05); opacity: 0;}
-        
+        img,.bg_blur{transition: ease 1.4s transform, ease 1.4s backdrop-filter, ease 1.4s opacity; transform: scale(1.05); opacity: 0;}
         &.active{
           .date,h1{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);  letter-spacing: 0px;}
-          img{transform: scale(1); opacity: 1;}
+          img,.bg_blur{transform: scale(1); opacity: 1;}
         }
       }
     }
     .mg_list + .mg_list.active::before{content: none;}
+    .mg_list_gallery_featured + .mg_list_gallery.active::before{content: "";}
     .mg_list_new_post{
       &::before{content: ''; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay: 0.6s;}
       @media(min-width:1025px){
@@ -143,7 +144,35 @@
         }
         img{aspect-ratio: 700 / 233;}
       }
-
+    }
+    .mg_list_gallery_featured{
+      .mg_li{padding: 0; position: relative; 
+        a{    display: flex;
+    align-items: center;
+    justify-content: center;}
+        h1{position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; z-index: 1; color: #fff; line-height: 1.1; font-weight: 300; padding: 0; letter-spacing: 0; z-index: 3; padding-top: 30vh; width: 100%; text-align: center;}
+        .bg_blur{width: 100%; height: 100%; display: block; left: 0; top: 0; position: absolute; backdrop-filter: blur(100px); background-color: rgb(0 0 0 / 10%); z-index: 1;}
+        img{width: 100%; height: 100%; object-fit: cover;
+          &.bg{aspect-ratio: 1440 / 910; z-index: 00;}
+          &.thumb{aspect-ratio: 600 / 750; position: absolute;/* left: 50%; top: 50%; transform: translate(-50%, -50%); */height: calc(100% - 160px); width: unset; z-index: 2;}
+        }
+      }
+    }
+    .mg_list_gallery{
+      .mg_li{padding: 0 0; position: relative; 
+        img{aspect-ratio: 453 / 566;}
+        @media(min-width:1025px){
+          &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; background-color: #000; width: 0; transition: ease-out 1.0s width; transition-delay:0.6s;}
+          &.active:nth-child(3n + 1)::before{width: calc(100vw - 7.273vw);}
+          @for $i from 1 through 3 {
+            &:nth-child(3n + #{$i}){
+              .date{transition-delay: #{(0.3 * $i) - 0.3}s;}
+              h1{transition-delay: #{(0.3 * $i) - 0.3}s;}
+              img{transition-delay: #{(0.2 * $i) - 0.2}s;}  
+            }
+          }
+        }
+      }
     }
 
     .pagenation{display: flex; gap: 1.455vw; justify-content: center; margin-top: 2.424vw;
@@ -217,6 +246,23 @@
         }
         &.mg_list_family{padding-top:5.556vw; margin-top: 11.111vw;
           &::before{content: ''; transition: width 0.5s ease;}
+        }
+        &.mg_list_gallery_featured{padding: 5.556vw 0 11.12vw; margin-left: -5.556vw; width: calc(100% + 11.112vw);
+          .mg_li{
+            h1{font-size: 40px; line-height: 1.1; display: flex; flex-direction: column; justify-content: center;
+              span{font-size: 40px;}
+            }
+            img{
+              &.bg{aspect-ratio:360 / 480 ;}
+            }
+          }
+        }
+        &.mg_list_gallery{padding: 11.11vw 0; border-bottom: 1px solid #000;
+          .mg_li{
+            h1{padding: 0 0 3.333vw; text-align: center;}
+            &::before{content: none;}
+
+          }
         }
       }
       .pagenation { margin-top: 12.222vw;  gap: 6.667vw;         

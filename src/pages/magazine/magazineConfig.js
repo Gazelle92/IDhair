@@ -5,7 +5,7 @@ export const magazinePageSettings = {
   "id-news": { columns: 3, totalItems: 40, firstPageItems: 13 },
   "id-event": { columns: 4, totalItems: 31 },
   "id-family": { columns: 2, totalItems: 24 },
-  "id-gallery": { columns: 3, totalItems: 35 },
+  "id-gallery": { columns: 3, totalItems: 35, firstPageItems: 7 },
   "id-play": { columns: 2, totalItems: 24 },
 };
 
@@ -80,6 +80,20 @@ export const makeMagazineItems = (category, title, totalItems) =>
       date: "2026.03.10",
       title: `${title} ${id}`,
       img: `/img/mg_list_event_${(index % 4) + 1}.jpg`,
+    };
+  });
+
+
+  export const galleryItems = (category, title, totalItems) =>
+  Array.from({ length: totalItems }, (_, index) => {
+    const id = index + 1;
+
+    return {
+      id,
+      category,
+      date: "2026",
+      title: `S/S Collection`,
+      img: `/img/mg_list_ga_${(index % 5) + 1}.jpg`,
     };
   });
 
