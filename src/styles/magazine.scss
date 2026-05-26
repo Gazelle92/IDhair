@@ -37,6 +37,14 @@
     }
     &.ani.active{
       .mg_nav::before{width: 100%;}
+
+      
+    }
+    &.ani:not(.active){
+      .mg_title_right{
+        h4{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.3s ease all;}
+        .txt{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.4s ease all;}
+      }
     }
   }
 

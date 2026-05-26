@@ -82,7 +82,7 @@ function AniProvider() {
         const aniPoint =
           item.getBoundingClientRect().top +
           window.scrollY +
-          window.innerHeight / 3;
+          window.innerHeight / 6;
 
         if (windowBottom > aniPoint) {
           if (!item.classList.contains("active")) {
