@@ -65,6 +65,7 @@
       &.active::before{width: 100%;}
       
       .mg_li{
+        .mg_a{width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; display: block; cursor: pointer;}
         h1{padding: 0.485vw 0 1.212vw; font-weight: 600;}
         img{aspect-ratio: 16 / 9; width: 100%; object-fit: cover;}
         .date, h1{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); display: block; letter-spacing: -1px;}
@@ -155,7 +156,7 @@
     }
     .mg_list_gallery_featured{
       .mg_li{padding: 0; position: relative; 
-        a{display: flex; align-items: center; justify-content: center;}
+        .mg_a{display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}
         h1{position: absolute; left: 50%; transform: translateX(-50%); bottom: 1.212vw; z-index: 1; color: #fff; line-height: 1.1; font-weight: 300; padding: 0; letter-spacing: 0; z-index: 3; padding-top: 30vh; width: 100%; text-align: center;}
         .bg_blur{width: 100%; height: 100%; display: block; left: 0; top: 0; position: absolute; backdrop-filter: blur(6.061vw); background-color: rgb(0 0 0 / 10%); z-index: 1;}
         img{width: 100%; height: 100%; object-fit: cover;
@@ -166,6 +167,8 @@
     }
     .mg_list_gallery{
       .mg_li{padding: 0 0; position: relative; 
+        h1{position: relative; z-index: 1;}
+        img{position: relative; z-index: 2; transform-origin: 50% 50%;}
         img{aspect-ratio: 453 / 566;}
         @media(min-width:1025px){
           &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; background-color: #000; width: 0; transition: ease-out 1.0s width; transition-delay:0.6s;}
@@ -174,7 +177,7 @@
             &:nth-child(3n + #{$i}){
               .date{transition-delay: #{(0.3 * $i) - 0.3}s;}
               h1{transition-delay: #{(0.3 * $i) - 0.3}s;}
-              img{transition-delay: #{(0.2 * $i) - 0.2}s;}  
+              img{transition-delay: #{(0.2 * $i) - 0.2}s;}
             }
           }
         }
@@ -235,7 +238,7 @@
         .mg_li{padding: 0 0 5.556vw; font-size: 0;position: relative;
           &::before{content: ''; display: block; width:0%; height: 1px; background-color: #000; position: absolute; left: 0; bottom: 0; transition: ease 0.5s width;}
           &.active::before{width: 100%;}
-          a{font-size: 0;
+          .mg_a{font-size: 0;
             span{font-size: 2.5vw;}
             h1{padding: 2.222vw 0 3.333vw; font-size: 3.333vw;}
           }
@@ -288,5 +291,62 @@
         }
       }
     } 
+  }
+}
+body.gallery-zooming {
+  .page_magazine .mg_body .mg_list_gallery {
+    .mg_li,
+    .mg_li img {
+      transition: none !important;
+    }
+  }
+}
+
+body.gallery-scroll-locked,
+body.gallery-viewer-open {
+  overflow: hidden;
+}
+
+.gallery_transition_clone{position: fixed; z-index: 999; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height;}
+
+.gallery_viewer{position: fixed; inset: 0; z-index: 1000; background-color: #ededed; color: #000;
+  .gallery_viewer_scroll{height: 100vh; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+    &::-webkit-scrollbar{display: none;}
+  }
+  .gallery_viewer_space{position: relative;}
+  .gallery_viewer_stage{position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; display: grid; grid-template-columns: 32.6vw 1fr 10.9vw; align-items: stretch; padding: 4.848vw 3.636vw; box-sizing: border-box;}
+  .gallery_viewer_left{position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0;}
+  .gallery_viewer_close{position: absolute; top: 0; left: 0; border: 0; padding: 0; background: transparent; color: currentColor; cursor: pointer;}
+  .gallery_viewer_title{font-size: clamp(52px, 6.25vw, 108px); line-height: 0.98; font-weight: 200; letter-spacing: 0;}
+  .gallery_viewer_hint{position: absolute; left: 0; bottom: 0; display: flex; align-items: center; gap: 0.727vw;}
+  .gallery_viewer_visual{position: relative; display: flex; justify-content: center; align-items: center; min-width: 0;}
+  .gallery_viewer_image_stack{position: relative; width: var(--gallery-viewer-image-width, min(38.18vw, 660px)); height: var(--gallery-viewer-image-height, min(81.36vh, 760px)); overflow: hidden; background-color: #ddd;}
+  .gallery_viewer_layer{position: absolute; inset: 0; background-color: #ededed; clip-path: inset(100% 0 0 0); will-change: clip-path;
+    &:first-child{clip-path: inset(0 0 0 0);}
+    img{width: 100%; height: 100%; object-fit: cover;}
+  }
+  .gallery_viewer_count{position: absolute;}
+  .gallery_viewer_count_start{left: 0; top: 0;}
+  .gallery_viewer_count_end{right: 0; bottom: 0;}
+  .gallery_viewer_thumbs_wrap{height: 100%; overflow: hidden; padding-left: 3.636vw;}
+  .gallery_viewer_thumbs{display: flex; flex-direction: column; gap: 1.212vw; align-items: center; will-change: transform;}
+  .gallery_viewer_thumb{width: 4.848vw; min-width: 64px; aspect-ratio: 1 / 1.28; border: 0; padding: 0; background: transparent; cursor: pointer; opacity: 0.45; transition: opacity 0.25s ease, transform 0.25s ease;
+    img{width: 100%; height: 100%; object-fit: cover; display: block;}
+    &.active{opacity: 1; transform: scale(1.02);}
+  }
+}
+
+@media(max-width:1024px){
+  .gallery_viewer{
+    .gallery_viewer_stage{grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; padding: 8.333vw 5.556vw;}
+    .gallery_viewer_left{display: contents;}
+    .gallery_viewer_close{position: fixed; top: 5.556vw; left: 5.556vw; z-index: 5;}
+    .gallery_viewer_title{font-size: 15vw; align-self: end; padding-top: 12vw;}
+    .gallery_viewer_hint{position: fixed; left: 5.556vw; bottom: 5.556vw; z-index: 5;}
+    .gallery_viewer_visual{grid-row: 2;}
+    .gallery_viewer_image_stack{width: 76vw; height: 60vh;}
+    .gallery_viewer_thumbs_wrap{grid-row: 3; height: auto; overflow-x: hidden; padding: 5.556vw 0 0;}
+    .gallery_viewer_thumbs{flex-direction: row; justify-content: flex-start; gap: 2.222vw;}
+    .gallery_viewer_thumb{width: 15vw; min-width: 15vw;}
   }
 }
