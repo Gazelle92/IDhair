@@ -15,14 +15,29 @@ const ZOOM_STAGGER_AMOUNT = 0.2;
 
 const getViewerImageTarget = () => {
   const isMobile = window.innerWidth <= 1024;
-  const width = isMobile ? window.innerWidth * 0.76 : Math.min(window.innerWidth * 0.3818, 660);
-  const height = isMobile ? window.innerHeight * 0.6 : Math.min(window.innerHeight * 0.8136, 760);
+  const width = isMobile ? window.innerWidth * 0.76 : Math.min(window.innerWidth * 0.375, 620);
+  const height = isMobile ? window.innerHeight * 0.6 : Math.min(window.innerHeight * 0.78, 720);
   const centerX = isMobile
     ? window.innerWidth * 0.5
     : window.innerWidth * 0.326 + (window.innerWidth - window.innerWidth * 0.326 - window.innerWidth * 0.109) / 2;
   const centerY = window.innerHeight * 0.5;
 
   return { width, height, centerX, centerY };
+};
+
+const getViewerImageStackTarget = (stackElement) => {
+  if (!stackElement) return getViewerImageTarget();
+
+  const rect = stackElement.getBoundingClientRect();
+
+  return {
+    width: rect.width,
+    height: rect.height,
+    centerX: rect.left + rect.width / 2,
+    centerY: rect.top + rect.height / 2,
+    left: rect.left,
+    top: rect.top,
+  };
 };
 
 function IdGallery({ currentPage = 1 }) {
@@ -34,8 +49,10 @@ function IdGallery({ currentPage = 1 }) {
   const transitionCloneRef = useRef(null);
   const viewerScrollRef = useRef(null);
   const viewerContentRef = useRef(null);
+  const viewerImageStackRef = useRef(null);
   const viewerLayerRefs = useRef([]);
   const viewerThumbRefs = useRef([]);
+  const viewerThumbsWrapRef = useRef(null);
   const viewerThumbsRef = useRef(null);
   const viewerFrameRef = useRef(null);
   const viewerLenisRef = useRef(null);
@@ -64,18 +81,17 @@ function IdGallery({ currentPage = 1 }) {
 
     zoomTimelineRef.current?.kill();
     removeTransitionClone();
-    showZoomedSourceImage();
     zoomedItemRef.current?.classList.remove("is_zoomed");
     zoomedItemRef.current = null;
     setIsGalleryViewerOpen(false);
     document.body.classList.remove("gallery-viewer-open");
 
     if (currentImage) {
-      const viewerTarget = getViewerImageTarget();
+      const viewerTarget = getViewerImageStackTarget(viewerImageStackRef.current);
       const rect = currentImage.getBoundingClientRect();
       const clone = currentImage.cloneNode(true);
-      const startLeft = viewerTarget.centerX - viewerTarget.width / 2;
-      const startTop = viewerTarget.centerY - viewerTarget.height / 2;
+      const startLeft = viewerTarget.left ?? viewerTarget.centerX - viewerTarget.width / 2;
+      const startTop = viewerTarget.top ?? viewerTarget.centerY - viewerTarget.height / 2;
 
       transitionCloneRef.current = clone;
       clone.className = "gallery_transition_clone";
@@ -86,6 +102,7 @@ function IdGallery({ currentPage = 1 }) {
         top: startTop,
         width: viewerTarget.width,
         height: viewerTarget.height,
+        visibility: "visible",
       });
 
       zoomTimelineRef.current = gsap.timeline({
@@ -169,17 +186,15 @@ function IdGallery({ currentPage = 1 }) {
       clearGalleryZoom(list);
     }
 
-    const viewerTarget = getViewerImageTarget();
-    document.documentElement.style.setProperty("--gallery-viewer-image-width", `${viewerTarget.width}px`);
-    document.documentElement.style.setProperty("--gallery-viewer-image-height", `${viewerTarget.height}px`);
+    const initialViewerTarget = getViewerImageStackTarget(viewerImageStackRef.current);
+    document.documentElement.style.setProperty("--gallery-viewer-image-width", `${initialViewerTarget.width}px`);
+    document.documentElement.style.setProperty("--gallery-viewer-image-height", `${initialViewerTarget.height}px`);
 
     document.body.classList.add("gallery-zooming");
     document.body.classList.add("gallery-scroll-locked");
     window.lenis?.stop?.();
 
     const rect = image.getBoundingClientRect();
-    const targetLeft = viewerTarget.centerX - viewerTarget.width / 2;
-    const targetTop = viewerTarget.centerY - viewerTarget.height / 2;
     const clone = image.cloneNode(true);
     const otherItems = [...list.querySelectorAll(".mg_li")].filter((li) => li !== item);
     const currentIndex = [...list.querySelectorAll(".mg_li")].indexOf(item);
@@ -205,33 +220,39 @@ function IdGallery({ currentPage = 1 }) {
     setViewerCurrentIndex(Math.max(currentIndex, 0));
     setIsGalleryViewerOpen(false);
 
-    zoomTimelineRef.current = gsap.timeline({
-      defaults: {
-        duration: ZOOM_IN_DURATION,
-        ease: "expo.inOut",
-      },
-      onComplete: () => {
-        document.body.classList.add("gallery-viewer-open");
-        setIsGalleryViewerOpen(true);
-        window.setTimeout(removeTransitionClone, 80);
-      },
-    });
+    requestAnimationFrame(() => {
+      const viewerTarget = getViewerImageStackTarget(viewerImageStackRef.current);
+      const targetLeft = viewerTarget.left ?? viewerTarget.centerX - viewerTarget.width / 2;
+      const targetTop = viewerTarget.top ?? viewerTarget.centerY - viewerTarget.height / 2;
 
-    zoomTimelineRef.current
-      .set(otherItems, { willChange: "transform, opacity" }, 0)
-      .to(clone, { left: targetLeft, top: targetTop, width: viewerTarget.width, height: viewerTarget.height }, 0)
-      .to(
-        otherItems,
-        {
-          opacity: 0,
-          scale: 0.8,
-          stagger: {
-            amount: ZOOM_STAGGER_AMOUNT,
-            from: "center",
-          },
+      zoomTimelineRef.current = gsap.timeline({
+        defaults: {
+          duration: ZOOM_IN_DURATION,
+          ease: "expo.inOut",
         },
-        0
-      );
+        onComplete: () => {
+          document.body.classList.add("gallery-viewer-open");
+          setIsGalleryViewerOpen(true);
+          window.setTimeout(removeTransitionClone, 80);
+        },
+      });
+
+      zoomTimelineRef.current
+        .set(otherItems, { willChange: "transform, opacity" }, 0)
+        .to(clone, { left: targetLeft, top: targetTop, width: viewerTarget.width, height: viewerTarget.height }, 0)
+        .to(
+          otherItems,
+          {
+            opacity: 0,
+            scale: 0.8,
+            stagger: {
+              amount: ZOOM_STAGGER_AMOUNT,
+              from: "center",
+            },
+          },
+          0
+        );
+    });
   };
 
   const closeGalleryViewer = () => {
@@ -239,7 +260,6 @@ function IdGallery({ currentPage = 1 }) {
 
     setIsGalleryViewerOpen(false);
     document.body.classList.remove("gallery-viewer-open");
-    window.lenis?.start?.();
     resetGalleryZoom(list);
   };
 
@@ -276,12 +296,12 @@ function IdGallery({ currentPage = 1 }) {
     setViewerCurrentIndex(nextIndex);
 
     const thumbs = viewerThumbsRef.current;
+    const thumbsWrap = viewerThumbsWrapRef.current;
     const currentThumb = viewerThumbRefs.current[nextIndex];
 
-    if (thumbs && currentThumb) {
-      const thumbsRect = thumbs.getBoundingClientRect();
-      const thumbOffset = currentThumb.offsetTop + currentThumb.offsetHeight / 2;
-      const targetY = thumbsRect.height / 2 - thumbOffset;
+    if (thumbs && thumbsWrap && currentThumb) {
+      const thumbCenter = currentThumb.offsetTop + currentThumb.offsetHeight / 2;
+      const targetY = thumbsWrap.clientHeight / 2 - thumbCenter;
 
       gsap.to(thumbs, {
         y: targetY,
@@ -383,8 +403,12 @@ function IdGallery({ currentPage = 1 }) {
         ))}
       </ul>
 
-      {isGalleryViewerOpen && (
-        <div className="gallery_viewer" aria-modal="true" role="dialog">
+      <div
+        className={`gallery_viewer ${isGalleryViewerOpen ? "active" : ""}`}
+        aria-hidden={!isGalleryViewerOpen}
+        aria-modal="true"
+        role="dialog"
+      >
           <div
             className="gallery_viewer_scroll"
             ref={viewerScrollRef}
@@ -415,7 +439,7 @@ function IdGallery({ currentPage = 1 }) {
                   <div className="gallery_viewer_count gallery_viewer_count_start body-m">
                     {String(viewerCurrentIndex + 1).padStart(2, "0")}
                   </div>
-                  <div className="gallery_viewer_image_stack">
+                  <div className="gallery_viewer_image_stack" ref={viewerImageStackRef}>
                     {normalItems.map((item, index) => (
                       <div
                         className="gallery_viewer_layer"
@@ -434,7 +458,11 @@ function IdGallery({ currentPage = 1 }) {
                   </div>
                 </div>
 
-                <div className="gallery_viewer_thumbs_wrap" aria-label="Gallery thumbnails">
+                <div
+                  className="gallery_viewer_thumbs_wrap"
+                  ref={viewerThumbsWrapRef}
+                  aria-label="Gallery thumbnails"
+                >
                   <div className="gallery_viewer_thumbs" ref={viewerThumbsRef}>
                     {normalItems.map((item, index) => (
                       <button
@@ -454,8 +482,7 @@ function IdGallery({ currentPage = 1 }) {
               </div>
             </div>
           </div>
-        </div>
-      )}
+      </div>
     </>
   );
 }
