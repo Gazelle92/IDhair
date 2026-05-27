@@ -84,15 +84,24 @@ export const makeMagazineItems = (category, title, totalItems) =>
   });
 
 
+  const galleryTitles = [
+    "S/S Collection1",
+    "S/S Collection2",
+    "S/S Collection3",
+    "S/S Collection4",
+    "S/S Collection5",
+  ];
+
   export const galleryItems = (category, title, totalItems) =>
   Array.from({ length: totalItems }, (_, index) => {
     const id = index + 1;
+    const year = 2026 - index;
 
     return {
       id,
       category,
-      date: "2026",
-      title: `S/S Collection`,
+      date: `${year}`,
+      title: galleryTitles[index % galleryTitles.length],
       img: `/img/mg_list_ga_${(index % 5) + 1}.jpg`,
     };
   });

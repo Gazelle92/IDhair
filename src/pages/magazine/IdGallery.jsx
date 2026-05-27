@@ -60,6 +60,7 @@ function IdGallery({ currentPage = 1 }) {
   const isFirstPage = currentPage === 1;
   const featuredItem = isFirstPage ? pageItems[0] : null;
   const normalItems = isFirstPage ? pageItems.slice(1) : pageItems;
+  const viewerItem = normalItems[viewerCurrentIndex] || normalItems[0];
 
   const removeTransitionClone = () => {
     transitionCloneRef.current?.remove();
@@ -279,6 +280,7 @@ function IdGallery({ currentPage = 1 }) {
     const currentScroll = typeof scrollValue === "number" ? scrollValue : scroller.scrollTop;
     const progress = currentScroll / Math.max(window.innerHeight, 1);
     const nextIndex = Math.min(normalItems.length - 1, Math.max(0, Math.round(progress)));
+    let clippingIndex = nextIndex;
 
     viewerLayerRefs.current.forEach((layer, index) => {
       if (!layer) return;
@@ -289,15 +291,19 @@ function IdGallery({ currentPage = 1 }) {
       }
 
       const revealProgress = Math.min(1, Math.max(0, progress - (index - 1)));
+      if (revealProgress > 0 && revealProgress < 1) {
+        clippingIndex = index;
+      }
+
       const topInset = (1 - revealProgress) * 100;
       layer.style.clipPath = `inset(${topInset}% 0% 0% 0%)`;
     });
 
-    setViewerCurrentIndex(nextIndex);
+    setViewerCurrentIndex(clippingIndex);
 
     const thumbs = viewerThumbsRef.current;
     const thumbsWrap = viewerThumbsWrapRef.current;
-    const currentThumb = viewerThumbRefs.current[nextIndex];
+    const currentThumb = viewerThumbRefs.current[clippingIndex];
 
     if (thumbs && thumbsWrap && currentThumb) {
       const thumbCenter = currentThumb.offsetTop + currentThumb.offsetHeight / 2;
@@ -424,10 +430,10 @@ function IdGallery({ currentPage = 1 }) {
                   <button type="button" className="gallery_viewer_close body-m" onClick={closeGalleryViewer}>
                     Close
                   </button>
-                  <h2 className="gallery_viewer_title apprael">
-                    2026 S/S
+                  <h2 className="gallery_viewer_title apprael" data-id={viewerItem?.id} data-category={viewerItem?.category}>
+                    {viewerItem?.date}
                     <br />
-                    Collection
+                    {viewerItem?.title}
                   </h2>
                   <div className="gallery_viewer_hint body-m">
                     <span>Scroll</span>

@@ -307,7 +307,7 @@ body.gallery-scroll-locked,
 body.gallery-viewer-open {
   overflow: hidden;
 }
-main.page_magazine::after{content: ''; width: 100%; height: 100%; position: absolute; left: 0; top: 0; transition: ease 0.3s all; z-index: 999; pointer-events: none;}
+main.page_magazine::after{content: ''; width: 100%; height: 100%; position: fixed; left: 0; top: 0; transition: ease 0.3s all; z-index: 999; pointer-events: none;}
 .gallery-viewer-open main.page_magazine::after{background-color: #ededed;}
 .gallery-viewer-open .gallery_viewer{}
 /*.gallery-viewer-open .gallery_viewer{background-color: #ededed;}*/
@@ -361,8 +361,9 @@ main.page_magazine::after{content: ''; width: 100%; height: 100%; position: abso
   }
 }
 /* 스크롤바의 폭 너비 */
+
 body::-webkit-scrollbar {
-    width: 10px;  
+    display: none;
 }
 
 body::-webkit-scrollbar-thumb {
