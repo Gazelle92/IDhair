@@ -1,5 +1,8 @@
-import TransitionLink from "../../components/TransitionLink";
-import { getPageItems, magazinePageSettings, makeMagazineItems } from "./magazineConfig";
+import { useRef, useState } from "react";
+import { gsap } from "gsap";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { magazinePageSettings, makeMagazineItems } from "./magazineConfig";
 
 const CATEGORY = "id-play";
 const ITEMS = makeMagazineItems(
@@ -7,25 +10,212 @@ const ITEMS = makeMagazineItems(
   "id PLAY layout",
   magazinePageSettings[CATEGORY].totalItems
 );
+const LOAD_COUNT = 9;
+const PLAY_ZOOM_DURATION = 1.05;
 
-const randomTypeClass = () => {
+const getTypeClass = (index) => {
   const types = ["type-a", "type-b", "type-c"];
-  return types[Math.floor(Math.random() * types.length)];
+  return types[index % types.length];
 };
 
-function IdPlay({ currentPage = 1 }) {
-  const pageItems = getPageItems(ITEMS, currentPage, CATEGORY);
+function IdPlay() {
+  const [visibleCount, setVisibleCount] = useState(LOAD_COUNT);
+  const [viewerOpen, setViewerOpen] = useState(false);
+  const [viewerReady, setViewerReady] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const pageItems = ITEMS.slice(0, visibleCount);
+  const hasMoreItems = visibleCount < ITEMS.length;
+  const viewerFrameRef = useRef(null);
+  const cloneRef = useRef(null);
+  const activeSourceImageRef = useRef(null);
+  const timelineRef = useRef(null);
+  const swiperRef = useRef(null);
+
+  const removeClone = () => {
+    cloneRef.current?.remove();
+    cloneRef.current = null;
+  };
+
+  const showSourceImage = () => {
+    if (activeSourceImageRef.current) {
+      gsap.set(activeSourceImageRef.current, { clearProps: "visibility" });
+    }
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount((count) => Math.min(count + LOAD_COUNT, ITEMS.length));
+
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event("scroll"));
+    });
+  };
+
+  const openViewer = (event, index) => {
+    const image = event.currentTarget.querySelector("img");
+    const target = viewerFrameRef.current;
+    if (!image || !target) return;
+
+    const sourceRect = image.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const clone = image.cloneNode(true);
+
+    timelineRef.current?.kill();
+    removeClone();
+    showSourceImage();
+
+    clone.className = "play_transition_clone";
+    document.body.appendChild(clone);
+    cloneRef.current = clone;
+    activeSourceImageRef.current = image;
+
+    gsap.set(clone, {
+      left: sourceRect.left,
+      top: sourceRect.top,
+      width: sourceRect.width,
+      height: sourceRect.height,
+    });
+    gsap.set(image, { visibility: "hidden" });
+
+    document.body.classList.add("play-viewer-locked", "play-viewer-zooming");
+    window.lenis?.stop?.();
+    setActiveIndex(index);
+    setViewerReady(false);
+    setViewerOpen(true);
+    swiperRef.current?.slideTo(index, 0);
+
+    timelineRef.current = gsap.timeline({
+      defaults: {
+        duration: PLAY_ZOOM_DURATION,
+        ease: "expo.inOut",
+      },
+      onComplete: () => {
+        document.body.classList.remove("play-viewer-zooming");
+        setViewerReady(true);
+        window.setTimeout(removeClone, 80);
+      },
+    });
+
+    timelineRef.current.to(clone, {
+      left: targetRect.left,
+      top: targetRect.top,
+      width: targetRect.width,
+      height: targetRect.height,
+    });
+  };
+
+  const closeViewer = () => {
+    const image = activeSourceImageRef.current;
+    const target = viewerFrameRef.current;
+    if (!image || !target) {
+      setViewerOpen(false);
+      setViewerReady(false);
+      document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
+      window.lenis?.start?.();
+      return;
+    }
+
+    const sourceRect = image.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const clone = ITEMS[activeIndex] ? document.createElement("img") : null;
+    if (!clone) return;
+
+    timelineRef.current?.kill();
+    removeClone();
+
+    clone.src = ITEMS[activeIndex].img;
+    clone.alt = "";
+    clone.className = "play_transition_clone";
+    document.body.appendChild(clone);
+    cloneRef.current = clone;
+
+    gsap.set(clone, {
+      left: targetRect.left,
+      top: targetRect.top,
+      width: targetRect.width,
+      height: targetRect.height,
+    });
+
+    setViewerOpen(false);
+    setViewerReady(false);
+    document.body.classList.add("play-viewer-zooming");
+
+    timelineRef.current = gsap.timeline({
+      defaults: {
+        duration: PLAY_ZOOM_DURATION,
+        ease: "expo.inOut",
+      },
+      onComplete: () => {
+        showSourceImage();
+        removeClone();
+        document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
+        window.lenis?.start?.();
+      },
+    });
+
+    timelineRef.current.to(clone, {
+      left: sourceRect.left,
+      top: sourceRect.top,
+      width: sourceRect.width,
+      height: sourceRect.height,
+    });
+  };
 
   return (
-    <ul className="mg_list mg_list_play init_ani">
-      {pageItems.map((item) => (
-        <li className={`mg_li sc_ani ${randomTypeClass()}`} key={item.id}>
-          <TransitionLink to={`/magazine/${CATEGORY}/post/${item.id}`} className="mg_a">
-            <img src={item.img} alt="Magazine Image" />
-          </TransitionLink>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="mg_list mg_list_play init_ani">
+        {pageItems.map((item, index) => (
+          <li className={`mg_li sc_ani ${getTypeClass(index)}`} key={item.id}>
+            <button type="button" className="mg_a" onClick={(event) => openViewer(event, index)}>
+              <img src={item.img} alt="Magazine Image" />
+            </button>
+          </li>
+        ))}
+      </ul>
+      {hasMoreItems && (
+        <div className="md_body_b b-t ani">
+          <button type="button" className="hover_btn" onClick={handleLoadMore}>
+            <span className="body-m fw-sb">LOAD MORE</span>
+          </button>
+        </div>
+      )}
+
+      <div className={`play_viewer ${viewerOpen ? "active" : ""} ${viewerReady ? "ready" : ""}`} aria-hidden={!viewerOpen}>
+        <button type="button" className="play_viewer_close" onClick={closeViewer} aria-label="Close">
+          <span></span>
+          <span></span>
+        </button>
+        <div className="play_viewer_bg" aria-hidden="true">
+          {/*<img src={ITEMS[activeIndex]?.img} alt="" />*/}
+        </div>
+        <div className="play_viewer_stage">
+          <Swiper
+            className="play_viewer_swiper"
+            slidesPerView="auto"
+            centeredSlides
+            initialSlide={activeIndex}
+            speed={800}
+            spaceBetween={120}
+            slideToClickedSlide
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+              swiper.slideTo(activeIndex, 0);
+            }}
+            onSlideChange={(swiper) => {
+              setActiveIndex(swiper.activeIndex);
+            }}
+          >
+            {ITEMS.map((item, index) => (
+              <SwiperSlide className={`play_viewer_slide ${getTypeClass(index)}`} key={item.id}>
+                <button type="button" className="play_viewer_slide_btn">
+                  <img src={item.img} alt={item.title} />
+                </button>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="play_viewer_frame" ref={viewerFrameRef} aria-hidden="true"></div>
+        </div>
+      </div>
+    </>
   );
 }
 

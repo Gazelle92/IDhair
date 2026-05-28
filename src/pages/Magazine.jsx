@@ -34,6 +34,7 @@ function Magazine() {
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
   const currentTabName = tabs.find((tab) => tab.path === currentCategory)?.name || tabs[0].name;
   const [displayTabName, setDisplayTabName] = useState(currentTabName);
+  const showPagination = currentCategory !== "id-play";
 
   const listComponents = {
     "our-picks": <OurPicks currentPage={currentPage} />,
@@ -169,7 +170,7 @@ function Magazine() {
       <section className="mg_body">
         {listComponents[currentCategory] || listComponents["our-picks"]}
 
-        <ul className="pagenation body-s txt-gray">
+        {showPagination && <ul className="pagenation body-s txt-gray">
           <li>
             <Link to={getListUrl(currentCategory, Math.max(currentPage - 1, 1))}>
               <img src="/img/arrow_pg_left.svg" alt="" />
@@ -192,7 +193,7 @@ function Magazine() {
               <img src="/img/arrow_pg_right.svg" alt="" />
             </Link>
           </li>
-        </ul>
+        </ul>}
 
       </section>
       

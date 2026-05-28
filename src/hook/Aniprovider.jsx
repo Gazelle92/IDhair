@@ -99,7 +99,7 @@ function AniProvider() {
     };
 
     const checkScAnimation = () => {
-      activeAnimation(scAniItems);
+      activeAnimation(Array.from(document.querySelectorAll(".sc_ani")));
     };
 
     const timer = setTimeout(() => {
