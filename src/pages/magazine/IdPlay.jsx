@@ -28,6 +28,8 @@ function IdPlay() {
   const viewerFrameRef = useRef(null);
   const cloneRef = useRef(null);
   const activeSourceImageRef = useRef(null);
+  const playItemRefs = useRef([]);
+  const viewerSlideRefs = useRef([]);
   const timelineRef = useRef(null);
   const swiperRef = useRef(null);
 
@@ -52,11 +54,9 @@ function IdPlay() {
 
   const openViewer = (event, index) => {
     const image = event.currentTarget.querySelector("img");
-    const target = viewerFrameRef.current;
-    if (!image || !target) return;
+    if (!image) return;
 
     const sourceRect = image.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
     const clone = image.cloneNode(true);
 
     timelineRef.current?.kill();
@@ -83,30 +83,43 @@ function IdPlay() {
     setViewerOpen(true);
     swiperRef.current?.slideTo(index, 0);
 
-    timelineRef.current = gsap.timeline({
-      defaults: {
-        duration: PLAY_ZOOM_DURATION,
-        ease: "expo.inOut",
-      },
-      onComplete: () => {
-        document.body.classList.remove("play-viewer-zooming");
-        setViewerReady(true);
-        window.setTimeout(removeClone, 80);
-      },
-    });
+    requestAnimationFrame(() => {
+      swiperRef.current?.slideTo(index, 0);
 
-    timelineRef.current.to(clone, {
-      left: targetRect.left,
-      top: targetRect.top,
-      width: targetRect.width,
-      height: targetRect.height,
+      requestAnimationFrame(() => {
+        const targetSlide = viewerSlideRefs.current[index];
+        const targetImage = targetSlide?.querySelector("img");
+        const targetRect = targetImage?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
+
+        if (!targetRect) return;
+
+        timelineRef.current = gsap.timeline({
+          defaults: {
+            duration: PLAY_ZOOM_DURATION,
+            ease: "expo.inOut",
+          },
+          onComplete: () => {
+            document.body.classList.remove("play-viewer-zooming");
+            setViewerReady(true);
+            window.setTimeout(removeClone, 80);
+          },
+        });
+
+        timelineRef.current.to(clone, {
+          left: targetRect.left,
+          top: targetRect.top,
+          width: targetRect.width,
+          height: targetRect.height,
+        });
+      });
     });
   };
 
   const closeViewer = () => {
-    const image = activeSourceImageRef.current;
     const target = viewerFrameRef.current;
-    if (!image || !target) {
+    const sourceImage = playItemRefs.current[activeIndex]?.querySelector("img") || activeSourceImageRef.current;
+
+    if (!sourceImage || !target) {
       setViewerOpen(false);
       setViewerReady(false);
       document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
@@ -114,7 +127,7 @@ function IdPlay() {
       return;
     }
 
-    const sourceRect = image.getBoundingClientRect();
+    const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
     const clone = ITEMS[activeIndex] ? document.createElement("img") : null;
     if (!clone) return;
@@ -146,6 +159,9 @@ function IdPlay() {
       },
       onComplete: () => {
         showSourceImage();
+        if (sourceImage !== activeSourceImageRef.current) {
+          gsap.set(sourceImage, { clearProps: "visibility" });
+        }
         removeClone();
         document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
         window.lenis?.start?.();
@@ -164,7 +180,13 @@ function IdPlay() {
     <>
       <ul className="mg_list mg_list_play init_ani">
         {pageItems.map((item, index) => (
-          <li className={`mg_li sc_ani ${getTypeClass(index)}`} key={item.id}>
+          <li
+            className={`mg_li sc_ani ${getTypeClass(index)}`}
+            key={item.id}
+            ref={(element) => {
+              playItemRefs.current[index] = element;
+            }}
+          >
             <button type="button" className="mg_a" onClick={(event) => openViewer(event, index)}>
               <img src={item.img} alt="Magazine Image" />
             </button>
@@ -205,7 +227,13 @@ function IdPlay() {
             }}
           >
             {ITEMS.map((item, index) => (
-              <SwiperSlide className={`play_viewer_slide ${getTypeClass(index)}`} key={item.id}>
+              <SwiperSlide
+                className={`play_viewer_slide ${getTypeClass(index)}`}
+                key={item.id}
+                ref={(element) => {
+                  viewerSlideRefs.current[index] = element;
+                }}
+              >
                 <button type="button" className="play_viewer_slide_btn">
                   <img src={item.img} alt={item.title} />
                 </button>
