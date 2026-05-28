@@ -6,11 +6,13 @@ export const magazinePageSettings = {
   "id-event": { columns: 4, totalItems: 31 },
   "id-family": { columns: 2, totalItems: 24 },
   "id-gallery": { columns: 3, totalItems: 35, firstPageItems: 7 },
-  "id-play": { columns: 2, totalItems: 24 },
+  "id-play": { columns: 2, totalItems: 24, itemsPerPage: 9 },
 };
 
 export const getItemsPerPage = (category) => {
   const setting = magazinePageSettings[category] || magazinePageSettings["our-picks"];
+  if (setting.itemsPerPage) return setting.itemsPerPage;
+
   return setting.columns * ROWS_PER_PAGE;
 };
 
