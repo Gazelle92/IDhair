@@ -60,7 +60,12 @@ function IdGallery({ currentPage = 1 }) {
   const isFirstPage = currentPage === 1;
   const featuredItem = isFirstPage ? pageItems[0] : null;
   const normalItems = isFirstPage ? pageItems.slice(1) : pageItems;
-  const viewerItem = normalItems[viewerCurrentIndex] || normalItems[0];
+  const viewerItems = pageItems;
+  const viewerItem = viewerItems[viewerCurrentIndex] || viewerItems[0];
+
+  const getGalleryDomItems = () => {
+    return [...document.querySelectorAll(".mg_list_gallery_featured .mg_li, .mg_list_gallery .mg_li")];
+  };
 
   const removeTransitionClone = () => {
     transitionCloneRef.current?.remove();
@@ -75,7 +80,7 @@ function IdGallery({ currentPage = 1 }) {
   };
 
   const resetGalleryZoom = (list) => {
-    const items = list ? [...list.querySelectorAll(".mg_li")] : [];
+    const items = getGalleryDomItems();
     const images = items.map((item) => item.querySelector("img")).filter(Boolean);
     const currentItem = zoomedItemRef.current;
     const currentImage = currentItem?.querySelector("img");
@@ -153,7 +158,7 @@ function IdGallery({ currentPage = 1 }) {
   };
 
   const clearGalleryZoom = (list) => {
-    const items = list ? [...list.querySelectorAll(".mg_li")] : [];
+    const items = getGalleryDomItems();
     const images = items.map((item) => item.querySelector("img")).filter(Boolean);
 
     zoomTimelineRef.current?.kill();
@@ -172,7 +177,7 @@ function IdGallery({ currentPage = 1 }) {
 
   const handleGalleryItemClick = (event) => {
     const item = event.currentTarget.closest(".mg_li");
-    const list = item?.closest(".mg_list_gallery");
+    const list = item?.closest(".mg_list");
     const image = item?.querySelector("img");
 
     if (!item || !list || !image) return;
@@ -197,8 +202,10 @@ function IdGallery({ currentPage = 1 }) {
 
     const rect = image.getBoundingClientRect();
     const clone = image.cloneNode(true);
-    const otherItems = [...list.querySelectorAll(".mg_li")].filter((li) => li !== item);
-    const currentIndex = [...list.querySelectorAll(".mg_li")].indexOf(item);
+    const galleryItems = getGalleryDomItems();
+    const otherItems = galleryItems.filter((li) => li !== item);
+    const itemIndex = Number(event.currentTarget.dataset.viewerIndex);
+    const currentIndex = Number.isNaN(itemIndex) ? galleryItems.indexOf(item) : itemIndex;
 
     removeTransitionClone();
     transitionCloneRef.current = clone;
@@ -279,7 +286,7 @@ function IdGallery({ currentPage = 1 }) {
 
     const currentScroll = typeof scrollValue === "number" ? scrollValue : scroller.scrollTop;
     const progress = currentScroll / Math.max(window.innerHeight, 1);
-    const nextIndex = Math.min(normalItems.length - 1, Math.max(0, Math.round(progress)));
+    const nextIndex = Math.min(viewerItems.length - 1, Math.max(0, Math.round(progress)));
     let clippingIndex = nextIndex;
 
     viewerLayerRefs.current.forEach((layer, index) => {
@@ -306,11 +313,17 @@ function IdGallery({ currentPage = 1 }) {
     const currentThumb = viewerThumbRefs.current[clippingIndex];
 
     if (thumbs && thumbsWrap && currentThumb) {
-      const thumbCenter = currentThumb.offsetTop + currentThumb.offsetHeight / 2;
-      const targetY = thumbsWrap.clientHeight / 2 - thumbCenter;
+      const isMobileThumbs = window.innerWidth <= 1024;
+      const thumbCenter = isMobileThumbs
+        ? currentThumb.offsetLeft + currentThumb.offsetWidth / 2
+        : currentThumb.offsetTop + currentThumb.offsetHeight / 2;
+      const target = isMobileThumbs
+        ? thumbsWrap.clientWidth / 2 - thumbCenter
+        : thumbsWrap.clientHeight / 2 - thumbCenter;
 
       gsap.to(thumbs, {
-        y: targetY,
+        x: isMobileThumbs ? target : 0,
+        y: isMobileThumbs ? 0 : target,
         duration: 0.45,
         ease: "power3.out",
         overwrite: true,
@@ -361,7 +374,7 @@ function IdGallery({ currentPage = 1 }) {
         viewerLenisRef.current = null;
       }
     };
-  }, [isGalleryViewerOpen, viewerStartIndex, normalItems.length]);
+  }, [isGalleryViewerOpen, viewerStartIndex, viewerItems.length]);
 
   useEffect(() => {
     return () => {
@@ -402,7 +415,7 @@ function IdGallery({ currentPage = 1 }) {
         {normalItems.map((item) => (
           <li className="mg_li ani" key={item.id}>
             <button type="button" className="mg_a" onClick={handleGalleryItemClick}>
-              <h1 className="body-m">{item.title}</h1>
+              <h1 className="body-m">{item.date} {item.title}</h1>
               <img src={item.img} alt="Magazine Image" />
             </button>
           </li>
@@ -423,17 +436,15 @@ function IdGallery({ currentPage = 1 }) {
             <div
               className="gallery_viewer_space"
               ref={viewerContentRef}
-              style={{ height: `${Math.max(normalItems.length, 1) * 100}vh` }}
+              style={{ height: `${Math.max(viewerItems.length, 1) * 100}vh` }}
             >
               <div className="gallery_viewer_stage">
                 <div className="gallery_viewer_left">
                   <button type="button" className="gallery_viewer_close body-m" onClick={closeGalleryViewer}>
                     Close
                   </button>
-                  <h2 className="gallery_viewer_title apprael" data-id={viewerItem?.id} data-category={viewerItem?.category}>
-                    {viewerItem?.date}
-                    <br />
-                    {viewerItem?.title}
+                  <h2 className="gallery_viewer_title apprael display-s" data-id={viewerItem?.id} data-category={viewerItem?.category}>
+                    {viewerItem?.date} {viewerItem?.title}
                   </h2>
                   <div className="gallery_viewer_hint body-m">
                     <span>Scroll</span>
@@ -446,7 +457,7 @@ function IdGallery({ currentPage = 1 }) {
                     {String(viewerCurrentIndex + 1).padStart(2, "0")}
                   </div>
                   <div className="gallery_viewer_image_stack" ref={viewerImageStackRef}>
-                    {normalItems.map((item, index) => (
+                    {viewerItems.map((item, index) => (
                       <div
                         className="gallery_viewer_layer"
                         key={item.id}
@@ -460,7 +471,7 @@ function IdGallery({ currentPage = 1 }) {
                     ))}
                   </div>
                   <div className="gallery_viewer_count gallery_viewer_count_end body-m">
-                    {String(normalItems.length).padStart(2, "0")}
+                    {String(viewerItems.length).padStart(2, "0")}
                   </div>
                 </div>
 
@@ -470,7 +481,7 @@ function IdGallery({ currentPage = 1 }) {
                   aria-label="Gallery thumbnails"
                 >
                   <div className="gallery_viewer_thumbs" ref={viewerThumbsRef}>
-                    {normalItems.map((item, index) => (
+                    {viewerItems.map((item, index) => (
                       <button
                         type="button"
                         className={`gallery_viewer_thumb ${viewerCurrentIndex === index ? "active" : ""}`}
