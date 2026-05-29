@@ -14,8 +14,12 @@ const LOAD_COUNT = 9;
 const PLAY_ZOOM_DURATION = 1.05;
 
 const getTypeClass = (index) => {
-  const types = ["type-a", "type-b", "type-c"];
+  const types = ["type-a", "type-b"];
   return types[index % types.length];
+};
+
+const getPlayAspect = (index) => {
+  return getTypeClass(index) === "type-b" ? "9 / 16" : "16 / 9";
 };
 
 function IdPlay() {
@@ -23,6 +27,7 @@ function IdPlay() {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerReady, setViewerReady] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeAspect, setActiveAspect] = useState(getPlayAspect(0));
   const pageItems = ITEMS.slice(0, visibleCount);
   const hasMoreItems = visibleCount < ITEMS.length;
   const viewerFrameRef = useRef(null);
@@ -79,6 +84,7 @@ function IdPlay() {
     document.body.classList.add("play-viewer-locked", "play-viewer-zooming");
     window.lenis?.stop?.();
     setActiveIndex(index);
+    setActiveAspect(getPlayAspect(index));
     setViewerReady(false);
     setViewerOpen(true);
     swiperRef.current?.slideTo(index, 0);
@@ -117,9 +123,12 @@ function IdPlay() {
 
   const closeViewer = () => {
     const target = viewerFrameRef.current;
-    const sourceImage = playItemRefs.current[activeIndex]?.querySelector("img") || activeSourceImageRef.current;
+    const originalSourceImage = activeSourceImageRef.current;
+    const currentSourceImage = playItemRefs.current[activeIndex]?.querySelector("img");
+    const sourceImage = currentSourceImage || originalSourceImage;
 
     if (!sourceImage || !target) {
+      showSourceImage();
       setViewerOpen(false);
       setViewerReady(false);
       document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
@@ -141,6 +150,12 @@ function IdPlay() {
     document.body.appendChild(clone);
     cloneRef.current = clone;
 
+    if (originalSourceImage && originalSourceImage !== sourceImage) {
+      gsap.set(originalSourceImage, { clearProps: "visibility" });
+    }
+
+    gsap.set(sourceImage, { visibility: "hidden" });
+
     gsap.set(clone, {
       left: targetRect.left,
       top: targetRect.top,
@@ -158,10 +173,8 @@ function IdPlay() {
         ease: "expo.inOut",
       },
       onComplete: () => {
-        showSourceImage();
-        if (sourceImage !== activeSourceImageRef.current) {
-          gsap.set(sourceImage, { clearProps: "visibility" });
-        }
+        gsap.set(sourceImage, { clearProps: "visibility" });
+        activeSourceImageRef.current = null;
         removeClone();
         document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
         window.lenis?.start?.();
@@ -224,6 +237,7 @@ function IdPlay() {
             }}
             onSlideChange={(swiper) => {
               setActiveIndex(swiper.activeIndex);
+              setActiveAspect(getPlayAspect(swiper.activeIndex));
             }}
           >
             {ITEMS.map((item, index) => (
@@ -240,7 +254,12 @@ function IdPlay() {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="play_viewer_frame" ref={viewerFrameRef} aria-hidden="true"></div>
+          <div
+            className="play_viewer_frame"
+            ref={viewerFrameRef}
+            aria-hidden="true"
+            style={{ "--play-viewer-aspect": activeAspect }}
+          ></div>
         </div>
       </div>
     </>

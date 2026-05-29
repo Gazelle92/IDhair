@@ -187,8 +187,9 @@
     .mg_list_play{
       .mg_li{padding:  1.2121vw; position: relative; font-size: 0; display: flex; align-items: center; justify-content: center;
         &.type-a img{aspect-ratio: 16 / 9;}
-        &.type-b img{aspect-ratio: 4 / 5}
-        &.type-c img{aspect-ratio: 1 / 1}
+        &.type-b{ padding: 1.2121vw 6.4242vw;
+          img{aspect-ratio: 9 / 16; }
+        }
         a{font-size: 0;}
         img{aspect-ratio: 330 / 412;}
         @media(min-width:1025px){
@@ -333,7 +334,7 @@ body.gallery-zooming {
     }
   }
 }
-
+.gallery-zooming.gallery-scroll-locked:not(.gallery-viewer-open){pointer-events: none;}
 body.gallery-scroll-locked,
 body.gallery-viewer-open,
 body.play-viewer-locked {
@@ -365,14 +366,15 @@ main.page_magazine::after{content: ''; width: 100%; height: 100%; position: fixe
   }
   .play_viewer_slide{width: var(--play-slide-width); aspect-ratio: 16 / 9; opacity: 0.68; transform: scale(0.9); transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
     &.type-a{aspect-ratio: 16 / 9;}
-    &.type-b{aspect-ratio: 4 / 5; width: calc(var(--play-slide-width) * 0.64);}
-    &.type-c{aspect-ratio: 1 / 1; width: calc(var(--play-slide-width) * 0.7);}
+    &.type-b{aspect-ratio: 9 / 16; width: calc(var(--play-slide-width) * 0.45); }
     &.swiper-slide-active{opacity: 1; transform: scale(1);}
   }
   .play_viewer_slide_btn{width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer;
     img{display: block; width: 100%; height: 100%; object-fit: cover;}
   }
-  .play_viewer_frame{position: absolute; left: 50%; top: 50%; width: var(--play-slide-width); aspect-ratio: 16 / 9; transform: translate(-50%, -50%); pointer-events: none;}
+  .play_viewer_frame{position: absolute; left: 50%; top: 50%; width: var(--play-slide-width); aspect-ratio: var(--play-viewer-aspect, 16 / 9); transform: translate(-50%, -50%); pointer-events: none;
+    &[style*="9 / 16"]{width: calc(var(--play-slide-width) * 0.45);}
+  }
   &:not(.ready){
     .play_viewer_swiper{opacity: 0;}
   }
@@ -392,6 +394,9 @@ main.page_magazine::after{content: ''; width: 100%; height: 100%; position: fixe
   .gallery_viewer_left{position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0;}
   .gallery_viewer_close{position: absolute; top: 2.424vw; left: 0; border: 0; padding: 0; background: transparent; color: currentColor; cursor: pointer;}
   /*.gallery_viewer_title{font-size: clamp(52px, 6.25vw, 108px); line-height: 0.98; font-weight: 200; letter-spacing: 0;}*/
+  .gallery_viewer_title{color: #00000000;
+    span{color: #000;}
+  }
   .gallery_viewer_hint{position: absolute; left: 0; bottom: 0; display: flex; align-items: center; gap: 0.727vw;}
   .gallery_viewer_visual{position: relative; display: flex; justify-content: center; align-items: center; min-width: 0;}
   .gallery_viewer_image_stack{position: relative; width: var(--gallery-viewer-image-width, min(37.5vw, 620px)); height: var(--gallery-viewer-image-height, min(78vh, 720px)); overflow: hidden; background-color: #ddd;}
@@ -404,7 +409,7 @@ main.page_magazine::after{content: ''; width: 100%; height: 100%; position: fixe
   .gallery_viewer_count_end{right: calc(50% - var(--gallery-viewer-image-width, min(37.5vw, 620px)) / 2 - 2.424vw); bottom: calc(50% - var(--gallery-viewer-image-height, min(78vh, 720px)) / 2);}
   .gallery_viewer_thumbs_wrap{height: 100%; overflow: hidden; padding-left:3.207vw;}
   .gallery_viewer_thumbs{display: flex; flex-direction: column; gap: 1.212vw; align-items: center; will-change: transform;}
-  .gallery_viewer_thumb{width: /*clamp(70px, 7.45vw, 86px)*/100%; aspect-ratio: 120 / 150; border: 0; padding: 0; background: transparent; cursor: pointer; opacity: 0.45; transition: opacity 0.25s ease, transform 0.25s ease;
+  .gallery_viewer_thumb{width: /*clamp(70px, 7.45vw, 86px)*/100%; aspect-ratio: 120 / 150; border: 0; padding: 0; background: transparent; cursor: pointer; opacity: 1; transition: opacity 0.25s ease, transform 0.25s ease;
     img{width: 100%; height: 100%; object-fit: cover; display: block;}
     &.active{opacity: 1;}
   }

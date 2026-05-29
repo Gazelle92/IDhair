@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Lenis from "lenis";
+import Splitting from "splitting";
 import { getPageItems, magazinePageSettings, galleryItems } from "./magazineConfig";
 
 const CATEGORY = "id-gallery";
@@ -44,6 +45,7 @@ function IdGallery({ currentPage = 1 }) {
   const [isGalleryViewerOpen, setIsGalleryViewerOpen] = useState(false);
   const [viewerStartIndex, setViewerStartIndex] = useState(0);
   const [viewerCurrentIndex, setViewerCurrentIndex] = useState(0);
+  const [activeViewerItems, setActiveViewerItems] = useState([]);
   const zoomedItemRef = useRef(null);
   const zoomTimelineRef = useRef(null);
   const transitionCloneRef = useRef(null);
@@ -55,12 +57,13 @@ function IdGallery({ currentPage = 1 }) {
   const viewerThumbsWrapRef = useRef(null);
   const viewerThumbsRef = useRef(null);
   const viewerFrameRef = useRef(null);
+  const viewerTitleRef = useRef(null);
   const viewerLenisRef = useRef(null);
   const pageItems = getPageItems(ITEMS, currentPage, CATEGORY);
   const isFirstPage = currentPage === 1;
   const featuredItem = isFirstPage ? pageItems[0] : null;
   const normalItems = isFirstPage ? pageItems.slice(1) : pageItems;
-  const viewerItems = pageItems;
+  const viewerItems = activeViewerItems;
   const viewerItem = viewerItems[viewerCurrentIndex] || viewerItems[0];
 
   const getGalleryDomItems = () => {
@@ -91,6 +94,7 @@ function IdGallery({ currentPage = 1 }) {
     zoomedItemRef.current = null;
     setIsGalleryViewerOpen(false);
     document.body.classList.remove("gallery-viewer-open");
+    setActiveViewerItems([]);
 
     if (currentImage) {
       const viewerTarget = getViewerImageStackTarget(viewerImageStackRef.current);
@@ -166,6 +170,7 @@ function IdGallery({ currentPage = 1 }) {
     showZoomedSourceImage();
     zoomedItemRef.current?.classList.remove("is_zoomed");
     zoomedItemRef.current = null;
+    setActiveViewerItems([]);
     document.body.classList.remove("gallery-zooming");
     document.body.classList.remove("gallery-scroll-locked");
     document.body.classList.remove("gallery-viewer-open");
@@ -204,8 +209,9 @@ function IdGallery({ currentPage = 1 }) {
     const clone = image.cloneNode(true);
     const galleryItems = getGalleryDomItems();
     const otherItems = galleryItems.filter((li) => li !== item);
-    const itemIndex = Number(event.currentTarget.dataset.viewerIndex);
-    const currentIndex = Number.isNaN(itemIndex) ? galleryItems.indexOf(item) : itemIndex;
+    const itemId = Number(event.currentTarget.dataset.itemId);
+    const selectedItem = pageItems.find((pageItem) => pageItem.id === itemId);
+    const selectedViewerItems = selectedItem?.images || [selectedItem].filter(Boolean);
 
     removeTransitionClone();
     transitionCloneRef.current = clone;
@@ -224,8 +230,9 @@ function IdGallery({ currentPage = 1 }) {
     zoomTimelineRef.current?.kill();
     zoomedItemRef.current = item;
     item.classList.add("is_zoomed");
-    setViewerStartIndex(Math.max(currentIndex, 0));
-    setViewerCurrentIndex(Math.max(currentIndex, 0));
+    setActiveViewerItems(selectedViewerItems);
+    setViewerStartIndex(0);
+    setViewerCurrentIndex(0);
     setIsGalleryViewerOpen(false);
 
     requestAnimationFrame(() => {
@@ -282,10 +289,11 @@ function IdGallery({ currentPage = 1 }) {
 
   const updateViewerClipPath = (scrollValue) => {
     const scroller = viewerScrollRef.current;
-    if (!scroller) return;
+    if (!scroller || viewerItems.length === 0) return;
 
     const currentScroll = typeof scrollValue === "number" ? scrollValue : scroller.scrollTop;
     const progress = currentScroll / Math.max(window.innerHeight, 1);
+    const clampedProgress = Math.min(viewerItems.length - 1, Math.max(0, progress));
     const nextIndex = Math.min(viewerItems.length - 1, Math.max(0, Math.round(progress)));
     let clippingIndex = nextIndex;
 
@@ -314,9 +322,18 @@ function IdGallery({ currentPage = 1 }) {
 
     if (thumbs && thumbsWrap && currentThumb) {
       const isMobileThumbs = window.innerWidth <= 1024;
-      const thumbCenter = isMobileThumbs
-        ? currentThumb.offsetLeft + currentThumb.offsetWidth / 2
-        : currentThumb.offsetTop + currentThumb.offsetHeight / 2;
+      const fromIndex = Math.floor(clampedProgress);
+      const toIndex = Math.min(viewerItems.length - 1, fromIndex + 1);
+      const progressBetweenThumbs = clampedProgress - fromIndex;
+      const fromThumb = viewerThumbRefs.current[fromIndex] || currentThumb;
+      const toThumb = viewerThumbRefs.current[toIndex] || fromThumb;
+      const fromCenter = isMobileThumbs
+        ? fromThumb.offsetLeft + fromThumb.offsetWidth / 2
+        : fromThumb.offsetTop + fromThumb.offsetHeight / 2;
+      const toCenter = isMobileThumbs
+        ? toThumb.offsetLeft + toThumb.offsetWidth / 2
+        : toThumb.offsetTop + toThumb.offsetHeight / 2;
+      const thumbCenter = fromCenter + (toCenter - fromCenter) * progressBetweenThumbs;
       const target = isMobileThumbs
         ? thumbsWrap.clientWidth / 2 - thumbCenter
         : thumbsWrap.clientHeight / 2 - thumbCenter;
@@ -324,8 +341,8 @@ function IdGallery({ currentPage = 1 }) {
       gsap.to(thumbs, {
         x: isMobileThumbs ? target : 0,
         y: isMobileThumbs ? 0 : target,
-        duration: 0.45,
-        ease: "power3.out",
+        duration: 0.18,
+        ease: "power2.out",
         overwrite: true,
       });
     }
@@ -377,6 +394,46 @@ function IdGallery({ currentPage = 1 }) {
   }, [isGalleryViewerOpen, viewerStartIndex, viewerItems.length]);
 
   useEffect(() => {
+    const title = viewerTitleRef.current;
+
+    if (!isGalleryViewerOpen || !title || !viewerItem) return undefined;
+
+    title.removeAttribute("data-effect17-ready");
+    Splitting({ target: title });
+
+    const chars = title.querySelectorAll(".char");
+
+    chars.forEach((char) => {
+      gsap.set(char.parentNode, { perspective: 1000 });
+    });
+
+    gsap.fromTo(
+      chars,
+      {
+        opacity: 0,
+        rotateX: () => gsap.utils.random(-120, 120),
+        z: () => gsap.utils.random(-200, 200),
+        willChange: "opacity, transform",
+      },
+      {
+        opacity: 1,
+        rotateX: 0,
+        z: 0,
+        duration: 2.4,
+        ease: "power3.out",
+        stagger: 0.02,
+      }
+    );
+
+    title.setAttribute("data-effect17-ready", "true");
+
+    return () => {
+      gsap.killTweensOf(chars);
+      title.removeAttribute("data-effect17-ready");
+    };
+  }, [isGalleryViewerOpen]);
+
+  useEffect(() => {
     return () => {
       if (viewerFrameRef.current) {
         cancelAnimationFrame(viewerFrameRef.current);
@@ -414,7 +471,12 @@ function IdGallery({ currentPage = 1 }) {
       <ul className="mg_list mg_list_gallery init_ani">
         {normalItems.map((item) => (
           <li className="mg_li ani" key={item.id}>
-            <button type="button" className="mg_a" onClick={handleGalleryItemClick}>
+              <button
+                type="button"
+                className="mg_a"
+                data-item-id={item.id}
+                onClick={handleGalleryItemClick}
+              >
               <h1 className="body-m">{item.date} {item.title}</h1>
               <img src={item.img} alt="Magazine Image" />
             </button>
@@ -443,7 +505,15 @@ function IdGallery({ currentPage = 1 }) {
                   <button type="button" className="gallery_viewer_close body-m" onClick={closeGalleryViewer}>
                     Close
                   </button>
-                  <h2 className="gallery_viewer_title apprael display-s" data-id={viewerItem?.id} data-category={viewerItem?.category}>
+                  <h2
+                    className="gallery_viewer_title apprael display-s text-effect apprael_all"
+                    data-id={viewerItem?.id}
+                    data-category={viewerItem?.category}
+                    data-splitting
+                    data-effect17
+                    key={activeViewerItems[0]?.parentId || activeViewerItems[0]?.id || "gallery-viewer-title"}
+                    ref={viewerTitleRef}
+                  >
                     {viewerItem?.date} {viewerItem?.title}
                   </h2>
                   <div className="gallery_viewer_hint body-m">
