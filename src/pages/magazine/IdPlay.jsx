@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -82,40 +83,50 @@ function IdPlay() {
     gsap.set(image, { visibility: "hidden" });
 
     document.body.classList.add("play-viewer-locked", "play-viewer-zooming");
+    document.body.classList.add("play-viewer-animating");
     window.lenis?.stop?.();
-    setActiveIndex(index);
-    setActiveAspect(getPlayAspect(index));
-    setViewerReady(false);
-    setViewerOpen(true);
-    swiperRef.current?.slideTo(index, 0);
+    flushSync(() => {
+      setActiveIndex(index);
+      setActiveAspect(getPlayAspect(index));
+      setViewerReady(false);
+      setViewerOpen(true);
+    });
+    swiperRef.current?.update();
+    swiperRef.current?.slideTo(index, 0, false);
 
     requestAnimationFrame(() => {
-      swiperRef.current?.slideTo(index, 0);
+      swiperRef.current?.update();
+      swiperRef.current?.slideTo(index, 0, false);
 
       requestAnimationFrame(() => {
-        const targetSlide = viewerSlideRefs.current[index];
-        const targetImage = targetSlide?.querySelector("img");
-        const targetRect = targetImage?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
+        swiperRef.current?.update();
+        swiperRef.current?.slideTo(index, 0, false);
 
-        if (!targetRect) return;
+        requestAnimationFrame(() => {
+          const targetSlide = viewerSlideRefs.current[index];
+          const targetRect = targetSlide?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
 
-        timelineRef.current = gsap.timeline({
-          defaults: {
-            duration: PLAY_ZOOM_DURATION,
-            ease: "expo.inOut",
-          },
+          if (!targetRect) return;
+
+          timelineRef.current = gsap.timeline({
+            defaults: {
+              duration: PLAY_ZOOM_DURATION,
+              ease: "expo.inOut",
+            },
           onComplete: () => {
             document.body.classList.remove("play-viewer-zooming");
+            document.body.classList.remove("play-viewer-animating");
             setViewerReady(true);
             window.setTimeout(removeClone, 80);
           },
-        });
+          });
 
-        timelineRef.current.to(clone, {
-          left: targetRect.left,
-          top: targetRect.top,
-          width: targetRect.width,
-          height: targetRect.height,
+          timelineRef.current.to(clone, {
+            left: targetRect.left,
+            top: targetRect.top,
+            width: targetRect.width,
+            height: targetRect.height,
+          });
         });
       });
     });
@@ -131,7 +142,7 @@ function IdPlay() {
       showSourceImage();
       setViewerOpen(false);
       setViewerReady(false);
-      document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
+      document.body.classList.remove("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
       window.lenis?.start?.();
       return;
     }
@@ -177,6 +188,7 @@ function IdPlay() {
         activeSourceImageRef.current = null;
         removeClone();
         document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
+        document.body.classList.remove("play-viewer-animating");
         window.lenis?.start?.();
       },
     });
@@ -191,10 +203,10 @@ function IdPlay() {
 
   return (
     <>
-      <ul className="mg_list mg_list_play init_ani">
+      <ul className="mg_list mg_list_play b-t init_ani">
         {pageItems.map((item, index) => (
           <li
-            className={`mg_li sc_ani ${getTypeClass(index)}`}
+            className={`mg_li ani ${getTypeClass(index)}`}
             key={item.id}
             ref={(element) => {
               playItemRefs.current[index] = element;
@@ -227,9 +239,20 @@ function IdPlay() {
             className="play_viewer_swiper"
             slidesPerView="auto"
             centeredSlides
+            direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
             initialSlide={activeIndex}
             speed={800}
             spaceBetween={120}
+            breakpoints={{
+              0: {
+                direction: "vertical",
+                
+              },
+              1025: {
+                direction: "horizontal",
+                spaceBetween: 120,
+              },
+            }}
             slideToClickedSlide
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
