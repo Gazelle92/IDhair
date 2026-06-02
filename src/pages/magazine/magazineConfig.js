@@ -98,13 +98,26 @@ export const makeMagazineItems = (category, title, totalItems) =>
   Array.from({ length: totalItems }, (_, index) => {
     const id = index + 1;
     const year = 2026 - index;
+    const itemTitle = galleryTitles[index % galleryTitles.length];
 
     return {
       id,
       category,
       date: `${year}`,
-      title: galleryTitles[index % galleryTitles.length],
+      title: itemTitle,
       img: `/img/mg_list_ga_${(index % 5) + 1}.jpg`,
+      images: Array.from({ length: 10 }, (_, imageIndex) => {
+        const imageId = imageIndex + 1;
+
+        return {
+          id: `${id}-${imageId}`,
+          parentId: id,
+          category,
+          date: `${year}`,
+          title: `${itemTitle}`,
+          img: `/img/mg_list_ga_${((index + imageIndex) % 5) + 1}.jpg`,
+        };
+      }),
     };
   });
 
