@@ -253,7 +253,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
   }
 
   @for $i from 1 through 30 {
-    .b-delay-#{$i}::before{transition-delay: $i * 0.0s;}
+    .b-delay-#{$i}::before{transition-delay: $i * 0.1s;}
   }
   
 }
@@ -327,17 +327,17 @@ button{background-color: unset; border: unset; cursor: pointer;}
   .fadeY-#{$i}{display:block; opacity:0; transform:translateY(130%); 
     
   }
-  .ani.active .fadeY-#{$i}{transform:translateY(0); opacity:1; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.0}s;
+  .ani.active .fadeY-#{$i}{transform:translateY(0); opacity:1; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s;
     &.fast{transition:all 0.6s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.05}s;}
   }
-  .fadeX-#{$i}{ transition: all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.0}s; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); }
+  .fadeX-#{$i}{ transition: all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); }
   .ani.active {
     .fadeX-#{$i}{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);}
   }
   .ani.active.fadeX-#{$i}{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);}
 }
 @for $i from 1 through 30 {
-  .fade-#{$i}{display:block; opacity:0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.0}s;}
+  .fade-#{$i}{display:block; opacity:0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay:#{($i - 1) * 0.1}s;}
   .ani.active {
     
     .fade-#{$i}{opacity:1;}
