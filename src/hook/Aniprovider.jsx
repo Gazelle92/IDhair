@@ -95,7 +95,7 @@ function AniProvider() {
 
     const checkAniAnimation = () => {
       if (!canStart) return;
-      activeAnimation(aniItems);
+      activeAnimation(Array.from(document.querySelectorAll(".ani")));
     };
 
     const checkScAnimation = () => {

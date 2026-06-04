@@ -219,7 +219,7 @@ function IdPlay() {
         ))}
       </ul>
       {hasMoreItems && (
-        <div className="md_body_b b-t ani">
+        <div className="md_body_b b-t b-c-gray ani">
           <button type="button" className="hover_btn" onClick={handleLoadMore}>
             <span className="body-m fw-sb">LOAD MORE</span>
           </button>

@@ -61,10 +61,11 @@
         &.mg_list_play{grid-template-columns: repeat(3, 1fr); grid-column-gap: 0; grid-row-gap: 0; padding: 2.424vw 0;}
 
       }
-      &::before{content: ""; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition: all 1s cubic-bezier(0, 0, 0.43, 1.06); transition-delay: 0.6s;}
+      &::before{content: ""; display: block; width: 0; height: 1px; background-color: #D2D1D3; position: absolute; left: 0; top: 0; transition: all 1s cubic-bezier(0, 0, 0.43, 1.06); transition-delay: 0.6s;}
       &.active::before{width: 100%;}
       
       .mg_li{
+        &::before{background-color: #D2D1D3;}
         .mg_a{width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; display: block; cursor: pointer;}
         h1{padding: 0.485vw 0 1.212vw; font-weight: 600;}
         img{aspect-ratio: 16 / 9; width: 100%; object-fit: cover;}
@@ -81,9 +82,9 @@
     .mg_list + .mg_list.active::before{content: none;}
     .mg_list_gallery_featured + .mg_list_gallery.active::before{content: "";}
     .mg_list_new_post{
-      &::before{content: ''; display: block; width: 0; height: 1px; background-color: #000; position: absolute; left: 0; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay: 0.6s;}
+      &::before{content: ''; display: block; width: 0; height: 1px; background-color: #D2D1D3; position: absolute; left: 0; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06); transition-delay: 0.6s;}
       @media(min-width:1025px){
-        &::after{content: ''; display: block; height: 0; width: 1px; background-color: #000; position: absolute; left: 50%; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06);transition-delay: 1.0s;}
+        &::after{content: ''; display: block; height: 0; width: 1px; background-color: #D2D1D3; position: absolute; left: 50%; top: 0; transition:all 1s cubic-bezier(0,0,.43,1.06);transition-delay: 1.0s;}
       }
       &.active{
         &::before{width: 100%;}
@@ -93,7 +94,7 @@
         &:nth-child(odd){padding-left: 0;}
         &:nth-child(even){padding-right: 0;}
         @media(min-width:1025px){
-          &:nth-child(2n + 1)::before{content: ''; display: block; position: absolute; bottom: 0; left: 0;height: 1px; background-color: #000; width: 0; transition: ease 1.0s width; transition-delay:0.8s;}
+          &:nth-child(2n + 1)::before{content: ''; display: block; position: absolute; bottom: 0; left: 0;height: 1px;  width: 0; transition: ease 1.0s width; transition-delay:0.8s;}
           &.active:nth-child(2n + 1)::before{width: calc(100vw - 7.273vw);}
           @for $i from 1 through 2 {
             &:nth-child(2n + #{$i}){
@@ -109,7 +110,7 @@
       .mg_li{padding: 0 0; position: relative;
         
         @media(min-width:1025px){
-          &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; background-color: #000; width: 0; transition: ease-out 1.0s width; transition-delay:0.6s;}
+          &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; width: 0; transition: ease-out 1.0s width; transition-delay:0.6s;}
           &.active:nth-child(3n + 1)::before{width: calc(100vw - 7.273vw);}
           @for $i from 1 through 3 {
             &:nth-child(3n + #{$i}){
@@ -126,7 +127,7 @@
       .mg_li{padding: 0 0; position: relative;
         img{aspect-ratio: 330 / 412;}
         @media(min-width:1025px){
-          &:nth-child(4n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; background-color: #000; width: 0; transition: ease-out 1.0s width; transition-delay:0.4s;}
+          &:nth-child(4n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; width: 0; transition: ease-out 1.0s width; transition-delay:0.4s;}
           &.active:nth-child(4n + 1)::before{width: calc(100vw - 7.273vw);}
           @for $i from 1 through 4 {
             &:nth-child(4n + #{$i}){
@@ -141,7 +142,7 @@
     .mg_list_family{overflow: hidden;
       .mg_li{position: relative;
         @media(min-width:1025px){
-          &:nth-child(2n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; background-color: #000; width: 0; transition: ease 1.0s width; transition-delay:0.4s;}
+          &:nth-child(2n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; width: 0; transition: ease 1.0s width; transition-delay:0.4s;}
           &.active:nth-child(2n + 1)::before{width: calc(100vw - 7.273vw);}
           @for $i from 1 through 2 {
             &:nth-child(2n + #{$i}){
@@ -158,7 +159,8 @@
       .mg_li{padding: 0; position: relative; 
         .mg_a{display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}
         h1{position: absolute; left: 50%; transform: translateX(-50%); bottom: 1.212vw; z-index: 1; color: #fff; line-height: 1.1; font-weight: 300; padding: 0; letter-spacing: 0; z-index: 3; padding-top: 30vh; width: 100%; text-align: center;}
-        .bg_blur{width: 100%; height: 100%; display: block; left: 0; top: 0; position: absolute; backdrop-filter: blur(6.061vw); background-color: rgb(0 0 0 / 10%); z-index: 1;}
+        .bg_blur{width: 100%; height: 100%; display: block; left: 0; top: 0; opacity: 0; position: absolute; backdrop-filter: blur(6.061vw); background-color: rgb(0 0 0 / 10%); z-index: 1;}
+        .bg{transition-delay: 0.8s;}
         img{width: 100%; height: 100%; object-fit: cover;
           &.bg{aspect-ratio: 1440 / 910; z-index: 00;}
           &.thumb{aspect-ratio: 600 / 750; position: absolute;/* left: 50%; top: 50%; transform: translate(-50%, -50%); */height: calc(100% - 9.697vw); width: unset; z-index: 2;}
@@ -171,7 +173,7 @@
         img{position: relative; z-index: 2; transform-origin: 50% 50%;}
         img{aspect-ratio: 453 / 566;}
         @media(min-width:1025px){
-          &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; background-color: #000; width: 0; transition: ease-out 1.0s width; transition-delay:0.6s;}
+          &:nth-child(3n + 1)::before{content: ''; display: block; position: absolute; bottom: -2.424vw; left: 0;height: 1px; width: 0; transition: ease-out 1.0s width; transition-delay:0.6s;}
           &.active:nth-child(3n + 1)::before{width: calc(100vw - 7.273vw);}
           @for $i from 1 through 3 {
             &:nth-child(3n + #{$i}){
