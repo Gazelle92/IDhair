@@ -75,7 +75,7 @@ function Footer() {
                 <a target="_blank" href="https://www.youtube.com/@idhairbrand"><img src="/img/icon_youtube.svg"/></a>
             </div>
 
-            <ol className="body-s">
+            <ol className="body-m">
               <li>
                 <div><h4>Email</h4></div>
                 <div><span>idhairkorea@gmail.com</span></div>
@@ -91,7 +91,7 @@ function Footer() {
                 <div><span>서울특별시 마포구 연희로 11 한국특허정보원 6층, (주)아이디뷰티</span></div>
               </li>
 
-              <small className="body-s"><div>idHAIR © 2026</div></small>
+              <small className="body-m"><div>idHAIR © 2026</div></small>
             </ol>
         </div>
     </footer>
