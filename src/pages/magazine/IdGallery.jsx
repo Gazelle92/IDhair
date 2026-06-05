@@ -59,6 +59,8 @@ function IdGallery({ currentPage = 1 }) {
   const viewerFrameRef = useRef(null);
   const viewerTitleRef = useRef(null);
   const viewerLenisRef = useRef(null);
+  const backdropTimerRef = useRef(null);
+  const controlsTimerRef = useRef(null);
   const pageItems = getPageItems(ITEMS, currentPage, CATEGORY);
   const isFirstPage = currentPage === 1;
   const featuredItem = isFirstPage ? pageItems[0] : null;
@@ -79,6 +81,30 @@ function IdGallery({ currentPage = 1 }) {
     transitionCloneRef.current = null;
   };
 
+  const clearGalleryBackdropTimer = () => {
+    if (!backdropTimerRef.current) return;
+
+    window.clearTimeout(backdropTimerRef.current);
+    backdropTimerRef.current = null;
+  };
+
+  const clearGalleryControlsTimer = () => {
+    if (!controlsTimerRef.current) return;
+
+    window.clearTimeout(controlsTimerRef.current);
+    controlsTimerRef.current = null;
+  };
+
+  const hideGalleryBackdrop = () => {
+    clearGalleryBackdropTimer();
+    document.body.classList.remove("gallery-backdrop-active");
+  };
+
+  const hideGalleryControls = () => {
+    clearGalleryControlsTimer();
+    document.body.classList.remove("gallery-controls-active");
+  };
+
   const showZoomedSourceImage = () => {
     const sourceImage = getGalleryZoomImage(zoomedItemRef.current);
     if (sourceImage) {
@@ -94,6 +120,8 @@ function IdGallery({ currentPage = 1 }) {
 
     zoomTimelineRef.current?.kill();
     removeTransitionClone();
+    hideGalleryBackdrop();
+    hideGalleryControls();
     zoomedItemRef.current?.classList.remove("is_zoomed");
     zoomedItemRef.current = null;
     setIsGalleryViewerOpen(false);
@@ -171,6 +199,8 @@ function IdGallery({ currentPage = 1 }) {
 
     zoomTimelineRef.current?.kill();
     removeTransitionClone();
+    hideGalleryBackdrop();
+    hideGalleryControls();
     showZoomedSourceImage();
     zoomedItemRef.current?.classList.remove("is_zoomed");
     zoomedItemRef.current = null;
@@ -207,6 +237,11 @@ function IdGallery({ currentPage = 1 }) {
 
     document.body.classList.add("gallery-zooming");
     document.body.classList.add("gallery-scroll-locked");
+    clearGalleryBackdropTimer();
+    backdropTimerRef.current = window.setTimeout(() => {
+      document.body.classList.add("gallery-backdrop-active");
+      backdropTimerRef.current = null;
+    }, 500);
     window.lenis?.stop?.();
 
     const rect = image.getBoundingClientRect();
@@ -256,6 +291,11 @@ function IdGallery({ currentPage = 1 }) {
         onComplete: () => {
           document.body.classList.add("gallery-viewer-open");
           setIsGalleryViewerOpen(true);
+          clearGalleryControlsTimer();
+          controlsTimerRef.current = window.setTimeout(() => {
+            document.body.classList.add("gallery-controls-active");
+            controlsTimerRef.current = null;
+          }, 120);
           window.setTimeout(removeTransitionClone, 80);
         },
       });
@@ -283,6 +323,8 @@ function IdGallery({ currentPage = 1 }) {
 
     setIsGalleryViewerOpen(false);
     document.body.classList.remove("gallery-viewer-open");
+    hideGalleryBackdrop();
+    hideGalleryControls();
     resetGalleryZoom(list);
   };
 
@@ -449,6 +491,8 @@ function IdGallery({ currentPage = 1 }) {
       viewerLenisRef.current?.destroy();
       zoomTimelineRef.current?.kill();
       removeTransitionClone();
+      hideGalleryBackdrop();
+      hideGalleryControls();
       document.body.classList.remove("gallery-zooming");
       document.body.classList.remove("gallery-scroll-locked");
       document.body.classList.remove("gallery-viewer-open");
