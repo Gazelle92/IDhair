@@ -244,13 +244,31 @@ button{background-color: unset; border: unset; cursor: pointer;}
   &.b-4::before{height: 4px;}
   &.b-5::before{height: 5px;}
 }
-.b-t.b-c-gray::before, .b-b.b-c-gray::before{background-color: #D2D1D3;}
+.b-l{position: relative;
+  &::before{content: ""; position: absolute; left: 0; top: 0; width: 1px; height: 100%; background-color: #000;}
+  &.b-2::before{width: 2px;}
+  &.b-3::before{width: 3px;}
+  &.b-4::before{width: 4px;}
+  &.b-5::before{width: 5px;}
+}
+.b-r{position: relative;
+  &::before{content: ""; position: absolute; right: 0; top: 0; width: 1px; height: 100%; background-color: #000;}
+  &.b-2::before{width: 2px;}
+  &.b-3::before{width: 3px;}
+  &.b-4::before{width: 4px;}
+  &.b-5::before{width: 5px;}
+}
+.b-t.b-c-gray::before, .b-b.b-c-gray::before, .b-l.b-c-gray::before, .b-r.b-c-gray::before{background-color: #D2D1D3;}
 .ani{
   .b-t::before, .b-b::before{width: 0; transition: ease 0.8s width;}
   &.b-t::before, &.b-b::before{width: 0; transition: ease 0.8s width;}
+  .b-l::before, .b-r::before{height: 0; transition: ease 0.8s height;}
+  &.b-l::before, &.b-r::before{height: 0; transition: ease 0.8s height;}
   &.active{
     .b-t::before, .b-b::before{width: 100%;}
     &.b-t::before, &.b-b::before{width: 100%;}
+    .b-l::before, .b-r::before{height: 100%;}
+    &.b-l::before, &.b-r::before{height: 100%;}
   }
 
   @for $i from 1 through 30 {

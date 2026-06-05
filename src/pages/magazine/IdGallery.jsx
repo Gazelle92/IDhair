@@ -70,13 +70,17 @@ function IdGallery({ currentPage = 1 }) {
     return [...document.querySelectorAll(".mg_list_gallery_featured .mg_li, .mg_list_gallery .mg_li")];
   };
 
+  const getGalleryZoomImage = (item) => {
+    return item?.querySelector(".thumb") || item?.querySelector("img");
+  };
+
   const removeTransitionClone = () => {
     transitionCloneRef.current?.remove();
     transitionCloneRef.current = null;
   };
 
   const showZoomedSourceImage = () => {
-    const sourceImage = zoomedItemRef.current?.querySelector("img");
+    const sourceImage = getGalleryZoomImage(zoomedItemRef.current);
     if (sourceImage) {
       gsap.set(sourceImage, { clearProps: "visibility" });
     }
@@ -84,9 +88,9 @@ function IdGallery({ currentPage = 1 }) {
 
   const resetGalleryZoom = (list) => {
     const items = getGalleryDomItems();
-    const images = items.map((item) => item.querySelector("img")).filter(Boolean);
+    const images = items.map(getGalleryZoomImage).filter(Boolean);
     const currentItem = zoomedItemRef.current;
-    const currentImage = currentItem?.querySelector("img");
+    const currentImage = getGalleryZoomImage(currentItem);
 
     zoomTimelineRef.current?.kill();
     removeTransitionClone();
@@ -163,7 +167,7 @@ function IdGallery({ currentPage = 1 }) {
 
   const clearGalleryZoom = (list) => {
     const items = getGalleryDomItems();
-    const images = items.map((item) => item.querySelector("img")).filter(Boolean);
+    const images = items.map(getGalleryZoomImage).filter(Boolean);
 
     zoomTimelineRef.current?.kill();
     removeTransitionClone();
@@ -183,7 +187,7 @@ function IdGallery({ currentPage = 1 }) {
   const handleGalleryItemClick = (event) => {
     const item = event.currentTarget.closest(".mg_li");
     const list = item?.closest(".mg_list");
-    const image = item?.querySelector("img");
+    const image = getGalleryZoomImage(item);
 
     if (!item || !list || !image) return;
 
@@ -211,7 +215,11 @@ function IdGallery({ currentPage = 1 }) {
     const otherItems = galleryItems.filter((li) => li !== item);
     const itemId = Number(event.currentTarget.dataset.itemId);
     const selectedItem = pageItems.find((pageItem) => pageItem.id === itemId);
-    const selectedViewerItems = selectedItem?.images || [selectedItem].filter(Boolean);
+    const selectedViewerItems = pageItems;
+    const selectedViewerIndex = Math.max(
+      0,
+      selectedViewerItems.findIndex((pageItem) => pageItem.id === selectedItem?.id)
+    );
 
     removeTransitionClone();
     transitionCloneRef.current = clone;
@@ -231,8 +239,8 @@ function IdGallery({ currentPage = 1 }) {
     zoomedItemRef.current = item;
     item.classList.add("is_zoomed");
     setActiveViewerItems(selectedViewerItems);
-    setViewerStartIndex(0);
-    setViewerCurrentIndex(0);
+    setViewerStartIndex(selectedViewerIndex);
+    setViewerCurrentIndex(selectedViewerIndex);
     setIsGalleryViewerOpen(false);
 
     requestAnimationFrame(() => {
@@ -341,7 +349,7 @@ function IdGallery({ currentPage = 1 }) {
       gsap.to(thumbs, {
         x: isMobileThumbs ? target : 0,
         y: isMobileThumbs ? 0 : target,
-        duration: 0.18,
+        duration: 0.0,
         ease: "power2.out",
         overwrite: true,
       });
@@ -455,7 +463,12 @@ function IdGallery({ currentPage = 1 }) {
       {featuredItem && (
         <ul className="mg_list mg_list_gallery_featured">
           <li className="mg_li ani" key={featuredItem.id}>
-            <div className="mg_a">
+            <button
+              type="button"
+              className="mg_a"
+              data-item-id={featuredItem.id}
+              onClick={handleGalleryItemClick}
+            >
               <h1 className="display-m text-effect apprael_all ani" data-splitting data-effect17>
                 <span>{featuredItem.date} </span>
                 <span>{featuredItem.title}</span>
@@ -463,7 +476,7 @@ function IdGallery({ currentPage = 1 }) {
               <img className="bg" src={featuredItem.img} alt="Magazine Image" />
               <div className="bg_blur"></div>
               <img className="thumb" src={featuredItem.img} alt="Magazine Image" />
-            </div>
+            </button>
           </li>
         </ul>
       )}

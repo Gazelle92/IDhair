@@ -12,6 +12,7 @@ import IdGallery from "./magazine/IdGallery";
 import IdPlay from "./magazine/IdPlay";
 import { getTotalPages } from "./magazine/magazineConfig";
 import "../styles/magazine.scss";
+import "../styles/ourpicks.scss";
 
 function Magazine() {
   const tabs = [
