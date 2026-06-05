@@ -388,7 +388,7 @@ main.page_magazine::after{content: ''; width: 100%; height: 100%; position: fixe
   .play_viewer_swiper{width: 100%; overflow: visible; opacity: 1; transition: opacity 0.12s ease;
     .swiper-wrapper{align-items: center;}
   }
-  .play_viewer_slide{width: var(--play-slide-width); aspect-ratio: 16 / 9;  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease; max-height:calc(100vh - 220px)
+  .play_viewer_slide{width: var(--play-slide-width); aspect-ratio: 16 / 9;  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
     &.type-a{aspect-ratio: 16 / 9;}
     &.type-b{aspect-ratio: 9 / 16; width: calc(var(--play-slide-width) * 0.45); }
     &.swiper-slide-active{}
@@ -487,3 +487,6 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-track {
     background: rgba(220, 20, 60, .1);  /*스크롤바 뒷 배경 색상*/
 }
+
+
+.play_viewer_slide{max-height: calc(100vh - 160px);}
