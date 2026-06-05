@@ -36,8 +36,8 @@ function IdNews({ currentPage = 1 }) {
         {normalItems.map((item) => (
           <li className="mg_li ani" key={item.id}>
             <TransitionLink to={`/magazine/${CATEGORY}/post/${item.id}`} className="mg_a">
-              <span className="date txt-gray caption-m">{item.date}</span>
-              <h1 className="body-m">{item.title}</h1>
+              <span className="date txt-gray body-m">{item.date}</span>
+              <h1 className="body-l">{item.title}</h1>
               <img src={item.img} alt="Magazine Image" />
             </TransitionLink>
           </li>

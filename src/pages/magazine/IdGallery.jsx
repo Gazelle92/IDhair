@@ -490,7 +490,7 @@ function IdGallery({ currentPage = 1 }) {
                 data-item-id={item.id}
                 onClick={handleGalleryItemClick}
               >
-              <h1 className="body-m">{item.date} {item.title}</h1>
+              <h1 className="body-l">{item.date} {item.title}</h1>
               <img src={item.img} alt="Magazine Image" />
             </button>
           </li>
