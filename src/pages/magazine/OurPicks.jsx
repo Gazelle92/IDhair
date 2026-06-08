@@ -205,7 +205,7 @@ function OurPicks() {
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id GALLERY</h2>
-            <p className="body-s txt-gray ">아이디헤어의 시즌 컬렉션과 비주얼 아카이브를 담은 갤러리 콘텐츠</p>
+            <p className="body-s txt-gray ">시즌별 헤어 룩북을 통해 아이디헤어의 스타일과 방향성을 보여주는 갤러리</p>
           </div>
           <TransitionLink to="/magazine/id-gallery" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
@@ -213,7 +213,7 @@ function OurPicks() {
           </TransitionLink>
         </div>
 
-        <div className="ourpicks_gallery_visual ani b-t b-2 b-delay-4">
+        <div className="ourpicks_gallery_visual ani b-c-gray b-t b-2 b-delay-4">
           <TransitionLink
             to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[1]?.id}`}
             className="ourpicks_gallery_card ourpicks_gallery_card_main ani"
@@ -226,7 +226,7 @@ function OurPicks() {
               <span>{GALLERY_ITEMS[0]?.date} S/S</span>
               <span>Collection</span>
             </h3>
-            <p className="caption-m">- 시즌룩을 아이디만의 무드로 소개합니다 -</p>
+            <p className="caption-m">“ 나다움을 마주하는 계절의 시작 “</p>
           </div>
 
           <TransitionLink
@@ -251,7 +251,7 @@ function OurPicks() {
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id PLAY</h2>
-            <p className="body-s txt-gray ">아이디헤어의 영상과 플레이 콘텐츠를 모아 보여주는 공간</p>
+            <p className="body-s txt-gray ">인스타그램과 유튜브 등 다양한 SNS 콘텐츠를 한곳에서 보여주는 id PLAY</p>
           </div>
           <TransitionLink to="/magazine/id-play" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
