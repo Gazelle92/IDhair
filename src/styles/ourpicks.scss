@@ -16,9 +16,19 @@ body.ourpicks-gallery-active .page_magazine {
   }
 }
 
+.page_magazine.our-picks{
+  .mg_body{padding-top: 0; padding-bottom: 0;
+    .pagenation{display: none;}
+  }
+}
 .ourpicks_page {
   .ourpicks_news {
-    padding: 0 0 7.273vw;
+    .mg_list{
+      &.mg_list_family::before{height: 2px; background-color: #000;}
+      &.mg_list_event::before{height: 2px; background-color: #000;}
+    } 
+    &:not(:last-child){padding: 0 0 7.273vw;}
+    
     &.active{
       .ourpicks_news_preview{opacity: 1; transform: scale(1);}
     }
@@ -184,110 +194,79 @@ body.ourpicks-gallery-active .page_magazine {
       }
     }
 
+    img{transition: ease 1.4s transform, ease 1.4s backdrop-filter, ease 1.4s opacity; transform: scale(1.05); opacity: 0;
+      &.active{transform: scale(1); opacity: 1;}
+    }
+    .active img{transform: scale(1); opacity: 1;}
   }
 
-  .ourpicks_play_slider {
-    padding-top: 2.424vw;
-    overflow: hidden;
-  }
+  .ourpicks_play_slider {padding-top: 2.424vw;
+    .ourpicks_play_swiper{height: 360px; overflow: visible;
+      .swiper-slide.ourpicks_play_slide{width: unset; height: 100%;
+        &:not(:last-child){padding-right: 2.424vw; box-sizing: unset;}
+        &.type-a{aspect-ratio: 16 / 9;}
+        &.type-b{aspect-ratio: 9 / 16;}
+        img{width: unset; height: 100%; object-fit: cover;}
+      }
 
-  .ourpicks_play_swiper {
-    overflow: visible;
-  }
-
-  .ourpicks_play_slide {
-    width: min(49vw, 808px);
-
-    &.type-b {
-      width: min(27vw, 446px);
     }
   }
 
-  .ourpicks_play_link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-
-    img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-  }
-
-  .ourpicks_play_slide.type-b .ourpicks_play_link img {
-    aspect-ratio: 9 / 16;
-  }
 }
 
 @media (max-width: 1024px) {
+  .page_magazine.our-picks .mg_body{padding-top: 40px;}
   .ourpicks_page {
-    .ourpicks_news {
-      padding-bottom: 22.222vw;
-    }
-
-    .ourpicks_section_head {
-      align-items: flex-start;
-      gap: 20px;
-      padding-bottom: 18px;
-    }
-
-
-    .ourpicks_news_body {
-      display: block;
-      padding-top: 24px;
-    }
-
-    .ourpicks_news_list {
-      border-left: 0;
-      border-top: 1px dashed rgb(0 0 0 / 100%);
-      margin-top: 24px;
-    }
-
-    .ourpicks_news_link {
-      min-height: auto;
-      padding: 16px 0;
-    }
-
-    .ourpicks_gallery_visual {
-      min-height: 120vw;
-      padding-top: 24px;
-    }
-
-    .ourpicks_gallery_card_main {
-      width: 44vw;
-      top: 24px;
-    }
-
-    .ourpicks_gallery_title {
-      left: 50vw;
-      top: 36px;
-      width: 42vw;
-    }
-
-    .ourpicks_gallery_card_sub {
-      left: 28vw;
-      top: 78vw;
-      width: 18vw;
-    }
-
-    .ourpicks_gallery_card_side {
-      right: 0;
-      top: 70vw;
-      width: 22vw;
-    }
-
-    .ourpicks_play_slider {
-      padding-top: 24px;
-    }
-
-    .ourpicks_play_slide {
-      width: 78vw;
-
-      &.type-b {
-        width: 48vw;
+    .ourpicks_news{
+      &:not(:last-child){padding: 0 0 60px;}
+      .mg_list{margin-top: 0; padding-top: 76px;
+        &.mg_list_event{margin-top: 0; padding-top: 76px;}
+        &.mg_list_family{margin-top: 0; padding-top: 76px;}
       }
+      .ourpicks_play_slider{margin-top: 0; padding-top: 76px;}
+    }
+    .ourpicks_section_head{position: relative; padding-bottom: 12px;
+      .ourpicks_view_all{position: absolute; top: calc(100% + 20px); right: 0; padding-bottom: 0;}
+      .ourpicks_section_title{justify-content: space-between;
+        h2{white-space: nowrap;}
+        p{text-wrap: balance; word-break: keep-all; text-align: right; width: 50%; line-height: 1.6;}
+      }
+    }
+    
+    .ourpicks_news_body{display: block; padding-top: 76px;
+      .ourpicks_news_preview{aspect-ratio: 320 / 180;}
+      .ourpicks_news_list{margin-top: 20px;
+        &::before{display: none;}
+        .ourpicks_news_link {gap: 8px; padding: 8px 0 12px;
+          .date{font-size: 9px;}
+          strong{font-size: 12px;}
+        }
+      }
+    }
+
+    .ourpicks_gallery_visual{flex-direction: column; align-items: center; padding-top: 76px;
+      .flex_left{width: 56%;}
+      .flex_right{padding-left: 0; width: 100%;
+        &::before{display: none;}
+        .ourpicks_gallery_title{text-align: center; margin-bottom: 40px;
+          h3{margin: 20px 0 16px;}
+        }
+        .img_s_w{ 
+          .ourpicks_gallery_card{gap: 8px;
+            &.ourpicks_gallery_card_sub{margin-top: 0;}
+            &.ourpicks_gallery_card_side{    flex-direction: row-reverse;}
+            img{width: 80px;}
+          }
+        }
+
+      }
+    }
+
+    .ourpicks_play_slider{ 
+      .ourpicks_play_swiper{height: 160px;
+      .swiper-slide.ourpicks_play_slide:not(:last-child){padding-right: 20px;}}
+      
+    
     }
   }
 }

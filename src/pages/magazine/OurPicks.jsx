@@ -216,14 +216,14 @@ function OurPicks() {
         <div className="ourpicks_gallery_visual ani b-c-gray b-t b-2 b-delay-4 flex">
           <TransitionLink
             to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[1]?.id}`}
-            className="ourpicks_gallery_card flex_left ourpicks_gallery_card_main ani"
+            className="mg_li ourpicks_gallery_card flex_left ourpicks_gallery_card_main ani"
           >
             <img src={GALLERY_ITEMS[1]?.img} alt="Magazine Image" />
           </TransitionLink>
 
           <div className="flex_right b-l b-c-gray b-delay-10">
             <div className="ourpicks_gallery_title ani">
-              <h3 className="display-s apprael apprael_all">
+              <h3 className="display-s text-effect apprael apprael_all ani" data-splitting data-effect17>
                 <span>{GALLERY_ITEMS[0]?.date} S/S</span><br/>
                 <span>Collection</span>
               </h3>
@@ -233,7 +233,7 @@ function OurPicks() {
             <div className="img_s_w">
               <TransitionLink
                 to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[2]?.id}`}
-                className="ourpicks_gallery_card ourpicks_gallery_card_sub ani"
+                className="mg_li ourpicks_gallery_card ourpicks_gallery_card_sub ani"
               >
                 <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" />
                 <span className="body-m">2025 A/W<br />Collection</span>
@@ -241,7 +241,7 @@ function OurPicks() {
 
               <TransitionLink
                 to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[3]?.id}`}
-                className="ourpicks_gallery_card ourpicks_gallery_card_side ani"
+                className="mg_li ourpicks_gallery_card ourpicks_gallery_card_side ani"
               >
                 <span className="body-m">2026 S/S<br />Collection</span>
                 <img src={GALLERY_ITEMS[3]?.img} alt="Magazine Image" />
@@ -267,16 +267,16 @@ function OurPicks() {
           <Swiper
             className="ourpicks_play_swiper"
             slidesPerView="auto"
-            spaceBetween={40}
+            //spaceBetween={40}
             grabCursor
-            breakpoints={{
+            /*breakpoints={{
               0: {
                 spaceBetween: 16,
               },
               1025: {
                 spaceBetween: 40,
               },
-            }}
+            }}*/
           >
             {PLAY_ITEMS.map((item, index) => (
               <SwiperSlide className={`ourpicks_play_slide ${getPlayTypeClass(index)}`} key={item.id}>

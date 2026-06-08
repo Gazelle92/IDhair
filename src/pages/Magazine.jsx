@@ -143,7 +143,7 @@ function Magazine() {
   }, [currentCategory, currentPage]);
 
   return (
-    <main className={`page_magazine ${isTabMove ? "tab_move" : ""}`}>
+    <main className={`page_magazine ${currentCategory} ${isTabMove ? "tab_move" : ""}`}>
       <section className="mg_head b-t b-2 ani" data-keep-active-on-route>
         <div className="mg_title b-b b-delay-2 ">
           <h1 className="display-l apprael effect17-title apprael_all" data-splitting data-effect17 >ID MAGAZINE</h1>
