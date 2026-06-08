@@ -36,9 +36,7 @@
       .btn_all{position: absolute; left: 0.485vw; top: 0.485vw;}
     }
     &.ani.active{
-      .mg_nav::before{width: 100%;}
-
-      
+      .mg_nav::before{width: 100%;}      
     }
     &.ani:not(.active){
       .mg_title_right{

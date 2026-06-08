@@ -11,6 +11,15 @@ const FAMILY_CATEGORY = "id-family";
 const GALLERY_CATEGORY = "id-gallery";
 const PLAY_CATEGORY = "id-play";
 
+const tabs = [
+  { name: "Our PICKS", path: "our-picks" },
+  { name: "id NEWS", path: "id-news" },
+  { name: "id EVENT", path: "id-event" },
+  { name: "id FAMILY", path: "id-family" },
+  { name: "id GALLERY", path: "id-gallery" },
+  { name: "id PLAY", path: "id-play" },
+];
+
 const newsTitles = [
   "새로운 브랜드 캠페인을 통해 선보이는 아이디헤어의 방향성과 감각",
   "강남지점 리뉴얼로 완성된 편안하고 세련된 공간",
@@ -57,10 +66,17 @@ const getPlayTypeClass = (index) => {
   return types[index % types.length];
 };
 
+const getListUrl = (category, page = 1) => {
+  return page === 1 ? `/magazine/${category}` : `/magazine/${category}/list-${page}`;
+};
+
 function OurPicks() {
   const [activeNewsIndex, setActiveNewsIndex] = useState(0);
+  const [isStickyNavActive, setIsStickyNavActive] = useState(false);
   const previewRefs = useRef([]);
   const gallerySectionRef = useRef(null);
+  const stickyWrapRef = useRef(null);
+  const stickyTriggerTopRef = useRef(0);
 
   const handleNewsEnter = (index) => {
     if (index === activeNewsIndex) return;
@@ -108,8 +124,52 @@ function OurPicks() {
     };
   }, []);
 
+  useEffect(() => {
+    const stickyWrap = stickyWrapRef.current;
+    if (!stickyWrap) return undefined;
+
+    const refreshStickyTop = () => {
+      stickyTriggerTopRef.current = stickyWrap.getBoundingClientRect().top + window.scrollY;
+    };
+
+    const updateStickyNavActive = () => {
+      setIsStickyNavActive(window.scrollY >= stickyTriggerTopRef.current);
+    };
+
+    const refreshStickyNav = () => {
+      refreshStickyTop();
+      updateStickyNavActive();
+    };
+
+    refreshStickyNav();
+    window.addEventListener("scroll", updateStickyNavActive, { passive: true });
+    window.addEventListener("resize", refreshStickyNav);
+    window.addEventListener("load", refreshStickyNav);
+
+    return () => {
+      window.removeEventListener("scroll", updateStickyNavActive);
+      window.removeEventListener("resize", refreshStickyNav);
+      window.removeEventListener("load", refreshStickyNav);
+    };
+  }, []);
+
   return (
     <div className="ourpicks_page">
+      <div ref={stickyWrapRef} className={`sticky_w ani ${isStickyNavActive ? "active" : ""}`}>
+        <ul className="mg_nav b-t b-delay-4">
+          {tabs.map((tab, i) => (
+            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fade-${6 + i}`}>
+              <TransitionLink
+                to={getListUrl(tab.path)}
+                state={{ fromMagazineTab: true }}
+                className={`body-m ${tab.path === "our-picks" ? "active" : ""}`}
+              >
+                <span>{tab.name}</span>
+              </TransitionLink>
+            </li>
+          ))}
+        </ul>
+      </div>
       <section className="ourpicks_news ani">
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
@@ -288,6 +348,7 @@ function OurPicks() {
           </Swiper>
         </div>
       </section>
+      
     </div>
   );
 }

@@ -110,12 +110,27 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
 
     }
   }
-
+  .sticky_w{position: absolute; left: 2.424vw; bottom: 0; height: calc(100% - 80vw); width: calc(100% - 4.848vw); pointer-events: none; z-index: 2;
+    
+    .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden;
+      &::before{content: ''; display: block; position: absolute; left: 0; top: 0; width: 0%; height: 100%; background-color: rgb(237 237 237 / 10%); backdrop-filter: blur(20px); border-radius: 0.242vw;}
+      
+      a{background-color: #fff; border-radius: 0.242vw; padding: 0.303vw 1.212vw 0.182vw; cursor: pointer; transition: ease 0.3s all; position: relative; overflow: hidden; display: flex;
+        span{position: relative; color: #000; transition: ease 0.3s color;}
+        &::before{content: ''; display: block; background-color: var(--bg-ac-1); left: 0; bottom: 0; width: 100%; height: 0; transition: ease 0.3s height; position: absolute;}
+        &.active::before, &:hover::before{height: 100%;}
+        &.active span, &:hover span{color: #fff;}
+      }
+      .btn_all{position: absolute; left: 0.485vw; top: 0.485vw;}
+    }
+    .mg_nav{position:sticky; transform: translateY(-100%); top: calc(100% - 40px); pointer-events: auto; opacity: 0; transition: opacity 0.3s ease;}
+    &.active .mg_nav{opacity: 1;}
+  }
 }
 
 @media (max-width: 1024px) {
   .page_magazine.our-picks .mg_body{padding-top: 11.111vw;}
-  .ourpicks_page {
+  .ourpicks_page {overflow-x: hidden;
     .ourpicks_news{
       &:not(:last-child){padding: 0 0 16.667vw;}
       .mg_list{margin-top: 0; padding-top: 21.111vw;
@@ -168,6 +183,18 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       
     
     }
+    .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); overflow: hidden;
+      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); top: 100%;
+        .btn_all{position: unset;}
+        a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
+        }
+      }
+      .mg_nav::-webkit-scrollbar {
+        height: 0px;
+      }
+      .mg_nav::-webkit-scrollbar-thumb {
+        background-color: #2f3542;
+      }
+    }
   }
 }
-
