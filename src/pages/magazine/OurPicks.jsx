@@ -227,7 +227,7 @@ function OurPicks() {
                 <span>{GALLERY_ITEMS[0]?.date} S/S</span><br/>
                 <span>Collection</span>
               </h3>
-              <p className="body-l">“ 나다움을 마주하는 계절의 시작 “</p>
+              <p className="body-l fadeX-3">“ 나다움을 마주하는 계절의 시작 “</p>
             </div>
 
             <div className="img_s_w">
@@ -236,14 +236,14 @@ function OurPicks() {
                 className="mg_li ourpicks_gallery_card ourpicks_gallery_card_sub ani"
               >
                 <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" />
-                <span className="body-m">2025 A/W<br />Collection</span>
+                <span className="body-m fadeX-8">2025 A/W<br />Collection</span>
               </TransitionLink>
 
               <TransitionLink
                 to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[3]?.id}`}
                 className="mg_li ourpicks_gallery_card ourpicks_gallery_card_side ani"
               >
-                <span className="body-m">2026 S/S<br />Collection</span>
+                <span className="body-m fadeX-8">2026 S/S<br />Collection</span>
                 <img src={GALLERY_ITEMS[3]?.img} alt="Magazine Image" />
               </TransitionLink>
             </div>
