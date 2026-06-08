@@ -213,37 +213,41 @@ function OurPicks() {
           </TransitionLink>
         </div>
 
-        <div className="ourpicks_gallery_visual ani b-c-gray b-t b-2 b-delay-4">
+        <div className="ourpicks_gallery_visual ani b-c-gray b-t b-2 b-delay-4 flex">
           <TransitionLink
             to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[1]?.id}`}
-            className="ourpicks_gallery_card ourpicks_gallery_card_main ani"
+            className="ourpicks_gallery_card flex_left ourpicks_gallery_card_main ani"
           >
             <img src={GALLERY_ITEMS[1]?.img} alt="Magazine Image" />
           </TransitionLink>
 
-          <div className="ourpicks_gallery_title ani">
-            <h3 className="display-xs apprael">
-              <span>{GALLERY_ITEMS[0]?.date} S/S</span>
-              <span>Collection</span>
-            </h3>
-            <p className="caption-m">“ 나다움을 마주하는 계절의 시작 “</p>
+          <div className="flex_right b-l b-c-gray b-delay-10">
+            <div className="ourpicks_gallery_title ani">
+              <h3 className="display-s apprael apprael_all">
+                <span>{GALLERY_ITEMS[0]?.date} S/S</span><br/>
+                <span>Collection</span>
+              </h3>
+              <p className="body-l">“ 나다움을 마주하는 계절의 시작 “</p>
+            </div>
+
+            <div className="img_s_w">
+              <TransitionLink
+                to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[2]?.id}`}
+                className="ourpicks_gallery_card ourpicks_gallery_card_sub ani"
+              >
+                <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" />
+                <span className="body-m">2025 A/W<br />Collection</span>
+              </TransitionLink>
+
+              <TransitionLink
+                to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[3]?.id}`}
+                className="ourpicks_gallery_card ourpicks_gallery_card_side ani"
+              >
+                <span className="body-m">2026 S/S<br />Collection</span>
+                <img src={GALLERY_ITEMS[3]?.img} alt="Magazine Image" />
+              </TransitionLink>
+            </div>
           </div>
-
-          <TransitionLink
-            to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[2]?.id}`}
-            className="ourpicks_gallery_card ourpicks_gallery_card_sub ani"
-          >
-            <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" />
-            <span className="caption-m">2025 A/W<br />Collection</span>
-          </TransitionLink>
-
-          <TransitionLink
-            to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[3]?.id}`}
-            className="ourpicks_gallery_card ourpicks_gallery_card_side ani"
-          >
-            <span className="caption-m">2026 S/S<br />Collection</span>
-            <img src={GALLERY_ITEMS[3]?.img} alt="Magazine Image" />
-          </TransitionLink>
         </div>
       </section>
 
@@ -259,7 +263,7 @@ function OurPicks() {
           </TransitionLink>
         </div>
 
-        <div className="ourpicks_play_slider ani b-t b-2 b-delay-4">
+        <div className="ourpicks_play_slider ani b-t b-2 b-c-gray b-delay-4">
           <Swiper
             className="ourpicks_play_swiper"
             slidesPerView="auto"
