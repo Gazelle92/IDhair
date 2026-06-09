@@ -57,7 +57,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
   }
 
   .ourpicks_news_list {position: relative; ; list-style: none; margin: 0; padding: 0;
-    &::before{border-left: 1px dashed rgb(0 0 0 / 100%); background-color:unset!important;}
+    &::before{border-left: 1px dashed rgba(0, 0, 0, 0.18); background-color:unset!important;}
   }
 
   .ourpicks_news_item {border-bottom: 1px dashed rgb(0 0 0 / 18%);
@@ -100,17 +100,18 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     &.active{opacity: 1;}
   }
   .ourpicks_play_slider {padding-top: 2.424vw;
+    .swiper-wrapper{align-items: center;}
     .ourpicks_play_swiper{height: 21.818vw; overflow: visible;
       .swiper-slide.ourpicks_play_slide{width: unset; height: 100%;
         &:not(:last-child){padding-right: 2.424vw; box-sizing: unset;}
-        &.type-a{aspect-ratio: 16 / 9;}
+        &.type-a{aspect-ratio: 16 / 9; height: 70%;}
         &.type-b{aspect-ratio: 9 / 16;}
         img{width: unset; height: 100%; object-fit: cover;}
       }
 
     }
   }
-  .sticky_w{position: absolute; left: 2.424vw; bottom: 0; height: calc(100% - 80vw); width: calc(100% - 4.848vw); pointer-events: none; z-index: 2;
+  .sticky_w{position: absolute; left: 2.424vw; bottom: -7.273vw; height: calc(100% - 80vw); width: calc(100% - 4.848vw); pointer-events: none; z-index: 2;
     
     .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden;
       &::before{content: ''; display: block; position: absolute; left: 0; top: 0; width: 0%; height: 100%; background-color: rgb(237 237 237 / 10%); backdrop-filter: blur(20px); border-radius: 0.242vw;}
@@ -130,14 +131,14 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
 
 @media (max-width: 1024px) {
   .page_magazine.our-picks .mg_body{padding-top: 11.111vw;}
-  .ourpicks_page {overflow-x: hidden;
+  .ourpicks_page {/*overflow-x: hidden;*/
     .ourpicks_news{
       &:not(:last-child){padding: 0 0 16.667vw;}
       .mg_list{margin-top: 0; padding-top: 21.111vw;
         &.mg_list_event{margin-top: 0; padding-top: 21.111vw;}
         &.mg_list_family{margin-top: 0; padding-top: 21.111vw;}
       }
-      .ourpicks_play_slider{margin-top: 0; padding-top: 21.111vw;}
+      .ourpicks_play_slider{margin-top: 0; padding-top: 21.111vw; width: calc(100% + (5.556vw * 2)); margin-left: -5.556vw; padding-left: 5.556vw; padding-right: 5.556vw; overflow: hidden;}
     }
     .ourpicks_section_head{position: relative; padding-bottom: 3.333vw;
       .ourpicks_view_all{position: absolute; top: calc(100% + 5.556vw); right: 0; padding-bottom: 0;}

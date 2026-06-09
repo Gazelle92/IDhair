@@ -145,16 +145,16 @@ function Magazine() {
   return (
     <main className={`page_magazine ${currentCategory} ${isTabMove ? "tab_move" : ""}`}>
       <section className="mg_head b-t b-2 ani" data-keep-active-on-route>
-        <div className="mg_title b-b b-delay-2 ">
+        <div className="mg_title b-b b-delay-0 ">
           <h1 className="display-l apprael effect17-title apprael_all" data-splitting data-effect17 >ID MAGAZINE</h1>
           <div className={`mg_title_right  ${isTitleTabOut ? "tab_out" : ""}`}>
-            <h4 className="gt display-xs fadeX-6">{displayTabName}</h4>
-            <div className="body-m fadeX-7 txt">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
-            <div className="body-m fadeX-8 txt">라이프스타일을 담은 이야기를 전합니다.</div>
+            <h4 className="gt display-xs fadeX-2">{displayTabName}</h4>
+            <div className="body-m fadeX-3 txt">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
+            <div className="body-m fadeX-4 txt">라이프스타일을 담은 이야기를 전합니다.</div>
           </div>
         </div>
 
-        <ul className="mg_nav b-t b-delay-4">
+        <ul className="mg_nav b-t b-delay-0">
           {tabs.map((tab, i) => (
             <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fade-${6 + i}`}>
               <Link
