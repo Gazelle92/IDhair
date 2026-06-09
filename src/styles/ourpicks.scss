@@ -90,13 +90,20 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       }
     }
 
-    img{transition: ease 1.4s transform, ease 1.4s backdrop-filter, ease 1.4s opacity; transform: scale(1.05); opacity: 0;
-      &.active{transform: scale(1); opacity: 1;}
+    
+    .ourpicks_gallery_card{
+      img{transition: ease 1.4s transform, ease 1.4s backdrop-filter, ease 1.4s opacity; transform: scale(1.05); opacity: 0;
+        &.active{transform: scale(1); opacity: 1;}
+      }
+      &.ourpicks_gallery_card_main img{transition-delay: 0.4s;}
+      &.ourpicks_gallery_card_sub img{transition-delay: 0.4s;}
+      &.ourpicks_gallery_card_side img{transition-delay: 0.4s;}
+      &.active img{transform: scale(1); opacity: 1;}
     }
-    .active img{transform: scale(1); opacity: 1;}
+    
   }
 
-  .ourpicks_play{opacity: 0; transition: opacity 1.4s ease;
+  .ourpicks_play{opacity: 0; transition: opacity 1.4s ease; padding-bottom: 4.2424vw;
     &.active{opacity: 1;}
   }
   .ourpicks_play_slider {padding-top: 2.424vw;
@@ -104,7 +111,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     .ourpicks_play_swiper{height: 21.818vw; overflow: visible;
       .swiper-slide.ourpicks_play_slide{width: unset; height: 100%;
         &:not(:last-child){padding-right: 2.424vw; box-sizing: unset;}
-        &.type-a{aspect-ratio: 16 / 9; height: 70%;}
+        &.type-a{aspect-ratio: 16 / 9; height: 60%;}
         &.type-b{aspect-ratio: 9 / 16;}
         img{width: unset; height: 100%; object-fit: cover;}
       }
@@ -184,7 +191,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       
     
     }
-    .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); overflow: hidden;
+    .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); height:calc(100% - 110vh); /*overflow: hidden;*/
       .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); top: 100%;
         .btn_all{position: unset;}
         a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
@@ -197,5 +204,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
         background-color: #2f3542;
       }
     }
+    .ourpicks_play{padding-bottom: 33.333vw;}
   }
+  .page_magazine.our-picks{padding-bottom: 0;}
 }
