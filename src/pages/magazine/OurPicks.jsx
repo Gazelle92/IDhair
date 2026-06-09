@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -53,7 +54,7 @@ const GALLERY_ITEMS = galleryItems(
   GALLERY_CATEGORY,
   "id GALLERY layout",
   magazinePageSettings[GALLERY_CATEGORY].totalItems
-).slice(0, 4);
+);
 
 const PLAY_ITEMS = makeMagazineItems(
   PLAY_CATEGORY,
@@ -66,22 +67,479 @@ const getPlayTypeClass = (index) => {
   return types[index % types.length];
 };
 
+const getPlayAspect = (index) => {
+  return getPlayTypeClass(index) === "type-b" ? "9 / 16" : "16 / 9";
+};
+
 const getListUrl = (category, page = 1) => {
   return page === 1 ? `/magazine/${category}` : `/magazine/${category}/list-${page}`;
+};
+
+const ZOOM_IN_DURATION = 1.2;
+const ZOOM_OUT_DURATION = 1.2;
+const PLAY_ZOOM_DURATION = 1.05;
+
+const getViewerImageTarget = () => {
+  const isMobile = window.innerWidth <= 1024;
+  const width = isMobile ? window.innerWidth * 0.76 : Math.min(window.innerWidth * 0.375, 620);
+  const height = isMobile ? window.innerHeight * 0.6 : Math.min(window.innerHeight * 0.78, 720);
+  const centerX = isMobile
+    ? window.innerWidth * 0.5
+    : window.innerWidth * 0.326 + (window.innerWidth - window.innerWidth * 0.326 - window.innerWidth * 0.109) / 2;
+  const centerY = window.innerHeight * 0.5;
+
+  return { width, height, centerX, centerY };
+};
+
+const getViewerImageStackTarget = (stackElement) => {
+  if (!stackElement) return getViewerImageTarget();
+
+  const rect = stackElement.getBoundingClientRect();
+
+  return {
+    width: rect.width,
+    height: rect.height,
+    centerX: rect.left + rect.width / 2,
+    centerY: rect.top + rect.height / 2,
+    left: rect.left,
+    top: rect.top,
+  };
 };
 
 function OurPicks() {
   const [activeNewsIndex, setActiveNewsIndex] = useState(0);
   const [isStickyNavActive, setIsStickyNavActive] = useState(false);
+  const [isGalleryViewerOpen, setIsGalleryViewerOpen] = useState(false);
+  const [galleryViewerStartIndex, setGalleryViewerStartIndex] = useState(0);
+  const [galleryViewerCurrentIndex, setGalleryViewerCurrentIndex] = useState(0);
+  const [activeGalleryViewerItems, setActiveGalleryViewerItems] = useState([]);
+  const [playViewerOpen, setPlayViewerOpen] = useState(false);
+  const [playViewerReady, setPlayViewerReady] = useState(false);
+  const [activePlayIndex, setActivePlayIndex] = useState(0);
+  const [activePlayAspect, setActivePlayAspect] = useState(getPlayAspect(0));
   const previewRefs = useRef([]);
   const gallerySectionRef = useRef(null);
   const stickyWrapRef = useRef(null);
   const stickyTriggerTopRef = useRef(0);
+  const isStickyNavActiveRef = useRef(false);
+  const galleryZoomedItemRef = useRef(null);
+  const galleryZoomTimelineRef = useRef(null);
+  const galleryTransitionCloneRef = useRef(null);
+  const galleryViewerScrollRef = useRef(null);
+  const galleryViewerContentRef = useRef(null);
+  const galleryViewerImageStackRef = useRef(null);
+  const galleryViewerLayerRefs = useRef([]);
+  const galleryViewerThumbRefs = useRef([]);
+  const galleryViewerThumbsWrapRef = useRef(null);
+  const galleryViewerThumbsRef = useRef(null);
+  const galleryViewerFrameRef = useRef(null);
+  const galleryViewerTitleRef = useRef(null);
+  const galleryViewerLenisRef = useRef(null);
+  const galleryBackdropTimerRef = useRef(null);
+  const galleryControlsTimerRef = useRef(null);
+  const playViewerFrameRef = useRef(null);
+  const playCloneRef = useRef(null);
+  const activePlaySourceImageRef = useRef(null);
+  const playItemRefs = useRef([]);
+  const playViewerSlideRefs = useRef([]);
+  const playTimelineRef = useRef(null);
+  const playViewerSwiperRef = useRef(null);
+  const galleryViewerItems = activeGalleryViewerItems;
+  const galleryViewerItem = galleryViewerItems[galleryViewerCurrentIndex] || galleryViewerItems[0];
+  const shouldRenderGalleryViewer = isGalleryViewerOpen || activeGalleryViewerItems.length > 0;
+  const shouldRenderPlayViewer = playViewerOpen || Boolean(activePlaySourceImageRef.current);
 
   const handleNewsEnter = (index) => {
     if (index === activeNewsIndex) return;
 
     setActiveNewsIndex(index);
+  };
+
+  const getOurPicksGalleryDomItems = () => {
+    return [...document.querySelectorAll(".ourpicks_gallery_card.mg_li")];
+  };
+
+  const removeGalleryTransitionClone = () => {
+    galleryTransitionCloneRef.current?.remove();
+    galleryTransitionCloneRef.current = null;
+  };
+
+  const clearGalleryBackdropTimer = () => {
+    if (!galleryBackdropTimerRef.current) return;
+    window.clearTimeout(galleryBackdropTimerRef.current);
+    galleryBackdropTimerRef.current = null;
+  };
+
+  const clearGalleryControlsTimer = () => {
+    if (!galleryControlsTimerRef.current) return;
+    window.clearTimeout(galleryControlsTimerRef.current);
+    galleryControlsTimerRef.current = null;
+  };
+
+  const hideGalleryBackdrop = () => {
+    clearGalleryBackdropTimer();
+    document.body.classList.remove("gallery-backdrop-active");
+  };
+
+  const hideGalleryControls = () => {
+    clearGalleryControlsTimer();
+    document.body.classList.remove("gallery-controls-active");
+  };
+
+  const showGallerySourceImage = () => {
+    const sourceImage = galleryZoomedItemRef.current?.querySelector("img");
+    if (sourceImage) {
+      gsap.set(sourceImage, { clearProps: "visibility" });
+    }
+  };
+
+  const clearGalleryZoom = () => {
+    const items = getOurPicksGalleryDomItems();
+    const images = items.map((item) => item.querySelector("img")).filter(Boolean);
+
+    galleryZoomTimelineRef.current?.kill();
+    removeGalleryTransitionClone();
+    hideGalleryBackdrop();
+    hideGalleryControls();
+    showGallerySourceImage();
+    galleryZoomedItemRef.current?.classList.remove("is_zoomed");
+    galleryZoomedItemRef.current = null;
+    setActiveGalleryViewerItems([]);
+    setIsGalleryViewerOpen(false);
+    document.body.classList.remove("gallery-zooming", "gallery-scroll-locked", "gallery-viewer-open");
+    document.documentElement.style.removeProperty("--gallery-viewer-image-width");
+    document.documentElement.style.removeProperty("--gallery-viewer-image-height");
+    window.lenis?.start?.();
+    gsap.set([...items, ...images], { clearProps: "opacity,scale,scaleX,scaleY,x,y,zIndex,willChange" });
+  };
+
+  const resetGalleryZoom = () => {
+    const items = getOurPicksGalleryDomItems();
+    const images = items.map((item) => item.querySelector("img")).filter(Boolean);
+    const currentItem = galleryZoomedItemRef.current;
+    const currentImage = currentItem?.querySelector("img");
+
+    galleryZoomTimelineRef.current?.kill();
+    removeGalleryTransitionClone();
+    hideGalleryBackdrop();
+    hideGalleryControls();
+    galleryZoomedItemRef.current?.classList.remove("is_zoomed");
+    galleryZoomedItemRef.current = null;
+    setIsGalleryViewerOpen(false);
+    document.body.classList.remove("gallery-viewer-open");
+    setActiveGalleryViewerItems([]);
+
+    if (currentImage) {
+      const viewerTarget = getViewerImageStackTarget(galleryViewerImageStackRef.current);
+      const rect = currentImage.getBoundingClientRect();
+      const clone = currentImage.cloneNode(true);
+      const startLeft = viewerTarget.left ?? viewerTarget.centerX - viewerTarget.width / 2;
+      const startTop = viewerTarget.top ?? viewerTarget.centerY - viewerTarget.height / 2;
+
+      galleryTransitionCloneRef.current = clone;
+      clone.className = "gallery_transition_clone";
+      document.body.appendChild(clone);
+
+      gsap.set(clone, {
+        left: startLeft,
+        top: startTop,
+        width: viewerTarget.width,
+        height: viewerTarget.height,
+        visibility: "visible",
+      });
+
+      galleryZoomTimelineRef.current = gsap.timeline({
+        defaults: { duration: ZOOM_OUT_DURATION, ease: "expo.inOut" },
+        onComplete: () => {
+          gsap.set(currentImage, { clearProps: "visibility" });
+          removeGalleryTransitionClone();
+          document.body.classList.remove("gallery-zooming", "gallery-scroll-locked", "gallery-viewer-open");
+          document.documentElement.style.removeProperty("--gallery-viewer-image-width");
+          document.documentElement.style.removeProperty("--gallery-viewer-image-height");
+          window.lenis?.start?.();
+          gsap.set([...items, ...images], { clearProps: "opacity,scale,scaleX,scaleY,x,y,zIndex,willChange" });
+        },
+      });
+
+      galleryZoomTimelineRef.current
+        .to(clone, { left: rect.left, top: rect.top, width: rect.width, height: rect.height }, 0)
+        .to(items, { opacity: 1, scale: 1 }, 0);
+    }
+  };
+
+  const openGalleryViewer = (event, index) => {
+    const item = event.currentTarget.closest(".mg_li");
+    const image = item?.querySelector("img");
+    if (!item || !image) return;
+
+    if (galleryZoomedItemRef.current === item) {
+      resetGalleryZoom();
+      return;
+    }
+
+    if (galleryZoomedItemRef.current) {
+      clearGalleryZoom();
+    }
+
+    const initialViewerTarget = getViewerImageStackTarget(galleryViewerImageStackRef.current);
+    document.documentElement.style.setProperty("--gallery-viewer-image-width", `${initialViewerTarget.width}px`);
+    document.documentElement.style.setProperty("--gallery-viewer-image-height", `${initialViewerTarget.height}px`);
+
+    document.body.classList.add("gallery-zooming", "gallery-scroll-locked");
+    clearGalleryBackdropTimer();
+    galleryBackdropTimerRef.current = window.setTimeout(() => {
+      document.body.classList.add("gallery-backdrop-active");
+      galleryBackdropTimerRef.current = null;
+    }, 500);
+    window.lenis?.stop?.();
+
+    const rect = image.getBoundingClientRect();
+    const clone = image.cloneNode(true);
+    const galleryItems = getOurPicksGalleryDomItems();
+    const otherItems = galleryItems.filter((li) => li !== item);
+
+    removeGalleryTransitionClone();
+    galleryTransitionCloneRef.current = clone;
+    clone.className = "gallery_transition_clone";
+    document.body.appendChild(clone);
+
+    gsap.set(clone, { left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+    gsap.set(image, { visibility: "hidden" });
+
+    gsap.killTweensOf([item, image, otherItems, clone]);
+    galleryZoomTimelineRef.current?.kill();
+    galleryZoomedItemRef.current = item;
+    item.classList.add("is_zoomed");
+    setActiveGalleryViewerItems(GALLERY_ITEMS);
+    setGalleryViewerStartIndex(index);
+    setGalleryViewerCurrentIndex(index);
+    setIsGalleryViewerOpen(false);
+
+    requestAnimationFrame(() => {
+      const viewerTarget = getViewerImageStackTarget(galleryViewerImageStackRef.current);
+      const targetLeft = viewerTarget.left ?? viewerTarget.centerX - viewerTarget.width / 2;
+      const targetTop = viewerTarget.top ?? viewerTarget.centerY - viewerTarget.height / 2;
+
+      galleryZoomTimelineRef.current = gsap.timeline({
+        defaults: { duration: ZOOM_IN_DURATION, ease: "expo.inOut" },
+        onComplete: () => {
+          document.body.classList.add("gallery-viewer-open");
+          setIsGalleryViewerOpen(true);
+          clearGalleryControlsTimer();
+          galleryControlsTimerRef.current = window.setTimeout(() => {
+            document.body.classList.add("gallery-controls-active");
+            galleryControlsTimerRef.current = null;
+          }, 120);
+          window.setTimeout(removeGalleryTransitionClone, 80);
+        },
+      });
+
+      galleryZoomTimelineRef.current
+        .set(otherItems, { willChange: "transform, opacity" }, 0)
+        .to(clone, { left: targetLeft, top: targetTop, width: viewerTarget.width, height: viewerTarget.height }, 0)
+        .to(otherItems, { opacity: 0, scale: 0.8, stagger: { amount: 0.2, from: "center" } }, 0);
+    });
+  };
+
+  const closeGalleryViewer = () => {
+    setIsGalleryViewerOpen(false);
+    document.body.classList.remove("gallery-viewer-open");
+    hideGalleryBackdrop();
+    hideGalleryControls();
+    resetGalleryZoom();
+  };
+
+  const handleGalleryViewerThumbClick = (index) => {
+    galleryViewerLenisRef.current?.scrollTo(index * window.innerHeight, { duration: 1, force: true });
+  };
+
+  const updateGalleryViewerClipPath = (scrollValue) => {
+    const scroller = galleryViewerScrollRef.current;
+    if (!scroller || galleryViewerItems.length === 0) return;
+
+    const currentScroll = typeof scrollValue === "number" ? scrollValue : scroller.scrollTop;
+    const progress = currentScroll / Math.max(window.innerHeight, 1);
+    const clampedProgress = Math.min(galleryViewerItems.length - 1, Math.max(0, progress));
+    const nextIndex = Math.min(galleryViewerItems.length - 1, Math.max(0, Math.round(progress)));
+    let clippingIndex = nextIndex;
+
+    galleryViewerLayerRefs.current.forEach((layer, index) => {
+      if (!layer) return;
+      if (index === 0) {
+        layer.style.clipPath = "inset(0% 0% 0% 0%)";
+        return;
+      }
+      const revealProgress = Math.min(1, Math.max(0, progress - (index - 1)));
+      if (revealProgress > 0 && revealProgress < 1) clippingIndex = index;
+      layer.style.clipPath = `inset(${(1 - revealProgress) * 100}% 0% 0% 0%)`;
+    });
+
+    setGalleryViewerCurrentIndex(clippingIndex);
+
+    const thumbs = galleryViewerThumbsRef.current;
+    const thumbsWrap = galleryViewerThumbsWrapRef.current;
+    const currentThumb = galleryViewerThumbRefs.current[clippingIndex];
+    if (thumbs && thumbsWrap && currentThumb) {
+      const isMobileThumbs = window.innerWidth <= 1024;
+      const fromIndex = Math.floor(clampedProgress);
+      const toIndex = Math.min(galleryViewerItems.length - 1, fromIndex + 1);
+      const progressBetweenThumbs = clampedProgress - fromIndex;
+      const fromThumb = galleryViewerThumbRefs.current[fromIndex] || currentThumb;
+      const toThumb = galleryViewerThumbRefs.current[toIndex] || fromThumb;
+      const fromCenter = isMobileThumbs
+        ? fromThumb.offsetLeft + fromThumb.offsetWidth / 2
+        : fromThumb.offsetTop + fromThumb.offsetHeight / 2;
+      const toCenter = isMobileThumbs
+        ? toThumb.offsetLeft + toThumb.offsetWidth / 2
+        : toThumb.offsetTop + toThumb.offsetHeight / 2;
+      const thumbCenter = fromCenter + (toCenter - fromCenter) * progressBetweenThumbs;
+      const target = isMobileThumbs ? thumbsWrap.clientWidth / 2 - thumbCenter : thumbsWrap.clientHeight / 2 - thumbCenter;
+      gsap.to(thumbs, { x: isMobileThumbs ? target : 0, y: isMobileThumbs ? 0 : target, duration: 0, overwrite: true });
+    }
+  };
+
+  const handleGalleryViewerScroll = () => {
+    if (galleryViewerFrameRef.current) return;
+    galleryViewerFrameRef.current = requestAnimationFrame(() => {
+      galleryViewerFrameRef.current = null;
+      updateGalleryViewerClipPath();
+    });
+  };
+
+  const removePlayClone = () => {
+    playCloneRef.current?.remove();
+    playCloneRef.current = null;
+  };
+
+  const showPlaySourceImage = () => {
+    if (activePlaySourceImageRef.current) {
+      gsap.set(activePlaySourceImageRef.current, { clearProps: "visibility" });
+    }
+  };
+
+  const openPlayViewer = (event, index) => {
+    const image = event.currentTarget.querySelector("img");
+    if (!image) return;
+
+    const sourceRect = image.getBoundingClientRect();
+    const clone = image.cloneNode(true);
+
+    playTimelineRef.current?.kill();
+    removePlayClone();
+    showPlaySourceImage();
+
+    clone.className = "play_transition_clone";
+    document.body.appendChild(clone);
+    playCloneRef.current = clone;
+    activePlaySourceImageRef.current = image;
+
+    gsap.set(clone, {
+      left: sourceRect.left,
+      top: sourceRect.top,
+      width: sourceRect.width,
+      height: sourceRect.height,
+    });
+    gsap.set(image, { visibility: "hidden" });
+
+    document.body.classList.add("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
+    window.lenis?.stop?.();
+    flushSync(() => {
+      setActivePlayIndex(index);
+      setActivePlayAspect(getPlayAspect(index));
+      setPlayViewerReady(false);
+      setPlayViewerOpen(true);
+    });
+    playViewerSwiperRef.current?.update();
+    playViewerSwiperRef.current?.slideTo(index, 0, false);
+
+    requestAnimationFrame(() => {
+      playViewerSwiperRef.current?.update();
+      playViewerSwiperRef.current?.slideTo(index, 0, false);
+      requestAnimationFrame(() => {
+        playViewerSwiperRef.current?.update();
+        playViewerSwiperRef.current?.slideTo(index, 0, false);
+        requestAnimationFrame(() => {
+          const targetSlide = playViewerSlideRefs.current[index];
+          const targetRect = targetSlide?.getBoundingClientRect() || playViewerFrameRef.current?.getBoundingClientRect();
+          if (!targetRect) return;
+
+          playTimelineRef.current = gsap.timeline({
+            defaults: { duration: PLAY_ZOOM_DURATION, ease: "expo.inOut" },
+            onComplete: () => {
+              document.body.classList.remove("play-viewer-zooming", "play-viewer-animating");
+              setPlayViewerReady(true);
+              window.setTimeout(removePlayClone, 80);
+            },
+          });
+
+          playTimelineRef.current.to(clone, {
+            left: targetRect.left,
+            top: targetRect.top,
+            width: targetRect.width,
+            height: targetRect.height,
+          });
+        });
+      });
+    });
+  };
+
+  const closePlayViewer = () => {
+    const target = playViewerFrameRef.current;
+    const originalSourceImage = activePlaySourceImageRef.current;
+    const currentSourceImage = playItemRefs.current[activePlayIndex]?.querySelector("img");
+    const sourceImage = currentSourceImage || originalSourceImage;
+
+    if (!sourceImage || !target) {
+      showPlaySourceImage();
+      setPlayViewerOpen(false);
+      setPlayViewerReady(false);
+      document.body.classList.remove("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
+      window.lenis?.start?.();
+      return;
+    }
+
+    const sourceRect = sourceImage.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const clone = PLAY_ITEMS[activePlayIndex] ? document.createElement("img") : null;
+    if (!clone) return;
+
+    playTimelineRef.current?.kill();
+    removePlayClone();
+
+    clone.src = PLAY_ITEMS[activePlayIndex].img;
+    clone.alt = "";
+    clone.className = "play_transition_clone";
+    document.body.appendChild(clone);
+    playCloneRef.current = clone;
+
+    if (originalSourceImage && originalSourceImage !== sourceImage) {
+      gsap.set(originalSourceImage, { clearProps: "visibility" });
+    }
+
+    gsap.set(sourceImage, { visibility: "hidden" });
+    gsap.set(clone, { left: targetRect.left, top: targetRect.top, width: targetRect.width, height: targetRect.height });
+
+    setPlayViewerOpen(false);
+    setPlayViewerReady(false);
+    document.body.classList.add("play-viewer-zooming");
+
+    playTimelineRef.current = gsap.timeline({
+      defaults: { duration: PLAY_ZOOM_DURATION, ease: "expo.inOut" },
+      onComplete: () => {
+        gsap.set(sourceImage, { clearProps: "visibility" });
+        activePlaySourceImageRef.current = null;
+        removePlayClone();
+        document.body.classList.remove("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
+        window.lenis?.start?.();
+      },
+    });
+
+    playTimelineRef.current.to(clone, {
+      left: sourceRect.left,
+      top: sourceRect.top,
+      width: sourceRect.width,
+      height: sourceRect.height,
+    });
   };
 
   useEffect(() => {
@@ -133,7 +591,11 @@ function OurPicks() {
     };
 
     const updateStickyNavActive = () => {
-      setIsStickyNavActive(window.scrollY >= stickyTriggerTopRef.current);
+      const nextIsActive = window.scrollY >= stickyTriggerTopRef.current;
+      if (isStickyNavActiveRef.current === nextIsActive) return;
+
+      isStickyNavActiveRef.current = nextIsActive;
+      setIsStickyNavActive(nextIsActive);
     };
 
     const refreshStickyNav = () => {
@@ -150,6 +612,118 @@ function OurPicks() {
       window.removeEventListener("scroll", updateStickyNavActive);
       window.removeEventListener("resize", refreshStickyNav);
       window.removeEventListener("load", refreshStickyNav);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isGalleryViewerOpen) return undefined;
+
+    const scroller = galleryViewerScrollRef.current;
+    const content = galleryViewerContentRef.current;
+    if (!scroller || !content) return undefined;
+
+    let isCancelled = false;
+    galleryViewerLenisRef.current?.destroy();
+
+    import("lenis").then(({ default: Lenis }) => {
+      if (isCancelled) return;
+
+      const viewerLenis = new Lenis({
+        wrapper: scroller,
+        content,
+        eventsTarget: scroller,
+        autoRaf: true,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        wheelMultiplier: 1,
+      });
+
+      galleryViewerLenisRef.current = viewerLenis;
+      viewerLenis.on("scroll", ({ scroll }) => {
+        updateGalleryViewerClipPath(scroll);
+      });
+
+      const scrollTop = galleryViewerStartIndex * window.innerHeight;
+      viewerLenis.scrollTo(scrollTop, { immediate: true, force: true });
+      updateGalleryViewerClipPath(scrollTop);
+    });
+
+    return () => {
+      isCancelled = true;
+      galleryViewerLenisRef.current?.destroy();
+      galleryViewerLenisRef.current = null;
+    };
+  }, [isGalleryViewerOpen, galleryViewerStartIndex, galleryViewerItems.length]);
+
+  useEffect(() => {
+    const title = galleryViewerTitleRef.current;
+    if (!isGalleryViewerOpen || !title || !galleryViewerItem) return undefined;
+
+    let chars = [];
+    let isCancelled = false;
+    title.removeAttribute("data-effect17-ready");
+
+    import("splitting").then(({ default: Splitting }) => {
+      if (isCancelled) return;
+
+      Splitting({ target: title });
+      chars = Array.from(title.querySelectorAll(".char"));
+      chars.forEach((char) => {
+        gsap.set(char.parentNode, { perspective: 1000 });
+      });
+
+      gsap.fromTo(
+        chars,
+        {
+          opacity: 0,
+          rotateX: () => gsap.utils.random(-120, 120),
+          z: () => gsap.utils.random(-200, 200),
+          willChange: "opacity, transform",
+        },
+        {
+          opacity: 1,
+          rotateX: 0,
+          z: 0,
+          duration: 2.4,
+          ease: "power3.out",
+          stagger: 0.02,
+        }
+      );
+
+      title.setAttribute("data-effect17-ready", "true");
+    });
+
+    return () => {
+      isCancelled = true;
+      gsap.killTweensOf(chars);
+      title.removeAttribute("data-effect17-ready");
+    };
+  }, [isGalleryViewerOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (galleryViewerFrameRef.current) {
+        cancelAnimationFrame(galleryViewerFrameRef.current);
+      }
+      galleryViewerLenisRef.current?.destroy();
+      galleryZoomTimelineRef.current?.kill();
+      playTimelineRef.current?.kill();
+      removeGalleryTransitionClone();
+      removePlayClone();
+      hideGalleryBackdrop();
+      hideGalleryControls();
+      showPlaySourceImage();
+      document.body.classList.remove(
+        "gallery-zooming",
+        "gallery-scroll-locked",
+        "gallery-viewer-open",
+        "play-viewer-locked",
+        "play-viewer-zooming",
+        "play-viewer-animating"
+      );
+      document.documentElement.style.removeProperty("--gallery-viewer-image-width");
+      document.documentElement.style.removeProperty("--gallery-viewer-image-height");
+      window.lenis?.start?.();
     };
   }, []);
 
@@ -231,7 +805,7 @@ function OurPicks() {
           {EVENT_ITEMS.map((item) => (
             <li className="mg_li ani" key={item.id}>
               <TransitionLink to={`/magazine/${EVENT_CATEGORY}/post/${item.id}`} className="mg_a">
-                <img src={item.img} alt="Magazine Image" />
+                <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
               </TransitionLink>
             </li>
           ))}
@@ -254,7 +828,7 @@ function OurPicks() {
           {FAMILY_ITEMS.map((item) => (
             <li className="mg_li ani" key={item.id}>
               <TransitionLink to={`/magazine/${FAMILY_CATEGORY}/post/${item.id}`} className="mg_a">
-                <img src={item.img} alt="Magazine Image" />
+                <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
               </TransitionLink>
             </li>
           ))}
@@ -274,12 +848,13 @@ function OurPicks() {
         </div>
 
         <div className="ourpicks_gallery_visual ani b-c-gray b-t b-2 b-delay-4 flex">
-          <TransitionLink
-            to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[0]?.id}`}
+          <button
+            type="button"
+            onClick={(event) => openGalleryViewer(event, 0)}
             className="mg_li ourpicks_gallery_card flex_left ourpicks_gallery_card_main ani"
           >
-            <img src={GALLERY_ITEMS[0]?.img} alt="Magazine Image" />
-          </TransitionLink>
+            <img src={GALLERY_ITEMS[0]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
+          </button>
 
           <div className="flex_right b-l b-c-gray b-delay-10">
             <div className="ourpicks_gallery_title ani">
@@ -291,21 +866,23 @@ function OurPicks() {
             </div>
 
             <div className="img_s_w">
-              <TransitionLink
-                to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[1]?.id}`}
+              <button
+                type="button"
+                onClick={(event) => openGalleryViewer(event, 1)}
                 className="mg_li ourpicks_gallery_card ourpicks_gallery_card_sub ani"
               >
-                <img src={GALLERY_ITEMS[1]?.img} alt="Magazine Image" />
+                <img src={GALLERY_ITEMS[1]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
                 <span className="body-m fadeX-8">2025 A/W<br />Collection</span>
-              </TransitionLink>
+              </button>
 
-              <TransitionLink
-                to={`/magazine/${GALLERY_CATEGORY}/post/${GALLERY_ITEMS[2]?.id}`}
+              <button
+                type="button"
+                onClick={(event) => openGalleryViewer(event, 2)}
                 className="mg_li ourpicks_gallery_card ourpicks_gallery_card_side ani"
               >
                 <span className="body-m fadeX-8">2026 S/S<br />Collection</span>
-                <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" />
-              </TransitionLink>
+                <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
+              </button>
             </div>
           </div>
         </div>
@@ -340,14 +917,165 @@ function OurPicks() {
           >
             {PLAY_ITEMS.map((item, index) => (
               <SwiperSlide className={`ourpicks_play_slide ${getPlayTypeClass(index)}`} key={item.id}>
-                <TransitionLink to={`/magazine/${PLAY_CATEGORY}/post/${item.id}`} className="ourpicks_play_link">
-                  <img src={item.img} alt="Magazine Image" />
-                </TransitionLink>
+                <button
+                  type="button"
+                  className="ourpicks_play_link"
+                  onClick={(event) => openPlayViewer(event, index)}
+                  ref={(element) => {
+                    playItemRefs.current[index] = element;
+                  }}
+                >
+                  <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
+                </button>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
       </section>
+
+      {shouldRenderGalleryViewer && <div
+        className={`gallery_viewer ${isGalleryViewerOpen ? "active" : ""}`}
+        aria-hidden={!isGalleryViewerOpen}
+        aria-modal="true"
+        role="dialog"
+      >
+        <div
+          className="gallery_viewer_scroll"
+          ref={galleryViewerScrollRef}
+          onScroll={handleGalleryViewerScroll}
+        >
+          <div
+            className="gallery_viewer_space"
+            ref={galleryViewerContentRef}
+            style={{ height: `${Math.max(galleryViewerItems.length, 1) * 100}vh` }}
+          >
+            <div className="gallery_viewer_stage">
+              <div className="gallery_viewer_left">
+                <button type="button" className="gallery_viewer_close body-m" onClick={closeGalleryViewer}>
+                  Close
+                </button>
+                <h2
+                  className="gallery_viewer_title apprael display-s text-effect apprael_all"
+                  data-id={galleryViewerItem?.id}
+                  data-category={galleryViewerItem?.category}
+                  data-splitting
+                  data-effect17
+                  key={activeGalleryViewerItems[0]?.parentId || activeGalleryViewerItems[0]?.id || "ourpicks-gallery-viewer-title"}
+                  ref={galleryViewerTitleRef}
+                >
+                  {galleryViewerItem?.date} {galleryViewerItem?.title}
+                </h2>
+                <div className="gallery_viewer_hint body-m">
+                  <span>Scroll</span>
+                  <span aria-hidden="true">v</span>
+                </div>
+              </div>
+
+              <div className="gallery_viewer_visual">
+                <div className="gallery_viewer_count gallery_viewer_count_start body-m">
+                  {String(galleryViewerCurrentIndex + 1).padStart(2, "0")}
+                </div>
+                <div className="gallery_viewer_image_stack" ref={galleryViewerImageStackRef}>
+                  {galleryViewerItems.map((item, index) => (
+                    <div
+                      className="gallery_viewer_layer"
+                      key={item.id}
+                      ref={(element) => {
+                        galleryViewerLayerRefs.current[index] = element;
+                      }}
+                      style={{ zIndex: index + 1 }}
+                    >
+                      <img src={item.img} alt="Magazine Image" />
+                    </div>
+                  ))}
+                </div>
+                <div className="gallery_viewer_count gallery_viewer_count_end body-m">
+                  {String(galleryViewerItems.length).padStart(2, "0")}
+                </div>
+              </div>
+
+              <div
+                className="gallery_viewer_thumbs_wrap"
+                ref={galleryViewerThumbsWrapRef}
+                aria-label="Gallery thumbnails"
+              >
+                <div className="gallery_viewer_thumbs" ref={galleryViewerThumbsRef}>
+                  {galleryViewerItems.map((item, index) => (
+                    <button
+                      type="button"
+                      className={`gallery_viewer_thumb ${galleryViewerCurrentIndex === index ? "active" : ""}`}
+                      key={item.id}
+                      ref={(element) => {
+                        galleryViewerThumbRefs.current[index] = element;
+                      }}
+                      onClick={() => handleGalleryViewerThumbClick(index)}
+                    >
+                      <img src={item.img} alt="" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>}
+
+      {shouldRenderPlayViewer && <div className={`play_viewer ${playViewerOpen ? "active" : ""} ${playViewerReady ? "ready" : ""}`} aria-hidden={!playViewerOpen}>
+        <button type="button" className="play_viewer_close" onClick={closePlayViewer} aria-label="Close">
+          <span></span>
+          <span></span>
+        </button>
+        <div className="play_viewer_bg" aria-hidden="true"></div>
+        <div className="play_viewer_stage">
+          <Swiper
+            className="play_viewer_swiper"
+            slidesPerView="auto"
+            centeredSlides
+            direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
+            initialSlide={activePlayIndex}
+            speed={800}
+            spaceBetween={120}
+            breakpoints={{
+              0: {
+                direction: "vertical",
+              },
+              1025: {
+                direction: "horizontal",
+                spaceBetween: 120,
+              },
+            }}
+            slideToClickedSlide
+            onSwiper={(swiper) => {
+              playViewerSwiperRef.current = swiper;
+              swiper.slideTo(activePlayIndex, 0);
+            }}
+            onSlideChange={(swiper) => {
+              setActivePlayIndex(swiper.activeIndex);
+              setActivePlayAspect(getPlayAspect(swiper.activeIndex));
+            }}
+          >
+            {PLAY_ITEMS.map((item, index) => (
+              <SwiperSlide
+                className={`play_viewer_slide ${getPlayTypeClass(index)}`}
+                key={item.id}
+                ref={(element) => {
+                  playViewerSlideRefs.current[index] = element;
+                }}
+              >
+                <button type="button" className="play_viewer_slide_btn">
+                  <img src={item.img} alt={item.title} />
+                </button>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div
+            className="play_viewer_frame"
+            ref={playViewerFrameRef}
+            aria-hidden="true"
+            style={{ "--play-viewer-aspect": activePlayAspect }}
+          ></div>
+        </div>
+      </div>}
       
     </div>
   );
