@@ -202,9 +202,8 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       
     
     }
-    .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); height:calc(100% - 110vh); /*overflow: hidden;*/ position: fixed; left: 0; bottom: 0; width: 100%; height: unset;
-      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); top: 100%; position: relative;
-    transform: unset;
+    .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); height:calc(100% - 110vh); /*overflow: hidden;*/ /*position: fixed; left: 0; bottom: 0; width: 100%; height: unset;*/ top: 110vh; bottom: unset;
+      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); top: 100%; 
         .btn_all{position: unset;}
         a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
         }

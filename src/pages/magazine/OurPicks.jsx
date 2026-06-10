@@ -737,7 +737,7 @@ function OurPicks() {
 
   return (
     <div className="ourpicks_page">
-      <div ref={stickyWrapRef} className={`sticky_w ani ${isStickyNavActive ? "active" : ""}`}>
+      <div ref={stickyWrapRef} className="sticky_w ani active">
         <ul className="mg_nav b-t b-delay-4">
           {tabs.map((tab, i) => (
             <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fade-${1 + i}`}>
