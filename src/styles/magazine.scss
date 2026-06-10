@@ -253,8 +253,8 @@ body.gallery-controls-active{
           .txt{width: unset;}
         }
       }
-      .mg_nav{gap: 4px; padding: 4px; margin-left: -5.556vw; overflow-x: scroll; width: calc(100% + 11.111vw); justify-content: unset; /*background-color: var(--bg-gray-1);*/
-        &::before{width:0;}
+      .mg_nav{gap: 4px; padding: 4px; margin-left: -5.556vw; overflow-x: scroll; width: calc(100% + 11.111vw); justify-content: unset; background-color: var(--bg-gray-1);     clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition: clip-path 1s cubic-bezier(0, 0, 0.43, 1.06); transition-delay: 0.0s;
+        &::before{content: none;}
         
         .btn_all{position: unset;}
         a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
@@ -268,6 +268,7 @@ body.gallery-controls-active{
       }
       &.active {
         .mg_title_right::before{width: 100%;}
+        .mg_nav{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);}
         .mg_nav::before{width: 100%;}
       }
     }
