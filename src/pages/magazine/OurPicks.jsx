@@ -740,7 +740,7 @@ function OurPicks() {
       <div ref={stickyWrapRef} className="sticky_w ani active">
         <ul className="mg_nav b-t b-delay-4">
           {tabs.map((tab, i) => (
-            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fade-${1 + i}`}>
+            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fadeFake-${1 + i}`}>
               <TransitionLink
                 to={getListUrl(tab.path)}
                 state={{ fromMagazineTab: true }}
