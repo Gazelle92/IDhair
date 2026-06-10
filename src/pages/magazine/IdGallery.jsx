@@ -250,11 +250,7 @@ function IdGallery({ currentPage = 1 }) {
     const otherItems = galleryItems.filter((li) => li !== item);
     const itemId = Number(event.currentTarget.dataset.itemId);
     const selectedItem = pageItems.find((pageItem) => pageItem.id === itemId);
-    const selectedViewerItems = pageItems;
-    const selectedViewerIndex = Math.max(
-      0,
-      selectedViewerItems.findIndex((pageItem) => pageItem.id === selectedItem?.id)
-    );
+    const selectedViewerItems = selectedItem?.images?.length ? selectedItem.images : [selectedItem].filter(Boolean);
 
     removeTransitionClone();
     transitionCloneRef.current = clone;
@@ -274,8 +270,8 @@ function IdGallery({ currentPage = 1 }) {
     zoomedItemRef.current = item;
     item.classList.add("is_zoomed");
     setActiveViewerItems(selectedViewerItems);
-    setViewerStartIndex(selectedViewerIndex);
-    setViewerCurrentIndex(selectedViewerIndex);
+    setViewerStartIndex(0);
+    setViewerCurrentIndex(0);
     setIsGalleryViewerOpen(false);
 
     requestAnimationFrame(() => {

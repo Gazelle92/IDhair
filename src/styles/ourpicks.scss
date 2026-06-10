@@ -44,7 +44,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
 
   .ourpicks_news_body {display: grid; grid-template-columns: minmax(0, 7fr) minmax(21.818vw, 5fr); gap: 2.424vw; padding-top: 2.424vw;}
 
-  .ourpicks_news_preview {transform: scale(1.05); opacity: 0; transition: all 1.4s ease; transition-delay: 1s; position: relative; overflow: hidden; background-color: #ededed; /*aspect-ratio: 16 / 9;*/
+  .ourpicks_news_preview {transform: scale(1.05); opacity: 0; transition: all 1.4s ease; transition-delay: 0.4s; position: relative; overflow: hidden; background-color: #ededed; /*aspect-ratio: 16 / 9;*/
     img {position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; opacity: 1; clip-path: inset(100% 0% 0% 0%); z-index: 1; will-change: clip-path;}
 
     .ourpicks_news_preview_img {

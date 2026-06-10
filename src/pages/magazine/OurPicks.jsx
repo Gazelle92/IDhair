@@ -310,9 +310,11 @@ function OurPicks() {
     galleryZoomTimelineRef.current?.kill();
     galleryZoomedItemRef.current = item;
     item.classList.add("is_zoomed");
-    setActiveGalleryViewerItems(GALLERY_ITEMS);
-    setGalleryViewerStartIndex(index);
-    setGalleryViewerCurrentIndex(index);
+    const selectedViewerItems = GALLERY_ITEMS[index]?.images?.length ? GALLERY_ITEMS[index].images : [GALLERY_ITEMS[index]].filter(Boolean);
+
+    setActiveGalleryViewerItems(selectedViewerItems);
+    setGalleryViewerStartIndex(0);
+    setGalleryViewerCurrentIndex(0);
     setIsGalleryViewerOpen(false);
 
     requestAnimationFrame(() => {
@@ -732,7 +734,7 @@ function OurPicks() {
       <div ref={stickyWrapRef} className={`sticky_w ani ${isStickyNavActive ? "active" : ""}`}>
         <ul className="mg_nav b-t b-delay-4">
           {tabs.map((tab, i) => (
-            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fade-${6 + i}`}>
+            <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fade-${1 + i}`}>
               <TransitionLink
                 to={getListUrl(tab.path)}
                 state={{ fromMagazineTab: true }}
@@ -771,10 +773,10 @@ function OurPicks() {
             ))}
           </div>
 
-          <ul className="ourpicks_news_list b-l b-delay-10">
+          <ul className="ourpicks_news_list b-l b-delay-6">
             {NEWS_ITEMS.map((item, index) => (
               <li
-                className={`ourpicks_news_item fadeX-${index + 12} ${activeNewsIndex === index ? "active" : ""}`}
+                className={`ourpicks_news_item fadeX-${1 + 3} ${activeNewsIndex === index ? "active" : ""}`}
                 key={item.id}
                 onMouseEnter={() => handleNewsEnter(index)}
                 onFocus={() => handleNewsEnter(index)}

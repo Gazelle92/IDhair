@@ -429,7 +429,7 @@ body.play-viewer-animating .play_viewer .play_viewer_swiper{opacity: 0;}
   .gallery_viewer_close{position: absolute; top: 2.424vw; left: 0; border: 0; padding: 0; background: transparent; color: currentColor; cursor: pointer;}
   /*.gallery_viewer_title{font-size: clamp(52px, 6.25vw, 108px); line-height: 0.98; font-weight: 200; letter-spacing: 0;}*/
   .gallery_viewer_title{color: #00000000;
-    span{color: #000;}
+    span{color: #000;color: red;}
   }
   .gallery_viewer_hint{position: absolute; left: 0; bottom: 74px; display: flex; align-items: center; gap: 0.727vw;}
   .gallery_viewer_visual{position: relative; display: flex; justify-content: center; align-items: center; min-width: 0;}
