@@ -735,9 +735,37 @@ function OurPicks() {
     };
   }, []);
 
+  useEffect(() => {
+    const section = stickyWrapRef.current;
+    if (!section) return undefined;
+
+    const updateSectionActive = () => {
+      const currentScroll = window.scrollY;
+      const rect = section.getBoundingClientRect();
+      const sectionTop = rect.top + currentScroll;
+      const sectionStart = sectionTop - window.innerHeight;
+      const sectionEnd = sectionTop + section.offsetHeight - window.innerHeight;
+      const isActive = currentScroll >= sectionStart;
+      const isBottom = currentScroll > sectionEnd;
+
+      console.log("Current Scroll:", currentScroll, "Section Range:", sectionStart, sectionEnd, "Active:", isActive);
+      section.classList.toggle("active", isActive);
+      section.classList.toggle("bottom", isBottom);
+    };
+
+    updateSectionActive();
+    window.addEventListener("scroll", updateSectionActive, { passive: true });
+    window.addEventListener("resize", updateSectionActive);
+
+    return () => {
+      window.removeEventListener("scroll", updateSectionActive);
+      window.removeEventListener("resize", updateSectionActive);
+    };
+  }, []);
+
   return (
     <div className="ourpicks_page">
-      <div ref={stickyWrapRef} className="sticky_w ani active">
+      <div ref={stickyWrapRef} className="sticky_w">
         <ul className="mg_nav b-t b-delay-4">
           {tabs.map((tab, i) => (
             <li key={tab.path} className={`${tab.path === "our-picks" ? "btn_all" : ""} fadeFake-${1 + i}`}>

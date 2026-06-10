@@ -128,8 +128,15 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
 
     }
   }
-  .sticky_w{position: absolute; left: 2.424vw; bottom: -7.273vw; height: calc(100% - 80vw); width: calc(100% - 4.848vw); pointer-events: none; z-index: 2;
-    
+  .sticky_w{position: absolute; left: 2.424vw; bottom: -7.273vw; height: calc(100% - 80vw); width: calc(100% - 4.848vw); pointer-events: none; z-index: 2; pointer-events: none;
+    &.active{pointer-events: all;
+      .mg_nav{
+        &::before{width: 100%;}
+      }
+    }
+    &.bottom{
+      .mg_nav{position: sticky;}
+    } 
     .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden;
       &::before{content: ''; display: block; position: absolute; left: 0; top: 0; width: 0%; height: 100%; background-color: rgb(237 237 237 / 10%); backdrop-filter: blur(20px); border-radius: 0.242vw;}
       
@@ -202,8 +209,14 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       
     
     }
-    .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); height:calc(100% - 110vh); /*overflow: hidden;*/ position: fixed; left: 0; bottom: 0; width: 100%; height: unset;
-      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); top: 100%; position: relative;
+    .sticky_w{left: -5.556vw; bottom: 12vw; width: calc(100% + (5.556vw * 2)); height:calc(100% - 110vh); /*overflow: hidden;*/ /*position: fixed; left: 0; bottom: 0; width: 100%; height: unset;*/
+      &.active{
+      .mg_nav{position: fixed; left: 0; bottom: 0; top: unset;}
+      } 
+      &.bottom{
+        .mg_nav{position: absolute; left: 0; bottom: 0; top: unset;}
+      } 
+      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); bottom: 0; position: fixed;
     transform: unset;
         .btn_all{position: unset;}
         a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
