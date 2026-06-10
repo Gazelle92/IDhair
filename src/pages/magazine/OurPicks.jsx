@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import TransitionLink from "../../components/TransitionLink";
-import { eventItems, familyItems, galleryItems, magazinePageSettings, makeMagazineItems } from "./magazineConfig";
+import { eventItems, familyItems, galleryItems, magazinePageSettings, makeMagazineItems, playItems } from "./magazineConfig";
 
 const NEWS_CATEGORY = "id-news";
 const EVENT_CATEGORY = "id-event";
@@ -56,7 +56,7 @@ const GALLERY_ITEMS = galleryItems(
   magazinePageSettings[GALLERY_CATEGORY].totalItems
 );
 
-const PLAY_ITEMS = makeMagazineItems(
+const PLAY_ITEMS = playItems(
   PLAY_CATEGORY,
   "id PLAY layout",
   magazinePageSettings[PLAY_CATEGORY].totalItems
@@ -117,6 +117,7 @@ function OurPicks() {
   const [playViewerReady, setPlayViewerReady] = useState(false);
   const [activePlayIndex, setActivePlayIndex] = useState(0);
   const [activePlayAspect, setActivePlayAspect] = useState(getPlayAspect(0));
+  const [activePlayViewerItems, setActivePlayViewerItems] = useState([]);
   const previewRefs = useRef([]);
   const gallerySectionRef = useRef(null);
   const stickyWrapRef = useRef(null);
@@ -147,6 +148,7 @@ function OurPicks() {
   const galleryViewerItems = activeGalleryViewerItems;
   const galleryViewerItem = galleryViewerItems[galleryViewerCurrentIndex] || galleryViewerItems[0];
   const shouldRenderGalleryViewer = isGalleryViewerOpen || activeGalleryViewerItems.length > 0;
+  const playViewerItems = activePlayViewerItems;
   const shouldRenderPlayViewer = playViewerOpen || Boolean(activePlaySourceImageRef.current);
 
   const handleNewsEnter = (index) => {
@@ -446,22 +448,25 @@ function OurPicks() {
     document.body.classList.add("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
     window.lenis?.stop?.();
     flushSync(() => {
-      setActivePlayIndex(index);
-      setActivePlayAspect(getPlayAspect(index));
+      const selectedViewerItems = PLAY_ITEMS[index]?.images?.length ? PLAY_ITEMS[index].images : [PLAY_ITEMS[index]].filter(Boolean);
+
+      setActivePlayViewerItems(selectedViewerItems);
+      setActivePlayIndex(0);
+      setActivePlayAspect(getPlayAspect(0));
       setPlayViewerReady(false);
       setPlayViewerOpen(true);
     });
     playViewerSwiperRef.current?.update();
-    playViewerSwiperRef.current?.slideTo(index, 0, false);
+    playViewerSwiperRef.current?.slideTo(0, 0, false);
 
     requestAnimationFrame(() => {
       playViewerSwiperRef.current?.update();
-      playViewerSwiperRef.current?.slideTo(index, 0, false);
+      playViewerSwiperRef.current?.slideTo(0, 0, false);
       requestAnimationFrame(() => {
         playViewerSwiperRef.current?.update();
-        playViewerSwiperRef.current?.slideTo(index, 0, false);
+        playViewerSwiperRef.current?.slideTo(0, 0, false);
         requestAnimationFrame(() => {
-          const targetSlide = playViewerSlideRefs.current[index];
+          const targetSlide = playViewerSlideRefs.current[0];
           const targetRect = targetSlide?.getBoundingClientRect() || playViewerFrameRef.current?.getBoundingClientRect();
           if (!targetRect) return;
 
@@ -488,11 +493,11 @@ function OurPicks() {
   const closePlayViewer = () => {
     const target = playViewerFrameRef.current;
     const originalSourceImage = activePlaySourceImageRef.current;
-    const currentSourceImage = playItemRefs.current[activePlayIndex]?.querySelector("img");
-    const sourceImage = currentSourceImage || originalSourceImage;
+    const sourceImage = originalSourceImage;
 
     if (!sourceImage || !target) {
       showPlaySourceImage();
+      setActivePlayViewerItems([]);
       setPlayViewerOpen(false);
       setPlayViewerReady(false);
       document.body.classList.remove("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
@@ -502,13 +507,13 @@ function OurPicks() {
 
     const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
-    const clone = PLAY_ITEMS[activePlayIndex] ? document.createElement("img") : null;
+    const clone = playViewerItems[activePlayIndex] ? document.createElement("img") : null;
     if (!clone) return;
 
     playTimelineRef.current?.kill();
     removePlayClone();
 
-    clone.src = PLAY_ITEMS[activePlayIndex].img;
+    clone.src = playViewerItems[activePlayIndex].img;
     clone.alt = "";
     clone.className = "play_transition_clone";
     document.body.appendChild(clone);
@@ -530,6 +535,7 @@ function OurPicks() {
       onComplete: () => {
         gsap.set(sourceImage, { clearProps: "visibility" });
         activePlaySourceImageRef.current = null;
+        setActivePlayViewerItems([]);
         removePlayClone();
         document.body.classList.remove("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
         window.lenis?.start?.();
@@ -849,7 +855,7 @@ function OurPicks() {
           </TransitionLink>
         </div>
 
-        <div className="ourpicks_gallery_visual ani b-c-gray b-t b-2 b-delay-4 flex">
+        <div className="ourpicks_gallery_visual ani b-t b-2 b-delay-4 flex">
           <button
             type="button"
             onClick={(event) => openGalleryViewer(event, 0)}
@@ -1034,7 +1040,7 @@ function OurPicks() {
             slidesPerView="auto"
             centeredSlides
             direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
-            initialSlide={activePlayIndex}
+            initialSlide={0}
             speed={800}
             spaceBetween={120}
             breakpoints={{
@@ -1049,14 +1055,14 @@ function OurPicks() {
             slideToClickedSlide
             onSwiper={(swiper) => {
               playViewerSwiperRef.current = swiper;
-              swiper.slideTo(activePlayIndex, 0);
+              swiper.slideTo(0, 0);
             }}
             onSlideChange={(swiper) => {
               setActivePlayIndex(swiper.activeIndex);
               setActivePlayAspect(getPlayAspect(swiper.activeIndex));
             }}
           >
-            {PLAY_ITEMS.map((item, index) => (
+            {playViewerItems.map((item, index) => (
               <SwiperSlide
                 className={`play_viewer_slide ${getPlayTypeClass(index)}`}
                 key={item.id}

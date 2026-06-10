@@ -58,6 +58,31 @@ export const makeMagazineItems = (category, title, totalItems) =>
     };
   });
 
+export const playItems = (category, title, totalItems) =>
+  Array.from({ length: totalItems }, (_, index) => {
+    const id = index + 1;
+
+    return {
+      id,
+      category,
+      date: "2026.03.10",
+      title: `${title} ${id}`,
+      img: `/img/mg_list_${(index % 4) + 1}.jpg`,
+      images: Array.from({ length: 8 }, (_, imageIndex) => {
+        const imageId = imageIndex + 1;
+
+        return {
+          id: `${id}-${imageId}`,
+          parentId: id,
+          category,
+          date: "2026.03.10",
+          title: `${title} ${id}`,
+          img: `/img/mg_list_${((index + imageIndex) % 4) + 1}.jpg`,
+        };
+      }),
+    };
+  });
+
 
   export const familyItems = (category, title, totalItems) =>
   Array.from({ length: totalItems }, (_, index) => {

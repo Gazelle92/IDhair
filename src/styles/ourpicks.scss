@@ -9,6 +9,9 @@ body.ourpicks-gallery-active main.page_magazine {background-color: #8e929b;}
 body.ourpicks-gallery-active .page_magazine {color: #fff;
   a,button {color: #fff;}
   .txt-gray {color: rgb(255 255 255 / 52%);}
+
+  .ourpicks_gallery_visual::before{background-color: #D2D1D3;}
+  .ourpicks_gallery_visual .flex_right::before{border-color: #D2D1D3;}
 }
 
 .page_magazine.our-picks{
@@ -75,9 +78,10 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
 
 
   .ourpicks_gallery_visual{display: flex; padding-top: 2.424vw;
+    &::before{background-color: #000;}
     .flex_left{width: calc((100% / 12) * 5); font-size: 0;}
     .flex_right{flex-direction: column; display: flex; width: calc((100% / 12) * 7); padding-left: 6.061vw; justify-content: space-between;
-      &::before{left: 2.424vw; border-left: 1px dashed #fff; background-color: unset;}
+      &::before{left: 2.424vw; border-left: 1px dashed #000; background-color: unset;}
       .ourpicks_gallery_title{
         h3{margin-bottom: 1.212vw;}
       }
@@ -100,7 +104,12 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       &.ourpicks_gallery_card_side img{transition-delay: 0.4s;}
       &.active img{transform: scale(1); opacity: 1;}
     }
+
     
+  }
+  .ourpicks_news.ourpicks_gallery{
+    .ani span, .ani p, .ani a{transition: clip-path 1s cubic-bezier(0, 0, 0.43, 1.06), color 0.3s cubic-bezier(0, 0, 0.43, 1.06);}
+    .ourpicks_view_all{transition: clip-path 1s cubic-bezier(0, 0, 0.43, 1.06), color 0.3s cubic-bezier(0, 0, 0.43, 1.06);}
   }
 
   .ourpicks_play{opacity: 0; transition: opacity 1.4s ease; padding-bottom: 4.2424vw;
@@ -195,6 +204,10 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     }
     .sticky_w{left: -5.556vw; bottom: 20px; width: calc(100% + (5.556vw * 2)); height:calc(100% - 110vh); /*overflow: hidden;*/
       .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); top: 100%;
+            position: fixed;
+    top: unset;
+    bottom: 0;
+    transform: unset;
         .btn_all{position: unset;}
         a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
         }

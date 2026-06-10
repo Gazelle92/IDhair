@@ -3,10 +3,10 @@ import { flushSync } from "react-dom";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { magazinePageSettings, makeMagazineItems } from "./magazineConfig";
+import { magazinePageSettings, playItems } from "./magazineConfig";
 
 const CATEGORY = "id-play";
-const ITEMS = makeMagazineItems(
+const ITEMS = playItems(
   CATEGORY,
   "id PLAY layout",
   magazinePageSettings[CATEGORY].totalItems
@@ -29,7 +29,9 @@ function IdPlay() {
   const [viewerReady, setViewerReady] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeAspect, setActiveAspect] = useState(getPlayAspect(0));
+  const [activeViewerItems, setActiveViewerItems] = useState([]);
   const pageItems = ITEMS.slice(0, visibleCount);
+  const viewerItems = activeViewerItems;
   const hasMoreItems = visibleCount < ITEMS.length;
   const viewerFrameRef = useRef(null);
   const cloneRef = useRef(null);
@@ -86,24 +88,27 @@ function IdPlay() {
     document.body.classList.add("play-viewer-animating");
     window.lenis?.stop?.();
     flushSync(() => {
-      setActiveIndex(index);
-      setActiveAspect(getPlayAspect(index));
+      const selectedViewerItems = pageItems[index]?.images?.length ? pageItems[index].images : [pageItems[index]].filter(Boolean);
+
+      setActiveViewerItems(selectedViewerItems);
+      setActiveIndex(0);
+      setActiveAspect(getPlayAspect(0));
       setViewerReady(false);
       setViewerOpen(true);
     });
     swiperRef.current?.update();
-    swiperRef.current?.slideTo(index, 0, false);
+    swiperRef.current?.slideTo(0, 0, false);
 
     requestAnimationFrame(() => {
       swiperRef.current?.update();
-      swiperRef.current?.slideTo(index, 0, false);
+      swiperRef.current?.slideTo(0, 0, false);
 
       requestAnimationFrame(() => {
         swiperRef.current?.update();
-        swiperRef.current?.slideTo(index, 0, false);
+        swiperRef.current?.slideTo(0, 0, false);
 
         requestAnimationFrame(() => {
-          const targetSlide = viewerSlideRefs.current[index];
+          const targetSlide = viewerSlideRefs.current[0];
           const targetRect = targetSlide?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
 
           if (!targetRect) return;
@@ -135,11 +140,11 @@ function IdPlay() {
   const closeViewer = () => {
     const target = viewerFrameRef.current;
     const originalSourceImage = activeSourceImageRef.current;
-    const currentSourceImage = playItemRefs.current[activeIndex]?.querySelector("img");
-    const sourceImage = currentSourceImage || originalSourceImage;
+    const sourceImage = originalSourceImage;
 
     if (!sourceImage || !target) {
       showSourceImage();
+      setActiveViewerItems([]);
       setViewerOpen(false);
       setViewerReady(false);
       document.body.classList.remove("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
@@ -149,13 +154,13 @@ function IdPlay() {
 
     const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
-    const clone = ITEMS[activeIndex] ? document.createElement("img") : null;
+    const clone = viewerItems[activeIndex] ? document.createElement("img") : null;
     if (!clone) return;
 
     timelineRef.current?.kill();
     removeClone();
 
-    clone.src = ITEMS[activeIndex].img;
+    clone.src = viewerItems[activeIndex].img;
     clone.alt = "";
     clone.className = "play_transition_clone";
     document.body.appendChild(clone);
@@ -186,6 +191,7 @@ function IdPlay() {
       onComplete: () => {
         gsap.set(sourceImage, { clearProps: "visibility" });
         activeSourceImageRef.current = null;
+        setActiveViewerItems([]);
         removeClone();
         document.body.classList.remove("play-viewer-locked", "play-viewer-zooming");
         document.body.classList.remove("play-viewer-animating");
@@ -240,7 +246,7 @@ function IdPlay() {
             slidesPerView="auto"
             centeredSlides
             direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
-            initialSlide={activeIndex}
+            initialSlide={0}
             speed={800}
             spaceBetween={120}
             breakpoints={{
@@ -256,14 +262,14 @@ function IdPlay() {
             slideToClickedSlide
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
-              swiper.slideTo(activeIndex, 0);
+              swiper.slideTo(0, 0);
             }}
             onSlideChange={(swiper) => {
               setActiveIndex(swiper.activeIndex);
               setActiveAspect(getPlayAspect(swiper.activeIndex));
             }}
           >
-            {ITEMS.map((item, index) => (
+            {viewerItems.map((item, index) => (
               <SwiperSlide
                 className={`play_viewer_slide ${getTypeClass(index)}`}
                 key={item.id}
