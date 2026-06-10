@@ -3,7 +3,7 @@
     .mg_title{display: flex; justify-content: space-between; margin-bottom: 1.939vw; padding-bottom: 1.939vw; 
       &::before{background-color: unset; border-bottom: 1px dashed rgb(0, 0, 0, 0.25);}
     
-      h1{white-space: nowrap;
+      h1{white-space: nowrap;  transition: clip-path 1s ease, letter-spacing 1s ease; letter-spacing: -1vw; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
         span.char{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200; opacity: 0;}
       }
       .mg_title_right{text-align: right; padding-top:1.8vw; display: flex; flex-direction: column; align-items: flex-end; opacity: 1; transition: ease 0.3s opacity;
@@ -44,6 +44,12 @@
         .txt{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.4s ease all;}
       }
     }
+    &.active{
+      .mg_title{
+        h1{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); letter-spacing: 0;}
+      }
+    }
+    
   }
 
   .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw;

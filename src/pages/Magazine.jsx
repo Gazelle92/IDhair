@@ -146,7 +146,7 @@ function Magazine() {
     <main className={`page_magazine ${currentCategory} ${isTabMove ? "tab_move" : ""}`}>
       <section className="mg_head b-t b-2 ani" data-keep-active-on-route>
         <div className="mg_title b-b b-delay-0 ">
-          <h1 className="display-l apprael effect17-title apprael_all" data-splitting data-effect17 >ID MAGAZINE</h1>
+          <h1 className="display-l apprael  apprael_all" >ID MAGAZINE</h1>
           <div className={`mg_title_right  ${isTitleTabOut ? "tab_out" : ""}`}>
             <h4 className="gt display-xs fadeX-2">{displayTabName}</h4>
             <div className="body-m fadeX-3 txt">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
