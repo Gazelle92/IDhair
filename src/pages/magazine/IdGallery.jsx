@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Lenis from "lenis";
-import Splitting from "splitting";
 import { getPageItems, magazinePageSettings, galleryItems } from "./magazineConfig";
 
 const CATEGORY = "id-gallery";
@@ -112,7 +111,7 @@ function IdGallery({ currentPage = 1 }) {
     }
   };
 
-  const resetGalleryZoom = (list) => {
+  const resetGalleryZoom = () => {
     const items = getGalleryDomItems();
     const images = items.map(getGalleryZoomImage).filter(Boolean);
     const currentItem = zoomedItemRef.current;
@@ -193,7 +192,7 @@ function IdGallery({ currentPage = 1 }) {
       .to(items, { opacity: 1, scale: 1 }, 0);
   };
 
-  const clearGalleryZoom = (list) => {
+  const clearGalleryZoom = () => {
     const items = getGalleryDomItems();
     const images = items.map(getGalleryZoomImage).filter(Boolean);
 

@@ -108,7 +108,6 @@ const getViewerImageStackTarget = (stackElement) => {
 
 function OurPicks() {
   const [activeNewsIndex, setActiveNewsIndex] = useState(0);
-  const [isStickyNavActive, setIsStickyNavActive] = useState(false);
   const [isGalleryViewerOpen, setIsGalleryViewerOpen] = useState(false);
   const [galleryViewerStartIndex, setGalleryViewerStartIndex] = useState(0);
   const [galleryViewerCurrentIndex, setGalleryViewerCurrentIndex] = useState(0);
@@ -121,8 +120,6 @@ function OurPicks() {
   const previewRefs = useRef([]);
   const gallerySectionRef = useRef(null);
   const stickyWrapRef = useRef(null);
-  const stickyTriggerTopRef = useRef(0);
-  const isStickyNavActiveRef = useRef(false);
   const galleryZoomedItemRef = useRef(null);
   const galleryZoomTimelineRef = useRef(null);
   const galleryTransitionCloneRef = useRef(null);
@@ -149,7 +146,7 @@ function OurPicks() {
   const galleryViewerItem = galleryViewerItems[galleryViewerCurrentIndex] || galleryViewerItems[0];
   const shouldRenderGalleryViewer = isGalleryViewerOpen || activeGalleryViewerItems.length > 0;
   const playViewerItems = activePlayViewerItems;
-  const shouldRenderPlayViewer = playViewerOpen || Boolean(activePlaySourceImageRef.current);
+  const shouldRenderPlayViewer = playViewerOpen || playViewerItems.length > 0;
 
   const handleNewsEnter = (index) => {
     if (index === activeNewsIndex) return;
@@ -587,39 +584,6 @@ function OurPicks() {
       window.removeEventListener("scroll", updateGalleryBackground);
       window.removeEventListener("resize", updateGalleryBackground);
       document.body.classList.remove("ourpicks-gallery-active");
-    };
-  }, []);
-
-  useEffect(() => {
-    const stickyWrap = stickyWrapRef.current;
-    if (!stickyWrap) return undefined;
-
-    const refreshStickyTop = () => {
-      stickyTriggerTopRef.current = stickyWrap.getBoundingClientRect().top + window.scrollY;
-    };
-
-    const updateStickyNavActive = () => {
-      const nextIsActive = window.scrollY >= stickyTriggerTopRef.current;
-      if (isStickyNavActiveRef.current === nextIsActive) return;
-
-      isStickyNavActiveRef.current = nextIsActive;
-      setIsStickyNavActive(nextIsActive);
-    };
-
-    const refreshStickyNav = () => {
-      refreshStickyTop();
-      updateStickyNavActive();
-    };
-
-    refreshStickyNav();
-    window.addEventListener("scroll", updateStickyNavActive, { passive: true });
-    window.addEventListener("resize", refreshStickyNav);
-    window.addEventListener("load", refreshStickyNav);
-
-    return () => {
-      window.removeEventListener("scroll", updateStickyNavActive);
-      window.removeEventListener("resize", refreshStickyNav);
-      window.removeEventListener("load", refreshStickyNav);
     };
   }, []);
 

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { gsap } from "gsap";
 import Splitting from "splitting";
@@ -29,12 +29,10 @@ function Magazine() {
 
   const currentCategory = category || "our-picks";
   const isTabMove = location.state?.fromMagazineTab === true;
-  const [isTitleTabOut, setIsTitleTabOut] = useState(false);
   const currentPage = Number(pageSlug?.replace("list-", "") || 1);
   const totalPages = getTotalPages(currentCategory);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
   const currentTabName = tabs.find((tab) => tab.path === currentCategory)?.name || tabs[0].name;
-  const [displayTabName, setDisplayTabName] = useState(currentTabName);
   const showPagination = currentCategory !== "id-play";
 
   const listComponents = {
@@ -49,25 +47,6 @@ function Magazine() {
   const getListUrl = (category, page = 1) => {
     return page === 1 ? `/magazine/${category}` : `/magazine/${category}/list-${page}`;
   };
-
-  useEffect(() => {
-    if (!isTabMove) {
-      setDisplayTabName(currentTabName);
-      setIsTitleTabOut(false);
-      return;
-    }
-
-    setIsTitleTabOut(true);
-
-    const timer = setTimeout(() => {
-      setDisplayTabName(currentTabName);
-      setIsTitleTabOut(false);
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [currentCategory, currentTabName, isTabMove]);
 
   useLayoutEffect(() => {
     Splitting();
@@ -147,8 +126,8 @@ function Magazine() {
       <section className="mg_head b-t b-2 ani" data-keep-active-on-route>
         <div className="mg_title b-b b-delay-0 ">
           <h1 className="display-l apprael  apprael_all apprael_ani" >ID MAGAZINE</h1>
-          <div className={`mg_title_right  ${isTitleTabOut ? "tab_out" : ""}`}>
-            <h4 className="gt display-xs fadeX-2">{displayTabName}</h4>
+          <div className="mg_title_right">
+            <h4 className="gt display-xs fadeX-2">{currentTabName}</h4>
             <div className="body-m fadeX-3 txt">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
             <div className="body-m fadeX-4 txt">라이프스타일을 담은 이야기를 전합니다.</div>
           </div>

@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 
+const checkCursorActive = () => {
+  const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  const isSmall = window.innerWidth <= 1024;
+
+  return !(isTouch || isSmall);
+};
+
 const CursorFollower = () => {
   const [cursorClass, setCursorClass] = useState("");
-  const [isCursorActive, setIsCursorActive] = useState(false);
+  const [isCursorActive, setIsCursorActive] = useState(() => checkCursorActive());
   const [isHidden, setIsHidden] = useState(false);
 
-  const checkCursorActive = () => {
-    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    const isSmall = window.innerWidth <= 1024;
-
-    return !(isTouch || isSmall);
-  };
-
-  const updateCursorMode = () => {
-    setIsCursorActive(checkCursorActive());
-  };
-
   useEffect(() => {
-    updateCursorMode();
+    const updateCursorMode = () => {
+      setIsCursorActive(checkCursorActive());
+    };
+
     window.addEventListener("resize", updateCursorMode);
     return () => window.removeEventListener("resize", updateCursorMode);
   }, []);

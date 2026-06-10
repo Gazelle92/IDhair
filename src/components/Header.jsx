@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import TransitionLink from "./TransitionLink";
+import Salon from "./Salon";
 import "../styles/header.scss";
 
 function Header() {
   const [navOpen, setNavOpen] = useState(false);
+  const [salonOpen, setSalonOpen] = useState(false);
   const [navHide, setNavHide] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
 
@@ -68,9 +70,13 @@ function Header() {
             <span></span>
           </button>
 
-          <TransitionLink to="/salon" className="salon_btn bg-ac-1 body-m">
+          <button
+            type="button"
+            className="salon_btn bg-ac-1 body-m"
+            onClick={() => setSalonOpen(true)}
+          >
             SALON
-          </TransitionLink>
+          </button>
         </div>
       </div>
 
@@ -116,6 +122,8 @@ function Header() {
           </div>
         </div>
       </nav>
+
+      <Salon open={salonOpen} onClose={() => setSalonOpen(false)} />
     </header>
   );
 }
