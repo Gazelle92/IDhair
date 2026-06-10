@@ -129,7 +129,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     }
   }
   .sticky_w{position: absolute; left: 2.424vw; bottom: -7.273vw; height: calc(100% - 80vw); width: calc(100% - 4.848vw); pointer-events: none; z-index: 2; pointer-events: none;
-    &.active{pointer-events: all;
+    &.active{
       .mg_nav{
         &::before{width: 100%;}
       }
@@ -137,7 +137,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     &.bottom{
       .mg_nav{position: sticky;}
     } 
-    .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden;
+    .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden; pointer-events: all;
       &::before{content: ''; display: block; position: absolute; left: 0; top: 0; width: 0%; height: 100%; background-color: rgb(237 237 237 / 10%); backdrop-filter: blur(20px); border-radius: 0.242vw;}
       
       a{background-color: #fff; border-radius: 0.242vw; padding: 0.303vw 1.212vw 0.182vw; cursor: pointer; transition: ease 0.3s all; position: relative; overflow: hidden; display: flex;
@@ -216,7 +216,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
       &.bottom{
         .mg_nav{position: absolute; left: 0; bottom: 0; top: unset;}
       } 
-      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); bottom: 0; position: fixed;
+      .mg_nav{gap: 4px; padding: 4px; margin-left: 0; overflow-x: scroll; width: unset; justify-content: unset; background-color: var(--bg-gray-1); bottom: 0; position: fixed; left: 0; width: 100%;
     transform: unset;
         .btn_all{position: unset;}
         a{padding: 1.389vw 3.333vw 0.833vw; white-space: nowrap; border-radius: 0.556vw;
