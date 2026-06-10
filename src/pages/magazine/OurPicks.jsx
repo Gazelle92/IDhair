@@ -663,50 +663,6 @@ function OurPicks() {
     };
   }, [isGalleryViewerOpen, galleryViewerStartIndex, galleryViewerItems.length]);
 
-  useEffect(() => {
-    const title = galleryViewerTitleRef.current;
-    if (!isGalleryViewerOpen || !title || !galleryViewerItem) return undefined;
-
-    let chars = [];
-    let isCancelled = false;
-    title.removeAttribute("data-effect17-ready");
-
-    import("splitting").then(({ default: Splitting }) => {
-      if (isCancelled) return;
-
-      Splitting({ target: title });
-      chars = Array.from(title.querySelectorAll(".char"));
-      chars.forEach((char) => {
-        gsap.set(char.parentNode, { perspective: 1000 });
-      });
-
-      gsap.fromTo(
-        chars,
-        {
-          opacity: 0,
-          rotateX: () => gsap.utils.random(-120, 120),
-          z: () => gsap.utils.random(-200, 200),
-          willChange: "opacity, transform",
-        },
-        {
-          opacity: 1,
-          rotateX: 0,
-          z: 0,
-          duration: 2.4,
-          ease: "power3.out",
-          stagger: 0.02,
-        }
-      );
-
-      title.setAttribute("data-effect17-ready", "true");
-    });
-
-    return () => {
-      isCancelled = true;
-      gsap.killTweensOf(chars);
-      title.removeAttribute("data-effect17-ready");
-    };
-  }, [isGalleryViewerOpen]);
 
   useEffect(() => {
     return () => {
@@ -894,7 +850,7 @@ function OurPicks() {
 
           <div className="flex_right b-l b-c-gray b-delay-10">
             <div className="ourpicks_gallery_title ani">
-              <h3 className="display-s text-effect apprael apprael_all ani" data-splitting data-effect17>
+              <h3 className="display-s apprael apprael_all ani apprael_ani">
                 <span>{GALLERY_ITEMS[0]?.date} S/S</span><br/>
                 <span>Collection</span>
               </h3>
@@ -991,11 +947,9 @@ function OurPicks() {
                   Close
                 </button>
                 <h2
-                  className="gallery_viewer_title apprael display-s text-effect apprael_all"
+                  className="gallery_viewer_title apprael display-s apprael_all apprael_ani"
                   data-id={galleryViewerItem?.id}
                   data-category={galleryViewerItem?.category}
-                  data-splitting
-                  data-effect17
                   key={activeGalleryViewerItems[0]?.parentId || activeGalleryViewerItems[0]?.id || "ourpicks-gallery-viewer-title"}
                   ref={galleryViewerTitleRef}
                 >

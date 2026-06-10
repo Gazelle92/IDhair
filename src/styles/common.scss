@@ -277,7 +277,12 @@ button{background-color: unset; border: unset; cursor: pointer;}
   
 }
 
-
+.apprael_ani{transition: clip-path 1s ease, letter-spacing 1.2s ease; letter-spacing: -0.6vw; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+  *{letter-spacing: -0.6vw; transition: clip-path 1s ease, letter-spacing 1.2s ease;}
+}
+.active .apprael_ani, .active.apprael_ani{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); letter-spacing: 0;
+  *{letter-spacing: 0;}
+}
 
 .cursor{position: fixed; top: 0; left: 0; z-index: 99; pointer-events: none; width: 10px; height: 10px; opacity: 1; transition: ease 0.5s opacity, ease 0.5s width, ease 0.5s height, ease 0.5s filter; transform: translate(-100px, -100px); will-change: transform; 
   .cursor-inner{width: 10px; height: 10px; border-radius: 100%; background-color: var(--bg-ac-1); backdrop-filter: blur(10px); transform: translate(-50%, -50%); transition: ease 0.3s all; position: absolute;

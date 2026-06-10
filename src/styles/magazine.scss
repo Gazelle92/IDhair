@@ -3,7 +3,7 @@
     .mg_title{display: flex; justify-content: space-between; margin-bottom: 1.939vw; padding-bottom: 1.939vw; 
       &::before{background-color: unset; border-bottom: 1px dashed rgb(0, 0, 0, 0.25);}
     
-      h1{white-space: nowrap;  transition: clip-path 1s ease, letter-spacing 1s ease; letter-spacing: -1vw; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+      h1{white-space: nowrap;
         span.char{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200; opacity: 0;}
       }
       .mg_title_right{text-align: right; padding-top:1.8vw; display: flex; flex-direction: column; align-items: flex-end; opacity: 1; transition: ease 0.3s opacity;
@@ -43,13 +43,7 @@
         h4{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.3s ease all;}
         .txt{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); transition-delay: 0.3s; transition:0.4s ease all;}
       }
-    }
-    &.active{
-      .mg_title{
-        h1{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); letter-spacing: 0;}
-      }
-    }
-    
+    }    
   }
 
   .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw;
@@ -162,7 +156,7 @@
     .mg_list_gallery_featured{
       .mg_li{padding: 0; position: relative; 
         .mg_a{display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;}
-        h1{position: absolute; left: 50%; transform: translateX(-50%); bottom: 1.212vw; z-index: 1; color: #fff; line-height: 1.1; font-weight: 300; padding: 0; letter-spacing: 0; z-index: 3; padding-top: 30vh; width: 100%; text-align: center;}
+        h1{position: absolute; left: 50%; transform: translateX(-50%); bottom: 1.212vw; z-index: 1; color: #fff; line-height: 1.1; font-weight: 300; padding: 0; letter-spacing: 0; z-index: 3; padding-top: 30vh; width: 100%; text-align: center; transition-delay: 0.6s;}
         .bg_blur{width: 100%; height: 100%; display: block; left: 0; top: 0; opacity: 0; position: absolute; backdrop-filter: blur(6.061vw); background-color: rgb(0 0 0 / 10%); z-index: 1;}
         .bg{transition-delay: 0.8s;}
         img{width: 100%; height: 100%; object-fit: cover;
@@ -435,7 +429,7 @@ body.play-viewer-animating .play_viewer .play_viewer_swiper{opacity: 0;}
   .gallery_viewer_left{position: relative; display: flex; flex-direction: column; justify-content: center; min-width: 0;}
   .gallery_viewer_close{position: absolute; top: 2.424vw; left: 0; border: 0; padding: 0; background: transparent; color: currentColor; cursor: pointer;}
   /*.gallery_viewer_title{font-size: clamp(52px, 6.25vw, 108px); line-height: 0.98; font-weight: 200; letter-spacing: 0;}*/
-  .gallery_viewer_title{color: #00000000;
+  .gallery_viewer_title{/*color: #00000000;*/
     span{color: #000;}
   }
   .gallery_viewer_hint{position: absolute; left: 0; bottom: 74px; display: flex; align-items: center; gap: 0.727vw;}

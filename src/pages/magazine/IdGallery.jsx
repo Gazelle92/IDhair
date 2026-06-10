@@ -439,45 +439,6 @@ function IdGallery({ currentPage = 1 }) {
     };
   }, [isGalleryViewerOpen, viewerStartIndex, viewerItems.length]);
 
-  useEffect(() => {
-    const title = viewerTitleRef.current;
-
-    if (!isGalleryViewerOpen || !title || !viewerItem) return undefined;
-
-    title.removeAttribute("data-effect17-ready");
-    Splitting({ target: title });
-
-    const chars = title.querySelectorAll(".char");
-
-    chars.forEach((char) => {
-      gsap.set(char.parentNode, { perspective: 1000 });
-    });
-
-    gsap.fromTo(
-      chars,
-      {
-        opacity: 0,
-        rotateX: () => gsap.utils.random(-120, 120),
-        z: () => gsap.utils.random(-200, 200),
-        willChange: "opacity, transform",
-      },
-      {
-        opacity: 1,
-        rotateX: 0,
-        z: 0,
-        duration: 2.4,
-        ease: "power3.out",
-        stagger: 0.02,
-      }
-    );
-
-    title.setAttribute("data-effect17-ready", "true");
-
-    return () => {
-      gsap.killTweensOf(chars);
-      title.removeAttribute("data-effect17-ready");
-    };
-  }, [isGalleryViewerOpen]);
 
   useEffect(() => {
     return () => {
@@ -509,7 +470,7 @@ function IdGallery({ currentPage = 1 }) {
               data-item-id={featuredItem.id}
               onClick={handleGalleryItemClick}
             >
-              <h1 className="display-m text-effect apprael_all ani" data-splitting data-effect17>
+              <h1 className="display-m apprael_all apprael_ani">
                 <span>{featuredItem.date} </span>
                 <span>{featuredItem.title}</span>
               </h1>
@@ -559,11 +520,9 @@ function IdGallery({ currentPage = 1 }) {
                     Close
                   </button>
                   <h2
-                    className="gallery_viewer_title apprael display-s text-effect apprael_all"
+                    className="gallery_viewer_title apprael display-s apprael_all ani apprael_ani"
                     data-id={viewerItem?.id}
                     data-category={viewerItem?.category}
-                    data-splitting
-                    data-effect17
                     key={activeViewerItems[0]?.parentId || activeViewerItems[0]?.id || "gallery-viewer-title"}
                     ref={viewerTitleRef}
                   >
