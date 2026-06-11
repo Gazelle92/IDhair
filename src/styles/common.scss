@@ -259,6 +259,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
   &.b-5::before{width: 5px;}
 }
 .b-t.b-c-gray::before, .b-b.b-c-gray::before, .b-l.b-c-gray::before, .b-r.b-c-gray::before{background-color: #D2D1D3;}
+.b-t.b-c-white::before, .b-b.b-c-white::before, .b-l.b-c-white::before, .b-r.b-c-white::before{background-color: #fff;}
 .ani{
   .b-t::before, .b-b::before{width: 0; transition: ease 0.8s width;}
   &.b-t::before, &.b-b::before{width: 0; transition: ease 0.8s width;}
