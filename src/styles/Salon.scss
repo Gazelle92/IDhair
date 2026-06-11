@@ -31,7 +31,9 @@
         .b_l_l{width: 50%; position: relative;
           &::before{content: ''; width: 1px; height: calc(100% - 20px); bottom: 0; background-color: #fff; right: 0; display: block; position: absolute; opacity: 0.25;}
           ol{display: flex; justify-content: center; align-items: center; gap: 4px; flex-direction: column; padding: 46px 20px 46px 0;
-            li{cursor: pointer; opacity: 0.5; transition: ease 0.3s opacity;}
+            li{cursor: pointer; opacity: 0.5; transition: ease 0.3s opacity;
+              button{color: #fff; font: inherit; line-height: inherit;}
+            }
             li.active, li:hover{opacity: 1;}
           }
           .arc_logo{display: flex; align-items: center; justify-content: center; padding: 28px 20px 28px 0; position: relative;
@@ -45,9 +47,24 @@
             img{width: 36px; height: 36px;}
           } 
         }
-        .b_l_r{width: 50%;}
+        .b_l_r{width: 50%; padding: 46px 20px; display: flex; flex-direction: column; gap: 12px;
+          li{
+            button{color: #fff; opacity: 0.5; transition: ease 0.3s opacity; text-align: left; line-height: 1.4;}
+            &.active button, button:hover{opacity: 1;}
+          }
+        }
       }
-      .body_right{flex: 8; padding-left: 20px;}
+      .body_right{flex: 8; padding-left: 20px; position: relative;
+        .store_detail{height: 100%; padding: 46px 0; display: flex; flex-direction: column; justify-content: flex-start;
+          .store_region{display: inline-flex; width: fit-content; color: rgb(255 255 255 / 60%); margin-bottom: 18px;}
+          h2{color: #fff; margin-bottom: 42px;}
+          dl{display: grid; gap: 18px; max-width: 520px;
+            div{display: grid; grid-template-columns: 90px 1fr; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid rgb(255 255 255 / 20%);}
+            dt{color: rgb(255 255 255 / 45%);}
+            dd{color: #fff;}
+          }
+        }
+      }
     }
     
   }
