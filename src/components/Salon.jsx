@@ -37,11 +37,12 @@ function Salon({ open, onClose }) {
           <div className="body_left">
             <div className="b_l_l">
               <ol className="head-m">
-                <li>서울</li>
+                <li className="active">서울</li>
                 <li>경기</li>
                 <li>지방</li>
               </ol>
               <a className="arc_logo"><img src="/img/arc.png" alt="" /></a>
+              <a className="find_store"><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
             </div>
             
             <ul className="b_l_r"></ul>
