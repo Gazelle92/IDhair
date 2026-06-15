@@ -104,12 +104,13 @@ function Salon({ open, onClose }) {
                   </div>
                 </dl>
               </div>
-              <div className="store_links body-m">
-                <a href={selectedStore.instagramUrl} target="_blank" rel="noreferrer">
-                  Instagram
+              <div className="store_links">
+                <a href={selectedStore.instagramUrl} target="_blank" className="insta" rel="noreferrer">
+                  <img src="/img/icon_instagram_w.svg"/>
                 </a>
-                <a href={selectedStore.reservationUrl} target="_blank" rel="noreferrer">
-                  Naver Reservation
+                <a href={selectedStore.reservationUrl} target="_blank" rel="noreferrer" className="naver">
+                  <img src="/img/icon_naver.svg"/>
+                  <span className="body-m">네이버 예약</span>
                 </a>
               </div>
             </div>
