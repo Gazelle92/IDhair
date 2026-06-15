@@ -1,4 +1,4 @@
-.salon_popup{position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 1; transition: opacity 0.35s ease, clip-path 0.5s ease; clip-path: inset(0% 0% 100% 0);
+.salon_popup{position: fixed; inset: 0; z-index: 98; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 1; transition: opacity 0.35s ease, clip-path 0.5s ease; clip-path: inset(0% 0% 100% 0);
   &.active{opacity: 1; pointer-events: auto; clip-path: inset(0 0 0 0);
     .salon_popup_page{}
   }
@@ -20,14 +20,14 @@
         .search_w{padding: 16px 0 16px 40px; display: flex; align-items: center;  position: relative;
           &::before{border-top:1px dashed #fff; opacity: 0.25; background-color: unset;}
           button{position: absolute; right: 20px; top: 50%; transform: translateY(-50%);}
-          input{background-color: unset; outline: none; border: 0; color: #fff;
+          input{background-color: unset; outline: none; border: 0; color: #fff; width: 100%;
             &::placeholder{color: rgb(255 255 255 / 25%);}
           }
         }
       }
     }
     .body{display: flex; flex: 1 1 auto; min-height: 0;
-      .body_left{display: flex; flex: 4; padding-left: 20px; margin-left: -20px; height: 100%; min-height: 0;
+      .body_left{display: flex; flex: 4 1 0; padding-left: 20px; margin-left: -20px; height: 100%; min-height: 0; min-width: 0;
         .b_l_l{width: 50%; position: relative;
           &::before{content: ''; width: 1px; height: calc(100% - 20px); bottom: 0; background-color: #fff; right: 0; display: block; position: absolute; opacity: 0.25;}
           ol{display: flex; justify-content: center; align-items: center; gap: 4px; flex-direction: column; padding: 46px 20px 46px 0;
@@ -49,18 +49,43 @@
         }
         .b_l_r{width: 50%; padding: 46px 20px; display: flex; flex-direction: column; min-height: 0;
           ul{height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; gap: 12px; flex-direction: column;
-            li{
-              button{color: #fff; opacity: 0.5; transition: ease 0.3s opacity; text-align: left; line-height: 1.4;}
-              &.active button, button:hover{opacity: 1;}
+            &::-webkit-scrollbar {
+              width: 4px;  
+            }
+
+            &::-webkit-scrollbar-thumb {     
+              border-radius: 10px;
+              background-color: rgb(255, 255, 255, 0.25);
+            }
+
+            &::-webkit-scrollbar-track {
+              background: rgba(220, 20, 60, .0);
+            }
+            li{font-size: 0;
+              button{color: #fff; opacity: 0.5; transition: ease 0.3s opacity; text-align: left;}
+              &.active button, button:hover{opacity: 1; font-weight: 600;}
             }
           }
           
         }
       }
-      .body_right{flex: 8; padding: 20px 0 0 20px; position: relative; display: flex; flex-direction: column; justify-content: space-between;
+      .body_right{flex: 8 1 0; min-width: 0; max-width: 100%; padding: 20px 0 40px 20px; position: relative; display: flex; flex-direction: column; justify-content: space-between;
+        .scroll-y{display: flex; flex-direction: column; justify-content: space-between;  height: 100%; min-width: 0;
+          
+        }
+        
         &::before{content: ''; display: block; width: 1px; height: calc(100% - 20px); position: absolute; left: 0; bottom: 0; background-color: #fff; }
-        .store_images{display: flex; aspect-ratio: 1000 / 430; max-width: 100%; border-bottom: 1px dashed #fff; padding-bottom: 20px;}
-        .store_detail{display: flex; justify-content: space-between; align-items: flex-end; padding: 0 20px 40px 40px;
+        .store_images{display: flex; width: 100%; min-width: 0; aspect-ratio: 1000 / 430; max-width: 100%;  overflow: hidden; position: relative;
+          .img_w{position: relative; width: 100%; min-width: 0; height: 100%; overflow: hidden;
+            .swiper-wrapper{height: 100%; min-width: 0;}
+            .swiper-slide{height: 100%; width: 100%; min-width: 0;}
+            img{width: 100%; height: 100%; object-fit: cover; display: block;}
+          }
+          .cursor_left{left: 0; cursor: pointer;}
+          .cursor_right{right: 0; cursor: pointer;}
+          .cursor_left, .cursor_right{position: absolute; width: 50%; height: 100%; top: 0; z-index: 1;}
+        }
+        .store_detail{display: flex; justify-content: space-between; align-items: flex-end; padding: 0 20px 00px 40px;
           address{margin: 20px 0 4px; font-style: unset;}
           dl{display: flex; gap: 40px;
             div{display: flex;}

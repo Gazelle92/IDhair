@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 const checkCursorActive = () => {
@@ -8,10 +8,27 @@ const checkCursorActive = () => {
   return !(isTouch || isSmall);
 };
 
+const getCursorClass = (target) => {
+  if (!(target instanceof Element)) return "";
+  if (target.closest(".cursor_left")) return "cursor_left";
+  if (target.closest(".cursor_right")) return "cursor_right";
+  if (target.closest(".mg_li")) return "cursor_view";
+
+  return "";
+};
+
 const CursorFollower = () => {
   const [cursorClass, setCursorClass] = useState("");
   const [isCursorActive, setIsCursorActive] = useState(() => checkCursorActive());
   const [isHidden, setIsHidden] = useState(false);
+  const cursorClassRef = useRef("");
+
+  const updateCursorClass = useCallback((nextCursorClass) => {
+    if (cursorClassRef.current === nextCursorClass) return;
+
+    cursorClassRef.current = nextCursorClass;
+    setCursorClass(nextCursorClass);
+  }, []);
 
   useEffect(() => {
     const updateCursorMode = () => {
@@ -25,7 +42,10 @@ const CursorFollower = () => {
   useEffect(() => {
     const onMouseOut = (e) => {
       const toElement = e.relatedTarget || e.toElement;
-      if (!toElement) setIsHidden(true);
+      if (!toElement) {
+        setIsHidden(true);
+        updateCursorClass("");
+      }
     };
     const onMouseOver = () => setIsHidden(false);
 
@@ -36,7 +56,7 @@ const CursorFollower = () => {
       window.removeEventListener("mouseout", onMouseOut);
       window.removeEventListener("mouseover", onMouseOver);
     };
-  }, []);
+  }, [updateCursorClass]);
 
   useEffect(() => {
     if (!isCursorActive) return;
@@ -48,35 +68,22 @@ const CursorFollower = () => {
         duration: 0.3,
         ease: "power2.out"
       });
+
+      updateCursorClass(getCursorClass(e.target));
+    };
+
+    const handleMouseLeave = () => {
+      updateCursorClass("");
     };
 
     window.addEventListener("mousemove", moveCursor);
-    return () => window.removeEventListener("mousemove", moveCursor);
-  }, [isCursorActive]);
-
-  useEffect(() => {
-    if (!isCursorActive) return;
-
-    const handleMouseOver = (e) => {
-      if (e.target.closest(".mg_li")) {
-        setCursorClass("cursor_view");
-      }
-    };
-
-    const handleMouseOut = (e) => {
-      if (e.target.closest(".mg_li")) {
-        setCursorClass("");
-      }
-    };
-
-    document.addEventListener("mouseover", handleMouseOver);
-    document.addEventListener("mouseout", handleMouseOut);
+    document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      document.removeEventListener("mouseover", handleMouseOver);
-      document.removeEventListener("mouseout", handleMouseOut);
+      window.removeEventListener("mousemove", moveCursor);
+      document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [isCursorActive]);
+  }, [isCursorActive, updateCursorClass]);
 
   const cursorClasses = [
     "cursor",
@@ -95,6 +102,8 @@ const CursorFollower = () => {
       <span className="cursor-txt cursor-txt-close">Close</span>
       <span className="cursor-txt cursor-txt-play">PLAY</span>
       <span className="cursor-txt cursor-txt-pause">PAUSE</span>
+      <span className="cursor-txt cursor-txt-left"><img src="/img/arrow_left_cursor.svg"/></span>
+      <span className="cursor-txt cursor-txt-right"><img src="/img/arrow_left_cursor.svg"/></span>
     </div>
   );
 };

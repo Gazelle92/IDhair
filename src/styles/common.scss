@@ -295,11 +295,25 @@ button{background-color: unset; border: unset; cursor: pointer;}
   }
   .cursor-txt{position: absolute; top: 0; left: 0; transform: translate(-50%, -50%); font-size: 16px; opacity: 0; transition: ease 0.1s opacity; color: var(--bg-ac-1);}
   
-  &.cursor_view{
+  &.cursor_view, &.cursor_left, &.cursor_right{
     .cursor-inner{width: 90px; height: 90px; border: 1px solid var(--bg-ac-1); backdrop-filter: blur(10px); background-color: rgba(255, 255, 255, 0.10);}
+  }
+  &.cursor_view{
     .cursor-txt-view{opacity: 1;}
   }
+  &.cursor_left{
+    .cursor-inner{border-color: #ffffff00;}
+    .cursor-txt-left{opacity: 1; }
+  }
+  &.cursor_right{
+    .cursor-inner{border-color: #ffffff00;}
+    .cursor-txt-right{opacity: 1;}
+  }
   &.cursor_close, &.hidden{display: none;}
+  .cursor-txt-left{width: 42px; }
+  .cursor-txt-right{width: 42px; 
+      img{transform: scaleX(-1);}
+    }
 }
 
 .fade-slice{display: block; width: 100%;
