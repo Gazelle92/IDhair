@@ -16,7 +16,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_1.jpg", "/img/mg_list_2.jpg", "/img/mg_list_3.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_2.jpg", "/img/salon_3.jpg"],
       },
       {
         id: "seoul-2",
@@ -24,7 +24,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_2.jpg", "/img/mg_list_3.jpg", "/img/mg_list_4.jpg"],
+        images: ["/img/salon_2.jpg", "/img/salon_3.jpg", "/img/salon_4.jpg"],
       },
       {
         id: "seoul-3",
@@ -32,7 +32,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_3.jpg", "/img/mg_list_4.jpg", "/img/mg_list_event_1.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_4.jpg", "/img/salon_1.jpg"],
       },
       {
         id: "seoul-4",
@@ -40,7 +40,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_4.jpg", "/img/mg_list_event_1.jpg", "/img/mg_list_event_2.jpg"],
+        images: ["/img/salon_4.jpg", "/img/salon_2.jpg", "/img/salon_3.jpg"],
       },
       {
         id: "seoul-5",
@@ -48,7 +48,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_1.jpg", "/img/mg_list_event_2.jpg", "/img/mg_list_event_3.jpg"],
+        images: ["/img/salon_4.jpg", "/img/salon_5.jpg", "/img/salon_1.jpg"],
       },
       {
         id: "seoul-6",
@@ -56,7 +56,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_2.jpg", "/img/mg_list_event_3.jpg", "/img/mg_list_event_4.jpg"],
+        images: ["/img/salon_2.jpg", "/img/salon_3.jpg", "/img/salon_4.jpg"],
       },
       {
         id: "seoul-7",
@@ -64,7 +64,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_3.jpg", "/img/mg_list_event_4.jpg", "/img/mg_list_fa_1.jpg"],
+        images: ["/img/salon_5.jpg", "/img/salon_1.jpg", "/img/salon_2.jpg"],
       },
       {
         id: "seoul-8",
@@ -72,7 +72,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_4.jpg", "/img/mg_list_fa_1.jpg", "/img/mg_list_fa_2.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_4.jpg", "/img/salon_5.jpg"],
       },
       {
         id: "seoul-9",
@@ -80,7 +80,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_fa_1.jpg", "/img/mg_list_fa_2.jpg", "/img/mg_list_ga_1.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_2.jpg", "/img/salon_3.jpg"],
       },
       {
         id: "seoul-10",
@@ -88,7 +88,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_fa_2.jpg", "/img/mg_list_ga_1.jpg", "/img/mg_list_ga_2.jpg"],
+        images: ["/img/salon_4.jpg", "/img/salon_5.jpg", "/img/salon_1.jpg"],
       },
     ],
   },
@@ -102,7 +102,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_1.jpg", "/img/mg_list_ga_2.jpg", "/img/mg_list_ga_3.jpg"],
+        images: ["/img/salon_2.jpg", "/img/salon_3.jpg", "/img/salon_4.jpg"],
       },
       {
         id: "gyeonggi-2",
@@ -110,7 +110,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_2.jpg", "/img/mg_list_ga_3.jpg", "/img/mg_list_ga_4.jpg"],
+        images: ["/img/salon_5.jpg", "/img/salon_1.jpg", "/img/salon_2.jpg"],
       },
       {
         id: "gyeonggi-3",
@@ -118,7 +118,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_3.jpg", "/img/mg_list_ga_4.jpg", "/img/mg_list_ga_5.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_4.jpg", "/img/salon_5.jpg"],
       },
       {
         id: "gyeonggi-4",
@@ -126,7 +126,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_4.jpg", "/img/mg_list_ga_5.jpg", "/img/mg_list_1.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_2.jpg", "/img/salon_1.jpg"],
       },
       {
         id: "gyeonggi-5",
@@ -134,7 +134,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_5.jpg", "/img/mg_list_1.jpg", "/img/mg_list_2.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_1.jpg", "/img/salon_2.jpg"],
       },
       {
         id: "gyeonggi-6",
@@ -142,7 +142,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_1.jpg", "/img/mg_list_2.jpg", "/img/mg_list_3.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_2.jpg", "/img/salon_3.jpg"],
       },
       {
         id: "gyeonggi-7",
@@ -150,7 +150,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_2.jpg", "/img/mg_list_3.jpg", "/img/mg_list_4.jpg"],
+        images: ["/img/salon_2.jpg", "/img/salon_3.jpg", "/img/salon_4.jpg"],
       },
       {
         id: "gyeonggi-8",
@@ -158,7 +158,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_3.jpg", "/img/mg_list_4.jpg", "/img/mg_list_event_1.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_4.jpg", "/img/salon_4.jpg"],
       },
       {
         id: "gyeonggi-9",
@@ -166,7 +166,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_4.jpg", "/img/mg_list_event_1.jpg", "/img/mg_list_event_2.jpg"],
+        images: ["/img/salon_4.jpg", "/img/salon_5.jpg", "/img/salon_1.jpg"],
       },
       {
         id: "gyeonggi-10",
@@ -174,7 +174,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_1.jpg", "/img/mg_list_event_2.jpg", "/img/mg_list_event_3.jpg"],
+        images: ["/img/salon_2.jpg", "/img/salon_3.jpg", "/img/salon_4.jpg"],
       },
     ],
   },
@@ -188,7 +188,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_2.jpg", "/img/mg_list_event_3.jpg", "/img/mg_list_event_4.jpg"],
+        images: ["/img/salon_5.jpg", "/img/salon_1.jpg", "/img/salon_2.jpg"],
       },
       {
         id: "local-2",
@@ -196,7 +196,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_3.jpg", "/img/mg_list_event_4.jpg", "/img/mg_list_fa_1.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_4.jpg", "/img/salon_5.jpg"],
       },
       {
         id: "local-3",
@@ -204,7 +204,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_event_4.jpg", "/img/mg_list_fa_1.jpg", "/img/mg_list_fa_2.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_2.jpg", "/img/salon_3.jpg"],
       },
       {
         id: "local-4",
@@ -212,7 +212,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_fa_1.jpg", "/img/mg_list_fa_2.jpg", "/img/mg_list_ga_1.jpg"],
+        images: ["/img/salon_4.jpg", "/img/salon_5.jpg", "/img/salon_1.jpg"],
       },
       {
         id: "local-5",
@@ -220,7 +220,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_fa_2.jpg", "/img/mg_list_ga_1.jpg", "/img/mg_list_ga_2.jpg"],
+        images: ["/img/salon_2.jpg", "/img/salon_3.jpg", "/img/salon_4.jpg"],
       },
       {
         id: "local-6",
@@ -228,7 +228,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_1.jpg", "/img/mg_list_ga_2.jpg", "/img/mg_list_ga_3.jpg"],
+        images: ["/img/salon_5.jpg", "/img/salon_1.jpg", "/img/salon_2.jpg"],
       },
       {
         id: "local-7",
@@ -236,7 +236,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_2.jpg", "/img/mg_list_ga_3.jpg", "/img/mg_list_ga_4.jpg"],
+        images: ["/img/salon_3.jpg", "/img/salon_4.jpg", "/img/salon_5.jpg"],
       },
       {
         id: "local-8",
@@ -244,7 +244,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_3.jpg", "/img/mg_list_ga_4.jpg", "/img/mg_list_ga_5.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_2.jpg", "/img/salon_3.jpg"],
       },
       {
         id: "local-9",
@@ -252,7 +252,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_4.jpg", "/img/mg_list_ga_5.jpg", "/img/mg_list_1.jpg"],
+        images: ["/img/salon_4.jpg", "/img/salon_5.jpg", "/img/salon_1.jpg"],
       },
       {
         id: "local-10",
@@ -260,7 +260,7 @@ export const salonRegions = [
         ...commonStoreInfo,
         instagramUrl: "https://www.instagram.com/",
         reservationUrl: "https://booking.naver.com/",
-        images: ["/img/mg_list_ga_5.jpg", "/img/mg_list_1.jpg", "/img/mg_list_2.jpg"],
+        images: ["/img/salon_1.jpg", "/img/salon_1.jpg", "/img/salon_2.jpg"],
       },
     ],
   },
