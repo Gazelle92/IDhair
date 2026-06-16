@@ -272,9 +272,13 @@
   @media(max-width:1024px){
     .salon_close{top:4.444vw; right:4.444vw; width:5.556vw; height:5.556vw;}
 
-    .salon_popup_page{padding:5.556vw 4.444vw 0;
+    .salon_popup_page{padding:5.556vw 4.444vw 0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+      &::-webkit-scrollbar{width:4px;}
+      &::-webkit-scrollbar-thumb{border-radius:10px; background-color:rgb(255, 255, 255, .25);}
+      &::-webkit-scrollbar-track{background:rgba(220, 20, 60, 0);}
       .head{align-items:flex-start; flex-direction:column; gap:5.556vw; padding-bottom:13.333vw;
         &::before{display:none;}
+        &::after{width:100%; height:2px; background-color:#fff; content:''; display:block; position:absolute; left:0; bottom:0;}
         .head_left{flex:unset; font-size:13.333vw;
           &::before{display:none;}
         }
@@ -287,8 +291,7 @@
         }
       }
 
-      .body{flex-direction:column; position:relative;
-        &::before{width:100%; height:.556vw; background-color:#fff; content:''; display:block; position:absolute; left:0; top:0;}
+      .body{flex:unset; min-height:unset; overflow:visible; flex-direction:column; position:relative; padding-bottom:6.667vw;
 
         .body_left{flex:unset; padding-left:0; margin-left:0; padding-top:0; height:62.222vw; padding-bottom:3.333vw;
           .b_l_l{width:calc((100% / 3) * 1);
@@ -312,12 +315,8 @@
           }
         }
 
-        .body_right{flex:unset; padding:2.222vw 0 0; height:calc(100% - 62.222vw); min-height:0; overflow:hidden;
-          .scroll-y{justify-content:flex-start; overflow-y:auto; overscroll-behavior:contain; min-height:0; padding-bottom:6.667vw; padding-right:1.111vw;
-            &::-webkit-scrollbar{width:1.111vw;}
-            &::-webkit-scrollbar-thumb{border-radius:2.778vw; background-color:rgb(255, 255, 255, .25);}
-            &::-webkit-scrollbar-track{background:rgba(220, 20, 60, 0);}
-          }
+        .body_right{flex:unset; padding:2.222vw 0 0; height:auto; min-height:0; overflow:visible;
+          .scroll-y{justify-content:flex-start; height:auto; min-height:0; padding-bottom:0; padding-right:0;}
 
           &::before{width:100%; height:1px; bottom:unset; top:0; opacity:.25;}
           .store_images{flex:0 0 auto; min-height:35.556vw;}

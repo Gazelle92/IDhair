@@ -87,7 +87,7 @@ function Salon({ open, onClose }) {
       <button type="button" className="salon_close" onClick={onClose} aria-label="Close salon popup">
         <span></span><span></span>
       </button>
-      <div className="salon_popup_page" role="dialog" aria-modal="true" aria-label="Salon">
+      <div className="salon_popup_page" role="dialog" aria-modal="true" aria-label="Salon" data-lenis-prevent>
         <div className="head b-b b-2 b-c-white">
           <div className="apprael display-m b-r b-c-white head_left">SALON</div>
           <div className="head_right">
