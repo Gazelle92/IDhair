@@ -46,7 +46,8 @@
     }    
   }
 
-  .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw;
+  .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw; opacity:1; transition:opacity .28s ease, transform .32s ease;
+    &.tab_out{opacity:0; pointer-events:none;}
     .mg_list{position: relative; display: grid;
       
       @media(min-width:1025px){

@@ -9,7 +9,10 @@ function Salon({ open, onClose }) {
   const [selectedStoreId, setSelectedStoreId] = useState(salonRegions[0].stores[0].id);
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState("");
+  const [detailStore, setDetailStore] = useState(salonRegions[0].stores[0]);
+  const [isDetailVisible, setIsDetailVisible] = useState(true);
   const imageSwiperRef = useRef(null);
+  const detailTimerRef = useRef(null);
 
   const flatStores = useMemo(
     () => salonRegions.flatMap((region) => region.stores),
@@ -39,15 +42,47 @@ function Salon({ open, onClose }) {
     ),
     [displayedStores, flatStores, selectedRegion, selectedStoreId]
   );
+  const changeStoreDetail = (store) => {
+    if (!store) return;
+
+    if (detailTimerRef.current) {
+      clearTimeout(detailTimerRef.current);
+    }
+
+    setSelectedStoreId(store.id);
+
+    if (store.id === detailStore.id) {
+      setIsDetailVisible(true);
+      return;
+    }
+
+    setIsDetailVisible(false);
+    detailTimerRef.current = setTimeout(() => {
+      setDetailStore(store);
+      requestAnimationFrame(() => {
+        setIsDetailVisible(true);
+      });
+    }, 300);
+  };
+
   const handleRegionClick = (region) => {
     setSearchQuery("");
     setSubmittedSearchQuery("");
     setSelectedRegionId(region.id);
-    setSelectedStoreId(region.stores[0].id);
+    changeStoreDetail(region.stores[0]);
   };
 
   const handleSearchSubmit = () => {
+    const query = searchQuery.trim().toLowerCase();
+    const matchingStores = query
+      ? flatStores.filter((store) => (
+          store.name.toLowerCase().includes(query) ||
+          store.address.toLowerCase().includes(query)
+        ))
+      : selectedRegion.stores;
+
     setSubmittedSearchQuery(searchQuery);
+    changeStoreDetail(matchingStores[0]);
   };
 
   const handleSearchKeyDown = (event) => {
@@ -65,6 +100,14 @@ function Salon({ open, onClose }) {
   const handleNextImage = () => {
     imageSwiperRef.current?.slideNext();
   };
+
+  useEffect(() => (
+    () => {
+      if (detailTimerRef.current) {
+        clearTimeout(detailTimerRef.current);
+      }
+    }
+  ), []);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -128,7 +171,7 @@ function Salon({ open, onClose }) {
                       type="button"
                       className="body-m"
                       onClick={() => {
-                        setSelectedStoreId(store.id);
+                        changeStoreDetail(store);
                       }}
                     >
                       {store.name}
@@ -143,9 +186,9 @@ function Salon({ open, onClose }) {
           </div>
           <div className="body_right">
             <div className="scroll-y">
-              <div className="store_images">
+              <div className={`store_images ${isDetailVisible ? "store_images_visible" : ""}`}>
                 <Swiper
-                  key={selectedStore.id}
+                  key={detailStore.id}
                   className="img_w"
                   loop
                   speed={600}
@@ -155,39 +198,39 @@ function Salon({ open, onClose }) {
                     swiper.slideToLoop(0, 0);
                   }}
                 >
-                  {selectedStore.images.map((image, index) => (
+                  {detailStore.images.map((image, index) => (
                     <SwiperSlide key={`${image}-${index}`}>
-                      <img src={image} alt={`${selectedStore.name} 이미지 ${index + 1}`} />
+                      <img src={image} alt={`${detailStore.name} 이미지 ${index + 1}`} />
                     </SwiperSlide>
                   ))}
                 </Swiper>
                 <button type="button" className="cursor_left" onClick={handlePrevImage} aria-label="Previous salon image"></button>
                 <button type="button" className="cursor_right" onClick={handleNextImage} aria-label="Next salon image"></button>
               </div>
-              <div className="store_detail">
-                <div className="store_info">
-                  <h2 className="head-m fw-sb">{selectedStore.name}</h2>
-                  <address className="body-m">{selectedStore.address}</address>
-                  <dl className="body-m">
+              <div className={`store_detail store-detail-motion-3 ${isDetailVisible ? "store_detail_visible" : ""}`}>
+                <div className="store_info ">
+                  <h2 className="head-m fw-sb ">{detailStore.name}</h2>
+                  <address className="body-m ">{detailStore.address}</address>
+                  <dl className="body-m ">
                     <div>
                       <dt>(T)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                      <dd>{selectedStore.phone}</dd>
+                      <dd>{detailStore.phone}</dd>
                     </div>
                     <div>
                       <dt>(Hours)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                      <dd>{selectedStore.hours}</dd>
+                      <dd>{detailStore.hours}</dd>
                     </div>
                     <div>
                       <dt>(Off)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                      <dd>{selectedStore.off}</dd>
+                      <dd>{detailStore.off}</dd>
                     </div>
                   </dl>
                 </div>
-                <div className="store_links">
-                  <a href={selectedStore.instagramUrl} target="_blank" className="insta" rel="noreferrer">
+                <div className="store_links ">
+                  <a href={detailStore.instagramUrl} target="_blank" className="insta" rel="noreferrer">
                     <img src="/img/icon_instagram_w.svg"/>
                   </a>
-                  <a href={selectedStore.reservationUrl} target="_blank" rel="noreferrer" className="naver">
+                  <a href={detailStore.reservationUrl} target="_blank" rel="noreferrer" className="naver">
                     <img src="/img/icon_naver.svg"/>
                     <span className="body-m">네이버 예약</span>
                   </a>
