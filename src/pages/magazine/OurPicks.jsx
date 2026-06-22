@@ -115,6 +115,7 @@ function OurPicks() {
   const [playViewerOpen, setPlayViewerOpen] = useState(false);
   const [playViewerReady, setPlayViewerReady] = useState(false);
   const [activePlayIndex, setActivePlayIndex] = useState(0);
+  const [playViewerTypeOffset, setPlayViewerTypeOffset] = useState(0);
   const [activePlayAspect, setActivePlayAspect] = useState(getPlayAspect(0));
   const [activePlayViewerItems, setActivePlayViewerItems] = useState([]);
   const previewRefs = useRef([]);
@@ -448,8 +449,9 @@ function OurPicks() {
       const selectedViewerItems = PLAY_ITEMS[index]?.images?.length ? PLAY_ITEMS[index].images : [PLAY_ITEMS[index]].filter(Boolean);
 
       setActivePlayViewerItems(selectedViewerItems);
+      setPlayViewerTypeOffset(index);
       setActivePlayIndex(0);
-      setActivePlayAspect(getPlayAspect(0));
+      setActivePlayAspect(getPlayAspect(index));
       setPlayViewerReady(false);
       setPlayViewerOpen(true);
     });
@@ -1005,12 +1007,12 @@ function OurPicks() {
             }}
             onSlideChange={(swiper) => {
               setActivePlayIndex(swiper.activeIndex);
-              setActivePlayAspect(getPlayAspect(swiper.activeIndex));
+              setActivePlayAspect(getPlayAspect(swiper.activeIndex + playViewerTypeOffset));
             }}
           >
             {playViewerItems.map((item, index) => (
               <SwiperSlide
-                className={`play_viewer_slide ${getPlayTypeClass(index)}`}
+                className={`play_viewer_slide ${getPlayTypeClass(index + playViewerTypeOffset)}`}
                 key={item.id}
                 ref={(element) => {
                   playViewerSlideRefs.current[index] = element;
