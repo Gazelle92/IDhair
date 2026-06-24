@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/sanity-data/(.*)",
+      "destination": "https://9pry8zdk.api.sanity.io/v2025-02-19/data/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
+import PortableNewsContent from "../components/PortableNewsContent";
+import { fetchNewsPost, formatNewsDate, getNewsImageUrl } from "../lib/sanityNews";
 import "../styles/MagazinePost.scss";
 
 function MagazinePost() {
-  const { category = "our-picks" } = useParams();
+  const { category = "our-picks", id } = useParams();
   const categoryNames = {
     "our-picks": "Our PICKS",
     "id-news": "id NEWS",
@@ -14,6 +17,96 @@ function MagazinePost() {
   };
   const listUrl = `/magazine/${category}`;
   const pageName = categoryNames[category] || categoryNames["our-picks"];
+  const [post, setPost] = useState(null);
+  const [status, setStatus] = useState(category === "id-news" ? "loading" : "ready");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (category !== "id-news" || !id) {
+      return undefined;
+    }
+
+    let isMounted = true;
+
+    fetchNewsPost(id)
+      .then((item) => {
+        if (!isMounted) return;
+
+        setPost(item);
+        setStatus(item ? "ready" : "missing");
+      })
+      .catch((error) => {
+        if (!isMounted) return;
+
+        console.error("Failed to load Sanity news post", error);
+        setErrorMessage(error?.message || "Unknown error");
+        setStatus("error");
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [category, id]);
+
+  const isSanityNewsPost = category === "id-news" && id;
+
+  if (isSanityNewsPost && status === "loading") {
+    return (
+      <main className="page_magazine_detail">
+        <section className="md_head b-t b-4 ani">
+          <div className="md_head_1 ani b-b b-delay-2">
+            <TransitionLink className="fadeX-2" to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></TransitionLink>
+            <div className="page_name body-s fadeX-4">{pageName}</div>
+          </div>
+        </section>
+        <section className="md_body"><div className="md_body_inner"><article>Loading...</article></div></section>
+      </main>
+    );
+  }
+
+  if (isSanityNewsPost && (status === "error" || status === "missing")) {
+    return (
+      <main className="page_magazine_detail">
+        <section className="md_head b-t b-4 ani">
+          <div className="md_head_1 ani b-b b-delay-2">
+            <TransitionLink className="fadeX-2" to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></TransitionLink>
+            <div className="page_name body-s fadeX-4">{pageName}</div>
+          </div>
+        </section>
+        <section className="md_body"><div className="md_body_inner"><article>{status === "error" ? `Post could not be loaded. ${errorMessage}` : "Post not found."}</article></div></section>
+      </main>
+    );
+  }
+
+  if (isSanityNewsPost && post) {
+    return (
+      <main className="page_magazine_detail">
+        <section className="md_head b-t b-4 ani">
+          <div className="md_head_1 ani b-b b-delay-2">
+            <TransitionLink className="fadeX-2" to={listUrl}><img src="/img/arrow_list_left.svg" alt="" /><span className="body-s">BACK</span></TransitionLink>
+            <div className="page_name body-s fadeX-4">{pageName}</div>
+          </div>
+          <div className="md_head_2 ani b-b b-delay-4">
+            <h1 className="fade-cw head-l fw-sb"><span className="fadeX-1">{post.title}</span></h1>
+            <span className="body-s txt-gray fade-cw"><span className="fadeX-2">{formatNewsDate(post.publishedAt)}</span></span>
+          </div>
+        </section>
+        <section className="md_body">
+          <div className="md_body_inner">
+            <article>
+              {post.thumbnail && <img className="ani fade-img" src={getNewsImageUrl(post.thumbnail, 1280)} alt="" />}
+              <div className="fade-slice fadeX ani">
+                <PortableNewsContent value={post.content} />
+              </div>
+            </article>
+          </div>
+        </section>
+        <div className="md_body_b b-t ani">
+          <TransitionLink to={listUrl}><img src="/img/icon_list.svg" alt="to list" /><span className="body-m">LIST</span></TransitionLink>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="page_magazine_detail">
