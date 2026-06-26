@@ -145,13 +145,17 @@ function updateFadeSliceAll() {
   });
 }
 
+export function refreshFadeSlice() {
+  initFadeSliceAll();
+  updateFadeSliceAll();
+}
+
 export default function useFadeSlice() {
   const location = useLocation();
 
   useLayoutEffect(() => {
     const timer = setTimeout(() => {
-      initFadeSliceAll();
-      updateFadeSliceAll();
+      refreshFadeSlice();
     }, 80);
 
     window.addEventListener("resize", updateFadeSliceAll);

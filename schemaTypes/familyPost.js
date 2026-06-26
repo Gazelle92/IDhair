@@ -2,8 +2,8 @@ import { defineType } from "sanity";
 import { createMagazinePostFields, magazinePostPreview } from "./magazinePostFields";
 
 export default defineType({
-  name: "newsPost",
-  title: "id NEWS",
+  name: "familyPost",
+  title: "id FAMILY",
   type: "document",
   fields: createMagazinePostFields(),
   preview: magazinePostPreview,

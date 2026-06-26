@@ -1,5 +1,11 @@
 import { getNewsImageUrl } from "../lib/sanityNews";
 
+const getBlockText = (block) =>
+  block.children
+    ?.map((child) => child?.text || "")
+    .join("")
+    .trim() || "";
+
 const renderTextSpan = (child) => {
   if (!child?.text) return null;
 
@@ -14,16 +20,21 @@ const renderTextSpan = (child) => {
 const renderBlock = (block) => {
   const children = block.children?.map(renderTextSpan);
   const key = block._key;
+  const description = getBlockText(block);
+  const fadeProps = {
+    className: "fade-slice fadeX ani",
+    "data-description": description,
+  };
 
   if (block.listItem) {
-    return <li key={key}>{children}</li>;
+    return <li key={key} {...fadeProps}>{children}</li>;
   }
 
-  if (block.style === "h2") return <h2 key={key}>{children}</h2>;
-  if (block.style === "h3") return <h3 key={key}>{children}</h3>;
-  if (block.style === "blockquote") return <blockquote key={key}>{children}</blockquote>;
+  if (block.style === "h2") return <h2 key={key} {...fadeProps}>{children}</h2>;
+  if (block.style === "h3") return <h3 key={key} {...fadeProps}>{children}</h3>;
+  if (block.style === "blockquote") return <blockquote key={key} {...fadeProps}>{children}</blockquote>;
 
-  return <p key={key}>{children}</p>;
+  return <p key={key} {...fadeProps}>{children}</p>;
 };
 
 function PortableNewsContent({ value = [] }) {

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
 import PortableNewsContent from "../components/PortableNewsContent";
 import { fetchNewsPost, formatNewsDate, getNewsImageUrl } from "../lib/sanityNews";
+import { refreshFadeSlice } from "../hook/useFadeSlice";
 import "../styles/MagazinePost.scss";
 
 function MagazinePost() {
@@ -50,6 +51,16 @@ function MagazinePost() {
 
   const isSanityNewsPost = category === "id-news" && id;
 
+  useEffect(() => {
+    if (!post) return undefined;
+
+    const timer = setTimeout(refreshFadeSlice, 80);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [post]);
+
   if (isSanityNewsPost && status === "loading") {
     return (
       <main className="page_magazine_detail">
@@ -95,7 +106,7 @@ function MagazinePost() {
           <div className="md_body_inner">
             <article>
               {post.thumbnail && <img className="ani fade-img" src={getNewsImageUrl(post.thumbnail, 1280)} alt="" />}
-              <div className="fade-slice fadeX ani">
+              <div>
                 <PortableNewsContent value={post.content} />
               </div>
             </article>
