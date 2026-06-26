@@ -1,14 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Lenis from "lenis";
-import { getPageItems, magazinePageSettings, galleryItems } from "./magazineConfig";
+import { fetchGalleryPosts, formatGalleryDate, getNewsImageUrl } from "../../lib/sanityNews";
+import { getPageItems } from "./magazineConfig";
 
 const CATEGORY = "id-gallery";
-const ITEMS = galleryItems(
-  CATEGORY,
-  "id GALLERY layout",
-  magazinePageSettings[CATEGORY].totalItems
-);
 const ZOOM_IN_DURATION = 1.2;
 const ZOOM_OUT_DURATION = 1.2;
 const ZOOM_STAGGER_AMOUNT = 0.2;
@@ -41,6 +37,9 @@ const getViewerImageStackTarget = (stackElement) => {
 };
 
 function IdGallery({ currentPage = 1 }) {
+  const [posts, setPosts] = useState([]);
+  const [status, setStatus] = useState("loading");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isGalleryViewerOpen, setIsGalleryViewerOpen] = useState(false);
   const [viewerStartIndex, setViewerStartIndex] = useState(0);
   const [viewerCurrentIndex, setViewerCurrentIndex] = useState(0);
@@ -60,7 +59,55 @@ function IdGallery({ currentPage = 1 }) {
   const viewerLenisRef = useRef(null);
   const backdropTimerRef = useRef(null);
   const controlsTimerRef = useRef(null);
-  const pageItems = getPageItems(ITEMS, currentPage, CATEGORY);
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchGalleryPosts()
+      .then((items) => {
+        if (!isMounted) return;
+
+        setPosts(items);
+        setStatus("ready");
+      })
+      .catch((error) => {
+        if (!isMounted) return;
+
+        console.error("Failed to load Sanity gallery posts", error);
+        setErrorMessage(error?.message || "Unknown error");
+        setStatus("error");
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const items = useMemo(
+    () => posts.map((post) => {
+      const galleryImages = post.images?.length ? post.images : [];
+      const coverImage = post.thumbnail || galleryImages[0];
+      const date = formatGalleryDate(post.publishedAt);
+
+      return {
+        id: post._id,
+        category: CATEGORY,
+        date,
+        title: post.title,
+        img: getNewsImageUrl(coverImage, 1280),
+        images: galleryImages.map((image, imageIndex) => ({
+          id: `${post._id}-${image._key || imageIndex}`,
+          parentId: post._id,
+          category: CATEGORY,
+          date,
+          title: post.title,
+          img: getNewsImageUrl(image, 1280),
+        })),
+      };
+    }),
+    [posts]
+  );
+
+  const pageItems = getPageItems(items, currentPage, CATEGORY);
   const isFirstPage = currentPage === 1;
   const featuredItem = isFirstPage ? pageItems[0] : null;
   const normalItems = isFirstPage ? pageItems.slice(1) : pageItems;
@@ -457,6 +504,18 @@ function IdGallery({ currentPage = 1 }) {
       window.lenis?.start?.();
     };
   }, []);
+
+  if (status === "loading") {
+    return <div className="mg_state body-m">Loading...</div>;
+  }
+
+  if (status === "error") {
+    return <div className="mg_state body-m">Gallery posts could not be loaded. {errorMessage}</div>;
+  }
+
+  if (!items.length) {
+    return <div className="mg_state body-m">No gallery posts yet.</div>;
+  }
 
   return (
     <>

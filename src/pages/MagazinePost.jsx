@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
 import PortableNewsContent from "../components/PortableNewsContent";
-import { fetchNewsPost, formatNewsDate, getNewsImageUrl } from "../lib/sanityNews";
+import { fetchMagazinePost, formatNewsDate, getNewsImageUrl, getPostTypeForCategory } from "../lib/sanityNews";
 import { refreshFadeSlice } from "../hook/useFadeSlice";
 import "../styles/MagazinePost.scss";
 
@@ -19,37 +19,40 @@ function MagazinePost() {
   const listUrl = `/magazine/${category}`;
   const pageName = categoryNames[category] || categoryNames["our-picks"];
   const [post, setPost] = useState(null);
-  const [status, setStatus] = useState(category === "id-news" ? "loading" : "ready");
+  const [status, setStatus] = useState(getPostTypeForCategory(category) && id ? "loading" : "ready");
   const [errorMessage, setErrorMessage] = useState("");
+  const isSanityMagazinePost = Boolean(getPostTypeForCategory(category) && id);
+  const currentPostKey = isSanityMagazinePost ? `${category}:${id}` : "";
+  const [loadedPostKey, setLoadedPostKey] = useState("");
 
   useEffect(() => {
-    if (category !== "id-news" || !id) {
+    if (!isSanityMagazinePost) {
       return undefined;
     }
 
     let isMounted = true;
 
-    fetchNewsPost(id)
+    fetchMagazinePost(category, id)
       .then((item) => {
         if (!isMounted) return;
 
         setPost(item);
+        setLoadedPostKey(currentPostKey);
         setStatus(item ? "ready" : "missing");
       })
       .catch((error) => {
         if (!isMounted) return;
 
-        console.error("Failed to load Sanity news post", error);
+        console.error("Failed to load Sanity magazine post", error);
         setErrorMessage(error?.message || "Unknown error");
+        setLoadedPostKey(currentPostKey);
         setStatus("error");
       });
 
     return () => {
       isMounted = false;
     };
-  }, [category, id]);
-
-  const isSanityNewsPost = category === "id-news" && id;
+  }, [category, currentPostKey, id, isSanityMagazinePost]);
 
   useEffect(() => {
     if (!post) return undefined;
@@ -61,7 +64,7 @@ function MagazinePost() {
     };
   }, [post]);
 
-  if (isSanityNewsPost && status === "loading") {
+  if (isSanityMagazinePost && (status === "loading" || loadedPostKey !== currentPostKey)) {
     return (
       <main className="page_magazine_detail">
         <section className="md_head b-t b-4 ani">
@@ -75,7 +78,7 @@ function MagazinePost() {
     );
   }
 
-  if (isSanityNewsPost && (status === "error" || status === "missing")) {
+  if (isSanityMagazinePost && (status === "error" || status === "missing")) {
     return (
       <main className="page_magazine_detail">
         <section className="md_head b-t b-4 ani">
@@ -89,7 +92,7 @@ function MagazinePost() {
     );
   }
 
-  if (isSanityNewsPost && post) {
+  if (isSanityMagazinePost && post) {
     return (
       <main className="page_magazine_detail">
         <section className="md_head b-t b-4 ani">

@@ -10,8 +10,8 @@ import IdEvent from "./magazine/IdEvent";
 import IdFamily from "./magazine/IdFamily";
 import IdGallery from "./magazine/IdGallery";
 import IdPlay from "./magazine/IdPlay";
-import { getTotalPages } from "./magazine/magazineConfig";
-import { fetchNewsCount } from "../lib/sanityNews";
+import { getItemsPerPage, getTotalPages, magazinePageSettings } from "./magazine/magazineConfig";
+import { fetchMagazinePostCount, getPostTypeForCategory } from "../lib/sanityNews";
 import "../styles/magazine.scss";
 import "../styles/ourpicks.scss";
 
@@ -32,8 +32,8 @@ function Magazine() {
   const currentCategory = category || "our-picks";
   const isTabMove = location.state?.fromMagazineTab === true;
   const currentPage = Number(pageSlug?.replace("list-", "") || 1);
-  const [newsTotalPages, setNewsTotalPages] = useState(getTotalPages("id-news"));
-  const totalPages = currentCategory === "id-news" ? newsTotalPages : getTotalPages(currentCategory);
+  const [sanityTotalPages, setSanityTotalPages] = useState({});
+  const totalPages = sanityTotalPages[currentCategory] || getTotalPages(currentCategory);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
   const currentTabName = tabs.find((tab) => tab.path === currentCategory)?.name || tabs[0].name;
   const showPagination = currentCategory !== "id-play";
@@ -152,25 +152,32 @@ function Magazine() {
   }, [currentCategory, isTabMove]);
 
   useEffect(() => {
-    if (currentCategory !== "id-news") return undefined;
+    if (!getPostTypeForCategory(currentCategory)) return undefined;
 
     let isMounted = true;
 
-    fetchNewsCount()
+    fetchMagazinePostCount(currentCategory)
       .then((count) => {
         if (!isMounted) return;
 
-        const firstPageItems = 13;
-        const itemsPerPage = 15;
+        const setting = magazinePageSettings[currentCategory] || {};
+        const firstPageItems = setting.firstPageItems || getItemsPerPage(currentCategory);
+        const itemsPerPage = getItemsPerPage(currentCategory);
         const remainingItems = Math.max(count - firstPageItems, 0);
         const nextTotalPages = Math.max(1, 1 + Math.ceil(remainingItems / itemsPerPage));
 
-        setNewsTotalPages(nextTotalPages);
+        setSanityTotalPages((pages) => ({
+          ...pages,
+          [currentCategory]: nextTotalPages,
+        }));
       })
       .catch(() => {
         if (!isMounted) return;
 
-        setNewsTotalPages(1);
+        setSanityTotalPages((pages) => ({
+          ...pages,
+          [currentCategory]: 1,
+        }));
       });
 
     return () => {

@@ -1,6 +1,13 @@
 import { sanityDataset, sanityProjectId, urlForSanityImage } from "./sanity";
 
-const newsFields = `
+const postTypesByCategory = {
+  "id-news": "newsPost",
+  "id-event": "eventPost",
+  "id-family": "familyPost",
+  "id-gallery": "galleryPost",
+};
+
+const magazinePostFields = `
   _id,
   title,
   thumbnail,
@@ -9,10 +16,21 @@ const newsFields = `
   isHidden
 `;
 
-const newsOrder = "order(publishedAt desc, _createdAt desc)";
+const galleryPostFields = `
+  _id,
+  title,
+  thumbnail,
+  images,
+  publishedAt,
+  isHidden
+`;
+
+const magazinePostOrder = "order(publishedAt desc, _createdAt desc)";
 const sanityQueryUrl = sanityProjectId
   ? `/sanity-data/query/${sanityDataset}`
   : "";
+
+export const getPostTypeForCategory = (category) => postTypesByCategory[category];
 
 const runQuery = async (query, params = {}) => {
   const searchParams = new URLSearchParams({ query });
@@ -53,20 +71,58 @@ export const getNewsImageUrl = (image, width = 960) => {
     .url();
 };
 
+export const formatGalleryDate = (dateValue) => {
+  if (!dateValue) return "";
+
+  return String(new Date(dateValue).getFullYear());
+};
+
 export const fetchNewsPosts = () =>
+  fetchMagazinePosts("id-news");
+
+export const fetchMagazinePosts = (category) => {
+  const postType = getPostTypeForCategory(category);
+
+  if (!postType) return Promise.resolve([]);
+
+  return runQuery(
+    `*[_type == $postType && (!defined(isHidden) || isHidden != true)] | ${magazinePostOrder} {
+      ${magazinePostFields}
+    }`,
+    { postType }
+  );
+};
+
+export const fetchGalleryPosts = () =>
   runQuery(
-    `*[_type == "newsPost" && (!defined(isHidden) || isHidden != true)] | ${newsOrder} {
-      ${newsFields}
+    `*[_type == "galleryPost" && (!defined(isHidden) || isHidden != true)] | ${magazinePostOrder} {
+      ${galleryPostFields}
     }`
   );
 
 export const fetchNewsCount = () =>
-  runQuery(`count(*[_type == "newsPost" && (!defined(isHidden) || isHidden != true)])`);
+  fetchMagazinePostCount("id-news");
+
+export const fetchMagazinePostCount = (category) => {
+  const postType = getPostTypeForCategory(category);
+
+  if (!postType) return Promise.resolve(0);
+
+  return runQuery(`count(*[_type == $postType && (!defined(isHidden) || isHidden != true)])`, { postType });
+};
 
 export const fetchNewsPost = (id) =>
-  runQuery(
-    `*[_type == "newsPost" && _id == $id][0] {
-      ${newsFields}
+  fetchMagazinePost("id-news", id);
+
+export const fetchMagazinePost = (category, id) => {
+  const postType = getPostTypeForCategory(category);
+
+  if (!postType) return Promise.resolve(null);
+
+  return runQuery(
+    `*[_type == $postType && _id == $id][0] {
+      ${magazinePostFields}
     }`,
-    { id }
+    { postType, id }
   );
+};
