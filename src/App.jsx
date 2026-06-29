@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -12,19 +13,34 @@ import MagazineDetail from "./pages/MagazinePost";
 import "./styles/common.scss";
 import LenisProvider from "./lib/Lenis";
 
+const AdminStudio = lazy(() => import("./pages/AdminStudio"));
+
 function FadeSliceProvider() {
   useFadeSlice();
   return null;
 }
 
-function App() {
+function AppRoutes() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  if (isAdminRoute) {
+    return (
+      <Suspense fallback={<div className="admin_studio_loading">Loading Studio...</div>}>
+        <Routes>
+          <Route path="/admin/*" element={<AdminStudio />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+
   return (
-    <BrowserRouter>
-    <FadeSliceProvider />
-    <AniProvider />
-    <LenisProvider />
-    
-    <CursorFollower />
+    <>
+      <FadeSliceProvider />
+      <AniProvider />
+      <LenisProvider />
+
+      <CursorFollower />
 
       <Header />
       <Routes>
@@ -37,6 +53,14 @@ function App() {
         <Route path="/magazine-post" element={<MagazineDetail />} />
       </Routes>
       <Footer />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

@@ -11,6 +11,20 @@ $bg-gray-4:#59575E;
   font-display: swap;
 }
 
+.admin_studio {
+  min-height: 100vh;
+}
+
+.admin_studio_loading {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  background: #f1f3f6;
+  color: #101112;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');

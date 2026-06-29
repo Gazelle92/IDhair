@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "sanity:dev": "sanity dev",
-    "sanity:build": "sanity build",
+    "sanity:build": "sanity build sanity-dist",
     "sanity:deploy": "sanity deploy"
   },
   "dependencies": {

@@ -7,20 +7,20 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      title: "제목",
+      title: "Title",
       type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "publishedAt",
-      title: "날짜",
+      title: "Date",
       type: "datetime",
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: "thumbnail",
-      title: "대표 이미지",
+      title: "Thumbnail",
       type: "image",
       options: {
         hotspot: true,
@@ -28,24 +28,24 @@ export default defineType({
     }),
     defineField({
       name: "images",
-      title: "갤러리 이미지",
+      title: "Gallery Images",
       type: "array",
       of: [
         defineArrayMember({
           type: "image",
-          title: "이미지",
+          title: "Image",
           options: {
             hotspot: true,
           },
           fields: [
             defineField({
               name: "alt",
-              title: "대체 텍스트",
+              title: "Alt Text",
               type: "string",
             }),
             defineField({
               name: "caption",
-              title: "캡션",
+              title: "Caption",
               type: "string",
             }),
           ],
@@ -55,7 +55,7 @@ export default defineType({
     }),
     defineField({
       name: "isHidden",
-      title: "포스팅 숨기기",
+      title: "Hide Post",
       type: "boolean",
       initialValue: false,
     }),
@@ -69,11 +69,11 @@ export default defineType({
       isHidden: "isHidden",
     },
     prepare({ title, media, firstImage, publishedAt, isHidden }) {
-      const date = publishedAt ? new Date(publishedAt).toLocaleDateString("ko-KR") : "날짜 없음";
+      const date = publishedAt ? new Date(publishedAt).toLocaleDateString("ko-KR") : "No date";
 
       return {
         title,
-        subtitle: `${date} · ${isHidden ? "숨김" : "노출"}`,
+        subtitle: `${date} - ${isHidden ? "Hidden" : "Visible"}`,
         media: media || firstImage,
       };
     },

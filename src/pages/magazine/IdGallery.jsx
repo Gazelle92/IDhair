@@ -294,7 +294,7 @@ function IdGallery({ currentPage = 1 }) {
     const clone = image.cloneNode(true);
     const galleryItems = getGalleryDomItems();
     const otherItems = galleryItems.filter((li) => li !== item);
-    const itemId = Number(event.currentTarget.dataset.itemId);
+    const itemId = event.currentTarget.dataset.itemId;
     const selectedItem = pageItems.find((pageItem) => pageItem.id === itemId);
     const selectedViewerItems = selectedItem?.images?.length ? selectedItem.images : [selectedItem].filter(Boolean);
 
