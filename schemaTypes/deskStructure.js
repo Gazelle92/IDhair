@@ -3,6 +3,7 @@ const magazinePostItems = [
   { id: "eventPost", title: "id EVENT", type: "eventPost" },
   { id: "familyPost", title: "id FAMILY", type: "familyPost" },
   { id: "galleryPost", title: "id GALLERY", type: "galleryPost" },
+  { id: "playPost", title: "id PLAY", type: "playPost" },
 ];
 
 export const deskStructure = (S) =>

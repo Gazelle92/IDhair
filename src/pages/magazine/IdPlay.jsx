@@ -1,38 +1,67 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { magazinePageSettings, playItems } from "./magazineConfig";
+import { fetchPlayPosts, formatNewsDate, getNewsImageUrl } from "../../lib/sanityNews";
 
 const CATEGORY = "id-play";
-const ITEMS = playItems(
-  CATEGORY,
-  "id PLAY layout",
-  magazinePageSettings[CATEGORY].totalItems
-);
 const LOAD_COUNT = 9;
 const PLAY_ZOOM_DURATION = 1.05;
 
-const getTypeClass = (index) => {
-  const types = ["type-a", "type-b"];
-  return types[index % types.length];
+const getTypeClass = (item, index = 0) => {
+  if (item?.displayType === "type-a" || item?.displayType === "type-b") {
+    return item.displayType;
+  }
+
+  return index % 2 === 0 ? "type-a" : "type-b";
 };
 
-const getPlayAspect = (index) => {
-  return getTypeClass(index) === "type-b" ? "9 / 16" : "16 / 9";
+const getPlayAspect = (item, index = 0) => {
+  return getTypeClass(item, index) === "type-a" ? "9 / 16" : "16 / 9";
 };
 
 function IdPlay() {
+  const [posts, setPosts] = useState([]);
+  const [status, setStatus] = useState("loading");
+  const [errorMessage, setErrorMessage] = useState("");
   const [visibleCount, setVisibleCount] = useState(LOAD_COUNT);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerReady, setViewerReady] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeAspect, setActiveAspect] = useState(getPlayAspect(0));
+  const [activeAspect, setActiveAspect] = useState(getPlayAspect(null, 0));
   const [activeViewerItems, setActiveViewerItems] = useState([]);
-  const pageItems = ITEMS.slice(0, visibleCount);
+  const items = posts
+    .map((post) => {
+      const images = (post.images || [])
+        .map((image, imageIndex) => ({
+          id: `${post._id}-${image._key || imageIndex}`,
+          parentId: post._id,
+          category: CATEGORY,
+          date: formatNewsDate(post.publishedAt),
+          title: post.title || "id PLAY",
+          displayType: image.displayType || getTypeClass(null, imageIndex),
+          img: getNewsImageUrl(image, 1600),
+        }))
+        .filter((image) => image.img);
+      const thumbnail = images[0];
+
+      if (!thumbnail) return null;
+
+      return {
+        id: post._id,
+        category: CATEGORY,
+        date: formatNewsDate(post.publishedAt),
+        title: post.title || "id PLAY",
+        displayType: thumbnail.displayType,
+        img: thumbnail.img,
+        images,
+      };
+    })
+    .filter(Boolean);
+  const pageItems = items.slice(0, visibleCount);
   const viewerItems = activeViewerItems;
-  const hasMoreItems = visibleCount < ITEMS.length;
+  const hasMoreItems = visibleCount < items.length;
   const viewerFrameRef = useRef(null);
   const cloneRef = useRef(null);
   const activeSourceImageRef = useRef(null);
@@ -40,6 +69,29 @@ function IdPlay() {
   const viewerSlideRefs = useRef([]);
   const timelineRef = useRef(null);
   const swiperRef = useRef(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchPlayPosts()
+      .then((items) => {
+        if (!isMounted) return;
+
+        setPosts(items);
+        setStatus("ready");
+      })
+      .catch((error) => {
+        if (!isMounted) return;
+
+        console.error("Failed to load Sanity play posts", error);
+        setErrorMessage(error?.message || "Unknown error");
+        setStatus("error");
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const removeClone = () => {
     cloneRef.current?.remove();
@@ -53,7 +105,7 @@ function IdPlay() {
   };
 
   const handleLoadMore = () => {
-    setVisibleCount((count) => Math.min(count + LOAD_COUNT, ITEMS.length));
+    setVisibleCount((count) => Math.min(count + LOAD_COUNT, items.length));
 
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("scroll"));
@@ -92,7 +144,7 @@ function IdPlay() {
 
       setActiveViewerItems(selectedViewerItems);
       setActiveIndex(0);
-      setActiveAspect(getPlayAspect(0));
+      setActiveAspect(getPlayAspect(selectedViewerItems[0], 0));
       setViewerReady(false);
       setViewerOpen(true);
     });
@@ -207,12 +259,24 @@ function IdPlay() {
     });
   };
 
+  if (status === "loading") {
+    return <div className="mg_state body-m">Loading...</div>;
+  }
+
+  if (status === "error") {
+    return <div className="mg_state body-m">Play posts could not be loaded. {errorMessage}</div>;
+  }
+
+  if (!items.length) {
+    return <div className="mg_state body-m">No play posts yet.</div>;
+  }
+
   return (
     <>
       <ul className="mg_list mg_list_play b-t init_ani">
         {pageItems.map((item, index) => (
           <li
-            className={`mg_li ani ${getTypeClass(index)}`}
+            className={`mg_li ani ${getTypeClass(item, index)}`}
             key={item.id}
             ref={(element) => {
               playItemRefs.current[index] = element;
@@ -237,9 +301,7 @@ function IdPlay() {
           <span></span>
           <span></span>
         </button>
-        <div className="play_viewer_bg" aria-hidden="true">
-          {/*<img src={ITEMS[activeIndex]?.img} alt="" />*/}
-        </div>
+        <div className="play_viewer_bg" aria-hidden="true"></div>
         <div className="play_viewer_stage">
           <Swiper
             className="play_viewer_swiper"
@@ -266,12 +328,12 @@ function IdPlay() {
             }}
             onSlideChange={(swiper) => {
               setActiveIndex(swiper.activeIndex);
-              setActiveAspect(getPlayAspect(swiper.activeIndex));
+              setActiveAspect(getPlayAspect(viewerItems[swiper.activeIndex], swiper.activeIndex));
             }}
           >
             {viewerItems.map((item, index) => (
               <SwiperSlide
-                className={`play_viewer_slide ${getTypeClass(index)}`}
+                className={`play_viewer_slide ${getTypeClass(item, index)}`}
                 key={item.id}
                 ref={(element) => {
                   viewerSlideRefs.current[index] = element;

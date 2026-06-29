@@ -68,7 +68,7 @@ const getPlayTypeClass = (index) => {
 };
 
 const getPlayAspect = (index) => {
-  return getPlayTypeClass(index) === "type-b" ? "9 / 16" : "16 / 9";
+  return getPlayTypeClass(index) === "type-a" ? "9 / 16" : "16 / 9";
 };
 
 const getListUrl = (category, page = 1) => {

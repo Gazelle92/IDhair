@@ -1,14 +1,16 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import DisplayTypeInput from "./components/DisplayTypeInput";
 
 export default defineType({
-  name: "galleryPost",
-  title: "id GALLERY",
+  name: "playPost",
+  title: "id PLAY",
   type: "document",
   fields: [
     defineField({
       name: "title",
       title: "Title",
       type: "string",
+      initialValue: "id PLAY",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -19,16 +21,8 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "thumbnail",
-      title: "Thumbnail",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
       name: "images",
-      title: "Gallery Images",
+      title: "Play Images",
       type: "array",
       of: [
         defineArrayMember({
@@ -39,13 +33,25 @@ export default defineType({
           },
           fields: [
             defineField({
-              name: "alt",
-              title: "Alt Text",
+              name: "displayType",
+              title: "Display Type",
+              description: "type-a: 9 / 16, type-b: 16 / 9",
               type: "string",
+              options: {
+                list: [
+                  { title: "type-a - 9 / 16", value: "type-a" },
+                  { title: "type-b - 16 / 9", value: "type-b" },
+                ],
+              },
+              components: {
+                input: DisplayTypeInput,
+              },
+              initialValue: "type-a",
+              validation: (rule) => rule.required(),
             }),
             defineField({
-              name: "caption",
-              title: "Caption",
+              name: "alt",
+              title: "Alt Text",
               type: "string",
             }),
           ],
@@ -63,18 +69,17 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      media: "thumbnail",
       firstImage: "images.0",
       publishedAt: "publishedAt",
       isHidden: "isHidden",
     },
-    prepare({ title, media, firstImage, publishedAt, isHidden }) {
+    prepare({ title, firstImage, publishedAt, isHidden }) {
       const date = publishedAt ? new Date(publishedAt).toLocaleDateString("ko-KR") : "No date";
 
       return {
-        title,
+        title: title || "id PLAY",
         subtitle: `${date} - ${isHidden ? "숨김" : "노출"}`,
-        media: media || firstImage,
+        media: firstImage,
       };
     },
   },

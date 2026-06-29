@@ -187,10 +187,10 @@
 
     .mg_list_play{
       .mg_li{padding:  1.2121vw; position: relative; font-size: 0; display: flex; align-items: center; justify-content: center;
-        &.type-a img{aspect-ratio: 16 / 9;}
-        &.type-b{ padding: 1.2121vw 6.4242vw;
+        &.type-a{ padding: 1.2121vw 6.4242vw;
           img{aspect-ratio: 9 / 16; }
         }
+        &.type-b img{aspect-ratio: 16 / 9;}
         a{font-size: 0;}
         img{aspect-ratio: 330 / 412;}
         @media(min-width:1025px){
@@ -399,8 +399,8 @@ body.gallery-backdrop-active main.page_magazine::after{background-color: #ededed
     .swiper-wrapper{align-items: center;}
   }
   .play_viewer_slide{width: min(var(--play-slide-width), calc(var(--play-max-height) * 16 / 9)); max-height: var(--play-max-height); aspect-ratio: 16 / 9;  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
-    &.type-a{aspect-ratio: 16 / 9;}
-    &.type-b{aspect-ratio: 9 / 16; width: min(calc(var(--play-slide-width) * 0.45), calc(var(--play-max-height) * 9 / 16)); }
+    &.type-a{aspect-ratio: 9 / 16; width: min(calc(var(--play-slide-width) * 0.45), calc(var(--play-max-height) * 9 / 16));}
+    &.type-b{aspect-ratio: 16 / 9;}
     &.swiper-slide-active{}
   }
   .play_viewer_slide_btn{width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer;
@@ -460,8 +460,8 @@ body.play-viewer-animating .play_viewer .play_viewer_swiper{opacity: 0;}
     .play_viewer_swiper{width: 100%; height: 100%; overflow: visible;}
     .play_viewer_swiper .swiper-wrapper{align-items: center;}
     .play_viewer_slide{width: min(var(--play-slide-width), calc(var(--play-max-height) * 16 / 9)); height: auto;}
-    .play_viewer_slide.type-a{aspect-ratio: 16 / 9;}
-    .play_viewer_slide.type-b{width: min(calc(var(--play-slide-width) * 0.56), calc(var(--play-max-height) * 9 / 16)); aspect-ratio: 9 / 16;}
+    .play_viewer_slide.type-a{width: min(calc(var(--play-slide-width) * 0.56), calc(var(--play-max-height) * 9 / 16)); aspect-ratio: 9 / 16;}
+    .play_viewer_slide.type-b{aspect-ratio: 16 / 9;}
     .play_viewer_frame{width: min(calc(100% - (5.556vw * 2)), calc(var(--play-max-height) * 16 / 9)); }
     .play_viewer_frame[style*="9 / 16"]{width: min(calc((100% - (5.556vw * 2)) * 0.56), calc(var(--play-max-height) * 9 / 16));}
   }

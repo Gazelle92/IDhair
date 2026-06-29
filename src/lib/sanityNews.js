@@ -5,6 +5,7 @@ const postTypesByCategory = {
   "id-event": "eventPost",
   "id-family": "familyPost",
   "id-gallery": "galleryPost",
+  "id-play": "playPost",
 };
 
 const magazinePostFields = `
@@ -20,6 +21,14 @@ const galleryPostFields = `
   _id,
   title,
   thumbnail,
+  images,
+  publishedAt,
+  isHidden
+`;
+
+const playPostFields = `
+  _id,
+  title,
   images,
   publishedAt,
   isHidden
@@ -97,6 +106,13 @@ export const fetchGalleryPosts = () =>
   runQuery(
     `*[_type == "galleryPost" && (!defined(isHidden) || isHidden != true)] | ${magazinePostOrder} {
       ${galleryPostFields}
+    }`
+  );
+
+export const fetchPlayPosts = () =>
+  runQuery(
+    `*[_type == "playPost" && (!defined(isHidden) || isHidden != true)] | ${magazinePostOrder} {
+      ${playPostFields}
     }`
   );
 
