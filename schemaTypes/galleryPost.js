@@ -12,6 +12,12 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "content",
+      title: "Content",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
       name: "publishedAt",
       title: "Date",
       type: "datetime",

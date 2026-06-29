@@ -20,6 +20,7 @@ const magazinePostFields = `
 const galleryPostFields = `
   _id,
   title,
+  content,
   thumbnail,
   images,
   publishedAt,

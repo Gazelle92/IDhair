@@ -108,6 +108,7 @@ const mapGalleryPost = (post) => {
     category: GALLERY_CATEGORY,
     date,
     title: post.title,
+    content: post.content,
     img: getNewsImageUrl(coverImage, 1280),
     images: galleryImages.map((image, imageIndex) => ({
       id: `${post._id}-${image._key || imageIndex}`,
@@ -917,7 +918,7 @@ function OurPicks() {
                 <span>{galleryItemsList[0]?.date} </span><br/>
                 <span>{galleryItemsList[0]?.title || "Collection"}</span>
               </h3>
-              <p className="body-l fadeX-3">“ 나다움을 마주하는 계절의 시작 “</p>
+              <p className="body-l fadeX-3">“ {galleryItemsList[0]?.content} “</p>
             </div>
 
             <div className="img_s_w">
