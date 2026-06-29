@@ -4,6 +4,14 @@ import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import TransitionLink from "../../components/TransitionLink";
+import {
+  fetchGalleryPosts,
+  fetchMagazinePosts,
+  fetchPlayPosts,
+  formatGalleryDate,
+  formatNewsDate,
+  getNewsImageUrl,
+} from "../../lib/sanityNews";
 import { eventItems, familyItems, galleryItems, magazinePageSettings, makeMagazineItems, playItems } from "./magazineConfig";
 
 const NEWS_CATEGORY = "id-news";
@@ -60,15 +68,18 @@ const PLAY_ITEMS = playItems(
   PLAY_CATEGORY,
   "id PLAY layout",
   magazinePageSettings[PLAY_CATEGORY].totalItems
-).slice(0, 8);
+).slice(0, 10);
 
-const getPlayTypeClass = (index) => {
-  const types = ["type-a", "type-b"];
-  return types[index % types.length];
+const getPlayTypeClass = (item, index = 0) => {
+  if (item?.displayType === "type-a" || item?.displayType === "type-b") {
+    return item.displayType;
+  }
+
+  return index % 2 === 0 ? "type-a" : "type-b";
 };
 
-const getPlayAspect = (index) => {
-  return getPlayTypeClass(index) === "type-a" ? "9 / 16" : "16 / 9";
+const getPlayAspect = (item, index = 0) => {
+  return getPlayTypeClass(item, index) === "type-a" ? "9 / 16" : "16 / 9";
 };
 
 const getListUrl = (category, page = 1) => {
@@ -78,6 +89,61 @@ const getListUrl = (category, page = 1) => {
 const ZOOM_IN_DURATION = 1.2;
 const ZOOM_OUT_DURATION = 1.2;
 const PLAY_ZOOM_DURATION = 1.05;
+
+const mapMagazinePost = (post, category) => ({
+  id: post._id,
+  category,
+  date: formatNewsDate(post.publishedAt),
+  title: post.title,
+  img: getNewsImageUrl(post.thumbnail, 1280),
+});
+
+const mapGalleryPost = (post) => {
+  const galleryImages = post.images?.length ? post.images : [];
+  const coverImage = post.thumbnail || galleryImages[0];
+  const date = formatGalleryDate(post.publishedAt);
+
+  return {
+    id: post._id,
+    category: GALLERY_CATEGORY,
+    date,
+    title: post.title,
+    img: getNewsImageUrl(coverImage, 1280),
+    images: galleryImages.map((image, imageIndex) => ({
+      id: `${post._id}-${image._key || imageIndex}`,
+      parentId: post._id,
+      category: GALLERY_CATEGORY,
+      date,
+      title: post.title,
+      img: getNewsImageUrl(image, 1280),
+    })),
+  };
+};
+
+const mapPlayPost = (post) => {
+  const images = (post.images || []).map((image, imageIndex) => ({
+    id: `${post._id}-${image._key || imageIndex}`,
+    parentId: post._id,
+    category: PLAY_CATEGORY,
+    date: formatNewsDate(post.publishedAt),
+    title: post.title || "id PLAY",
+    displayType: image.displayType || getPlayTypeClass(null, imageIndex),
+    img: getNewsImageUrl(image, 1600),
+  }));
+  const thumbnail = images[0];
+
+  if (!thumbnail) return null;
+
+  return {
+    id: post._id,
+    category: PLAY_CATEGORY,
+    date: formatNewsDate(post.publishedAt),
+    title: post.title || "id PLAY",
+    displayType: thumbnail.displayType,
+    img: thumbnail.img,
+    images,
+  };
+};
 
 const getViewerImageTarget = () => {
   const isMobile = window.innerWidth <= 1024;
@@ -107,6 +173,11 @@ const getViewerImageStackTarget = (stackElement) => {
 };
 
 function OurPicks() {
+  const [newsItems, setNewsItems] = useState(NEWS_ITEMS);
+  const [eventItemsList, setEventItemsList] = useState(EVENT_ITEMS);
+  const [familyItemsList, setFamilyItemsList] = useState(FAMILY_ITEMS);
+  const [galleryItemsList, setGalleryItemsList] = useState(GALLERY_ITEMS.slice(0, 3));
+  const [playItemsList, setPlayItemsList] = useState(PLAY_ITEMS);
   const [activeNewsIndex, setActiveNewsIndex] = useState(0);
   const [isGalleryViewerOpen, setIsGalleryViewerOpen] = useState(false);
   const [galleryViewerStartIndex, setGalleryViewerStartIndex] = useState(0);
@@ -115,8 +186,7 @@ function OurPicks() {
   const [playViewerOpen, setPlayViewerOpen] = useState(false);
   const [playViewerReady, setPlayViewerReady] = useState(false);
   const [activePlayIndex, setActivePlayIndex] = useState(0);
-  const [playViewerTypeOffset, setPlayViewerTypeOffset] = useState(0);
-  const [activePlayAspect, setActivePlayAspect] = useState(getPlayAspect(0));
+  const [activePlayAspect, setActivePlayAspect] = useState(getPlayAspect(null, 0));
   const [activePlayViewerItems, setActivePlayViewerItems] = useState([]);
   const previewRefs = useRef([]);
   const gallerySectionRef = useRef(null);
@@ -148,6 +218,34 @@ function OurPicks() {
   const shouldRenderGalleryViewer = isGalleryViewerOpen || activeGalleryViewerItems.length > 0;
   const playViewerItems = activePlayViewerItems;
   const shouldRenderPlayViewer = playViewerOpen || playViewerItems.length > 0;
+
+  useEffect(() => {
+    let isMounted = true;
+
+    Promise.all([
+      fetchMagazinePosts(NEWS_CATEGORY),
+      fetchMagazinePosts(EVENT_CATEGORY),
+      fetchMagazinePosts(FAMILY_CATEGORY),
+      fetchGalleryPosts(),
+      fetchPlayPosts(),
+    ])
+      .then(([newsPosts, eventPosts, familyPosts, galleryPosts, playPosts]) => {
+        if (!isMounted) return;
+
+        setNewsItems(newsPosts.slice(0, 5).map((post) => mapMagazinePost(post, NEWS_CATEGORY)));
+        setEventItemsList(eventPosts.slice(0, 4).map((post) => mapMagazinePost(post, EVENT_CATEGORY)));
+        setFamilyItemsList(familyPosts.slice(0, 2).map((post) => mapMagazinePost(post, FAMILY_CATEGORY)));
+        setGalleryItemsList(galleryPosts.slice(0, 3).map(mapGalleryPost));
+        setPlayItemsList(playPosts.slice(0, 10).map(mapPlayPost).filter(Boolean));
+      })
+      .catch((error) => {
+        console.error("Failed to load Sanity our picks", error);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleNewsEnter = (index) => {
     if (index === activeNewsIndex) return;
@@ -310,7 +408,7 @@ function OurPicks() {
     galleryZoomTimelineRef.current?.kill();
     galleryZoomedItemRef.current = item;
     item.classList.add("is_zoomed");
-    const selectedViewerItems = GALLERY_ITEMS[index]?.images?.length ? GALLERY_ITEMS[index].images : [GALLERY_ITEMS[index]].filter(Boolean);
+    const selectedViewerItems = galleryItemsList[index]?.images?.length ? galleryItemsList[index].images : [galleryItemsList[index]].filter(Boolean);
 
     setActiveGalleryViewerItems(selectedViewerItems);
     setGalleryViewerStartIndex(0);
@@ -446,12 +544,11 @@ function OurPicks() {
     document.body.classList.add("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
     window.lenis?.stop?.();
     flushSync(() => {
-      const selectedViewerItems = PLAY_ITEMS[index]?.images?.length ? PLAY_ITEMS[index].images : [PLAY_ITEMS[index]].filter(Boolean);
+      const selectedViewerItems = playItemsList[index]?.images?.length ? playItemsList[index].images : [playItemsList[index]].filter(Boolean);
 
       setActivePlayViewerItems(selectedViewerItems);
-      setPlayViewerTypeOffset(index);
       setActivePlayIndex(0);
-      setActivePlayAspect(getPlayAspect(index));
+      setActivePlayAspect(getPlayAspect(selectedViewerItems[0], 0));
       setPlayViewerReady(false);
       setPlayViewerOpen(true);
     });
@@ -716,7 +813,7 @@ function OurPicks() {
 
         <div className="ourpicks_news_body b-t b-2 b-delay-4">
           <div className="ourpicks_news_preview" aria-hidden="true">
-            {NEWS_ITEMS.map((item, index) => (
+            {newsItems.map((item, index) => (
               <img
                 className={`ourpicks_news_preview_img ${activeNewsIndex === index ? "active" : ""}`}
                 src={item.img}
@@ -730,7 +827,7 @@ function OurPicks() {
           </div>
 
           <ul className="ourpicks_news_list b-l b-delay-6">
-            {NEWS_ITEMS.map((item, index) => (
+            {newsItems.map((item, index) => (
               <li
                 className={`ourpicks_news_item fadeX-${1 + 3} ${activeNewsIndex === index ? "active" : ""}`}
                 key={item.id}
@@ -760,7 +857,7 @@ function OurPicks() {
         </div>
 
         <ul className="mg_list mg_list_event ani b-t b-2 b-delay-4">
-          {EVENT_ITEMS.map((item) => (
+          {eventItemsList.map((item) => (
             <li className="mg_li ani" key={item.id}>
               <TransitionLink to={`/magazine/${EVENT_CATEGORY}/post/${item.id}`} className="mg_a">
                 <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
@@ -783,7 +880,7 @@ function OurPicks() {
         </div>
 
         <ul className="mg_list mg_list_family ani b-t b-2 b-delay-4">
-          {FAMILY_ITEMS.map((item) => (
+          {familyItemsList.map((item) => (
             <li className="mg_li ani" key={item.id}>
               <TransitionLink to={`/magazine/${FAMILY_CATEGORY}/post/${item.id}`} className="mg_a">
                 <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
@@ -811,14 +908,14 @@ function OurPicks() {
             onClick={(event) => openGalleryViewer(event, 0)}
             className="mg_li ourpicks_gallery_card flex_left ourpicks_gallery_card_main ani"
           >
-            <img src={GALLERY_ITEMS[0]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
+            <img src={galleryItemsList[0]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
           </button>
 
           <div className="flex_right b-l b-c-gray b-delay-10">
             <div className="ourpicks_gallery_title ani">
               <h3 className="display-s apprael apprael_all ani apprael_ani">
-                <span>{GALLERY_ITEMS[0]?.date} S/S</span><br/>
-                <span>Collection</span>
+                <span>{galleryItemsList[0]?.date} </span><br/>
+                <span>{galleryItemsList[0]?.title || "Collection"}</span>
               </h3>
               <p className="body-l fadeX-3">“ 나다움을 마주하는 계절의 시작 “</p>
             </div>
@@ -829,8 +926,8 @@ function OurPicks() {
                 onClick={(event) => openGalleryViewer(event, 1)}
                 className="mg_li ourpicks_gallery_card ourpicks_gallery_card_sub ani"
               >
-                <img src={GALLERY_ITEMS[1]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
-                <span className="body-m fadeX-8">2025 A/W<br />Collection</span>
+                <img src={galleryItemsList[1]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
+                <span className="body-m fadeX-8">{galleryItemsList[1]?.date}<br />{galleryItemsList[1]?.title}</span>
               </button>
 
               <button
@@ -838,8 +935,8 @@ function OurPicks() {
                 onClick={(event) => openGalleryViewer(event, 2)}
                 className="mg_li ourpicks_gallery_card ourpicks_gallery_card_side ani"
               >
-                <span className="body-m fadeX-8">2026 S/S<br />Collection</span>
-                <img src={GALLERY_ITEMS[2]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
+                <span className="body-m fadeX-8">{galleryItemsList[2]?.date}<br />{galleryItemsList[2]?.title}</span>
+                <img src={galleryItemsList[2]?.img} alt="Magazine Image" loading="lazy" decoding="async" />
               </button>
             </div>
           </div>
@@ -873,8 +970,8 @@ function OurPicks() {
               },
             }}*/
           >
-            {PLAY_ITEMS.map((item, index) => (
-              <SwiperSlide className={`ourpicks_play_slide ${getPlayTypeClass(index)}`} key={item.id}>
+            {playItemsList.map((item, index) => (
+              <SwiperSlide className={`ourpicks_play_slide ${getPlayTypeClass(item, index)}`} key={item.id}>
                 <button
                   type="button"
                   className="ourpicks_play_link"
@@ -1007,12 +1104,12 @@ function OurPicks() {
             }}
             onSlideChange={(swiper) => {
               setActivePlayIndex(swiper.activeIndex);
-              setActivePlayAspect(getPlayAspect(swiper.activeIndex + playViewerTypeOffset));
+              setActivePlayAspect(getPlayAspect(playViewerItems[swiper.activeIndex], swiper.activeIndex));
             }}
           >
             {playViewerItems.map((item, index) => (
               <SwiperSlide
-                className={`play_viewer_slide ${getPlayTypeClass(index + playViewerTypeOffset)}`}
+                className={`play_viewer_slide ${getPlayTypeClass(item, index)}`}
                 key={item.id}
                 ref={(element) => {
                   playViewerSlideRefs.current[index] = element;
