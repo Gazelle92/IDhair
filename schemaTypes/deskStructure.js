@@ -4,6 +4,7 @@ const magazinePostItems = [
   { id: "familyPost", title: "id FAMILY", type: "familyPost" },
   { id: "galleryPost", title: "id GALLERY", type: "galleryPost" },
   { id: "playPost", title: "id PLAY", type: "playPost" },
+  { id: "salonLocation", title: "SALON", type: "salonLocation" },
 ];
 
 export const deskStructure = (S) =>
@@ -17,10 +18,17 @@ export const deskStructure = (S) =>
           .child(
             S.documentTypeList(item.type)
               .title(item.title)
-              .defaultOrdering([
-                { field: "publishedAt", direction: "desc" },
-                { field: "_createdAt", direction: "desc" },
-              ])
+              .defaultOrdering(
+                item.type === "salonLocation"
+                  ? [
+                      { field: "order", direction: "asc" },
+                      { field: "_createdAt", direction: "desc" },
+                    ]
+                  : [
+                      { field: "publishedAt", direction: "desc" },
+                      { field: "_createdAt", direction: "desc" },
+                    ]
+              )
           )
       )
     );
