@@ -96,6 +96,7 @@
           .naver{padding: 6px 20px; border: 1px solid #fff; border-radius: 4px; gap: 20px; display: flex; align-items: center; justify-content: center;
             span{line-height: 1.1; padding-top: 2px; color: #fff;}
           }
+          a:not([href]), a[href=""]{display: none;}
           *{transition: ease 0.3s all;}
           a:hover{background-color: #fff;
             *{filter: invert(0.47);}
@@ -235,7 +236,11 @@
       }
 
       .body_right{flex:8 1 0; min-width:0; max-width:100%; padding:1.282vw 0 2.564vw 1.282vw; position:relative; display:flex; flex-direction:column; justify-content:space-between;
-        .scroll-y{display:flex; flex-direction:column; justify-content:space-between; height:100%; min-width:0;}
+        .scroll-y{display:flex; flex-direction:column; justify-content:space-between; height:100%; min-width:0;
+          &.scroll-y_no_images{justify-content:flex-start;
+            .store_detail{padding-top:4.3vw;}
+          }
+        }
         &::before{content:''; display:block; width:1px; height:calc(100% - 1.282vw); position:absolute; left:0; bottom:0; background-color:#fff;}
         .store_images{display:flex; width:100%; min-width:0; aspect-ratio:1000 / 430; max-width:100%; overflow:hidden; position:relative; transition:ease 0.4s transform, ease 0.4s backdrop-filter, ease 0.3s opacity; transform:scale(1.03); opacity:0; transition-delay: 0.0s;
           &.store_images_visible{transform:scale(1); opacity:1; transition:0.6s ease all; transition-delay: 0.0s;}
@@ -269,6 +274,7 @@
           .naver{padding:.385vw 1.282vw; border:1px solid #fff; border-radius:.256vw; gap:1.282vw; display:flex; align-items:center; justify-content:center;
             span{line-height:1.1; padding-top:.128vw; color:#fff;}
           }
+          a:not([href]), a[href=""]{display:none;}
           *{transition:ease .3s all;}
           a:hover{background-color:#fff;
             *{filter:invert(.47);}

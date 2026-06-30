@@ -1,47 +1,73 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { salonRegions } from "../data/salonRegions";
+import { fetchSalonRegions } from "../lib/sanitySalon";
 import "../styles/Salon.scss";
 
+const defaultSalonRegions = [
+  { id: "seoul", name: "서울", stores: [] },
+  { id: "gyeonggi", name: "경기", stores: [] },
+  { id: "local", name: "지방", stores: [] },
+];
+
+const emptyStore = {
+  id: "",
+  name: "",
+  address: "",
+  phone: "",
+  hours: "",
+  off: "",
+  instagramUrl: "",
+  reservationUrl: "",
+  images: [],
+};
+
 function Salon({ open, onClose }) {
-  const [selectedRegionId, setSelectedRegionId] = useState(salonRegions[0].id);
-  const [selectedStoreId, setSelectedStoreId] = useState(salonRegions[0].stores[0].id);
+  const [salonRegions, setSalonRegions] = useState(defaultSalonRegions);
+  const [selectedRegionId, setSelectedRegionId] = useState(defaultSalonRegions[0].id);
+  const [selectedStoreId, setSelectedStoreId] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedSearchQuery, setSubmittedSearchQuery] = useState("");
-  const [detailStore, setDetailStore] = useState(salonRegions[0].stores[0]);
+  const [detailStore, setDetailStore] = useState(emptyStore);
   const [isDetailVisible, setIsDetailVisible] = useState(true);
   const imageSwiperRef = useRef(null);
   const detailTimerRef = useRef(null);
 
   const flatStores = useMemo(
     () => salonRegions.flatMap((region) => region.stores),
-    []
+    [salonRegions]
   );
 
   const selectedRegion = useMemo(
     () => salonRegions.find((region) => region.id === selectedRegionId) ?? salonRegions[0],
-    [selectedRegionId]
+    [salonRegions, selectedRegionId]
   );
+
   const displayedStores = useMemo(() => {
     const query = submittedSearchQuery.trim().toLowerCase();
 
-    if (!query) return selectedRegion.stores;
+    if (!query) return selectedRegion?.stores ?? [];
 
     return flatStores.filter((store) => (
       store.name.toLowerCase().includes(query) ||
       store.address.toLowerCase().includes(query)
     ));
   }, [flatStores, submittedSearchQuery, selectedRegion]);
+
   const selectedStore = useMemo(
     () => (
       displayedStores.find((store) => store.id === selectedStoreId) ??
       displayedStores[0] ??
       flatStores.find((store) => store.id === selectedStoreId) ??
-      selectedRegion.stores[0]
+      selectedRegion?.stores?.[0] ??
+      emptyStore
     ),
     [displayedStores, flatStores, selectedRegion, selectedStoreId]
   );
+
+  const detailImages = detailStore.images ?? [];
+  const hasDetailImages = detailImages.length > 0;
+
   const changeStoreDetail = (store) => {
     if (!store) return;
 
@@ -69,7 +95,7 @@ function Salon({ open, onClose }) {
     setSearchQuery("");
     setSubmittedSearchQuery("");
     setSelectedRegionId(region.id);
-    changeStoreDetail(region.stores[0]);
+    changeStoreDetail(region.stores[0] ?? emptyStore);
   };
 
   const handleSearchSubmit = () => {
@@ -100,6 +126,31 @@ function Salon({ open, onClose }) {
   const handleNextImage = () => {
     imageSwiperRef.current?.slideNext();
   };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchSalonRegions()
+      .then((regions) => {
+        if (!isMounted) return;
+
+        setSalonRegions(regions);
+
+        const firstRegionWithStore = regions.find((region) => region.stores.length > 0);
+        const firstStore = firstRegionWithStore?.stores[0] ?? emptyStore;
+
+        setSelectedRegionId(firstRegionWithStore?.id ?? regions[0]?.id ?? defaultSalonRegions[0].id);
+        setSelectedStoreId(firstStore.id);
+        setDetailStore(firstStore);
+      })
+      .catch((error) => {
+        console.error("Failed to load salon locations", error);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => (
     () => {
@@ -162,7 +213,7 @@ function Salon({ open, onClose }) {
               <a className="arc_logo"><img src="/img/arc.png" alt="" /></a>
               <a className="find_store"><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
             </div>
-            
+
             <div className="b_l_r head-s">
               <ul data-lenis-prevent>
                 {displayedStores.map((store) => (
@@ -185,28 +236,30 @@ function Salon({ open, onClose }) {
             </div>
           </div>
           <div className="body_right">
-            <div className="scroll-y">
-              <div className={`store_images ${isDetailVisible ? "store_images_visible" : ""}`}>
-                <Swiper
-                  key={detailStore.id}
-                  className="img_w"
-                  loop
-                  speed={600}
-                  slidesPerView={1}
-                  onSwiper={(swiper) => {
-                    imageSwiperRef.current = swiper;
-                    swiper.slideToLoop(0, 0);
-                  }}
-                >
-                  {detailStore.images.map((image, index) => (
-                    <SwiperSlide key={`${image}-${index}`}>
-                      <img src={image} alt={`${detailStore.name} 이미지 ${index + 1}`} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-                <button type="button" className="cursor_left" onClick={handlePrevImage} aria-label="Previous salon image"></button>
-                <button type="button" className="cursor_right" onClick={handleNextImage} aria-label="Next salon image"></button>
-              </div>
+            <div className={`scroll-y ${hasDetailImages ? "" : "scroll-y_no_images"}`}>
+              {hasDetailImages && (
+                <div className={`store_images ${isDetailVisible ? "store_images_visible" : ""}`}>
+                  <Swiper
+                    key={detailStore.id}
+                    className="img_w"
+                    loop
+                    speed={600}
+                    slidesPerView={1}
+                    onSwiper={(swiper) => {
+                      imageSwiperRef.current = swiper;
+                      swiper.slideToLoop(0, 0);
+                    }}
+                  >
+                    {detailImages.map((image, index) => (
+                      <SwiperSlide key={`${image}-${index}`}>
+                        <img src={image} alt={`${detailStore.name} 이미지 ${index + 1}`} />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                  <button type="button" className="cursor_left" onClick={handlePrevImage} aria-label="Previous salon image"></button>
+                  <button type="button" className="cursor_right" onClick={handleNextImage} aria-label="Next salon image"></button>
+                </div>
+              )}
               <div className={`store_detail store-detail-motion-3 ${isDetailVisible ? "store_detail_visible" : ""}`}>
                 <div className="store_info ">
                   <h2 className="head-m fw-sb ">{detailStore.name}</h2>

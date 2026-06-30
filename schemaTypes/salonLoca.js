@@ -15,14 +15,7 @@ export default defineType({
       name: "region",
       title: "지역",
       type: "string",
-      options: {
-        layout: "dropdown",
-        list: [
-          { title: "서울", value: "seoul" },
-          { title: "경기", value: "gyeonggi" },
-          { title: "지방", value: "local" },
-        ],
-      },
+      hidden: true,
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -102,9 +95,15 @@ export default defineType({
       isHidden: "isHidden",
     },
     prepare({ title, subtitle, media, region, isHidden }) {
+      const regionLabel = {
+        seoul: "서울",
+        gyeonggi: "경기",
+        local: "지방",
+      }[region];
+
       return {
         title,
-        subtitle: `${region || "지역 없음"} - ${isHidden ? "숨김" : "노출"} - ${subtitle || "주소 없음"}`,
+        subtitle: `${regionLabel || "지역 없음"} - ${isHidden ? "숨김" : "노출"} - ${subtitle || "주소 없음"}`,
         media,
       };
     },
