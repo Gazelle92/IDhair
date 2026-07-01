@@ -211,7 +211,7 @@ function Salon({ open, onClose }) {
                 ))}
               </ol>
               <a className="arc_logo"><img src="/img/arc.png" alt="" /></a>
-              <a className="find_store"><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
+              <a className="find_store" href="https://map.naver.com/p/search/id%ED%97%A4%EC%96%B4" target="_blank"><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
             </div>
 
             <div className="b_l_r head-s">
