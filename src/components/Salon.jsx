@@ -70,6 +70,7 @@ function Salon({ open, onClose }) {
 
   const detailImages = detailStore.images ?? [];
   const hasDetailImages = detailImages.length > 0;
+  const hasDetailStore = Boolean(detailStore.id);
 
   const changeStoreDetail = (store) => {
     if (!store) return;
@@ -102,6 +103,10 @@ function Salon({ open, onClose }) {
   };
 
   const handleSearchSubmit = () => {
+    if (detailTimerRef.current) {
+      clearTimeout(detailTimerRef.current);
+    }
+
     const query = searchQuery.trim().toLowerCase();
     const matchingStores = query
       ? flatStores.filter((store) => (
@@ -111,6 +116,16 @@ function Salon({ open, onClose }) {
       : selectedRegion.stores;
 
     setSubmittedSearchQuery(searchQuery);
+
+    if (matchingStores.length === 0) {
+      setSelectedStoreId("");
+      setIsDetailVisible(false);
+      detailTimerRef.current = setTimeout(() => {
+        setDetailStore(emptyStore);
+      }, 300);
+      return;
+    }
+
     changeStoreDetail(matchingStores[0]);
   };
 
@@ -240,7 +255,7 @@ function Salon({ open, onClose }) {
           </div>
           <div className="body_right">
             <div className={`scroll-y ${hasDetailImages ? "" : "scroll-y_no_images"}`}>
-              {hasDetailImages && (
+              {hasDetailStore && hasDetailImages && (
                 <div className={`store_images ${isDetailVisible ? "store_images_visible" : ""}`}>
                   <Swiper
                     key={detailStore.id}
@@ -263,35 +278,37 @@ function Salon({ open, onClose }) {
                   <button type="button" className="cursor_right" onClick={handleNextImage} aria-label="Next salon image"></button>
                 </div>
               )}
-              <div className={`store_detail store-detail-motion-3 ${isDetailVisible ? "store_detail_visible" : ""}`}>
-                <div className="store_info ">
-                  <h2 className="head-m fw-sb ">{detailStore.name}</h2>
-                  <address className="body-m ">{detailStore.address}</address>
-                  <dl className="body-m ">
-                    <div>
-                      <dt>(T)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                      <dd>{detailStore.phone}</dd>
-                    </div>
-                    <div>
-                      <dt>(Hours)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                      <dd>{detailStore.hours}</dd>
-                    </div>
-                    <div>
-                      <dt>(Off)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                      <dd>{detailStore.off}</dd>
-                    </div>
-                  </dl>
+              {hasDetailStore && (
+                <div className={`store_detail store-detail-motion-3 ${isDetailVisible ? "store_detail_visible" : ""}`}>
+                  <div className="store_info ">
+                    <h2 className="head-m fw-sb ">{detailStore.name}</h2>
+                    <address className="body-m ">{detailStore.address}</address>
+                    <dl className="body-m ">
+                      <div>
+                        <dt>(T)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                        <dd>{detailStore.phone}</dd>
+                      </div>
+                      <div>
+                        <dt>(Hours)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                        <dd>{detailStore.hours}</dd>
+                      </div>
+                      <div>
+                        <dt>(Off)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                        <dd>{detailStore.off}</dd>
+                      </div>
+                    </dl>
+                  </div>
+                  <div className="store_links ">
+                    <a href={detailStore.instagramUrl} target="_blank" className="insta" rel="noreferrer">
+                      <img src="/img/icon_instagram_w.svg"/>
+                    </a>
+                    <a href={detailStore.reservationUrl} target="_blank" rel="noreferrer" className="naver">
+                      <img src="/img/icon_naver.svg"/>
+                      <span className="body-m">네이버 예약</span>
+                    </a>
+                  </div>
                 </div>
-                <div className="store_links ">
-                  <a href={detailStore.instagramUrl} target="_blank" className="insta" rel="noreferrer">
-                    <img src="/img/icon_instagram_w.svg"/>
-                  </a>
-                  <a href={detailStore.reservationUrl} target="_blank" rel="noreferrer" className="naver">
-                    <img src="/img/icon_naver.svg"/>
-                    <span className="body-m">네이버 예약</span>
-                  </a>
-                </div>
-              </div>
+              )}
             </div>
           </div>
 
