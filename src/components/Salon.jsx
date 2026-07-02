@@ -24,6 +24,7 @@ const emptyStore = {
 
 const naverMapSearchKeyword = "id헤어";
 const naverMapDefaultUrl = `https://map.naver.com/p/search/${encodeURIComponent(naverMapSearchKeyword)}`;
+const isMobileDevice = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
 const getNaverMapSearchUrl = ({ latitude, longitude }) => {
   const earthRadius = 6378137;
@@ -31,6 +32,17 @@ const getNaverMapSearchUrl = ({ latitude, longitude }) => {
   const y = earthRadius * Math.log(Math.tan(Math.PI / 4 + latitude * Math.PI / 360));
 
   return `${naverMapDefaultUrl}?c=${x.toFixed(7)},${y.toFixed(7)},15.00,0,0,0,dh`;
+};
+
+const getNaverMapAppSearchUrl = ({ latitude, longitude }) => {
+  const params = new URLSearchParams({
+    query: naverMapSearchKeyword,
+    lat: String(latitude),
+    lng: String(longitude),
+    appname: "idhair",
+  });
+
+  return `nmap://search?${params.toString()}`;
 };
 
 function Salon({ open, onClose }) {
@@ -159,6 +171,18 @@ function Salon({ open, onClose }) {
           latitude: coords.latitude,
           longitude: coords.longitude,
         });
+
+        if (isMobileDevice()) {
+          mapWindow.location.href = getNaverMapAppSearchUrl({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          });
+          setTimeout(() => {
+            mapWindow.location.href = url;
+          }, 900);
+          return;
+        }
+
         mapWindow.location.href = url;
       },
       () => {
