@@ -227,7 +227,9 @@
             &::-webkit-scrollbar{width:4px;}
             &::-webkit-scrollbar-thumb{border-radius:10px; background-color:rgb(255, 255, 255, .25);}
             &::-webkit-scrollbar-track{background:rgba(220, 20, 60, 0);}
-            li{font-size:0;
+            li{
+              &:not(.empty){font-size:0;}
+              &.empty{opacity:.5;}
               button{color:#fff; opacity:.5; transition:ease .3s opacity; text-align:left;}
               &.active button, button:hover{opacity:1; font-weight:600;}
             }

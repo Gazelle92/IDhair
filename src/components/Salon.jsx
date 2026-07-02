@@ -22,6 +22,17 @@ const emptyStore = {
   images: [],
 };
 
+const naverMapSearchKeyword = "id헤어";
+const naverMapDefaultUrl = `https://map.naver.com/p/search/${encodeURIComponent(naverMapSearchKeyword)}`;
+
+const getNaverMapSearchUrl = ({ latitude, longitude }) => {
+  const earthRadius = 6378137;
+  const x = earthRadius * longitude * Math.PI / 180;
+  const y = earthRadius * Math.log(Math.tan(Math.PI / 4 + latitude * Math.PI / 360));
+
+  return `${naverMapDefaultUrl}?c=${x.toFixed(7)},${y.toFixed(7)},15.00,0,0,0,dh`;
+};
+
 function Salon({ open, onClose }) {
   const [salonRegions, setSalonRegions] = useState(defaultSalonRegions);
   const [selectedRegionId, setSelectedRegionId] = useState(defaultSalonRegions[0].id);
@@ -127,6 +138,40 @@ function Salon({ open, onClose }) {
     imageSwiperRef.current?.slideNext();
   };
 
+  const handleFindStoreClick = (event) => {
+    event.preventDefault();
+    const mapWindow = window.open("about:blank", "_blank");
+
+    if (!mapWindow) {
+      return;
+    }
+
+    mapWindow.opener = null;
+
+    if (!navigator.geolocation) {
+      mapWindow.location.href = naverMapDefaultUrl;
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        const url = getNaverMapSearchUrl({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+        mapWindow.location.href = url;
+      },
+      () => {
+        mapWindow.location.href = naverMapDefaultUrl;
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 6000,
+        maximumAge: 60000,
+      }
+    );
+  };
+
   useEffect(() => {
     let isMounted = true;
 
@@ -211,7 +256,7 @@ function Salon({ open, onClose }) {
                 ))}
               </ol>
               <a className="arc_logo"><img src="/img/arc.png" alt="" /></a>
-              <a className="find_store" href="https://map.naver.com/p/search/id%ED%97%A4%EC%96%B4" target="_blank"><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
+              <a className="find_store" href={naverMapDefaultUrl} target="_blank" rel="noreferrer" onClick={handleFindStoreClick}><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
             </div>
 
             <div className="b_l_r head-s">
@@ -230,7 +275,7 @@ function Salon({ open, onClose }) {
                   </li>
                 ))}
                 {displayedStores.length === 0 && (
-                  <li className="empty">검색 결과가 없습니다.</li>
+                  <li className="empty body-m">검색결과 없음</li>
                 )}
               </ul>
             </div>
