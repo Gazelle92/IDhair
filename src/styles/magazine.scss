@@ -484,19 +484,17 @@ body.play-viewer-animating .play_viewer .play_viewer_swiper{opacity: 0;}
     .gallery_viewer_thumb{width: 15vw; min-width: 15vw;}
   }
 }
-/* 스크롤바의 폭 너비 */
-
+/*
 body::-webkit-scrollbar {
     display: none;
 }
 
 body::-webkit-scrollbar-thumb {
-    background: rgba(220, 20, 60); /* 스크롤바 색상 */
-    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+    background: rgba(220, 20, 60); 
+    border-radius: 10px; 
 }
 
 body::-webkit-scrollbar-track {
-    background: rgba(220, 20, 60, .1);  /*스크롤바 뒷 배경 색상*/
+    background: rgba(220, 20, 60, .1);
 }
-
-
+*/
