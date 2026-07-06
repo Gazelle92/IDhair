@@ -9,6 +9,7 @@ const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 3;
 const ARROW_SCROLL = 50;
 const TRACK_SELECTOR = "[data-about-horizontal-track]";
+const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
 const TEXT_MOTION_ITEMS = [
   { selector: ".t_m_1", speed: 0.08 },
@@ -115,6 +116,7 @@ export default function useAboutSmoothScroll() {
         horizontalX = Math.min(track.maxX, Math.max(0, horizontalX + deltaX));
         track.element.style.transform = `translate3d(${-horizontalX}px, 0, 0)`;
         applyTextMotion(track.element);
+        applyHorizontalAnimation();
       }
 
       if (deltaY !== 0) {
@@ -124,13 +126,16 @@ export default function useAboutSmoothScroll() {
 
     function applyTextMotion(trackElement) {
       const wrappers = Array.from(trackElement.querySelectorAll(TEXT_MOTION_WRAP_SELECTOR));
+      const trackRect = trackElement.getBoundingClientRect();
 
       wrappers.forEach((wrapper) => {
-        const wrapperStartX = wrapper.offsetLeft;
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const wrapperStartX = wrapperRect.left - trackRect.left;
         const distanceFromLeft = wrapperStartX - horizontalX;
 
         TEXT_MOTION_ITEMS.forEach(({ selector, speed }) => {
           wrapper.querySelectorAll(selector).forEach((item) => {
+            if (item.closest(TEXT_MOTION_WRAP_SELECTOR) !== wrapper) return;
             item.style.transform = `translate3d(${distanceFromLeft * speed}px, 0, 0)`;
           });
         });
@@ -143,6 +148,27 @@ export default function useAboutSmoothScroll() {
         .forEach((item) => {
           item.style.transform = "";
         });
+    }
+
+    function resetHorizontalAnimation() {
+      document.querySelectorAll(HORIZONTAL_ANI_SELECTOR).forEach((item) => {
+        item.classList.remove("active");
+      });
+    }
+
+    function applyHorizontalAnimation() {
+      const triggerX = window.innerWidth * (5 / 6);
+
+      document.querySelectorAll(HORIZONTAL_ANI_SELECTOR).forEach((item) => {
+        if (item.classList.contains("active")) return;
+
+        const rect = item.getBoundingClientRect();
+        const isInTriggerRange = rect.left < triggerX && rect.right > 0;
+
+        if (isInTriggerRange) {
+          item.classList.add("active");
+        }
+      });
     }
 
     function scheduleFrame(callback) {
@@ -318,11 +344,13 @@ export default function useAboutSmoothScroll() {
     document.body.style.overflow = "hidden";
     document.body.style.overscrollBehavior = "none";
     previousLenis?.stop?.();
+    resetHorizontalAnimation();
 
     const initialTrack = getTrack();
     if (initialTrack?.element) {
       applyTextMotion(initialTrack.element);
     }
+    applyHorizontalAnimation();
 
     document.addEventListener("wheel", onWheel, { passive: false, capture: true });
     window.addEventListener("keydown", onKeyDown, { passive: false });
