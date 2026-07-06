@@ -75,7 +75,13 @@
       }
       
     }
-    .as_3_3{ display:flex; padding-right:200vw;
+    .as_3_3{ display:flex; padding-right:500px;
+    }
+  }
+  .as_4{
+    .as_4_1{height:100%;}
+    .card_w{width:600px; height:100%;
+      img{width:100%; height:100%; object-fit:cover; object-position:center;}
     }
   }
 }

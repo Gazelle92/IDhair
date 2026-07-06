@@ -10,7 +10,7 @@ function About() {
     <main
       className="page_about"
       style={{
-        width: "400vw",
+        width: "600vw",
         minHeight: "100vh",
         overflow: "hidden",
         background: "#f4f1ea",
@@ -116,6 +116,13 @@ function About() {
                 <span className="apprael_ani ls_s delay-2">깊은 감동을 선사하는 '행복 스타일리스트'로서,</span>
                 <span className="apprael_ani ls_s delay-3">모든 사람들과 함께 성공하고 꿈을 이뤄갑니다.</span>
               </div>
+            </div>
+          </div>
+        </section>
+        <section className="as_4 bg-gray-2">
+          <div className="as_4_1 t_m_w">
+            <div className="card_w">
+              <img src="/img/about_4_card_1.jpg" />
             </div>
           </div>
         </section>
