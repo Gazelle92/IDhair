@@ -15,6 +15,9 @@ const TEXT_MOTION_ITEMS = [
   { selector: ".t_m_1", speed: 0.08 },
   { selector: ".t_m_2", speed: 0.14 },
   { selector: ".t_m_3", speed: 0.2 },
+  { selector: ".t_m_4", speed: 0.26 },
+  { selector: ".t_m_5", speed: 0.32 },
+  { selector: ".t_m_6", speed: 0.38 },
 ];
 
 const KEY_CODES = {

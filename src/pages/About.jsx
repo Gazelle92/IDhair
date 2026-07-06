@@ -94,10 +94,10 @@ function About() {
               <img src="/img/about_3_card_2.jpg" />
             </div>
             <div className="as_text  ani_x">
-              <h1 className="t_m_1 txt-ac fw-r">vision</h1>
-              <span className="body-m  t_m_2">( a )</span>
+              <h1 className="t_m_1 t_1 txt-ac fw-r">vision</h1>
+              <span className="body-m t_2 t_m_2">( a )</span>
               <div className="body-m as_text_1 t_m_3">
-                <span className="apprael_ani ls_s delay-1">고객의 고유한 아름다움을 찾아주는 든든한 뷰티 파트너로서,</span>
+                <span className="apprael_ani ls_s  delay-1">고객의 고유한 아름다움을 찾아주는 든든한 뷰티 파트너로서,</span>
                 <span className="apprael_ani ls_s delay-2">구성원과 함께 동반 성장하며 K-뷰티의 새로운 역사를</span>
                 <span className="apprael_ani ls_s delay-3">쓰는 위대한 기업으로 도약하겠습니다.</span>
               </div>
@@ -109,8 +109,8 @@ function About() {
               <img src="/img/about_3_card_3.jpg" />
             </div>
             <div className="as_text  ani_x">
-              <h1 className="t_m_1 txt-ac fw-r">mission</h1>
-              <span className="body-m  t_m_2">( b )</span>
+              <h1 className="t_m_1 t_1 txt-ac fw-r">mission</h1>
+              <span className="body-m t_2  t_m_2">( b )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s delay-1">단순한 헤어 디자인 기술을 넘어 고객의 삶에</span>
                 <span className="apprael_ani ls_s delay-2">깊은 감동을 선사하는 '행복 스타일리스트'로서,</span>
