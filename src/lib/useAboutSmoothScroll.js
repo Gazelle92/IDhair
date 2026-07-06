@@ -9,6 +9,7 @@ const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 3;
 const ARROW_SCROLL = 50;
 const TRACK_SELECTOR = "[data-about-horizontal-track]";
+const PINNED_SECTION_SELECTOR = ".as_3";
 const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
 const TEXT_MOTION_ITEMS = [
@@ -118,6 +119,7 @@ export default function useAboutSmoothScroll() {
       if (track?.maxX > 0 && deltaX !== 0) {
         horizontalX = Math.min(track.maxX, Math.max(0, horizontalX + deltaX));
         track.element.style.transform = `translate3d(${-horizontalX}px, 0, 0)`;
+        applyPinnedSections(track.element);
         applyTextMotion(track.element);
         applyHorizontalAnimation();
       }
@@ -125,6 +127,23 @@ export default function useAboutSmoothScroll() {
       if (deltaY !== 0) {
         window.scrollBy(0, deltaY);
       }
+    }
+
+    function applyPinnedSections(trackElement) {
+      trackElement.querySelectorAll(PINNED_SECTION_SELECTOR).forEach((section) => {
+        const sectionStartX = section.offsetLeft;
+        const sectionWidth = section.offsetWidth;
+        const pinStartX = sectionStartX + sectionWidth - window.innerWidth;
+        const pinOffset = Math.max(0, horizontalX - pinStartX);
+
+        section.style.transform = pinOffset > 0 ? `translate3d(${pinOffset}px, 0, 0)` : "";
+      });
+    }
+
+    function clearPinnedSections() {
+      document.querySelectorAll(PINNED_SECTION_SELECTOR).forEach((section) => {
+        section.style.transform = "";
+      });
     }
 
     function applyTextMotion(trackElement) {
@@ -351,6 +370,7 @@ export default function useAboutSmoothScroll() {
 
     const initialTrack = getTrack();
     if (initialTrack?.element) {
+      applyPinnedSections(initialTrack.element);
       applyTextMotion(initialTrack.element);
     }
     applyHorizontalAnimation();
@@ -367,6 +387,7 @@ export default function useAboutSmoothScroll() {
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
       document.body.style.overscrollBehavior = previousBodyOverscroll;
+      clearPinnedSections();
       clearTextMotion();
       previousLenis?.start?.();
     };

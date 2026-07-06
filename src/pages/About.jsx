@@ -64,8 +64,8 @@ function About() {
         </section>
         <section className="as_2 t_m_w">
           <div className="as_text ">
-            <h1 className="display-l fw-l apprael t_m_1">Brand</h1>
-            <h1 className="display-l fw-l apprael t_m_2">Story</h1>
+            <h1 className="display-l fw-l t_m_1">Brand</h1>
+            <h1 className="display-l fw-l t_m_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
             <span className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</span>
@@ -84,8 +84,8 @@ function About() {
               <img src="/img/about_3_card_1.jpg" />
             </div>
             <div className="as_text as_text_1 ">
-              <h1 className="display-l fw-l apprael t_m_1">Our</h1>
-              <h1 className="display-l fw-l apprael t_m_2">Identity</h1>
+              <h1 className="display-l fw-l t_m_1">Our</h1>
+              <h1 className="display-l fw-l t_m_2">Identity</h1>
             </div>
           </div>
 
