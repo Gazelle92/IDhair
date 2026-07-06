@@ -9,6 +9,12 @@ const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 3;
 const ARROW_SCROLL = 50;
 const TRACK_SELECTOR = "[data-about-horizontal-track]";
+const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
+const TEXT_MOTION_ITEMS = [
+  { selector: ".t_m_1", speed: 0.08 },
+  { selector: ".t_m_2", speed: 0.14 },
+  { selector: ".t_m_3", speed: 0.2 },
+];
 
 const KEY_CODES = {
   left: 37,
@@ -108,11 +114,35 @@ export default function useAboutSmoothScroll() {
       if (track?.maxX > 0 && deltaX !== 0) {
         horizontalX = Math.min(track.maxX, Math.max(0, horizontalX + deltaX));
         track.element.style.transform = `translate3d(${-horizontalX}px, 0, 0)`;
+        applyTextMotion(track.element);
       }
 
       if (deltaY !== 0) {
         window.scrollBy(0, deltaY);
       }
+    }
+
+    function applyTextMotion(trackElement) {
+      const wrappers = Array.from(trackElement.querySelectorAll(TEXT_MOTION_WRAP_SELECTOR));
+
+      wrappers.forEach((wrapper) => {
+        const wrapperStartX = wrapper.offsetLeft;
+        const distanceFromLeft = wrapperStartX - horizontalX;
+
+        TEXT_MOTION_ITEMS.forEach(({ selector, speed }) => {
+          wrapper.querySelectorAll(selector).forEach((item) => {
+            item.style.transform = `translate3d(${distanceFromLeft * speed}px, 0, 0)`;
+          });
+        });
+      });
+    }
+
+    function clearTextMotion() {
+      document
+        .querySelectorAll(TEXT_MOTION_ITEMS.map(({ selector }) => selector).join(","))
+        .forEach((item) => {
+          item.style.transform = "";
+        });
     }
 
     function scheduleFrame(callback) {
@@ -289,6 +319,11 @@ export default function useAboutSmoothScroll() {
     document.body.style.overscrollBehavior = "none";
     previousLenis?.stop?.();
 
+    const initialTrack = getTrack();
+    if (initialTrack?.element) {
+      applyTextMotion(initialTrack.element);
+    }
+
     document.addEventListener("wheel", onWheel, { passive: false, capture: true });
     window.addEventListener("keydown", onKeyDown, { passive: false });
 
@@ -301,6 +336,7 @@ export default function useAboutSmoothScroll() {
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
       document.body.style.overscrollBehavior = previousBodyOverscroll;
+      clearTextMotion();
       previousLenis?.start?.();
     };
   }, []);
