@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 const FRAME_RATE = 150;
-const ANIMATION_TIME = 1200;
-const DEFAULT_STEP_SIZE = 120;
-const SAFARI_STEP_SIZE = 120;
+const ANIMATION_TIME = 1600;
+const DEFAULT_STEP_SIZE = 80;
+const SAFARI_STEP_SIZE = 80;
 const PULSE_SCALE = 4;
 const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 3;
