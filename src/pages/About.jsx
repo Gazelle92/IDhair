@@ -120,9 +120,27 @@ function About() {
           </div>
         </section>
         <section className="as_4 bg-gray-2">
+          <div className="card_w">
+            <img src="/img/about_4_card_1.jpg" />
+          </div>
           <div className="as_4_1 t_m_w">
-            <div className="card_w">
-              <img src="/img/about_4_card_1.jpg" />
+            <div className="as_text as_text_1">
+              <h1 className="display-l fw-l t_m_1">Our</h1>
+              <h1 className="display-l fw-l t_m_2">Message</h1>
+            </div>
+            <div className="as_text_2">
+              <img class="signiture" src="/img/about_4_sig.png"/>
+              <ul class="ani_x">
+                <li className="body-m apprael_ani ls_s delay-1">
+                  <strong className="fw-b">Company Name</strong><p>주식회사 아이디뷰티</p>
+                </li>
+                <li className="body-m apprael_ani ls_s delay-2">
+                  <strong className="fw-b">Establishment Date</strong><p>1988년, 1호점 오픈</p>
+                </li>
+                <li className="body-m apprael_ani ls_s delay-3">
+                  <strong className="fw-b">Founder</strong><p>위운미 (Wi Unmi)</p>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
