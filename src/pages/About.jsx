@@ -43,7 +43,9 @@ function About() {
         }}
       >
         <section className="as_1 t_m_w">
-          <img src="/img/about_1.jpg" />
+          <div className="t_m_bg_w">
+            <img className="t_m_bg_el" src="/img/about_1.jpg" />
+          </div>
           <div className="as_text ">
             <h1 className="display-l fw-l apprael t_m_1">Beyond</h1>
             <h1 className="display-l fw-l apprael t_m_2">Style,</h1>

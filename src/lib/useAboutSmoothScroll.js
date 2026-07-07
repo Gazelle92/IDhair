@@ -12,6 +12,9 @@ const TRACK_SELECTOR = "[data-about-horizontal-track]";
 const PINNED_SECTION_SELECTOR = ".as_3";
 const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
+const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
+const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
+const BACKGROUND_MOTION_SPEED = 0.18;
 const TEXT_MOTION_ITEMS = [
   { selector: ".t_m_1", speed: 0.08 },
   { selector: ".t_m_2", speed: 0.14 },
@@ -131,6 +134,7 @@ export default function useAboutSmoothScroll() {
         track.element.style.transform = `translate3d(${-horizontalX}px, 0, 0)`;
         applyPinnedSections(track.element);
         applyTextMotion(track.element);
+        applyBackgroundMotion(track.element);
         applyHorizontalAnimation();
       }
 
@@ -180,6 +184,29 @@ export default function useAboutSmoothScroll() {
         .forEach((item) => {
           item.style.transform = "";
         });
+    }
+
+    function applyBackgroundMotion(trackElement) {
+      const wrappers = Array.from(trackElement.querySelectorAll(BACKGROUND_MOTION_WRAP_SELECTOR));
+      const trackRect = trackElement.getBoundingClientRect();
+
+      wrappers.forEach((wrapper) => {
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const wrapperStartX = wrapperRect.left - trackRect.left;
+        const distanceFromLeft = wrapperStartX - horizontalX;
+        const moveX = -distanceFromLeft * BACKGROUND_MOTION_SPEED;
+
+        wrapper.querySelectorAll(BACKGROUND_MOTION_EL_SELECTOR).forEach((item) => {
+          if (item.closest(BACKGROUND_MOTION_WRAP_SELECTOR) !== wrapper) return;
+          item.style.transform = `translate3d(${moveX}px, 0, 0)`;
+        });
+      });
+    }
+
+    function clearBackgroundMotion() {
+      document.querySelectorAll(BACKGROUND_MOTION_EL_SELECTOR).forEach((item) => {
+        item.style.transform = "";
+      });
     }
 
     function resetHorizontalAnimation() {
@@ -382,6 +409,7 @@ export default function useAboutSmoothScroll() {
     if (initialTrack?.element) {
       applyPinnedSections(initialTrack.element);
       applyTextMotion(initialTrack.element);
+      applyBackgroundMotion(initialTrack.element);
     }
     applyHorizontalAnimation();
 
@@ -399,6 +427,7 @@ export default function useAboutSmoothScroll() {
       document.body.style.overscrollBehavior = previousBodyOverscroll;
       clearPinnedSections();
       clearTextMotion();
+      clearBackgroundMotion();
       previousLenis?.start?.();
     };
   }, []);
