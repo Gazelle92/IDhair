@@ -173,6 +173,16 @@ function About() {
           </div>
         </section>
 
+        <section className="as_5">
+          <img className="bg" src="/img/about_5.jpg" />
+          <div className="as_text_1 t_m_w txt-ac">
+            <h1 className="display-l fw-l t_m_1 apprael">Corporate</h1>
+            <h1 className="display-l fw-l t_m_2 apprael">Social</h1>
+            <h1 className="display-l fw-l t_m_3 apprael">Responsibility</h1>
+          </div>
+
+        </section>
+
         
       </div>
     </main>
