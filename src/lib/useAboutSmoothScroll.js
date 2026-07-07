@@ -12,9 +12,24 @@ const TRACK_SELECTOR = "[data-about-horizontal-track]";
 const PINNED_SECTION_SELECTOR = ".as_3";
 const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
+const SECTION_PROGRESS_SELECTOR = ".as_6_1";
+const SECTION_PROGRESS_BG_SELECTOR = ".as_6_bg_w";
+const SECTION_PROGRESS_TEXT_SELECTOR = ".as_6_text";
 const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
 const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
 const BACKGROUND_MOTION_SPEED = 0.7;
+const BACKGROUND_MOTION_ITEMS = [
+  {
+    wrapSelector: BACKGROUND_MOTION_WRAP_SELECTOR,
+    elSelector: BACKGROUND_MOTION_EL_SELECTOR,
+    speed: BACKGROUND_MOTION_SPEED,
+  },
+  {
+    wrapSelector: ".as_6_bg_w",
+    elSelector: ".as_6_bg_el",
+    speed: 1,
+  },
+];
 const TEXT_MOTION_ITEMS = [
   { selector: ".t_m_1", speed: 0.08 },
   { selector: ".t_m_2", speed: 0.14 },
@@ -85,6 +100,10 @@ function normalizeStepDelta(value, stepSize) {
   return absValue > 1.2 ? value * (stepSize / 120) : value;
 }
 
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
 export default function useAboutSmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -135,6 +154,7 @@ export default function useAboutSmoothScroll() {
         applyPinnedSections(track.element);
         applyTextMotion(track.element);
         applyBackgroundMotion(track.element);
+        applySectionProgress(track.element);
         applyHorizontalAnimation();
       }
 
@@ -187,25 +207,57 @@ export default function useAboutSmoothScroll() {
     }
 
     function applyBackgroundMotion(trackElement) {
-      const wrappers = Array.from(trackElement.querySelectorAll(BACKGROUND_MOTION_WRAP_SELECTOR));
       const trackRect = trackElement.getBoundingClientRect();
 
-      wrappers.forEach((wrapper) => {
-        const wrapperRect = wrapper.getBoundingClientRect();
-        const wrapperStartX = wrapperRect.left - trackRect.left;
-        const distanceFromLeft = wrapperStartX - horizontalX;
-        const moveX = -distanceFromLeft * BACKGROUND_MOTION_SPEED;
+      BACKGROUND_MOTION_ITEMS.forEach(({ wrapSelector, elSelector, speed }) => {
+        const wrappers = Array.from(trackElement.querySelectorAll(wrapSelector));
 
-        wrapper.querySelectorAll(BACKGROUND_MOTION_EL_SELECTOR).forEach((item) => {
-          if (item.closest(BACKGROUND_MOTION_WRAP_SELECTOR) !== wrapper) return;
-          item.style.transform = `translate3d(${moveX}px, 0, 0)`;
+        wrappers.forEach((wrapper) => {
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const wrapperStartX = wrapperRect.left - trackRect.left;
+          const distanceFromLeft = wrapperStartX - horizontalX;
+          const moveX = -distanceFromLeft * speed;
+
+          wrapper.querySelectorAll(elSelector).forEach((item) => {
+            if (item.closest(wrapSelector) !== wrapper) return;
+            item.style.transform = `translate3d(${moveX}px, 0, 0)`;
+          });
         });
       });
     }
 
     function clearBackgroundMotion() {
-      document.querySelectorAll(BACKGROUND_MOTION_EL_SELECTOR).forEach((item) => {
+      BACKGROUND_MOTION_ITEMS.forEach(({ elSelector }) => {
+        document.querySelectorAll(elSelector).forEach((item) => {
+          item.style.transform = "";
+        });
+      });
+    }
+
+    function applySectionProgress(trackElement) {
+      trackElement.querySelectorAll(SECTION_PROGRESS_SELECTOR).forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const progress = clamp(-rect.left / rect.width, 0, 1);
+
+        section.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
+          item.style.filter = `grayscale(${progress})`;
+          item.style.transform = `scale(${1 - progress * 0.5})`;
+        });
+
+        section.querySelectorAll(SECTION_PROGRESS_TEXT_SELECTOR).forEach((item) => {
+          item.style.opacity = progress;
+        });
+      });
+    }
+
+    function clearSectionProgress() {
+      document.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
+        item.style.filter = "";
         item.style.transform = "";
+      });
+
+      document.querySelectorAll(SECTION_PROGRESS_TEXT_SELECTOR).forEach((item) => {
+        item.style.opacity = "";
       });
     }
 
@@ -410,6 +462,7 @@ export default function useAboutSmoothScroll() {
       applyPinnedSections(initialTrack.element);
       applyTextMotion(initialTrack.element);
       applyBackgroundMotion(initialTrack.element);
+      applySectionProgress(initialTrack.element);
     }
     applyHorizontalAnimation();
 
@@ -428,6 +481,7 @@ export default function useAboutSmoothScroll() {
       clearPinnedSections();
       clearTextMotion();
       clearBackgroundMotion();
+      clearSectionProgress();
       previousLenis?.start?.();
     };
   }, []);

@@ -186,7 +186,20 @@ function About() {
           </div>
 
         </section>
+        <section className="as_6">
+          <div className="as_6_1">
+            <div className="as_6_text"></div>
+            <div className="as_6_bg_w">
+              <img className="as_6_bg_el" src="/img/about_6.jpg" />
+              <img className="as_6_bg_el" src="/img/about_6.jpg" />
+              <img className="as_6_bg_el" src="/img/about_6.jpg" />
+              <img className="as_6_bg_el" src="/img/about_6.jpg" />
+            </div>
+          </div>
 
+        </section>
+
+        <section className="as_7"></section>
         
       </div>
     </main>
