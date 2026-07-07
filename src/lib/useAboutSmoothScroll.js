@@ -14,7 +14,7 @@ const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
 const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
 const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
-const BACKGROUND_MOTION_SPEED = 0.18;
+const BACKGROUND_MOTION_SPEED = 0.7;
 const TEXT_MOTION_ITEMS = [
   { selector: ".t_m_1", speed: 0.08 },
   { selector: ".t_m_2", speed: 0.14 },
