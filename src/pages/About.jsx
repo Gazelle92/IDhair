@@ -128,19 +128,47 @@ function About() {
               <h1 className="display-l fw-l t_m_1">Our</h1>
               <h1 className="display-l fw-l t_m_2">Message</h1>
             </div>
-            <div className="as_text_2">
+            <div className="as_text_2 ani_x">
               <img class="signiture" src="/img/about_4_sig.png"/>
-              <ul class="ani_x">
-                <li className="body-m apprael_ani ls_s delay-1">
+              <ul class="">
+                <li className="body-m apprael_ani delay-1 ls_s">
                   <strong className="fw-b">Company Name</strong><p>주식회사 아이디뷰티</p>
                 </li>
-                <li className="body-m apprael_ani ls_s delay-2">
+                <li className="body-m apprael_ani delay-2 ls_s">
                   <strong className="fw-b">Establishment Date</strong><p>1988년, 1호점 오픈</p>
                 </li>
-                <li className="body-m apprael_ani ls_s delay-3">
+                <li className="body-m apprael_ani delay-3 ls_s">
                   <strong className="fw-b">Founder</strong><p>위운미 (Wi Unmi)</p>
                 </li>
               </ul>
+            </div>
+          </div>
+
+          <div className="card_w card_w_s">
+            <img src="/img/about_4_card_2.jpg" />
+          </div>
+          <div className="as_4_2 t_m_w">
+            <h1 className="display-l fw-l t_m_1 apprael">1988</h1>
+            <div className="body-m as_text_1 t_m_3 ani_x">
+              <span className="apprael_ani ls_s delay-1">1988년 작은 미용실 '미스파마'에서 두 명의 스타일리스트로</span>
+              <span className="apprael_ani ls_s delay-2">시작한 아이디헤어는, 이제 대한민국을 대표하는 프로페셔널</span>
+              <span className="apprael_ani ls_s delay-3">헤어 브랜드로 성장했습니다. </span>
+            </div>
+          </div>
+
+          <div className="card_w card_w_s">
+            <img src="/img/about_4_card_3.jpg" />
+          </div>
+
+          <div className="as_4_3 t_m_w">
+            <h1 className="display-l fw-l t_m_1 apprael">39</h1>
+
+
+
+            <div className="body-m as_text_1 t_m_3 ani_x">
+              <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어 고객의 행복을 디자인하는</span>
+              <span className="apprael_ani ls_s delay-2">'행복 스타일리스트'로 달려왔습니다. '함께 성공하는 것'이라는 변치 않는</span>
+              <span className="apprael_ani ls_s delay-3">사명 아래, 앞으로도 고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
             </div>
           </div>
         </section>

@@ -306,7 +306,9 @@ button{background-color: unset; border: unset; cursor: pointer;}
 
 .apprael_ani{transition: clip-path 1s ease, letter-spacing 1.2s ease; letter-spacing: -0.6vw; clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
   *{letter-spacing: -0.6vw; transition: clip-path 1s ease, letter-spacing 1.2s ease;}
-  &.ls_s{letter-spacing: -0.1vw;}
+  &.ls_s{letter-spacing: -0.1vw;
+    *{letter-spacing: -0.1vw;}
+  }
   &.delay-1{transition-delay: 0.1s; *{transition-delay: 0.1s;}}
   &.delay-2{transition-delay: 0.2s; *{transition-delay: 0.2s;}}
   &.delay-3{transition-delay: 0.3s; *{transition-delay: 0.3s;}}
