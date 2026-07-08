@@ -24,11 +24,6 @@ const BACKGROUND_MOTION_ITEMS = [
     elSelector: BACKGROUND_MOTION_EL_SELECTOR,
     speed: BACKGROUND_MOTION_SPEED,
   },
-  {
-    wrapSelector: ".as_6_bg_w",
-    elSelector: ".as_6_bg_el",
-    speed: 1,
-  },
 ];
 const TEXT_MOTION_ITEMS = [
   { selector: ".t_m_1", speed: 0.08 },
@@ -240,12 +235,15 @@ export default function useAboutSmoothScroll() {
         const progress = clamp(-rect.left / rect.width, 0, 1);
 
         section.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
+          const scale = 1 - progress * 0.5;
+
           item.style.filter = `grayscale(${progress})`;
-          item.style.transform = `scale(${1 - progress * 0.5})`;
+          item.style.transform = `translate3d(${-rect.left}px, 0, 0) scale(${scale})`;
         });
 
         section.querySelectorAll(SECTION_PROGRESS_TEXT_SELECTOR).forEach((item) => {
           item.style.opacity = progress;
+          item.style.transform = `translate3d(${-rect.left}px, 0, 0)`;
         });
       });
     }
@@ -258,6 +256,7 @@ export default function useAboutSmoothScroll() {
 
       document.querySelectorAll(SECTION_PROGRESS_TEXT_SELECTOR).forEach((item) => {
         item.style.opacity = "";
+        item.style.transform = "";
       });
     }
 

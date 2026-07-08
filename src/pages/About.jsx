@@ -188,7 +188,10 @@ function About() {
         </section>
         <section className="as_6">
           <div className="as_6_1">
-            <div className="as_6_text"></div>
+            <div className="as_6_text">
+              수십 년간 꾸준히 이어온 장기적인 아동 후원과 나눔을 통해,<br/>
+              단순한 뷰티 브랜드를 넘어 사회적 책임을 다하는 진정성 있는 동반자로 함께합니다.
+            </div>
             <div className="as_6_bg_w">
               <img className="as_6_bg_el" src="/img/about_6.jpg" />
               <img className="as_6_bg_el" src="/img/about_6.jpg" />
