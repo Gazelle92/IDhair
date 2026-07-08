@@ -202,7 +202,45 @@ function About() {
 
         </section>
 
-        <section className="as_7"></section>
+        <section className="as_7 txt-white">
+          <div className="as_7_1 t_m_w">
+            <div className="as_text as_text_1 ">
+              <h1 className="display-l fw-l t_m_1">Family</h1>
+              <h1 className="display-l fw-l t_m_2">Brand</h1>
+            </div>
+            <div className="body-m as_text_2 t_m_3 ani_x">
+              <span className="apprael_ani ls_s delay-1">시장의 다양한 니즈에 대응하기 위해 전략적으로 </span>
+              <span className="apprael_ani ls_s delay-2">브랜드 포트폴리오를 확장하며 시장 지배력을 강화하고 있습니다.</span>
+            </div>
+          </div>
+          <div className="as_7_2 ani_x">
+            <ul class="">
+              <li className="body-m apprael_ani delay-1 ls_s">
+                <span>전국 매장수 (2026년)</span>
+                <div>
+                  <h1>112</h1>
+                  <p>개</p>
+                </div>
+              </li>
+              <li className="body-m apprael_ani delay-2 ls_s">
+                <span>10년전 대비 매장 증가율</span>
+                <div>
+                  <h1>5</h1>
+                  <p>배</p>
+                </div>
+              </li>
+              <li className="body-m apprael_ani delay-3 ls_s">
+                <span>10년간 폐점률</span>
+                <div>
+                  <h1>0</h1>
+                  <p>%</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          
+
+        </section>
         
       </div>
     </main>
