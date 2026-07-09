@@ -67,9 +67,9 @@ function About() {
           </div>
         </section>
         <section className="as_2 t_m_w">
-          <div className="as_text ">
-            <h1 className="display-l fw-l t_m_1">Brand</h1>
-            <h1 className="display-l fw-l t_m_2">Story</h1>
+          <div className="as_text nunito">
+            <h1 className="display-l fw-r t_m_1">Brand</h1>
+            <h1 className="display-l fw-r t_m_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
             <span className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</span>
@@ -87,9 +87,9 @@ function About() {
             <div className="card_w">
               <img src="/img/about_3_card_1.jpg" />
             </div>
-            <div className="as_text as_text_1 t_m_w">
-              <h1 className="display-l fw-l t_m_1">Our</h1>
-              <h1 className="display-l fw-l t_m_2">Identity</h1>
+            <div className="as_text as_text_1 nunito t_m_w">
+              <h1 className="display-l fw-r t_m_1">Our</h1>
+              <h1 className="display-l fw-r t_m_2">Identity</h1>
             </div>
           </div>
 
@@ -98,7 +98,7 @@ function About() {
               <img src="/img/about_3_card_2.jpg" />
             </div>
             <div className="as_text  ani_x">
-              <h1 className="t_m_1 t_1 txt-ac fw-r">vision</h1>
+              <h1 className="t_m_1 t_1 txt-ac fw-r nunito">vision</h1>
               <span className="body-m t_2 t_m_2">( a )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s  delay-1">고객의 고유한 아름다움을 찾아주는 든든한 뷰티 파트너로서,</span>
@@ -113,7 +113,7 @@ function About() {
               <img src="/img/about_3_card_3.jpg" />
             </div>
             <div className="as_text  ani_x">
-              <h1 className="t_m_1 t_1 txt-ac fw-r">mission</h1>
+              <h1 className="t_m_1 t_1 txt-ac fw-r nunito">mission</h1>
               <span className="body-m t_2  t_m_2">( b )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s delay-1">단순한 헤어 디자인 기술을 넘어 고객의 삶에</span>
@@ -128,9 +128,9 @@ function About() {
             <img src="/img/about_4_card_1.jpg" />
           </div>
           <div className="as_4_1 t_m_w">
-            <div className="as_text as_text_1">
-              <h1 className="display-l fw-l t_m_1">CEO</h1>
-              <h1 className="display-l fw-l t_m_2">Message</h1>
+            <div className="as_text as_text_1 nunito">
+              <h1 className="display-l fw-r t_m_1">CEO</h1>
+              <h1 className="display-l fw-r t_m_2">Message</h1>
             </div>
             <div className="as_text_2 ani_x">
               <img class="signiture" src="/img/about_4_sig.png"/>
@@ -191,8 +191,11 @@ function About() {
         <section className="as_6">
           <div className="as_6_1">
             <div className="as_6_text">
-              수십 년간 꾸준히 이어온 장기적인 아동 후원과 나눔을 통해,<br/>
-              단순한 뷰티 브랜드를 넘어 사회적 책임을 다하는 진정성 있는 동반자로 함께합니다.
+              <img src="/img/icon_heart.svg"/>
+              <span className="head-s">
+                수십 년간 꾸준히 이어온 장기적인 아동 후원과 나눔을 통해,<br/>
+                단순한 뷰티 브랜드를 넘어 사회적 책임을 다하는 진정성 있는 동반자로 함께합니다.
+              </span>
             </div>
             <div className="as_6_bg_w">
               <img className="as_6_bg_el" src="/img/about_6.jpg" />
@@ -206,9 +209,9 @@ function About() {
 
         <section className="as_7 txt-white">
           <div className="as_7_1 t_m_w">
-            <div className="as_text as_text_1 ">
-              <h1 className="display-l fw-l t_m_1">Family</h1>
-              <h1 className="display-l fw-l t_m_2">Brand</h1>
+            <div className="as_text as_text_1 nunito">
+              <h1 className="display-l fw-r t_m_1">Family</h1>
+              <h1 className="display-l fw-r t_m_2">Brand</h1>
             </div>
             <div className="body-m as_text_2 t_m_3 ani_x">
               <span className="apprael_ani ls_s delay-1">시장의 다양한 니즈에 대응하기 위해 전략적으로 </span>
@@ -248,7 +251,7 @@ function About() {
             <div className="img_w ">
               <img className="t_m_1" src="/img/as_7_3.jpg"/>
               <div className="as_text apprael_ani ls_s delay-1  body-m t_m_2">
-              <img src="/img/logo_w.png"/>
+              <img className="t_m_2" src="/img/logo_w.png"/>
               <span className="span_text">
                 대중적 접근성과 전문적인 서비스를 균형 있게 갖춘 핵심 브랜드로,<br/>
                 누구나 쉽게 다가갈 수 있는 전문성과 신뢰를 제공합니다.
@@ -257,14 +260,14 @@ function About() {
             </div>
             
           </div>
-          <div className="as_8_2">
+          <div className="as_8_2 ani_x t_m_w">
             <div className="img_w">
-              <img src="/img/as_7_4_1.jpg"/>
-              <img src="/img/as_7_4_2.jpg"/>
+              <img className="t_m_1" src="/img/as_7_4_1.jpg"/>
+              <img className="t_m_1" src="/img/as_7_4_2.jpg"/>
               <div className="as_text body-m">
-                <img src="/img/as_7_4_3.png"/>
-                <span className="magin_text">&#123; 세컨드 하이엔드 브랜드 &#125;</span>
-                <span className="span_text">한남동과 유엔빌리지에 위치한 프리미엄 살롱으로,<br/>셀럽과 VIP 고객을 중심으로 브랜드의 고급 이미지를 강화합니다.</span>
+                <img className="t_m_2" src="/img/as_7_4_3.png"/>
+                <span className="magin_text t_m_3">&#123; 세컨드 하이엔드 브랜드 &#125;</span>
+                <span className="span_text ">한남동과 유엔빌리지에 위치한 프리미엄 살롱으로,<br/>셀럽과 VIP 고객을 중심으로 브랜드의 고급 이미지를 강화합니다.</span>
               </div>
             </div>
             
