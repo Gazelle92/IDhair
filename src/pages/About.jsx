@@ -1,16 +1,18 @@
 import useAboutIntroAnimation from "../lib/useAboutIntroAnimation";
+import useAboutNumberCounter from "../lib/useAboutNumberCounter";
 import useAboutSmoothScroll from "../lib/useAboutSmoothScroll";
 import "../styles/about.scss";
 
 function About() {
   useAboutIntroAnimation();
+  useAboutNumberCounter();
   useAboutSmoothScroll();
 
   return (
     <main
       className="page_about"
       style={{
-        width: "600vw",
+        //width: "600vw",
         minHeight: "100vh",
         overflow: "hidden",
         background: "#f4f1ea",
@@ -81,11 +83,11 @@ function About() {
           </div>
         </section>
         <section className="as_3">
-          <div className="as_3_1 t_m_w">
+          <div className="as_3_1 ">
             <div className="card_w">
               <img src="/img/about_3_card_1.jpg" />
             </div>
-            <div className="as_text as_text_1 ">
+            <div className="as_text as_text_1 t_m_w">
               <h1 className="display-l fw-l t_m_1">Our</h1>
               <h1 className="display-l fw-l t_m_2">Identity</h1>
             </div>
@@ -150,8 +152,8 @@ function About() {
             <img src="/img/about_4_card_2.jpg" />
           </div>
           <div className="as_4_2 t_m_w">
-            <h1 className="display-l fw-l t_m_1 apprael">1988</h1>
-            <div className="body-m as_text_1 t_m_3 ani_x">
+            <h1 className="display-l fw-l t_m_2 apprael">1988</h1>
+            <div className="body-m as_text_1 t_m_1 ani_x">
               <span className="apprael_ani ls_s delay-1">1988년 작은 미용실 '미스파마'에서 두 명의 스타일리스트로</span>
               <span className="apprael_ani ls_s delay-2">시작한 아이디헤어는, 이제 대한민국을 대표하는 프로페셔널</span>
               <span className="apprael_ani ls_s delay-3">헤어 브랜드로 성장했습니다. </span>
@@ -163,11 +165,11 @@ function About() {
           </div>
 
           <div className="as_4_3 t_m_w">
-            <h1 className="display-l fw-l t_m_1 apprael">39</h1>
+            <h1 className="display-l fw-l t_m_2 apprael">39</h1>
 
 
 
-            <div className="body-m as_text_1 t_m_3 ani_x">
+            <div className="body-m as_text_1 t_m_1 ani_x">
               <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어 고객의 행복을 디자인하는</span>
               <span className="apprael_ani ls_s delay-2">'행복 스타일리스트'로 달려왔습니다. '함께 성공하는 것'이라는 변치 않는</span>
               <span className="apprael_ani ls_s delay-3">사명 아래, 앞으로도 고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
@@ -213,33 +215,60 @@ function About() {
               <span className="apprael_ani ls_s delay-2">브랜드 포트폴리오를 확장하며 시장 지배력을 강화하고 있습니다.</span>
             </div>
           </div>
-          <div className="as_7_2 ani_x">
-            <ul class="">
-              <li className="body-m apprael_ani delay-1 ls_s">
-                <span>전국 매장수 (2026년)</span>
-                <div>
-                  <h1>112</h1>
-                  <p>개</p>
+          <div className="as_7_2 t_m_w">
+            <ul>
+              <li className="body-m  ani_x t_m_4">
+                <span className="body-m apprael_ani delay-1 ls_s">전국 매장수 (2026년)</span>
+                <div className="b-t b-1 b-c-white b-delay-2">
+                  <h1 className="display-l fw-l apprael">112</h1>
+                  <p className="body-m">개</p>
                 </div>
               </li>
-              <li className="body-m apprael_ani delay-2 ls_s">
-                <span>10년전 대비 매장 증가율</span>
-                <div>
-                  <h1>5</h1>
-                  <p>배</p>
+              <li className="body-m  ani_x t_m_5">
+                <span className="body-m apprael_ani delay-2 ls_s">10년전 대비 매장 증가율</span>
+                <div className="b-t b-1 b-c-white b-delay-2">
+                  <h1 className="display-l fw-l apprael">5</h1>
+                  <p className="body-m">배</p>
                 </div>
               </li>
-              <li className="body-m apprael_ani delay-3 ls_s">
-                <span>10년간 폐점률</span>
-                <div>
-                  <h1>0</h1>
-                  <p>%</p>
+              <li className="body-m  ani_x t_m_6">
+                <span className="body-m apprael_ani delay-3 ls_s">10년간 폐점률</span>
+                <div className="b-t b-1 b-c-white b-delay-2">
+                  <h1 className="display-l fw-l apprael">0</h1>
+                  <p className="body-m">%</p>
                 </div>
               </li>
             </ul>
           </div>
-          
 
+
+        </section>
+        <section className="as_8 txt-white">
+          <div className="as_8_1 ani_x t_m_w">
+            <div className="img_w ">
+              <img className="t_m_1" src="/img/as_7_3.jpg"/>
+              <div className="as_text apprael_ani ls_s delay-1  body-m t_m_2">
+              <img src="/img/logo_w.png"/>
+              <span className="span_text">
+                대중적 접근성과 전문적인 서비스를 균형 있게 갖춘 핵심 브랜드로,<br/>
+                누구나 쉽게 다가갈 수 있는 전문성과 신뢰를 제공합니다.
+              </span>
+            </div>
+            </div>
+            
+          </div>
+          <div className="as_8_2">
+            <div className="img_w">
+              <img src="/img/as_7_4_1.jpg"/>
+              <img src="/img/as_7_4_2.jpg"/>
+              <div className="as_text body-m">
+                <img src="/img/as_7_4_3.png"/>
+                <span className="magin_text">&#123; 세컨드 하이엔드 브랜드 &#125;</span>
+                <span className="span_text">한남동과 유엔빌리지에 위치한 프리미엄 살롱으로,<br/>셀럽과 VIP 고객을 중심으로 브랜드의 고급 이미지를 강화합니다.</span>
+              </div>
+            </div>
+            
+          </div>
         </section>
         
       </div>

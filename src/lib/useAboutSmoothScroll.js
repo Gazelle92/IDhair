@@ -182,12 +182,12 @@ export default function useAboutSmoothScroll() {
       wrappers.forEach((wrapper) => {
         const wrapperRect = wrapper.getBoundingClientRect();
         const wrapperStartX = wrapperRect.left - trackRect.left;
-        const distanceFromLeft = wrapperStartX - horizontalX;
+        const distanceFromStart = wrapperStartX - horizontalX;
 
         TEXT_MOTION_ITEMS.forEach(({ selector, speed }) => {
           wrapper.querySelectorAll(selector).forEach((item) => {
             if (item.closest(TEXT_MOTION_WRAP_SELECTOR) !== wrapper) return;
-            item.style.transform = `translate3d(${distanceFromLeft * speed}px, 0, 0)`;
+            item.style.transform = `translate3d(${distanceFromStart * speed}px, 0, 0)`;
           });
         });
       });
