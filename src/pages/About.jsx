@@ -129,7 +129,7 @@ function About() {
           </div>
           <div className="as_4_1 t_m_w">
             <div className="as_text as_text_1">
-              <h1 className="display-l fw-l t_m_1">Our</h1>
+              <h1 className="display-l fw-l t_m_1">CEO</h1>
               <h1 className="display-l fw-l t_m_2">Message</h1>
             </div>
             <div className="as_text_2 ani_x">
