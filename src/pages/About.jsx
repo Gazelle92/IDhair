@@ -32,7 +32,7 @@ function About() {
           </div>
         </div>
         <div className="intro_video_w">
-          <div className="intro_video"></div>
+          <div className="intro_video"><img src="/img/about_intro.jpg"/></div>
         </div>
       </div>
       <div
@@ -63,7 +63,7 @@ function About() {
             </div>
           <div className="scroll_indicator">
             <span className="body-s">[ SCROLL ]</span>
-            
+            <div className="bar"><div className="inner"></div></div>
           </div>
         </section>
         <section className="as_2 t_m_w">
@@ -84,7 +84,7 @@ function About() {
         </section>
         <section className="as_3">
           <div className="as_3_1 ">
-            <div className="card_w">
+            <div className="card_w ">
               <img src="/img/about_3_card_1.jpg" />
             </div>
             <div className="as_text as_text_1 nunito t_m_w">

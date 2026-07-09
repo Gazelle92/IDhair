@@ -18,6 +18,9 @@ const SECTION_PROGRESS_TEXT_SELECTOR = ".as_6_text";
 const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
 const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
 const BACKGROUND_MOTION_SPEED = 0.7;
+const CARD_IMAGE_WRAP_SELECTOR = ".card_w";
+const CARD_IMAGE_SELECTOR = "img";
+const CARD_IMAGE_MAX_MOVE = 20;
 const BACKGROUND_MOTION_ITEMS = [
   {
     wrapSelector: BACKGROUND_MOTION_WRAP_SELECTOR,
@@ -149,6 +152,7 @@ export default function useAboutSmoothScroll() {
         applyPinnedSections(track.element);
         applyTextMotion(track.element);
         applyBackgroundMotion(track.element);
+        applyCardImageMotion(track.element);
         applySectionProgress(track.element);
         applyHorizontalAnimation();
       }
@@ -226,6 +230,24 @@ export default function useAboutSmoothScroll() {
         document.querySelectorAll(elSelector).forEach((item) => {
           item.style.transform = "";
         });
+      });
+    }
+
+    function applyCardImageMotion(trackElement) {
+      trackElement.querySelectorAll(CARD_IMAGE_WRAP_SELECTOR).forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const progress = clamp((window.innerWidth - rect.left) / window.innerWidth, 0, 1);
+        const moveX = -progress * CARD_IMAGE_MAX_MOVE;
+
+        card.querySelectorAll(CARD_IMAGE_SELECTOR).forEach((image) => {
+          image.style.transform = `translate3d(${moveX}%, 0, 0)`;
+        });
+      });
+    }
+
+    function clearCardImageMotion() {
+      document.querySelectorAll(`${CARD_IMAGE_WRAP_SELECTOR} ${CARD_IMAGE_SELECTOR}`).forEach((image) => {
+        image.style.transform = "";
       });
     }
 
@@ -461,6 +483,7 @@ export default function useAboutSmoothScroll() {
       applyPinnedSections(initialTrack.element);
       applyTextMotion(initialTrack.element);
       applyBackgroundMotion(initialTrack.element);
+      applyCardImageMotion(initialTrack.element);
       applySectionProgress(initialTrack.element);
     }
     applyHorizontalAnimation();
@@ -480,6 +503,7 @@ export default function useAboutSmoothScroll() {
       clearPinnedSections();
       clearTextMotion();
       clearBackgroundMotion();
+      clearCardImageMotion();
       clearSectionProgress();
       previousLenis?.start?.();
     };

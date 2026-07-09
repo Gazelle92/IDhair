@@ -2,10 +2,12 @@ import { useEffect } from "react";
 
 const START_YEAR = 1988;
 const INTRO_DURATION = 1000;
+const PAGE_SELECTOR = ".page_about";
 const INTRO_SELECTOR = ".about_intro";
 const YEARS_WRAP_SELECTOR = ".years_w";
 const YEARS_NUMBER_SELECTOR = ".years_num";
 const INTRO_ANI_SELECTOR = ".about_intro .ani";
+const INTRO_LOADING_CLASS = "intro_loading";
 
 function ease(value) {
   return 1 - Math.pow(1 - value, 2);
@@ -20,6 +22,26 @@ export default function useAboutIntroAnimation() {
     let observer = null;
     let started = false;
     let introElement = null;
+
+    function waitForImages() {
+      const pageElement = document.querySelector(PAGE_SELECTOR);
+      const images = Array.from(pageElement?.querySelectorAll("img") || []);
+      const pendingImages = images.filter((image) => !image.complete);
+
+      if (!pendingImages.length) {
+        return Promise.resolve();
+      }
+
+      return Promise.all(
+        pendingImages.map(
+          (image) =>
+            new Promise((resolve) => {
+              image.addEventListener("load", resolve, { once: true });
+              image.addEventListener("error", resolve, { once: true });
+            }),
+        ),
+      );
+    }
 
     function cancelFrame() {
       if (!frameId) return;
@@ -75,6 +97,18 @@ export default function useAboutIntroAnimation() {
       frameId = window.requestAnimationFrame(animateYears);
     }
 
+    async function prepareIntro() {
+      introElement = document.querySelector(INTRO_SELECTOR);
+      introElement?.classList.add(INTRO_LOADING_CLASS);
+
+      await waitForImages();
+
+      if (cancelled) return;
+
+      introElement?.classList.remove(INTRO_LOADING_CLASS);
+      watchIntroAniActive();
+    }
+
     function watchIntroAniActive() {
       const aniItems = Array.from(document.querySelectorAll(INTRO_ANI_SELECTOR));
 
@@ -94,12 +128,13 @@ export default function useAboutIntroAnimation() {
       });
     }
 
-    watchIntroAniActive();
+    prepareIntro();
 
     return () => {
       cancelled = true;
       cancelFrame();
       observer?.disconnect();
+      introElement?.classList.remove(INTRO_LOADING_CLASS);
       introElement?.classList.remove("intro_start");
     };
   }, []);
