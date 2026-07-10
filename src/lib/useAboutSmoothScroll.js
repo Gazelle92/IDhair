@@ -6,7 +6,7 @@ const DEFAULT_STEP_SIZE = 80;
 const SAFARI_STEP_SIZE = 80;
 const PULSE_SCALE = 4;
 const ACCELERATION_DELTA = 60;
-const ACCELERATION_MAX = 3;
+const ACCELERATION_MAX = 1;
 const ARROW_SCROLL = 50;
 const TRACK_SELECTOR = "[data-about-horizontal-track]";
 const PINNED_SECTION_SELECTOR = ".as_3";
@@ -18,8 +18,8 @@ const SECTION_PROGRESS_TEXT_SELECTOR = ".as_6_text";
 const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
 const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
 const BACKGROUND_MOTION_SPEED = 0.7;
-const CARD_IMAGE_WRAP_SELECTOR = ".card_w";
-const CARD_IMAGE_SELECTOR = "img";
+const CARD_IMAGE_WRAP_SELECTOR = ".card_w, .as_8 .img_w";
+const CARD_IMAGE_SELECTOR = ":scope > img";
 const CARD_IMAGE_MAX_MOVE = 20;
 const BACKGROUND_MOTION_ITEMS = [
   {
@@ -246,7 +246,7 @@ export default function useAboutSmoothScroll() {
     }
 
     function clearCardImageMotion() {
-      document.querySelectorAll(`${CARD_IMAGE_WRAP_SELECTOR} ${CARD_IMAGE_SELECTOR}`).forEach((image) => {
+      document.querySelectorAll(".card_w > img, .as_8 .img_w > img").forEach((image) => {
         image.style.transform = "";
       });
     }
