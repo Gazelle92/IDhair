@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const FRAME_RATE = 150;
 const ANIMATION_TIME = 1600;
@@ -8,6 +8,7 @@ const PULSE_SCALE = 4;
 const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 1;
 const ARROW_SCROLL = 50;
+const MOBILE_VERTICAL_QUERY = "(max-width: 1024px)";
 const TRACK_SELECTOR = "[data-about-horizontal-track]";
 const PINNED_SECTION_SELECTOR = ".as_3";
 const HORIZONTAL_ANI_SELECTOR = ".ani_x";
@@ -15,6 +16,8 @@ const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
 const SECTION_PROGRESS_SELECTOR = ".as_6_1";
 const SECTION_PROGRESS_BG_SELECTOR = ".as_6_bg_w";
 const SECTION_PROGRESS_TEXT_SELECTOR = ".as_6_text";
+const SECTION_FIXED_LAYER_SELECTOR = ".as_4";
+const SECTION_FIXED_LAYER_EL_SELECTOR = ".as_4_bg_1";
 const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
 const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
 const BACKGROUND_MOTION_SPEED = 0.7;
@@ -103,6 +106,27 @@ function clamp(value, min, max) {
 }
 
 export default function useAboutSmoothScroll() {
+  const [isMobileVertical, setIsMobileVertical] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(MOBILE_VERTICAL_QUERY).matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const mobileVerticalMedia = window.matchMedia(MOBILE_VERTICAL_QUERY);
+
+    function updateMode(event) {
+      setIsMobileVertical(event.matches);
+    }
+
+    mobileVerticalMedia.addEventListener("change", updateMode);
+
+    return () => {
+      mobileVerticalMedia.removeEventListener("change", updateMode);
+    };
+  }, []);
+
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
 
@@ -120,6 +144,13 @@ export default function useAboutSmoothScroll() {
     let previousHtmlOverflow = "";
     let previousBodyOverflow = "";
     let previousBodyOverscroll = "";
+
+    function clearTrackTransform() {
+      const track = document.querySelector(TRACK_SELECTOR);
+      if (track) {
+        track.style.transform = "";
+      }
+    }
 
     function getTrack() {
       const element = document.querySelector(TRACK_SELECTOR);
@@ -153,6 +184,7 @@ export default function useAboutSmoothScroll() {
         applyTextMotion(track.element);
         applyBackgroundMotion(track.element);
         applyCardImageMotion(track.element);
+        applySectionFixedLayer(track.element);
         applySectionProgress(track.element);
         applyHorizontalAnimation();
       }
@@ -251,6 +283,22 @@ export default function useAboutSmoothScroll() {
       });
     }
 
+    function applySectionFixedLayer(trackElement) {
+      trackElement.querySelectorAll(SECTION_FIXED_LAYER_SELECTOR).forEach((section) => {
+        const rect = section.getBoundingClientRect();
+
+        section.querySelectorAll(SECTION_FIXED_LAYER_EL_SELECTOR).forEach((layer) => {
+          layer.style.transform = `translate3d(${-rect.left}px, 0, 0)`;
+        });
+      });
+    }
+
+    function clearSectionFixedLayer() {
+      document.querySelectorAll(SECTION_FIXED_LAYER_EL_SELECTOR).forEach((layer) => {
+        layer.style.transform = "";
+      });
+    }
+
     function applySectionProgress(trackElement) {
       trackElement.querySelectorAll(SECTION_PROGRESS_SELECTOR).forEach((section) => {
         const rect = section.getBoundingClientRect();
@@ -296,6 +344,21 @@ export default function useAboutSmoothScroll() {
 
         const rect = item.getBoundingClientRect();
         const isInTriggerRange = rect.left < triggerX && rect.right > 0;
+
+        if (isInTriggerRange) {
+          item.classList.add("active");
+        }
+      });
+    }
+
+    function applyVerticalAnimation() {
+      const triggerY = window.innerHeight * (5 / 6);
+
+      document.querySelectorAll(HORIZONTAL_ANI_SELECTOR).forEach((item) => {
+        if (item.classList.contains("active")) return;
+
+        const rect = item.getBoundingClientRect();
+        const isInTriggerRange = rect.top < triggerY && rect.bottom > 0;
 
         if (isInTriggerRange) {
           item.classList.add("active");
@@ -468,6 +531,26 @@ export default function useAboutSmoothScroll() {
       smoothScroll(deltaX, deltaY);
     }
 
+    if (isMobileVertical) {
+      clearTrackTransform();
+      clearPinnedSections();
+      clearTextMotion();
+      clearBackgroundMotion();
+      clearCardImageMotion();
+      clearSectionFixedLayer();
+      clearSectionProgress();
+      resetHorizontalAnimation();
+      applyVerticalAnimation();
+
+      window.addEventListener("scroll", applyVerticalAnimation, { passive: true });
+      window.addEventListener("resize", applyVerticalAnimation);
+
+      return () => {
+        window.removeEventListener("scroll", applyVerticalAnimation);
+        window.removeEventListener("resize", applyVerticalAnimation);
+      };
+    }
+
     previousLenis = window.lenis;
     previousHtmlOverflow = document.documentElement.style.overflow;
     previousBodyOverflow = document.body.style.overflow;
@@ -484,6 +567,7 @@ export default function useAboutSmoothScroll() {
       applyTextMotion(initialTrack.element);
       applyBackgroundMotion(initialTrack.element);
       applyCardImageMotion(initialTrack.element);
+      applySectionFixedLayer(initialTrack.element);
       applySectionProgress(initialTrack.element);
     }
     applyHorizontalAnimation();
@@ -504,8 +588,9 @@ export default function useAboutSmoothScroll() {
       clearTextMotion();
       clearBackgroundMotion();
       clearCardImageMotion();
+      clearSectionFixedLayer();
       clearSectionProgress();
       previousLenis?.start?.();
     };
-  }, []);
+  }, [isMobileVertical]);
 }

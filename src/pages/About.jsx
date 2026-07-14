@@ -13,10 +13,7 @@ function About() {
       className="page_about"
       style={{
         //width: "600vw",
-        minHeight: "100vh",
-        overflow: "hidden",
-        background: "#f4f1ea",
-        color: "#111",
+        
       }}
     >
       <div className="about_bg_1">
@@ -35,15 +32,7 @@ function About() {
           <div className="intro_video"><img src="/img/about_intro.jpg"/></div>
         </div>
       </div>
-      <div
-        data-about-horizontal-track
-        style={{
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          willChange: "transform",
-        }}
-      >
+      <div data-about-horizontal-track>
         <section className="as_1 t_m_w">
           <div className="t_m_bg_w">
             <img className="t_m_bg_el" src="/img/about_1.jpg" />
@@ -124,6 +113,9 @@ function About() {
           </div>
         </section>
         <section className="as_4 bg-gray-2">
+          <div className="as_4_bg_1">
+            <img src="/img/about_bg_1.png" />
+          </div>
           <div className="card_w">
             <img src="/img/about_4_card_1.jpg" />
           </div>
@@ -133,8 +125,8 @@ function About() {
               <h1 className="display-l fw-r t_m_2">Message</h1>
             </div>
             <div className="as_text_2 ani_x">
-              <img class="signiture" src="/img/about_4_sig.png"/>
-              <ul class="">
+              <img className="signiture" src="/img/about_4_sig.png"/>
+              <ul className="">
                 <li className="body-m apprael_ani delay-1 ls_s">
                   <strong className="fw-b">Company Name</strong><p>주식회사 아이디뷰티</p>
                 </li>
