@@ -379,7 +379,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
     }
   }
 }
-.ani.active{
+.ani.active, .ani_x.active{
   .fade-slice{
     .line{overflow: hidden; display: block;
       .inner{transform: translateY(0);}
@@ -441,9 +441,18 @@ body main::before{content: ''; display: block; opacity: 0; transition: ease 0.3s
   &::before{content: ''; display: block; background-color: var(--bg-ac-1); left: 0; bottom: 0; width: 100%; height: 0; transition: ease 0.3s height; position: absolute;}
   &:hover::before{height: 100%;}
 }
+
 @media (max-width:1024px){
   .hover_btn{width: 36.667vw; height: 9.444vw;
     img{width: 4.444vw; height: 4.444vw;}
     span{padding-top: 0.556vw;}
   }
+  br.pc{display: none;}
+  .pc{display: none!important;}
+}
+
+
+@media (min-width:1025px){
+  br.mob{display: none;}
+  .mob{display: none!important;}
 }

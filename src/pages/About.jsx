@@ -161,11 +161,23 @@ function About() {
 
 
 
-            <div className="body-m as_text_1 t_m_1 ani_x">
+            {/*<div className="body-m as_text_1 t_m_1 ani_x pc">
+              <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어 고객의 행복을 디자인하는</span>
+              <span className="apprael_ani ls_s delay-2">'행복 스타일리스트'로 달려왔습니다. '함께 성공하는 것'이라는 변치 않는</span>
+              <span className="apprael_ani ls_s delay-3">사명 아래, 앞으로도 고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
+            </div>*/}
+            <div className="body-m as_text_1 t_m_1 ani_x pc">
               <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어 고객의 행복을 디자인하는</span>
               <span className="apprael_ani ls_s delay-2">'행복 스타일리스트'로 달려왔습니다. '함께 성공하는 것'이라는 변치 않는</span>
               <span className="apprael_ani ls_s delay-3">사명 아래, 앞으로도 고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
             </div>
+            <div className="body-m as_text_1 t_m_1 ani_x mob">
+              <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어</span>
+              <span className="apprael_ani ls_s delay-2">고객의 행복을 디자인하는 '행복 스타일리스트'로 달려왔습니다. </span>
+              <span className="apprael_ani ls_s delay-3">'함께 성공하는 것'이라는 변치 않는 사명 아래, 앞으로도</span>
+              <span className="apprael_ani ls_s delay-3">고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
+            </div>
+            
           </div>
         </section>
 
@@ -184,9 +196,14 @@ function About() {
           <div className="as_6_1">
             <div className="as_6_text">
               <img src="/img/icon_heart.svg"/>
-              <span className="head-s">
-                수십 년간 꾸준히 이어온 장기적인 아동 후원과 나눔을 통해,<br/>
+              <span className="head-s pc">
+                수십 년간 꾸준히 이어온 장기적인 아동 후원과 나눔을 통해, <br/>
                 단순한 뷰티 브랜드를 넘어 사회적 책임을 다하는 진정성 있는 동반자로 함께합니다.
+              </span>
+              <span className="head-s mob">
+                수십 년간 꾸준히 이어온 장기적인 아동 <br/> 
+                후원과 나눔을 통해, 단순한 뷰티 브랜드를<br/>
+                넘어 사회적 책임을 다하는 진정성 있는<br/>동반자로 함께합니다.
               </span>
             </div>
             <div className="as_6_bg_w">

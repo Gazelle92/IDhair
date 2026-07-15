@@ -117,9 +117,13 @@
     .as_4_2, .as_4_3{padding:19.2308vw 10.2564vw 0 7.6923vw;
       h1{margin-bottom:2.5641vw; color:#fff;}
       .as_text_1{display:flex; flex-direction: column;
-        span{display:block; position:relative; left:0;}
+        span{position:relative; left:0; display: block;}
+        &.pc{display: flex;}
+        &.mob{display: none;}
       }
     }
+    
+    
     .card_w{width:38.4615vw; height:100%; position:relative; overflow:hidden;
       img{display:block; width:120%; height:100%; object-fit:cover; object-position:center; max-width:unset; will-change:transform;}
       &.card_w_s{padding-top:11.5385vw;}
@@ -199,8 +203,8 @@
 
   @media (max-width: 1024px){
     overflow: unset; height: unset;
-    [data-about-horizontal-track]{height: unset!important; display: block!important; overflow-x: hidden; will-change: unset;}
-    section{width: 100%!important; min-height: 100vh; min-width: unset!important; height: unset;}
+    [data-about-horizontal-track]{height: unset!important; display: block!important; overflow:unset; will-change: unset;}
+    section{width: 100%!important; min-height: 100vh; min-width: unset!important; height: unset; overflow-x: hidden;}
     .as_1{ display: flex; flex-direction: column; justify-content: center;
       .as_text{position: unset;}
       .as_1_text_2{position: unset; padding-right: 20px;}
@@ -233,13 +237,54 @@
       .as_3_3{padding-top: 62px; margin-top: 80px;}
     }
     .as_4{flex-direction: column; align-items: center; padding-top: 210px;
-      .as_4_1{
+      .as_4_1{padding: 40px 30px 78px; width: 100%; height: unset;
         .as_text{position: absolute; left: 20px; top: 90px; width: 100%; height: unset;}
+        .as_text_2{position: relative;
+          .signiture{margin-top: unset; position: absolute; right: 0; bottom: calc(100% + 40px); width: 57px;}
+          ul{width: 100%;
+            li{width: unset; gap: 10px;
+              strong{width: 110px; white-space: nowrap;}
+            }
+          }
+        }
       }
+      .as_4_2, .as_4_3{padding: 0 0 40px; width: 100%;
+        h1{margin: 20px auto; text-align: center;}
+        .as_text_1{text-align: center; 
+          &.pc{display: none;}
+          &.mob{display: flex;}
+        }
+      }
+      
       .card_w{width: 160px; height: unset; padding-top: 0;
         img{width: 100%;}
+
+        &.card_w_s{padding-top: unset;}
       }
     }
+    .as_5{ 
+      .as_text_1{left: 20px; bottom: 20px;}
+    }
+    .as_6{height: 300vh; width: 100%; overflow: unset;
+      .as_6_1 {position: sticky; top: 0; width: 100% !important; height: 100vh; overflow: hidden;
+        .as_6_text {width: 100%; height: 100%; 
+          img{width: 20px;}
+          .head-s{font-size: 11px;}
+        }
+        .as_6_bg_w{width: 100%; height: 100%;}
+      }
+
+      
+    }
+    .as_7{display: block; min-height: unset;
+      .as_7_1{gap: 80px; padding: 100px 20px 40px;
+        .as_text_2{text-align: right;}
+      }
+      .as_7_2{padding: 0 20px 60px;
+        ul{gap: 28px;}
+      }
+    }
+    .as_7, .as_8{overflow: hidden;  min-height: unset;}
     /*
     height:auto!important; overflow-x: hidden;
     [data-about-horizontal-track]{height:auto!important; display:flex!important; flex-direction:column!important; align-items:stretch!important; transform:none!important; will-change:auto!important;}

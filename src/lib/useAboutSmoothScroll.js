@@ -14,6 +14,7 @@ const PINNED_SECTION_SELECTOR = ".as_3";
 const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
 const SECTION_PROGRESS_SELECTOR = ".as_6_1";
+const SECTION_PROGRESS_WRAP_SELECTOR = ".as_6";
 const SECTION_PROGRESS_BG_SELECTOR = ".as_6_bg_w";
 const SECTION_PROGRESS_TEXT_SELECTOR = ".as_6_text";
 const SECTION_FIXED_LAYER_SELECTOR = ".as_4";
@@ -318,6 +319,26 @@ export default function useAboutSmoothScroll() {
       });
     }
 
+    function applyMobileSectionProgress() {
+      document.querySelectorAll(SECTION_PROGRESS_WRAP_SELECTOR).forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const progressDistance = Math.max(1, rect.height - window.innerHeight);
+        const progress = clamp(-rect.top / progressDistance, 0, 1);
+
+        section.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
+          const scale = 1 - progress * 0.5;
+
+          item.style.filter = `grayscale(${progress})`;
+          item.style.transform = `scale(${scale})`;
+        });
+
+        section.querySelectorAll(SECTION_PROGRESS_TEXT_SELECTOR).forEach((item) => {
+          item.style.opacity = progress;
+          item.style.transform = "";
+        });
+      });
+    }
+
     function clearSectionProgress() {
       document.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
         item.style.filter = "";
@@ -541,13 +562,20 @@ export default function useAboutSmoothScroll() {
       clearSectionProgress();
       resetHorizontalAnimation();
       applyVerticalAnimation();
+      applyMobileSectionProgress();
 
-      window.addEventListener("scroll", applyVerticalAnimation, { passive: true });
-      window.addEventListener("resize", applyVerticalAnimation);
+      function applyMobileScrollEffects() {
+        applyVerticalAnimation();
+        applyMobileSectionProgress();
+      }
+
+      window.addEventListener("scroll", applyMobileScrollEffects, { passive: true });
+      window.addEventListener("resize", applyMobileScrollEffects);
 
       return () => {
-        window.removeEventListener("scroll", applyVerticalAnimation);
-        window.removeEventListener("resize", applyVerticalAnimation);
+        window.removeEventListener("scroll", applyMobileScrollEffects);
+        window.removeEventListener("resize", applyMobileScrollEffects);
+        clearSectionProgress();
       };
     }
 
