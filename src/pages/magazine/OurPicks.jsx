@@ -82,6 +82,13 @@ const getPlayAspect = (item, index = 0) => {
   return getPlayTypeClass(item, index) === "type-a" ? "9 / 16" : "16 / 9";
 };
 
+const getPlayViewerCursorClass = (index, activeIndex) => {
+  if (index === activeIndex - 1) return "cursor_left";
+  if (index === activeIndex + 1) return "cursor_right";
+
+  return "";
+};
+
 const getYoutubeId = (url) => {
   if (!url) return "";
 
@@ -123,6 +130,10 @@ const mapPlayMedia = (post, media, mediaIndex) => {
   const displayType = media.displayType || getPlayTypeClass(null, mediaIndex);
 
   if (embedUrl) {
+    const thumbnailUrl = getNewsImageUrl(media.thumbnail, 1600);
+
+    if (!thumbnailUrl) return null;
+
     return {
       id: `${post._id}-${media._key || mediaIndex}`,
       parentId: post._id,
@@ -131,6 +142,7 @@ const mapPlayMedia = (post, media, mediaIndex) => {
       title: media.title || post.title || "id PLAY",
       displayType,
       mediaType: "youtube",
+      img: thumbnailUrl,
       youtubeUrl,
       embedUrl,
     };
@@ -152,8 +164,8 @@ const mapPlayMedia = (post, media, mediaIndex) => {
   };
 };
 
-const renderPlayMedia = (item, alt = "Magazine Image") => {
-  if (item.mediaType === "youtube") {
+const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => {
+  if (item.mediaType === "youtube" && shouldPlay) {
     return (
       <iframe
         className="play_media play_media_youtube"
@@ -688,22 +700,14 @@ function OurPicks() {
     const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
     const activeItem = playViewerItems[activePlayIndex];
-    const clone = activeItem
-      ? document.createElement(activeItem.mediaType === "youtube" ? "iframe" : "img")
-      : null;
+    const clone = activeItem ? document.createElement("img") : null;
     if (!clone) return;
 
     playTimelineRef.current?.kill();
     removePlayClone();
 
-    if (activeItem.mediaType === "youtube") {
-      clone.src = activeItem.embedUrl;
-      clone.setAttribute("title", activeItem.title || "YouTube video");
-      clone.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
-    } else {
-      clone.src = activeItem.img;
-      clone.alt = "";
-    }
+    clone.src = activeItem.img;
+    clone.alt = "";
     clone.className = "play_transition_clone";
     document.body.appendChild(clone);
     playCloneRef.current = clone;
@@ -1202,14 +1206,14 @@ function OurPicks() {
           >
             {playViewerItems.map((item, index) => (
               <SwiperSlide
-                className={`play_viewer_slide ${getPlayTypeClass(item, index)}`}
+                className={`play_viewer_slide ${getPlayTypeClass(item, index)} ${getPlayViewerCursorClass(index, activePlayIndex)}`}
                 key={item.id}
                 ref={(element) => {
                   playViewerSlideRefs.current[index] = element;
                 }}
               >
                 <button type="button" className="play_viewer_slide_btn">
-                  {renderPlayMedia(item, item.title)}
+                  {renderPlayMedia(item, item.title, playViewerReady && index === activePlayIndex)}
                 </button>
               </SwiperSlide>
             ))}

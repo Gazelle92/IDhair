@@ -114,7 +114,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     .ourpicks_view_all{transition: clip-path 1s cubic-bezier(0, 0, 0.43, 1.06), color 0.3s cubic-bezier(0, 0, 0.43, 1.06);}
   }
 
-  .ourpicks_play{opacity: 0; transition: opacity 1.4s ease; padding-bottom: 4.2424vw;
+  .ourpicks_play{opacity: 0; transition: opacity 1.4s ease; padding-bottom: 4.2424vw; width: calc(100% + 3.636vw + 3.636vw); margin-left: -3.636vw; overflow-x: hidden;
     &.active{opacity: 1;}
   }
   .ourpicks_play_slider {padding-top: 2.424vw;

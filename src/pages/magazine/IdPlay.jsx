@@ -39,7 +39,7 @@ const getYoutubeEmbedUrl = (url) => {
 
   if (!id) return "";
 
-  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0`;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&autohide=1&playsinline=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0`;
 };
 
 const getPlayVideoUrl = (item) => item?.youtubeUrl || item?.videoUrl || item?.url || "";
@@ -50,6 +50,10 @@ const mapPlayMedia = (post, media, mediaIndex) => {
   const displayType = media.displayType || getTypeClass(null, mediaIndex);
 
   if (youtubeEmbedUrl) {
+    const thumbnailUrl = getNewsImageUrl(media.thumbnail, 1600);
+
+    if (!thumbnailUrl) return null;
+
     return {
       id: `${post._id}-${media._key || mediaIndex}`,
       parentId: post._id,
@@ -58,6 +62,7 @@ const mapPlayMedia = (post, media, mediaIndex) => {
       title: media.title || post.title || "id PLAY",
       displayType,
       mediaType: "youtube",
+      img: thumbnailUrl,
       youtubeUrl,
       embedUrl: youtubeEmbedUrl,
     };
@@ -79,8 +84,8 @@ const mapPlayMedia = (post, media, mediaIndex) => {
   };
 };
 
-const renderPlayMedia = (item, alt = "Magazine Image") => {
-  if (item.mediaType === "youtube") {
+const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => {
+  if (item.mediaType === "youtube" && shouldPlay) {
     return (
       <iframe
         className="play_media play_media_youtube"
@@ -105,6 +110,13 @@ const getTypeClass = (item, index = 0) => {
 
 const getPlayAspect = (item, index = 0) => {
   return getTypeClass(item, index) === "type-a" ? "9 / 16" : "16 / 9";
+};
+
+const getViewerCursorClass = (index, activeIndex) => {
+  if (index === activeIndex - 1) return "cursor_left";
+  if (index === activeIndex + 1) return "cursor_right";
+
+  return "";
 };
 
 function IdPlay() {
@@ -288,22 +300,14 @@ function IdPlay() {
     const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
     const activeItem = viewerItems[activeIndex];
-    const clone = activeItem
-      ? document.createElement(activeItem.mediaType === "youtube" ? "iframe" : "img")
-      : null;
+    const clone = activeItem ? document.createElement("img") : null;
     if (!clone) return;
 
     timelineRef.current?.kill();
     removeClone();
 
-    if (activeItem.mediaType === "youtube") {
-      clone.src = activeItem.embedUrl;
-      clone.setAttribute("title", activeItem.title || "YouTube video");
-      clone.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
-    } else {
-      clone.src = activeItem.img;
-      clone.alt = "";
-    }
+    clone.src = activeItem.img;
+    clone.alt = "";
     clone.className = "play_transition_clone";
     document.body.appendChild(clone);
     cloneRef.current = clone;
@@ -423,14 +427,14 @@ function IdPlay() {
           >
             {viewerItems.map((item, index) => (
               <SwiperSlide
-                className={`play_viewer_slide ${getTypeClass(item, index)}`}
+                className={`play_viewer_slide ${getTypeClass(item, index)} ${getViewerCursorClass(index, activeIndex)}`}
                 key={item.id}
                 ref={(element) => {
                   viewerSlideRefs.current[index] = element;
                 }}
               >
                 <button type="button" className="play_viewer_slide_btn">
-                  {renderPlayMedia(item, item.title)}
+                  {renderPlayMedia(item, item.title, viewerReady && index === activeIndex)}
                 </button>
               </SwiperSlide>
             ))}

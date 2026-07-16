@@ -68,6 +68,15 @@ export default defineType({
               validation: (rule) => rule.required(),
             }),
             defineField({
+              name: "thumbnail",
+              title: "Thumbnail Image",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
               name: "displayType",
               title: "Display Type",
               description: "type-a: 9 / 16, type-b: 16 / 9",
@@ -95,11 +104,13 @@ export default defineType({
               title: "title",
               youtubeUrl: "youtubeUrl",
               displayType: "displayType",
+              thumbnail: "thumbnail",
             },
-            prepare({ title, youtubeUrl, displayType }) {
+            prepare({ title, youtubeUrl, displayType, thumbnail }) {
               return {
                 title: title || "YouTube Video",
                 subtitle: `${displayType || "type-b"} - ${youtubeUrl || ""}`,
+                media: thumbnail,
               };
             },
           },
