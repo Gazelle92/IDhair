@@ -238,6 +238,22 @@ export default function useAboutSmoothScroll() {
         });
     }
 
+    function applyMobileTextMotion() {
+      const wrappers = Array.from(document.querySelectorAll(TEXT_MOTION_WRAP_SELECTOR));
+
+      wrappers.forEach((wrapper) => {
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const distanceFromTop = wrapperRect.top;
+
+        TEXT_MOTION_ITEMS.forEach(({ selector, speed }) => {
+          wrapper.querySelectorAll(selector).forEach((item) => {
+            if (item.closest(TEXT_MOTION_WRAP_SELECTOR) !== wrapper) return;
+            item.style.transform = `translate3d(0, ${distanceFromTop * speed}px, 0)`;
+          });
+        });
+      });
+    }
+
     function applyBackgroundMotion(trackElement) {
       const trackRect = trackElement.getBoundingClientRect();
 
@@ -555,17 +571,18 @@ export default function useAboutSmoothScroll() {
     if (isMobileVertical) {
       clearTrackTransform();
       clearPinnedSections();
-      clearTextMotion();
       clearBackgroundMotion();
       clearCardImageMotion();
       clearSectionFixedLayer();
       clearSectionProgress();
       resetHorizontalAnimation();
       applyVerticalAnimation();
+      applyMobileTextMotion();
       applyMobileSectionProgress();
 
       function applyMobileScrollEffects() {
         applyVerticalAnimation();
+        applyMobileTextMotion();
         applyMobileSectionProgress();
       }
 
@@ -575,6 +592,7 @@ export default function useAboutSmoothScroll() {
       return () => {
         window.removeEventListener("scroll", applyMobileScrollEffects);
         window.removeEventListener("resize", applyMobileScrollEffects);
+        clearTextMotion();
         clearSectionProgress();
       };
     }
