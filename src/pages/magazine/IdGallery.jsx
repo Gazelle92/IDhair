@@ -506,7 +506,7 @@ function IdGallery({ currentPage = 1 }) {
   }, []);
 
   if (status === "loading") {
-    return <div className="mg_state body-m">Loading...</div>;
+    return <div className="mg_state body-m loading"></div>;
   }
 
   if (status === "error") {

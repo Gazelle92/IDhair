@@ -82,6 +82,92 @@ const getPlayAspect = (item, index = 0) => {
   return getPlayTypeClass(item, index) === "type-a" ? "9 / 16" : "16 / 9";
 };
 
+const getYoutubeId = (url) => {
+  if (!url) return "";
+
+  try {
+    const parsedUrl = new URL(url);
+    const host = parsedUrl.hostname.replace(/^www\./, "");
+
+    if (host === "youtu.be") {
+      return parsedUrl.pathname.split("/").filter(Boolean)[0] || "";
+    }
+
+    if (host.endsWith("youtube.com")) {
+      if (parsedUrl.pathname.startsWith("/shorts/") || parsedUrl.pathname.startsWith("/embed/")) {
+        return parsedUrl.pathname.split("/").filter(Boolean)[1] || "";
+      }
+
+      return parsedUrl.searchParams.get("v") || "";
+    }
+  } catch {
+    return "";
+  }
+
+  return "";
+};
+
+const getYoutubeEmbedUrl = (url) => {
+  const id = getYoutubeId(url);
+
+  if (!id) return "";
+
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0`;
+};
+
+const getPlayVideoUrl = (item) => item?.youtubeUrl || item?.videoUrl || item?.url || "";
+
+const mapPlayMedia = (post, media, mediaIndex) => {
+  const youtubeUrl = getPlayVideoUrl(media);
+  const embedUrl = getYoutubeEmbedUrl(youtubeUrl);
+  const displayType = media.displayType || getPlayTypeClass(null, mediaIndex);
+
+  if (embedUrl) {
+    return {
+      id: `${post._id}-${media._key || mediaIndex}`,
+      parentId: post._id,
+      category: PLAY_CATEGORY,
+      date: formatNewsDate(post.publishedAt),
+      title: media.title || post.title || "id PLAY",
+      displayType,
+      mediaType: "youtube",
+      youtubeUrl,
+      embedUrl,
+    };
+  }
+
+  const imageUrl = getNewsImageUrl(media, 1600);
+
+  if (!imageUrl) return null;
+
+  return {
+    id: `${post._id}-${media._key || mediaIndex}`,
+    parentId: post._id,
+    category: PLAY_CATEGORY,
+    date: formatNewsDate(post.publishedAt),
+    title: post.title || "id PLAY",
+    displayType,
+    mediaType: "image",
+    img: imageUrl,
+  };
+};
+
+const renderPlayMedia = (item, alt = "Magazine Image") => {
+  if (item.mediaType === "youtube") {
+    return (
+      <iframe
+        className="play_media play_media_youtube"
+        src={item.embedUrl}
+        title={item.title || "YouTube video"}
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    );
+  }
+
+  return <img className="play_media" src={item.img} alt={alt} loading="lazy" decoding="async" />;
+};
+
 const getListUrl = (category, page = 1) => {
   return page === 1 ? `/magazine/${category}` : `/magazine/${category}/list-${page}`;
 };
@@ -122,16 +208,10 @@ const mapGalleryPost = (post) => {
 };
 
 const mapPlayPost = (post) => {
-  const images = (post.images || []).map((image, imageIndex) => ({
-    id: `${post._id}-${image._key || imageIndex}`,
-    parentId: post._id,
-    category: PLAY_CATEGORY,
-    date: formatNewsDate(post.publishedAt),
-    title: post.title || "id PLAY",
-    displayType: image.displayType || getPlayTypeClass(null, imageIndex),
-    img: getNewsImageUrl(image, 1600),
-  }));
-  const thumbnail = images[0];
+  const mediaItems = (post.images || [])
+    .map((media, mediaIndex) => mapPlayMedia(post, media, mediaIndex))
+    .filter(Boolean);
+  const thumbnail = mediaItems[0];
 
   if (!thumbnail) return null;
 
@@ -142,7 +222,10 @@ const mapPlayPost = (post) => {
     title: post.title || "id PLAY",
     displayType: thumbnail.displayType,
     img: thumbnail.img,
-    images,
+    mediaType: thumbnail.mediaType,
+    embedUrl: thumbnail.embedUrl,
+    youtubeUrl: thumbnail.youtubeUrl,
+    images: mediaItems,
   };
 };
 
@@ -519,11 +602,11 @@ function OurPicks() {
   };
 
   const openPlayViewer = (event, index) => {
-    const image = event.currentTarget.querySelector("img");
-    if (!image) return;
+    const sourceMedia = event.currentTarget.querySelector(".play_media");
+    if (!sourceMedia) return;
 
-    const sourceRect = image.getBoundingClientRect();
-    const clone = image.cloneNode(true);
+    const sourceRect = sourceMedia.getBoundingClientRect();
+    const clone = sourceMedia.cloneNode(true);
 
     playTimelineRef.current?.kill();
     removePlayClone();
@@ -532,7 +615,7 @@ function OurPicks() {
     clone.className = "play_transition_clone";
     document.body.appendChild(clone);
     playCloneRef.current = clone;
-    activePlaySourceImageRef.current = image;
+    activePlaySourceImageRef.current = sourceMedia;
 
     gsap.set(clone, {
       left: sourceRect.left,
@@ -540,7 +623,7 @@ function OurPicks() {
       width: sourceRect.width,
       height: sourceRect.height,
     });
-    gsap.set(image, { visibility: "hidden" });
+    gsap.set(sourceMedia, { visibility: "hidden" });
 
     document.body.classList.add("play-viewer-locked", "play-viewer-zooming", "play-viewer-animating");
     window.lenis?.stop?.();
@@ -604,14 +687,23 @@ function OurPicks() {
 
     const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
-    const clone = playViewerItems[activePlayIndex] ? document.createElement("img") : null;
+    const activeItem = playViewerItems[activePlayIndex];
+    const clone = activeItem
+      ? document.createElement(activeItem.mediaType === "youtube" ? "iframe" : "img")
+      : null;
     if (!clone) return;
 
     playTimelineRef.current?.kill();
     removePlayClone();
 
-    clone.src = playViewerItems[activePlayIndex].img;
-    clone.alt = "";
+    if (activeItem.mediaType === "youtube") {
+      clone.src = activeItem.embedUrl;
+      clone.setAttribute("title", activeItem.title || "YouTube video");
+      clone.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+    } else {
+      clone.src = activeItem.img;
+      clone.alt = "";
+    }
     clone.className = "play_transition_clone";
     document.body.appendChild(clone);
     playCloneRef.current = clone;
@@ -981,7 +1073,7 @@ function OurPicks() {
                     playItemRefs.current[index] = element;
                   }}
                 >
-                  <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
+                  {renderPlayMedia(item)}
                 </button>
               </SwiperSlide>
             ))}
@@ -1117,7 +1209,7 @@ function OurPicks() {
                 }}
               >
                 <button type="button" className="play_viewer_slide_btn">
-                  <img src={item.img} alt={item.title} />
+                  {renderPlayMedia(item, item.title)}
                 </button>
               </SwiperSlide>
             ))}

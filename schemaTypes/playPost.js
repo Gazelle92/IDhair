@@ -56,6 +56,54 @@ export default defineType({
             }),
           ],
         }),
+        defineArrayMember({
+          type: "object",
+          name: "youtubeVideo",
+          title: "YouTube Video",
+          fields: [
+            defineField({
+              name: "youtubeUrl",
+              title: "YouTube URL",
+              type: "url",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "displayType",
+              title: "Display Type",
+              description: "type-a: 9 / 16, type-b: 16 / 9",
+              type: "string",
+              options: {
+                list: [
+                  { title: "type-a - 9 / 16", value: "type-a" },
+                  { title: "type-b - 16 / 9", value: "type-b" },
+                ],
+              },
+              components: {
+                input: DisplayTypeInput,
+              },
+              initialValue: "type-b",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+            }),
+          ],
+          preview: {
+            select: {
+              title: "title",
+              youtubeUrl: "youtubeUrl",
+              displayType: "displayType",
+            },
+            prepare({ title, youtubeUrl, displayType }) {
+              return {
+                title: title || "YouTube Video",
+                subtitle: `${displayType || "type-b"} - ${youtubeUrl || ""}`,
+              };
+            },
+          },
+        }),
       ],
       validation: (rule) => rule.min(1).required(),
     }),

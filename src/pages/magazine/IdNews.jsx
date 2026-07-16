@@ -50,7 +50,7 @@ function IdNews({ currentPage = 1 }) {
   const normalItems = isFirstPage ? pageItems.slice(FEATURED_COUNT) : pageItems;
 
   if (status === "loading") {
-    return <div className="mg_state body-m">Loading...</div>;
+    return <div className="mg_state body-m loading"></div>;
   }
 
   if (status === "error") {

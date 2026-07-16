@@ -73,6 +73,7 @@ export const formatNewsDate = (dateValue) => {
 
 export const getNewsImageUrl = (image, width = 960) => {
   if (!image) return "/img/mg_list_1.jpg";
+  if (!image.asset) return "";
 
   return urlForSanityImage(image)
     .width(width)

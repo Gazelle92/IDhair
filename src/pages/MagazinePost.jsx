@@ -73,7 +73,7 @@ function MagazinePost() {
             <div className="page_name body-s fadeX-4">{pageName}</div>
           </div>
         </section>
-        <section className="md_body"><div className="md_body_inner"><article>Loading...</article></div></section>
+        <section className="md_body"><div className="md_body_inner"><article className="Loading"></article></div></section>
       </main>
     );
   }

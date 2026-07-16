@@ -46,8 +46,11 @@
     }    
   }
 
-  .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw; opacity:1; transition:opacity .28s ease, transform .32s ease;
-    &.tab_out{opacity:0; pointer-events:none;}
+  .mg_body{width: calc(100% + 4.848vw); left: -2.424vw; position: relative;  padding: 4.848vw 2.424vw; opacity:1; transition:opacity .28s ease, transform .32s ease; 
+    &.tab_out{opacity:0; pointer-events:none;
+      .pagenation{opacity: 0;}
+    }
+    .loading{min-height: 100vh;}
     .mg_list{position: relative; display: grid;
       
       @media(min-width:1025px){
@@ -68,13 +71,15 @@
         .mg_a{width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: inherit; display: block; cursor: pointer;}
         h1{padding: 0.485vw 0 1.212vw; font-weight: 600;}
         img{aspect-ratio: 16 / 9; width: 100%; object-fit: cover;}
+        .play_media{aspect-ratio: 16 / 9; width: 100%; object-fit: cover; border: 0; display: block;}
+        iframe.play_media{pointer-events: none;}
         .date, h1{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0); display: block; letter-spacing: -1px;}
         .date{transition: ease 0.7s clip-path, ease 0.7s letter-spacing; }
         h1{transition: ease 0.8s clip-path, ease 0.7s letter-spacing; transition-duration: 0.2;}
-        img,.bg_blur{transition: ease 1.4s transform, ease 1.4s backdrop-filter, ease 1.4s opacity; transform: scale(1.05); opacity: 0;}
+        img,.play_media,.bg_blur{transition: ease 1.4s transform, ease 1.4s backdrop-filter, ease 1.4s opacity; transform: scale(1.05); opacity: 0;}
         &.active{
           .date,h1{clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);  letter-spacing: 0px;}
-          img,.bg_blur{transform: scale(1); opacity: 1;}
+          img,.play_media,.bg_blur{transform: scale(1); opacity: 1;}
         }
       }
     }
@@ -187,10 +192,11 @@
 
     .mg_list_play{
       .mg_li{padding:  1.2121vw; position: relative; font-size: 0; display: flex; align-items: center; justify-content: center;
+        .play_media{aspect-ratio: 330 / 412;}
         &.type-a{ padding: 1.2121vw 6.4242vw;
-          img{aspect-ratio: 9 / 16; }
+          .play_media{aspect-ratio: 9 / 16; }
         }
-        &.type-b img{aspect-ratio: 16 / 9;}
+        &.type-b .play_media{aspect-ratio: 16 / 9;}
         a{font-size: 0;}
         img{aspect-ratio: 330 / 412;}
         @media(min-width:1025px){
@@ -370,7 +376,8 @@ body.gallery-backdrop-active main.page_magazine::after{background-color: #ededed
 /*.gallery-viewer-open .gallery_viewer{background-color: #ededed;}*/
 
 .gallery_transition_clone{position: fixed; z-index: 999; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height;}
-.play_transition_clone{position: fixed; z-index: 1201; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height;}
+.play_transition_clone{position: fixed; z-index: 1201; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height; border:0;}
+.play_media_youtube{pointer-events:none;}
 
 .play_viewer{position: fixed; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; pointer-events: none;
   --play-slide-width: min(58.182vw, 960px);
@@ -398,13 +405,15 @@ body.gallery-backdrop-active main.page_magazine::after{background-color: #ededed
   .play_viewer_swiper{width: 100%; overflow: visible; opacity: 1; transition: opacity 0.12s ease;
     .swiper-wrapper{align-items: center;}
   }
-  .play_viewer_slide{width: min(var(--play-slide-width), calc(var(--play-max-height) * 16 / 9)); max-height: var(--play-max-height); aspect-ratio: 16 / 9;  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+  .play_viewer_slide{width: min(var(--play-slide-width), calc(var(--play-max-height) * 16 / 9)); max-height: var(--play-max-height); aspect-ratio: 16 / 9;  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease; 
+
     &.type-a{aspect-ratio: 9 / 16; width: min(calc(var(--play-slide-width) * 0.45), calc(var(--play-max-height) * 9 / 16));}
     &.type-b{aspect-ratio: 16 / 9;}
     &.swiper-slide-active{}
   }
-  .play_viewer_slide_btn{width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer;
-    img{display: block; width: 100%; height: 100%; object-fit: cover;}
+  .play_viewer_slide_btn{width: 100%; height: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; pointer-events: none;
+    .play_media{display: block; width: 100%; height: 100%; object-fit: cover; border:0;}
+    iframe.play_media{pointer-events: none;}
   }
   .play_viewer_frame{position: absolute; left: 50%; top: 50%; width: min(var(--play-slide-width), calc(var(--play-max-height) * 16 / 9)); max-height: var(--play-max-height); aspect-ratio: var(--play-viewer-aspect, 16 / 9); transform: translate(-50%, -50%); pointer-events: none;
     &[style*="9 / 16"]{width: min(calc(var(--play-slide-width) * 0.45), calc(var(--play-max-height) * 9 / 16));}
