@@ -215,7 +215,9 @@
     }
     .as_2{background-color: #EDEDED; height: unset; min-height: unset; padding-bottom: 40px;
       .as_text{position: unset; padding: 110px 20px 80px;}
-      .as_text_2{position: unset; width: 100%; padding: 0 20px; gap: 10px;}
+      .as_text_2{position: unset; width: 100%; padding: 0 20px; gap: 10px;
+        span{font-size: 11px;}
+      }
     }
     .as_3{background-color: #EDEDED; flex-direction: column; padding-bottom: 60px;
       .as_3_1, .as_3_2, .as_3_3{flex-direction: column; justify-content: center; padding-right: 0;}
