@@ -449,6 +449,26 @@ body main::before{content: ''; display: block; opacity: 0; transition: ease 0.3s
   }
   br.pc{display: none;}
   .pc{display: none!important;}
+
+  .mob_ani{
+    @for $i from 1 through 10{
+      &.me_#{$i}, .me_#{$i}{
+        transition: clip-path 1.2s ease, letter-spacing 1.2s ease;
+        transition-delay: #{($i - 1) * 0.2}s;
+        letter-spacing: -0.6vw;
+        clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+      }
+    }
+
+    &.active{
+      @for $i from 1 through 10{
+        &.me_#{$i}, .me_#{$i}{
+          clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+          letter-spacing: 0;
+        }
+      }
+    }
+  }
 }
 
 

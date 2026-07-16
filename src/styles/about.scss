@@ -214,7 +214,7 @@
       &.intro_start{clip-path: polygon(0 0, 0 0, 100% 0, 100% 0);}
     }
     section{width: 100%!important; min-height: 100vh; min-width: unset!important; height: unset; overflow-x: hidden;}
-    .as_1{ display: flex; flex-direction: column; justify-content: center; height: 100svh;
+    .as_1{ display: flex; flex-direction: column; justify-content: center; height: 100svh; gap: 24px;
       .as_text{position: unset;}
       .as_1_text_2{position: unset; padding-right: 20px;}
       .scroll_indicator{top: unset; bottom: 60px; left: 50%; right: unset; transform: translateX(-50%); writing-mode: vertical-lr; width: unset; height: unset; background-color: unset;
@@ -223,7 +223,12 @@
       }
     }
     .as_2{background-color: #EDEDED; height: unset; min-height: unset; padding-bottom: 40px;
-      .as_text{position: unset; padding: 110px 20px 80px;}
+      .as_text{position: unset; padding: 110px 20px 80px;
+        h1{
+          &.t_m_1{left: 0;}
+          &.t_m_2{left: 0; padding-left: 40px;}
+        }
+      }
       .as_text_2{position: unset; width: 100%; padding: 0 20px; gap: 10px;
         span{font-size: 11px;}
       }
@@ -232,7 +237,10 @@
       .as_3_1, .as_3_2, .as_3_3{flex-direction: column; justify-content: center; padding-right: 0;}
       .as_3_1{
         .card_w{width: calc(100% - 120px); left: 50%; transform: translateX(-50%); position: relative;}
-        .as_text_1{position: relative; padding-left: 20px; padding-top: 110px; padding-right: unset; left: unset; top: unset;}
+        .as_text_1{position: relative; padding-left: 20px; padding-top: 110px; padding-right: unset; left: unset; top: unset;
+          .t_m_1{left: 0;}
+          .t_m_2{left:0; padding-left: 40px;}
+        }
       }
       .as_3_2, .as_3_3{align-items: center; position: relative;
         .card_w{width: 160px; height: unset; padding-top: 0;
@@ -240,7 +248,7 @@
         }
         .as_text{padding: 0; width: 100%; min-width: unset; padding: 40px 0 0 30px; gap: 20px; flex-direction: unset; justify-content: unset;
           .as_text_1{padding-left: unset;}
-          .t_1{position: absolute; display: block; text-align: center; width: 100%; top: 0; left: 0;}
+          .t_1{position: absolute; display: block; text-align: center; top:0; display: inline-block; width: unset; left: 50%; transform: translateX(-50%);}
           .t_2{margin: unset;}
         }
       }

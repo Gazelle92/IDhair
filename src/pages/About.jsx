@@ -56,9 +56,9 @@ function About() {
           </div>
         </section>
         <section className="as_2 t_m_w">
-          <div className="as_text nunito">
-            <h1 className="display-l fw-r t_m_1">Brand</h1>
-            <h1 className="display-l fw-r t_m_2">Story</h1>
+          <div className="as_text nunito mob_ani">
+            <h1 className="display-l fw-r t_m_1 me_1">Brand</h1>
+            <h1 className="display-l fw-r t_m_2 me_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
             <span className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</span>
@@ -76,9 +76,9 @@ function About() {
             <div className="card_w ">
               <img src="/img/about_3_card_1.jpg" />
             </div>
-            <div className="as_text as_text_1 nunito t_m_w">
-              <h1 className="display-l fw-r t_m_1">Our</h1>
-              <h1 className="display-l fw-r t_m_2">Identity</h1>
+            <div className="as_text as_text_1 nunito t_m_w mob_ani">
+              <h1 className="display-l fw-r t_m_1 me_1">Our</h1>
+              <h1 className="display-l fw-r t_m_2 me_2">Identity</h1>
             </div>
           </div>
 
@@ -87,7 +87,7 @@ function About() {
               <img src="/img/about_3_card_2.jpg" />
             </div>
             <div className="as_text  ani_x">
-              <h1 className="t_m_1 t_1 txt-ac fw-r nunito">vision</h1>
+              <h1 className="t_m_1 t_1 txt-ac fw-r nunito mob_ani me_1">vision</h1>
               <span className="body-m t_2 t_m_2">( a )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s  delay-1">고객의 고유한 아름다움을 찾아주는 든든한 뷰티 파트너로서,</span>
@@ -102,7 +102,7 @@ function About() {
               <img src="/img/about_3_card_3.jpg" />
             </div>
             <div className="as_text  ani_x">
-              <h1 className="t_m_1 t_1 txt-ac fw-r nunito">mission</h1>
+              <h1 className="t_m_1 t_1 txt-ac fw-r nunito  mob_ani me_1">mission</h1>
               <span className="body-m t_2  t_m_2">( b )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s delay-1">단순한 헤어 디자인 기술을 넘어 고객의 삶에</span>
