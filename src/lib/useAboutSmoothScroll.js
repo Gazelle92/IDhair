@@ -266,6 +266,22 @@ export default function useAboutSmoothScroll() {
       });
     }
 
+    function applyMobileBackgroundMotion() {
+      BACKGROUND_MOTION_ITEMS.forEach(({ wrapSelector, elSelector, speed }) => {
+        const wrappers = Array.from(document.querySelectorAll(wrapSelector));
+
+        wrappers.forEach((wrapper) => {
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const moveY = -wrapperRect.top * speed;
+
+          wrapper.querySelectorAll(elSelector).forEach((item) => {
+            if (item.closest(wrapSelector) !== wrapper) return;
+            item.style.transform = `translate3d(0, ${moveY}px, 0)`;
+          });
+        });
+      });
+    }
+
     function applyCardImageMotion(trackElement) {
       trackElement.querySelectorAll(CARD_IMAGE_WRAP_SELECTOR).forEach((card) => {
         const rect = card.getBoundingClientRect();
@@ -562,19 +578,28 @@ export default function useAboutSmoothScroll() {
       clearSectionProgress();
       resetHorizontalAnimation();
       applyVerticalAnimation();
+      applyMobileBackgroundMotion();
       applyMobileSectionProgress();
 
       function applyMobileScrollEffects() {
         applyVerticalAnimation();
+        applyMobileBackgroundMotion();
         applyMobileSectionProgress();
       }
 
-      window.addEventListener("scroll", applyMobileScrollEffects, { passive: true });
+      const removeLenisMobileScroll = window.lenis?.on?.("scroll", applyMobileScrollEffects);
+      if (!removeLenisMobileScroll) {
+        window.addEventListener("scroll", applyMobileScrollEffects, { passive: true });
+      }
       window.addEventListener("resize", applyMobileScrollEffects);
 
       return () => {
-        window.removeEventListener("scroll", applyMobileScrollEffects);
+        removeLenisMobileScroll?.();
+        if (!removeLenisMobileScroll) {
+          window.removeEventListener("scroll", applyMobileScrollEffects);
+        }
         window.removeEventListener("resize", applyMobileScrollEffects);
+        clearBackgroundMotion();
         clearSectionProgress();
       };
     }

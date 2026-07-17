@@ -120,13 +120,13 @@ function About() {
             <img src="/img/about_4_card_1.jpg" />
           </div>
           <div className="as_4_1 t_m_w">
-            <div className="as_text as_text_1 nunito">
-              <h1 className="display-l fw-r t_m_1">CEO</h1>
-              <h1 className="display-l fw-r t_m_2">Message</h1>
+            <div className="as_text as_text_1 nunito mob_ani">
+              <h1 className="display-l fw-r t_m_1 me_1">CEO</h1>
+              <h1 className="display-l fw-r t_m_2 me_2">Message</h1>
             </div>
             <div className="as_text_2 ani_x">
               <img className="signiture" src="/img/about_4_sig.png"/>
-              <ul className="">
+              <ul>
                 <li className="body-m apprael_ani delay-1 ls_s">
                   <strong className="fw-b">Company Name</strong><p>주식회사 아이디뷰티</p>
                 </li>
@@ -144,7 +144,7 @@ function About() {
             <img src="/img/about_4_card_2.jpg" />
           </div>
           <div className="as_4_2 t_m_w">
-            <h1 className="display-l fw-l t_m_2 apprael">1988</h1>
+            <h1 className="display-l fw-l t_m_2 apprael mob_ani me_1">1988</h1>
             <div className="body-m as_text_1 t_m_1 ani_x">
               <span className="apprael_ani ls_s delay-1">1988년 작은 미용실 '미스파마'에서 두 명의 스타일리스트로</span>
               <span className="apprael_ani ls_s delay-2">시작한 아이디헤어는, 이제 대한민국을 대표하는 프로페셔널</span>
@@ -157,7 +157,7 @@ function About() {
           </div>
 
           <div className="as_4_3 t_m_w">
-            <h1 className="display-l fw-l t_m_2 apprael">39</h1>
+            <h1 className="display-l fw-l t_m_2 apprael mob_ani me_1">39</h1>
 
 
 
@@ -185,10 +185,10 @@ function About() {
           <div className="t_m_bg_w">
             <img className="t_m_bg_el" src="/img/about_5.jpg" />
           </div>
-          <div className="as_text_1 t_m_w txt-ac">
-            <h1 className="display-l fw-l t_m_1 apprael">Corporate</h1>
-            <h1 className="display-l fw-l t_m_2 apprael">Social</h1>
-            <h1 className="display-l fw-l t_m_3 apprael">Responsibility</h1>
+          <div className="as_text_1 t_m_w txt-ac mob_ani">
+            <h1 className="display-l fw-l t_m_1 apprael me_1">Corporate</h1>
+            <h1 className="display-l fw-l t_m_2 apprael me_2">Social</h1>
+            <h1 className="display-l fw-l t_m_3 apprael me_3">Responsibility</h1>
           </div>
 
         </section>
@@ -218,9 +218,9 @@ function About() {
 
         <section className="as_7 txt-white">
           <div className="as_7_1 t_m_w">
-            <div className="as_text as_text_1 nunito">
-              <h1 className="display-l fw-r t_m_1">Family</h1>
-              <h1 className="display-l fw-r t_m_2">Brand</h1>
+            <div className="as_text as_text_1 nunito mob_ani">
+              <h1 className="display-l fw-r t_m_1 me_1">Family</h1>
+              <h1 className="display-l fw-r t_m_2 me_2">Brand</h1>
             </div>
             <div className="body-m as_text_2 t_m_3 ani_x">
               <span className="apprael_ani ls_s delay-1">시장의 다양한 니즈에 대응하기 위해 전략적으로 </span>
