@@ -29,7 +29,9 @@ function About() {
           </div>
         </div>
         <div className="intro_video_w">
-          <div className="intro_video"><img src="/img/about_intro.jpg"/></div>
+          <div className="intro_video">
+            <video src="/video/About_intro.mp4" autoPlay muted loop playsInline />
+          </div>
         </div>
       </div>
       <div data-about-horizontal-track>

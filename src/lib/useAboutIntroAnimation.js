@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
 const START_YEAR = 1988;
-const INTRO_DURATION = 1000;
+const INTRO_DURATION = 1500;
+const INTRO_START_DELAY = 700;
 const PAGE_SELECTOR = ".page_about";
 const INTRO_SELECTOR = ".about_intro";
 const YEARS_WRAP_SELECTOR = ".years_w";
@@ -21,6 +22,7 @@ export default function useAboutIntroAnimation() {
     let cancelled = false;
     let observer = null;
     let started = false;
+    let startTimer = null;
     let introElement = null;
 
     function waitForImages() {
@@ -97,6 +99,15 @@ export default function useAboutIntroAnimation() {
       frameId = window.requestAnimationFrame(animateYears);
     }
 
+    function scheduleStartAnimation() {
+      if (cancelled || started || startTimer) return;
+
+      startTimer = window.setTimeout(() => {
+        startTimer = null;
+        startAnimation();
+      }, INTRO_START_DELAY);
+    }
+
     async function prepareIntro() {
       introElement = document.querySelector(INTRO_SELECTOR);
       introElement?.classList.add(INTRO_LOADING_CLASS);
@@ -113,13 +124,13 @@ export default function useAboutIntroAnimation() {
       const aniItems = Array.from(document.querySelectorAll(INTRO_ANI_SELECTOR));
 
       if (!aniItems.length || aniItems.some((item) => item.classList.contains("active"))) {
-        startAnimation();
+        scheduleStartAnimation();
         return;
       }
 
       observer = new MutationObserver(() => {
         if (aniItems.some((item) => item.classList.contains("active"))) {
-          startAnimation();
+          scheduleStartAnimation();
         }
       });
 
@@ -132,6 +143,9 @@ export default function useAboutIntroAnimation() {
 
     return () => {
       cancelled = true;
+      if (startTimer) {
+        window.clearTimeout(startTimer);
+      }
       cancelFrame();
       observer?.disconnect();
       introElement?.classList.remove(INTRO_LOADING_CLASS);
