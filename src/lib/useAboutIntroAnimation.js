@@ -4,7 +4,9 @@ const START_YEAR = 1988;
 const INTRO_DURATION = 1000;
 const INTRO_START_DELAY = 500;
 const INTRO_START_DELAY_1 = 10;
+const PAGE_SELECTOR = ".page_about";
 const INTRO_SELECTOR = ".about_intro";
+const INTRO_VIDEO_SELECTOR = ".about_intro video";
 const YEARS_WRAP_SELECTOR = ".years_w";
 const YEARS_NUMBER_SELECTOR = ".years_num";
 const INTRO_ANI_SELECTOR = ".about_intro [data-about-intro-ani]";
@@ -22,6 +24,51 @@ export default function useAboutIntroAnimation(introVideoUrl) {
     let startTimer = null;
     let startTimer1 = null;
     let introElement = null;
+
+    function waitForImages() {
+      const pageElement = document.querySelector(PAGE_SELECTOR);
+      const images = Array.from(pageElement?.querySelectorAll("img") || []);
+      const pendingImages = images.filter((image) => !image.complete);
+
+      if (!pendingImages.length) {
+        return Promise.resolve();
+      }
+
+      return Promise.all(
+        pendingImages.map(
+          (image) =>
+            new Promise((resolve) => {
+              image.addEventListener("load", resolve, { once: true });
+              image.addEventListener("error", resolve, { once: true });
+            }),
+        ),
+      );
+    }
+
+    function waitForVideo() {
+      const video = document.querySelector(INTRO_VIDEO_SELECTOR);
+
+      if (!video || video.readyState >= 3) {
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        const handleReady = () => {
+          cleanup();
+          resolve();
+        };
+        const cleanup = () => {
+          video.removeEventListener("canplaythrough", handleReady);
+          video.removeEventListener("loadeddata", handleReady);
+          video.removeEventListener("error", handleReady);
+        };
+
+        video.addEventListener("canplaythrough", handleReady, { once: true });
+        video.addEventListener("loadeddata", handleReady, { once: true });
+        video.addEventListener("error", handleReady, { once: true });
+        video.load();
+      });
+    }
 
     function cancelFrame() {
       if (!frameId) return;
@@ -95,10 +142,13 @@ export default function useAboutIntroAnimation(introVideoUrl) {
       }, INTRO_START_DELAY_1);
     }
 
-    function prepareIntro() {
+    async function prepareIntro() {
       introElement = document.querySelector(INTRO_SELECTOR);
       introElement?.classList.add(INTRO_LOADING_CLASS);
       resetIntroAni();
+
+      await waitForVideo();
+      await waitForImages();
 
       if (cancelled) return;
 
