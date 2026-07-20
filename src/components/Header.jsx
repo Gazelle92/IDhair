@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import TransitionLink from "./TransitionLink";
 import Salon from "./Salon";
 import "../styles/header.scss";
+
+const ABOUT_HORIZONTAL_SCROLL_EVENT = "about-horizontal-scroll";
+const ABOUT_NAV_HIDE_MIN_WIDTH = 1024;
+const NAV_HIDE_THRESHOLD = 100;
 
 function Header() {
   const [navOpen, setNavOpen] = useState(false);
   const [salonOpen, setSalonOpen] = useState(false);
   const [navHide, setNavHide] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
+  const location = useLocation();
+  const aboutHorizontalXRef = useRef(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,22 +25,36 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 100) {
-        setNavHide(true);
-      } else {
-        setNavHide(false);
-      }
+    const isAboutPage = location.pathname === "/about";
+    const shouldUseAboutHorizontal = () => isAboutPage && window.innerWidth >= ABOUT_NAV_HIDE_MIN_WIDTH;
+    const updateNavHide = () => {
+      const scrollValue = shouldUseAboutHorizontal() ? aboutHorizontalXRef.current : window.scrollY;
+      setNavHide(scrollValue > NAV_HIDE_THRESHOLD);
     };
 
-    handleScroll();
+    const handleScroll = () => updateNavHide();
+    const handleResize = () => updateNavHide();
+    const handleAboutHorizontalScroll = (event) => {
+      aboutHorizontalXRef.current = event.detail?.x || 0;
+      updateNavHide();
+    };
+
+    if (!isAboutPage) {
+      aboutHorizontalXRef.current = 0;
+    }
+
+    updateNavHide();
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener(ABOUT_HORIZONTAL_SCROLL_EVENT, handleAboutHorizontalScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener(ABOUT_HORIZONTAL_SCROLL_EVENT, handleAboutHorizontalScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <header className={`header ani ${headerActive ? "active" : ""} ${navHide ? "nav_hide" : ""}`}>

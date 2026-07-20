@@ -4,12 +4,14 @@ const FRAME_RATE = 150;
 const ANIMATION_TIME = 1600;
 const DEFAULT_STEP_SIZE = 80;
 const SAFARI_STEP_SIZE = 80;
+const MAX_COMBINED_SCROLL = 80;
 const PULSE_SCALE = 4;
 const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 1;
 const ARROW_SCROLL = 50;
 const MOBILE_VERTICAL_QUERY = "(max-width: 1024px)";
 const TRACK_SELECTOR = "[data-about-horizontal-track]";
+const ABOUT_HORIZONTAL_SCROLL_EVENT = "about-horizontal-scroll";
 const PINNED_SECTION_SELECTOR = ".as_3";
 const HORIZONTAL_ANI_SELECTOR = ".ani_x";
 const TEXT_MOTION_WRAP_SELECTOR = ".t_m_w";
@@ -146,6 +148,14 @@ export default function useAboutSmoothScroll() {
     let previousBodyOverflow = "";
     let previousBodyOverscroll = "";
 
+    function dispatchHorizontalScroll() {
+      window.dispatchEvent(
+        new CustomEvent(ABOUT_HORIZONTAL_SCROLL_EVENT, {
+          detail: { x: horizontalX },
+        }),
+      );
+    }
+
     function clearTrackTransform() {
       const track = document.querySelector(TRACK_SELECTOR);
       if (track) {
@@ -188,6 +198,7 @@ export default function useAboutSmoothScroll() {
         applySectionFixedLayer(track.element);
         applySectionProgress(track.element);
         applyHorizontalAnimation();
+        dispatchHorizontalScroll();
       }
 
       if (deltaY !== 0) {
@@ -202,7 +213,7 @@ export default function useAboutSmoothScroll() {
         const pinStartX = sectionStartX + sectionWidth - window.innerWidth;
         const pinOffset = Math.max(0, horizontalX - pinStartX);
 
-        section.style.transform = pinOffset > 0 ? `translate3d(${pinOffset}px, 0, 0)` : "";
+        //section.style.transform = pinOffset > 0 ? `translate3d(${pinOffset}px, 0, 0)` : "";
       });
     }
 
@@ -470,6 +481,8 @@ export default function useAboutSmoothScroll() {
           }
         }
 
+        scrollX = clamp(scrollX, -MAX_COMBINED_SCROLL, MAX_COMBINED_SCROLL);
+        scrollY = clamp(scrollY, -MAX_COMBINED_SCROLL, MAX_COMBINED_SCROLL);
         applyScroll(scrollX, scrollY);
 
         if (queue.length) {
@@ -570,6 +583,8 @@ export default function useAboutSmoothScroll() {
 
     if (isMobileVertical) {
       clearTrackTransform();
+      horizontalX = 0;
+      dispatchHorizontalScroll();
       clearPinnedSections();
       clearTextMotion();
       clearBackgroundMotion();
@@ -624,6 +639,7 @@ export default function useAboutSmoothScroll() {
       applySectionProgress(initialTrack.element);
     }
     applyHorizontalAnimation();
+    dispatchHorizontalScroll();
 
     document.addEventListener("wheel", onWheel, { passive: false, capture: true });
     window.addEventListener("keydown", onKeyDown, { passive: false });
@@ -637,6 +653,8 @@ export default function useAboutSmoothScroll() {
       document.documentElement.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
       document.body.style.overscrollBehavior = previousBodyOverscroll;
+      horizontalX = 0;
+      dispatchHorizontalScroll();
       clearPinnedSections();
       clearTextMotion();
       clearBackgroundMotion();

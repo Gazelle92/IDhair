@@ -1,12 +1,38 @@
+import { useEffect, useState } from "react";
 import useAboutIntroAnimation from "../lib/useAboutIntroAnimation";
 import useAboutNumberCounter from "../lib/useAboutNumberCounter";
 import useAboutSmoothScroll from "../lib/useAboutSmoothScroll";
+import { fetchAboutSettings } from "../lib/sanityAbout";
 import "../styles/about.scss";
 
+const FALLBACK_INTRO_VIDEO_URL = "/video/About_intro.mp4";
+
 function About() {
-  useAboutIntroAnimation();
+  const [introVideoUrl, setIntroVideoUrl] = useState("");
+
+  useAboutIntroAnimation(introVideoUrl);
   useAboutNumberCounter();
   useAboutSmoothScroll();
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetchAboutSettings()
+      .then((settings) => {
+        if (!cancelled) {
+          setIntroVideoUrl(settings?.introVideoUrl || FALLBACK_INTRO_VIDEO_URL);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setIntroVideoUrl(FALLBACK_INTRO_VIDEO_URL);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <main
@@ -20,9 +46,9 @@ function About() {
           <img src="/img/about_bg_1.png" />
         </div>
       <div className="about_intro ">
-        <div className="b-t b-4 b-c-white ani"></div>
-        <h1 className="display-l fw-l apprael">ABOUT ID HAIR</h1>
-        <div className="b-t b-1 b-c-white dotted ani"></div>
+        <div className="b-t b-4 b-c-white ani" data-about-intro-ani></div>
+        <h1 className="display-l fw-l ani" data-about-intro-ani-1><span className="apprael">ABOUT ID HAIR</span></h1>
+        <div className="b-t b-1 b-c-white dotted ani" data-about-intro-ani></div>
         <div className="years_w head-m fw-sb">
           <div className="years_num">
             <h2>1988</h2>
@@ -30,7 +56,9 @@ function About() {
         </div>
         <div className="intro_video_w">
           <div className="intro_video">
-            <video src="/video/About_intro.mp4" autoPlay muted loop playsInline />
+            {introVideoUrl ? (
+              <video key={introVideoUrl} src={introVideoUrl} autoPlay muted loop playsInline />
+            ) : null}
           </div>
         </div>
       </div>
@@ -45,10 +73,10 @@ function About() {
             <h1 className="display-l fw-l apprael t_m_3">Be You</h1>
           </div>
           <div className="as_1_text_2 head-s ani_x">
-            <span className="apprael_ani ls_s delay-1">
+            <span className=" delay-1">
             행복을 디자인합니다.
             </span>
-            <span className="apprael_ani ls_s delay-3">
+            <span className=" delay-3">
             행복 스타일 리스트.
             </span>
             </div>
@@ -58,9 +86,9 @@ function About() {
           </div>
         </section>
         <section className="as_2 t_m_w">
-          <div className="as_text nunito mob_ani">
-            <h1 className="display-l fw-r t_m_1 me_1">Brand</h1>
-            <h1 className="display-l fw-r t_m_2 me_2">Story</h1>
+          <div className="as_text neulis mob_ani">
+            <h1 className="as_title fw-r t_m_1 me_1">Brand</h1>
+            <h1 className="as_title fw-r t_m_2 me_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
             <span className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</span>
@@ -78,18 +106,18 @@ function About() {
             <div className="card_w ">
               <img src="/img/about_3_card_1.jpg" />
             </div>
-            <div className="as_text as_text_1 nunito t_m_w mob_ani">
-              <h1 className="display-l fw-r t_m_1 me_1">Our</h1>
-              <h1 className="display-l fw-r t_m_2 me_2">Identity</h1>
+            <div className="as_text as_text_1 neulis t_m_w mob_ani">
+              <h1 className="as_title fw-r t_m_1 me_1">Our</h1>
+              <h1 className="as_title fw-r t_m_2 me_2">Identity</h1>
             </div>
           </div>
 
-          <div className="as_3_2 t_m_w">
+          <div className="as_3_2 ">
             <div className="card_w">
               <img src="/img/about_3_card_2.jpg" />
             </div>
-            <div className="as_text  ani_x">
-              <h1 className="t_m_1 t_1 txt-ac fw-r nunito mob_ani me_1">vision</h1>
+            <div className="as_text t_m_w ani_x">
+              <h1 className="t_m_1 t_1 txt-ac fw-r neulis mob_ani me_1">vision</h1>
               <span className="body-m t_2 t_m_2">( a )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s  delay-1">고객의 고유한 아름다움을 찾아주는 든든한 뷰티 파트너로서,</span>
@@ -99,12 +127,12 @@ function About() {
             </div>
           </div>
 
-          <div className="as_3_3 t_m_w">
+          <div className="as_3_3 ">
             <div className="card_w">
               <img src="/img/about_3_card_3.jpg" />
             </div>
-            <div className="as_text  ani_x">
-              <h1 className="t_m_1 t_1 txt-ac fw-r nunito  mob_ani me_1">mission</h1>
+            <div className="as_text t_m_w ani_x">
+              <h1 className="t_m_1 t_1 txt-ac fw-r neulis  mob_ani me_1">mission</h1>
               <span className="body-m t_2  t_m_2">( b )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s delay-1">단순한 헤어 디자인 기술을 넘어 고객의 삶에</span>
@@ -118,13 +146,13 @@ function About() {
           <div className="as_4_bg_1">
             <img src="/img/about_bg_1.png" />
           </div>
-          <div className="card_w">
-            <img src="/img/about_4_card_1.jpg" />
+          <div className="t_m_bg_w">
+            <img className="t_m_bg_el" src="/img/about_4_card_1.jpg" />
           </div>
           <div className="as_4_1 t_m_w">
-            <div className="as_text as_text_1 nunito mob_ani">
-              <h1 className="display-l fw-r t_m_1 me_1">CEO</h1>
-              <h1 className="display-l fw-r t_m_2 me_2">Message</h1>
+            <div className="as_text as_text_1 neulis mob_ani">
+              <h1 className="as_title fw-r t_m_1 me_1">CEO</h1>
+              <h1 className="as_title fw-r t_m_2 me_2">Message</h1>
             </div>
             <div className="as_text_2 ani_x">
               <img className="signiture" src="/img/about_4_sig.png"/>
@@ -220,9 +248,9 @@ function About() {
 
         <section className="as_7 txt-white">
           <div className="as_7_1 t_m_w">
-            <div className="as_text as_text_1 nunito mob_ani">
-              <h1 className="display-l fw-r t_m_1 me_1">Family</h1>
-              <h1 className="display-l fw-r t_m_2 me_2">Brand</h1>
+            <div className="as_text as_text_1 neulis mob_ani">
+              <h1 className="as_title fw-r t_m_1 me_1">Family</h1>
+              <h1 className="as_title fw-r t_m_2 me_2">Brand</h1>
             </div>
             <div className="body-m as_text_2 t_m_3 ani_x">
               <span className="apprael_ani ls_s delay-1">시장의 다양한 니즈에 대응하기 위해 전략적으로 </span>

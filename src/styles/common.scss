@@ -115,11 +115,22 @@ $bg-gray-4:#59575E;
   font-weight: 300;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Neulis';
+  src: url('/font/neulis-sans.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 *{margin: 0; padding: 0; box-sizing: border-box; font-family:'Pretendard', serif;}
 a{text-decoration: none; color: #000;}
 li{list-style: none;}
 img{max-width: 100%;}
 .nunito, .nunito *{font-family: "Nunito Sans", sans-serif;}
+.neulis, .neulis *{font-family: "Neulis", sans-serif;}
+
 .apprael{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200;}
 .apprael_all, .apprael_all *{font-family: 'Apparel', 'Pretendard', serif; font-weight: 200;}
 .gt{font-family: 'GT Walsheim', 'Pretendard', serif; font-weight:400;}

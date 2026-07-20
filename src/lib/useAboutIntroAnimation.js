@@ -1,28 +1,28 @@
 import { useEffect } from "react";
 
 const START_YEAR = 1988;
-const INTRO_DURATION = 1500;
-const INTRO_START_DELAY = 700;
+const INTRO_DURATION = 1000;
+const INTRO_START_DELAY = 500;
+const INTRO_START_DELAY_1 = 10;
 const PAGE_SELECTOR = ".page_about";
 const INTRO_SELECTOR = ".about_intro";
+const INTRO_VIDEO_SELECTOR = ".about_intro video";
 const YEARS_WRAP_SELECTOR = ".years_w";
 const YEARS_NUMBER_SELECTOR = ".years_num";
-const INTRO_ANI_SELECTOR = ".about_intro .ani";
+const INTRO_ANI_SELECTOR = ".about_intro [data-about-intro-ani]";
+const INTRO_ANI_1_SELECTOR = ".about_intro [data-about-intro-ani-1]";
 const INTRO_LOADING_CLASS = "intro_loading";
+const INTRO_DONE_CLASS = "intro_done";
 
-function ease(value) {
-  return 1 - Math.pow(1 - value, 2);
-}
-
-export default function useAboutIntroAnimation() {
+export default function useAboutIntroAnimation(introVideoUrl) {
   useEffect(() => {
-    if (typeof window === "undefined") return undefined;
+    if (typeof window === "undefined" || !introVideoUrl) return undefined;
 
     let frameId = null;
     let cancelled = false;
-    let observer = null;
     let started = false;
     let startTimer = null;
+    let startTimer1 = null;
     let introElement = null;
 
     function waitForImages() {
@@ -43,6 +43,31 @@ export default function useAboutIntroAnimation() {
             }),
         ),
       );
+    }
+
+    function waitForVideo() {
+      const video = document.querySelector(INTRO_VIDEO_SELECTOR);
+
+      if (!video || video.readyState >= 3) {
+        return Promise.resolve();
+      }
+
+      return new Promise((resolve) => {
+        const handleReady = () => {
+          cleanup();
+          resolve();
+        };
+        const cleanup = () => {
+          video.removeEventListener("canplaythrough", handleReady);
+          video.removeEventListener("loadeddata", handleReady);
+          video.removeEventListener("error", handleReady);
+        };
+
+        video.addEventListener("canplaythrough", handleReady, { once: true });
+        video.addEventListener("loadeddata", handleReady, { once: true });
+        video.addEventListener("error", handleReady, { once: true });
+        video.load();
+      });
     }
 
     function cancelFrame() {
@@ -70,9 +95,8 @@ export default function useAboutIntroAnimation() {
         if (cancelled) return;
 
         const progress = Math.min(1, (now - startTime) / INTRO_DURATION);
-        const easedProgress = ease(progress);
-        const displayYear = Math.round(START_YEAR + (currentYear - START_YEAR) * easedProgress);
-        const x = targetX * easedProgress;
+        const displayYear = Math.round(START_YEAR + (currentYear - START_YEAR) * progress);
+        const x = targetX * progress;
 
         yearsText.textContent = String(displayYear);
         yearsNumber.style.transform = `translate3d(${x}px, 0, 0)`;
@@ -95,7 +119,7 @@ export default function useAboutIntroAnimation() {
       started = true;
       introElement = document.querySelector(INTRO_SELECTOR);
       introElement?.classList.add("intro_start");
-      observer?.disconnect();
+      introElement?.classList.add(INTRO_DONE_CLASS);
       frameId = window.requestAnimationFrame(animateYears);
     }
 
@@ -104,38 +128,51 @@ export default function useAboutIntroAnimation() {
 
       startTimer = window.setTimeout(() => {
         startTimer = null;
+        activateIntroAni();
         startAnimation();
       }, INTRO_START_DELAY);
+    }
+
+    function scheduleIntroAni1() {
+      if (cancelled || startTimer1) return;
+
+      startTimer1 = window.setTimeout(() => {
+        startTimer1 = null;
+        activateIntroAni1();
+      }, INTRO_START_DELAY_1);
     }
 
     async function prepareIntro() {
       introElement = document.querySelector(INTRO_SELECTOR);
       introElement?.classList.add(INTRO_LOADING_CLASS);
+      resetIntroAni();
 
-      await waitForImages();
+      await Promise.all([waitForImages(), waitForVideo()]);
 
       if (cancelled) return;
 
       introElement?.classList.remove(INTRO_LOADING_CLASS);
-      watchIntroAniActive();
+      scheduleStartAnimation();
+      scheduleIntroAni1();
     }
 
-    function watchIntroAniActive() {
+    function activateIntroAni() {
       const aniItems = Array.from(document.querySelectorAll(INTRO_ANI_SELECTOR));
 
-      if (!aniItems.length || aniItems.some((item) => item.classList.contains("active"))) {
-        scheduleStartAnimation();
-        return;
-      }
-
-      observer = new MutationObserver(() => {
-        if (aniItems.some((item) => item.classList.contains("active"))) {
-          scheduleStartAnimation();
-        }
-      });
-
       aniItems.forEach((item) => {
-        observer.observe(item, { attributes: true, attributeFilter: ["class"] });
+        item.classList.add("active");
+      });
+    }
+
+    function resetIntroAni() {
+      document.querySelectorAll(`${INTRO_ANI_SELECTOR}, ${INTRO_ANI_1_SELECTOR}`).forEach((item) => {
+        item.classList.remove("active");
+      });
+    }
+
+    function activateIntroAni1() {
+      document.querySelectorAll(INTRO_ANI_1_SELECTOR).forEach((item) => {
+        item.classList.add("active");
       });
     }
 
@@ -146,10 +183,11 @@ export default function useAboutIntroAnimation() {
       if (startTimer) {
         window.clearTimeout(startTimer);
       }
+      if (startTimer1) {
+        window.clearTimeout(startTimer1);
+      }
       cancelFrame();
-      observer?.disconnect();
       introElement?.classList.remove(INTRO_LOADING_CLASS);
-      introElement?.classList.remove("intro_start");
     };
-  }, []);
+  }, [introVideoUrl]);
 }

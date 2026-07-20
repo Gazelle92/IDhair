@@ -2,6 +2,7 @@ import { useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const MOBILE_ANI_QUERY = "(max-width: 1024px)";
+const MANUAL_ANI_SELECTOR = "[data-about-intro-ani], [data-about-intro-ani-1]";
 
 function AniProvider() {
   const location = useLocation();
@@ -91,6 +92,8 @@ function AniProvider() {
       const windowBottom = window.scrollY + window.innerHeight;
 
       items.forEach((item) => {
+        if (item.matches(MANUAL_ANI_SELECTOR)) return;
+
         const aniPoint =
           item.getBoundingClientRect().top +
           window.scrollY +

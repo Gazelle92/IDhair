@@ -17,6 +17,16 @@ export const deskStructure = (S) =>
     .title("Content")
     .items(
       [
+        S.listItem()
+          .id("aboutSettings")
+          .title("ABOUT Settings")
+          .child(
+            S.document()
+              .id("aboutSettings")
+              .schemaType("aboutSettings")
+              .documentId("aboutSettings")
+              .title("ABOUT Settings")
+          ),
         ...magazinePostItems.map((item) =>
           S.listItem()
             .id(item.id)
