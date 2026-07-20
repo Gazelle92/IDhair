@@ -91,7 +91,7 @@ function About() {
             <h1 className="as_title fw-r t_m_2 me_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
-            <span className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</span>
+            <b className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</b>
             <span className="apprael_ani ls_s delay-2">
               우리는 고객 한 분 한 분이 가진 고유한 뷰티 아이덴티티를 섬세하게<br/>
               디자인하여, 세상에 단 하나뿐인 '가장 나다운 아름다움'을 완성합니다.
