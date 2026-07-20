@@ -34,20 +34,6 @@ function About() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!introVideoUrl) return undefined;
-
-    const preloadLink = document.createElement("link");
-    preloadLink.rel = "preload";
-    preloadLink.as = "video";
-    preloadLink.href = introVideoUrl;
-    document.head.appendChild(preloadLink);
-
-    return () => {
-      preloadLink.remove();
-    };
-  }, [introVideoUrl]);
-
   return (
     <main
       className="page_about"
@@ -61,7 +47,7 @@ function About() {
         </div>
       <div className="about_intro ">
         <div className="b-t b-4 b-c-white ani" data-about-intro-ani></div>
-        <h1 className="display-l fw-l ani" data-about-intro-ani-1><span className="apprael">ABOUT ID HAIR</span></h1>
+        <h1 className="display-l fw-l"><span className="apprael">ABOUT ID HAIR</span></h1>
         <div className="b-t b-1 b-c-white dotted ani" data-about-intro-ani></div>
         <div className="years_w head-m fw-sb">
           <div className="years_num">
@@ -71,7 +57,7 @@ function About() {
         <div className="intro_video_w">
           <div className="intro_video">
             {introVideoUrl ? (
-              <video key={introVideoUrl} src={introVideoUrl} autoPlay muted loop playsInline preload="auto" />
+              <video key={introVideoUrl} src={introVideoUrl} autoPlay muted loop playsInline />
             ) : null}
           </div>
         </div>
