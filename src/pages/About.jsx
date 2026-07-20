@@ -34,6 +34,20 @@ function About() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!introVideoUrl) return undefined;
+
+    const preloadLink = document.createElement("link");
+    preloadLink.rel = "preload";
+    preloadLink.as = "video";
+    preloadLink.href = introVideoUrl;
+    document.head.appendChild(preloadLink);
+
+    return () => {
+      preloadLink.remove();
+    };
+  }, [introVideoUrl]);
+
   return (
     <main
       className="page_about"
@@ -57,7 +71,7 @@ function About() {
         <div className="intro_video_w">
           <div className="intro_video">
             {introVideoUrl ? (
-              <video key={introVideoUrl} src={introVideoUrl} autoPlay muted loop playsInline />
+              <video key={introVideoUrl} src={introVideoUrl} autoPlay muted loop playsInline preload="auto" />
             ) : null}
           </div>
         </div>

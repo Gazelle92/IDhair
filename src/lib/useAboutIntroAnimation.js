@@ -147,7 +147,8 @@ export default function useAboutIntroAnimation(introVideoUrl) {
       introElement?.classList.add(INTRO_LOADING_CLASS);
       resetIntroAni();
 
-      await Promise.all([waitForImages(), waitForVideo()]);
+      await waitForVideo();
+      await waitForImages();
 
       if (cancelled) return;
 
