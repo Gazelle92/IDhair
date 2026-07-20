@@ -1,4 +1,4 @@
-.page_about{height:100vh;  min-height: 100vh; overflow: hidden; background: #f4f1ea; color: #111;
+.page_about{height:100vh;  min-height: 100vh; overflow: hidden; background: #ededed; color: #111;
   [data-about-horizontal-track]{height: 100%; display: flex; align-items: center; will-change: transform;}
   .as_title{font-size: 6.1538vw; line-height: 1;}
   .about_bg_1{position:fixed; right:0; height:100%; opacity: 0.2;}
@@ -358,6 +358,8 @@
   @media (max-width: 1024px){
   overflow: unset; height: unset;
 
+  &.about_bg_hidden .about_bg_1{display:none;}
+
   [data-about-horizontal-track]{height: unset!important; display: block!important; overflow: unset; will-change: unset;}
 
   .t_m_bg_w{
@@ -365,70 +367,93 @@
   }
 
   .about_intro{padding: 62.778vw 5.556vw 27.778vw;
+    h1{padding: 5.556vw 0 0; margin-bottom: 5.556vw; text-wrap:balance;}
     .b-t.b-4::before{height: 0.556vw;}
     .years_w{bottom: 27.778vw; left: 5.556vw; width: calc(100% - 11.111vw);}
     &.intro_start{clip-path: polygon(0 0, 0 0, 100% 0, 100% 0);}
+    .intro_video_w{width: calc(100% - 33.333vw); top:60%}
+    .years_w{font-size: 4.444vw;}
   }
 
   section{width: 100%!important; min-height: 100vh; min-width: unset!important; height: unset; overflow-x: hidden;}
-
-  .as_1{display: flex; flex-direction: column; justify-content: center; height: 100svh; gap: 6.667vw;
-    .as_text{position: unset;}
-    .as_1_text_2{position: unset; padding-right: 5.556vw;}
+  .as_title{font-size: 11.111vw;}
+  .as_1{display: flex; flex-direction: column; justify-content: flex-start; height: 100svh; gap: 6.667vw;
+    .t_m_bg_w{
+      .t_m_bg_el, img{width: 100%; height: 100%; top: -00%; left: 0;}
+    }
+    .as_text{position: unset; padding-top: 16.667vw;
+      h1{font-size: 11.111vw;
+        &.t_m_1{left:unset; padding-left: 5.556vw;}
+        &.t_m_2{left:unset; padding-left: 23.611vw;}
+        &.t_m_3{left:unset; padding-left: 42.778vw; padding-right: 5.556vw; display: flex; justify-content: space-between;}
+      }
+    }
+    .as_1_text_2{position: relative; padding-right: 5.556vw; width:100%; bottom:unset; right:unset; padding-top:0vw; font-size: 3.056vw;}
 
     .scroll_indicator{top: unset; bottom: 16.667vw; left: 50%; right: unset; transform: translateX(-50%); writing-mode: vertical-lr; width: unset; height: unset; background-color: unset;
       .bar{display: none;}
-      span{position: unset;}
+      span{position: unset; font-size: 2.5vw;}
     }
   }
 
-  .as_2{background-color: #EDEDED; height: unset; min-height: unset; padding-bottom: 11.111vw;
-    .as_text{position: unset; padding: 30.556vw 5.556vw 22.222vw;
+  .as_2{ height: unset; min-height: unset; padding-bottom: 11.111vw;
+    .as_text{position: unset; padding: 11.111vw 5.556vw 16.667vw;
       h1{
         &.t_m_1{left: 0;}
         &.t_m_2{left: 0; padding-left: 11.111vw;}
       }
     }
 
-    .as_text_2{position: unset; width: 100%; padding: 0 5.556vw; gap: 2.778vw;
+    .as_text_2{position: unset; width: 100%; padding: 0 5.556vw; gap: 2.778vw; text-align: right;
       span{font-size: 3.056vw;}
+      b{font-size: 3.333vw;}
     }
   }
 
-  .as_3{background-color: #EDEDED; flex-direction: column; padding-bottom: 16.667vw;
+  .as_3{flex-direction: column; padding-bottom: 16.667vw;
     .as_3_1, .as_3_2, .as_3_3{flex-direction: column; justify-content: center; padding-right: 0;}
 
     .as_3_1{
-      .card_w{width: calc(100% - 33.333vw); left: 50%; transform: translateX(-50%); position: relative;}
+      .card_w{width: calc(100% - 11.111vw); left: 50%; transform: translateX(-50%); position: relative; aspect-ratio: 1 / 1;
+        img{width: 100%;}
+      }
 
-      .as_text_1{position: relative; padding-left: 5.556vw; padding-top: 30.556vw; padding-right: unset; left: unset; top: unset;
+      .as_text_1{position: relative; padding-left: 5.556vw; padding-top:11.112vw    ; padding-right: unset; left: unset; top: unset;
         .t_m_1{left: 0;}
         .t_m_2{left: 0; padding-left: 11.111vw;}
       }
     }
 
     .as_3_2, .as_3_3{align-items: center; position: relative;
-      .card_w{width: 44.444vw; height: unset; padding-top: 0;
+      .card_w{width: 59vw; height: unset; padding-top: 0; margin-top: 0;
         img{width: 100%;}
       }
 
       .as_text{padding: 0; width: 100%; min-width: unset; padding: 11.111vw 0 0 8.333vw; gap: 5.556vw; flex-direction: unset; justify-content: unset;
         .as_text_1{padding-left: unset;}
-        .t_1{position: absolute; display: block; text-align: center; top: 0; display: inline-block; width: unset; left: 50%; transform: translateX(-50%);}
+        .t_1{position: absolute; display: block; text-align: center; top: 0; display: inline-block; width: unset; left: 50%; transform: translateX(-50%); font-size: 8.889vw; }
         .t_2{margin: unset;}
       }
     }
 
-    .as_3_2{padding-top: 16.667vw; margin-top: 11.111vw;}
-    .as_3_3{padding-top: 17.222vw; margin-top: 22.222vw;}
+    .as_3_2{padding-top: 16.667vw; margin-top: 16.668vw;}
+    .as_3_3{padding-top: 16.667vw; margin-top: 11.111vw;}
   }
 
-  .as_4{flex-direction: column; align-items: center; padding-top: 58.333vw;
-    .as_4_1{padding: 11.111vw 8.333vw 21.667vw; width: 100%; height: unset;
+  .about_bg_1{position: fixed; top: 0; right: 0; width: 66%; height: unset; aspect-ratio: 240 / 291; left: unset;}
+  .as_4{flex-direction: column; align-items: center; padding-top: 58.333vw; position: relative; overflow: hidden;
+    .as_4_bg_1{position: fixed; top: 0; right: 0; width: 66%; height: unset; aspect-ratio: 240 / 291; left: unset; opacity: 0;
+      img{height: 100%; width: 100%; object-fit: cover;}
+    }
+    .t_m_bg_w{height: unset; width: 59vw; aspect-ratio: 214 / 321;
+      img.t_m_bg_el, img{position: unset; width: 100%; height: 100%; transform: unset!important;}
+    }
+    .as_4_1{padding: 8.888vw 8.333vw 11.111vw; width: 100%; height: unset; align-items: center;
       .as_text{position: absolute; left: 5.556vw; top: 25vw; width: 100%; height: unset;}
 
       .as_text_2{position: relative;
-        .signiture{margin-top: unset; position: absolute; right: 0; bottom: calc(100% + 11.111vw); width: 15.833vw;}
+        .signiture{margin-top: unset; position: absolute; right: 0; bottom: calc(100% + 13.111vw); width: 15.833vw;
+        }
 
         ul{width: 100%;
           li{width: unset; gap: 2.778vw;
@@ -439,28 +464,31 @@
     }
 
     .as_4_2, .as_4_3{padding: 0 0 11.111vw; width: 100%;
-      h1{margin: 5.556vw auto; text-align: center;}
+      h1{margin: -7.5vw auto 5.556vw; text-align: center;}
 
       .as_text_1{text-align: center;
         &.pc{display: none;}
         &.mob{display: flex;}
       }
     }
+    .as_4_3{margin-bottom:5.556vw;}
 
     .card_w{width: 44.444vw; height: unset; padding-top: 0;
       img{width: 100%;}
 
-      &.card_w_s{padding-top: unset;}
+      &.card_w_s{padding-top: unset; width: 59vw; margin-top: 0;}
     }
   }
 
-  .as_5{
-    .as_text_1{left: 5.556vw; bottom: 5.556vw;}
+  .as_5{min-height: unset; width: 100%; aspect-ratio: 360 / 480;
+    .as_text_1{left: 5.556vw; bottom: 5.556vw;
+      h1{font-size: 10.666vw;}
+    }
   }
 
   .as_6{height: 200vh; width: 100%; overflow: unset;
     .as_6_1{position: sticky; top: 0; width: 100% !important; height: 100vh; overflow: hidden;
-      .as_6_text{width: 100%; height: 100%;
+      .as_6_text{width: 100%; height: 100%; gap: 5.556vw;
         img{width: 5.556vw;}
         .head-s{font-size: 3.056vw;}
       }
@@ -470,7 +498,7 @@
   }
 
   .as_7{display: block; min-height: unset;
-    .as_7_1{gap: 22.222vw; padding: 27.778vw 5.556vw 11.111vw;
+    .as_7_1{gap: 20vw; padding: 16.667vw 5.556vw 11.111vw;
       .as_text_2{text-align: right;}
     }
 
@@ -490,8 +518,8 @@
       }
 
       .as_text{position: unset; flex-direction: column; align-items: center; gap: 0;
-        img{margin-top: 5.556vw;}
-        .span_text{margin-top: 11.111vw;}
+        img{margin-top: 5.556vw; width: 25.8vw;}
+        .span_text{margin-top: 11.111vw; text-align: center;}
       }
     }
 
@@ -510,7 +538,7 @@
 
   .as_7, .as_8{overflow: hidden; min-height: unset;}
 
-}
+  }
 
   @keyframes about-scroll-indicator-bar {
     0%{transform:translate3d(-100%, 0, 0);}

@@ -54,7 +54,7 @@
     .mg_list{position: relative; display: grid;
       
       @media(min-width:1025px){
-        &.mg_list_new_post{grid-template-columns: repeat(2, 1fr); gap: 1px;}
+        &.mg_list_new_post{grid-template-columns: repeat(2, 1fr); gap: 1px; margin-bottom: 5.556vw;}
         &.mg_list_news{grid-template-columns: repeat(3, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}
         &.mg_list_event{grid-template-columns: repeat(4, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}
         &.mg_list_family{grid-template-columns: repeat(2, 1fr); grid-column-gap: 2.424vw; grid-row-gap: 4.848vw; padding: 2.424vw 0;}

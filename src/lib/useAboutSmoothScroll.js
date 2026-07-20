@@ -22,6 +22,7 @@ const SECTION_PROGRESS_BG_SELECTOR = ".as_6_bg_w";
 const SECTION_PROGRESS_TEXT_SELECTOR = ".as_6_text";
 const SECTION_FIXED_LAYER_SELECTOR = ".as_4";
 const SECTION_FIXED_LAYER_EL_SELECTOR = ".as_4_bg_1";
+const ABOUT_BG_HIDDEN_CLASS = "about_bg_hidden";
 const BACKGROUND_MOTION_WRAP_SELECTOR = ".t_m_bg_w";
 const BACKGROUND_MOTION_EL_SELECTOR = ".t_m_bg_el";
 const BACKGROUND_MOTION_SPEED = 0.7;
@@ -355,7 +356,7 @@ export default function useAboutSmoothScroll() {
         const progress = clamp(-rect.top / progressDistance, 0, 1);
 
         section.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
-          const scale = 1 - progress * 0.5;
+          const scale = 2 - progress;
 
           item.style.filter = `grayscale(${progress})`;
           item.style.transform = `scale(${scale})`;
@@ -366,6 +367,14 @@ export default function useAboutSmoothScroll() {
           item.style.transform = "";
         });
       });
+    }
+
+    function applyMobileAboutBgVisibility() {
+      const pageElement = document.querySelector(".page_about");
+      const section = document.querySelector(SECTION_FIXED_LAYER_SELECTOR);
+      if (!pageElement || !section) return;
+
+      pageElement.classList.toggle(ABOUT_BG_HIDDEN_CLASS, section.getBoundingClientRect().top <= 0);
     }
 
     function clearSectionProgress() {
@@ -613,11 +622,13 @@ export default function useAboutSmoothScroll() {
       applyVerticalAnimation();
       applyMobileBackgroundMotion();
       applyMobileSectionProgress();
+      applyMobileAboutBgVisibility();
 
       function applyMobileScrollEffects() {
         applyVerticalAnimation();
         applyMobileBackgroundMotion();
         applyMobileSectionProgress();
+        applyMobileAboutBgVisibility();
       }
 
       const removeLenisMobileScroll = window.lenis?.on?.("scroll", applyMobileScrollEffects);
@@ -634,6 +645,7 @@ export default function useAboutSmoothScroll() {
         window.removeEventListener("resize", applyMobileScrollEffects);
         clearBackgroundMotion();
         clearSectionProgress();
+        document.querySelector(".page_about")?.classList.remove(ABOUT_BG_HIDDEN_CLASS);
       };
     }
 

@@ -79,12 +79,13 @@ function About() {
       <div data-about-horizontal-track>
         <section className="as_1 t_m_w">
           <div className="t_m_bg_w">
-            <img className="t_m_bg_el" src="/img/about_1.jpg" />
+            <img className="t_m_bg_el pc" src="/img/about_1.jpg" />
+            <img className="mob" src="/img/about_1_m.jpg" />
           </div>
           <div className="as_text ">
             <h1 className="display-l fw-l apprael t_m_1">Beyond</h1>
             <h1 className="display-l fw-l apprael t_m_2">Style,</h1>
-            <h1 className="display-l fw-l apprael t_m_3">Be You</h1>
+            <h1 className="display-l fw-l apprael_all t_m_3"><span>Be</span><span>You</span></h1>
           </div>
           <div className="as_1_text_2 head-s ani_x">
             <span className=" delay-1">
@@ -105,7 +106,7 @@ function About() {
             <h1 className="as_title fw-r t_m_2 me_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
-            <b className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는 당신의 정체성, 바로 'Identity'를 뜻합니다.</b>
+            <b className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는<br className="mob"/> 당신의 정체성, 바로 'Identity'를 뜻합니다.</b>
             <span className="apprael_ani ls_s delay-2">
               우리는 고객 한 분 한 분이 가진 고유한 뷰티 아이덴티티를 섬세하게<br/>
               디자인하여, 세상에 단 하나뿐인 '가장 나다운 아름다움'을 완성합니다.
@@ -161,7 +162,8 @@ function About() {
             <img src="/img/about_bg_1.png" />
           </div>
           <div className="t_m_bg_w">
-            <img className="t_m_bg_el" src="/img/about_4_card_1.jpg" />
+            <img className="t_m_bg_el pc" src="/img/about_4_card_1.jpg" />
+            <img className="mob" src="/img/about_4_card_1_m.jpg" />
           </div>
           <div className="as_4_1 t_m_w">
             <div className="as_text as_text_1 neulis mob_ani">
@@ -227,7 +229,8 @@ function About() {
 
         <section className="as_5">
           <div className="t_m_bg_w">
-            <img className="t_m_bg_el" src="/img/about_5.jpg" />
+            <img className="t_m_bg_el pc" src="/img/about_5.jpg" />
+            <img className="mob" src="/img/about_5_m.jpg" />
           </div>
           <div className="as_text_1 t_m_w txt-ac mob_ani">
             <h1 className="display-l fw-l t_m_1 apprael me_1">Corporate</h1>
