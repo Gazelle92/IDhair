@@ -5,6 +5,7 @@ const ANIMATION_TIME = 1600;
 const DEFAULT_STEP_SIZE = 80;
 const SAFARI_STEP_SIZE = 80;
 const MAX_COMBINED_SCROLL = 40;
+const MAX_DELTA_ACCELERATION = 1.2;
 const PULSE_SCALE = 4;
 const ACCELERATION_DELTA = 60;
 const ACCELERATION_MAX = 1;
@@ -141,6 +142,7 @@ export default function useAboutSmoothScroll() {
     let animating = false;
     let horizontalX = 0;
     let lastDirection = { x: 0, y: 0 };
+    let lastScrollDelta = { x: 0, y: 0 };
     let lastWheelTime = Date.now();
     let frameId = null;
     let previousLenis = null;
@@ -333,7 +335,7 @@ export default function useAboutSmoothScroll() {
         const progress = clamp(-rect.left / rect.width, 0, 1);
 
         section.querySelectorAll(SECTION_PROGRESS_BG_SELECTOR).forEach((item) => {
-          const scale = 1 - progress * 0.5;
+          const scale = 2 - progress;
 
           item.style.filter = `grayscale(${progress})`;
           item.style.transform = `translate3d(${-rect.left}px, 0, 0) scale(${scale})`;
@@ -430,6 +432,7 @@ export default function useAboutSmoothScroll() {
 
       if (lastDirection.x !== directionX || lastDirection.y !== directionY) {
         lastDirection = { x: directionX, y: directionY };
+        lastScrollDelta = { x: 0, y: 0 };
         queue = [];
         lastWheelTime = 0;
       }
@@ -445,6 +448,10 @@ export default function useAboutSmoothScroll() {
 
         lastWheelTime = Date.now();
       }
+
+      deltaX = limitDeltaAcceleration(deltaX, lastScrollDelta.x);
+      deltaY = limitDeltaAcceleration(deltaY, lastScrollDelta.y);
+      lastScrollDelta = { x: deltaX, y: deltaY };
 
       queue.push({
         x: deltaX,
@@ -495,6 +502,17 @@ export default function useAboutSmoothScroll() {
 
       animating = true;
       scheduleFrame(step);
+    }
+
+    function limitDeltaAcceleration(value, previousValue) {
+      const absValue = Math.abs(value);
+      const absPrevious = Math.abs(previousValue);
+
+      if (!absValue || !absPrevious) return value;
+
+      const maxValue = absPrevious * MAX_DELTA_ACCELERATION;
+
+      return absValue > maxValue ? Math.sign(value) * maxValue : value;
     }
 
     function normalizeWheel(event) {

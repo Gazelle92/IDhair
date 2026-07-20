@@ -11,7 +11,7 @@
   .about_intro{background-color:#18161E; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 6; padding: 12.8205vw 3.8462vw 6.2179vw ; color:#fff; clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); transition: ease 1s clip-path; transition-delay:1.2s;
     &.intro_loading > *{opacity:0;}
     h1{text-align:center; padding: 1.0256vw 0 0; margin-bottom: 2.0513vw;  position: relative; z-index: 1; overflow: hidden;
-      span{transition: ease 0.4s transform; transform: translateY(110%); display:block;}
+      span{/*transition: ease 0.4s transform; transform: translateY(110%); */display:block;}
       &.active{
         span{transform: translateY(0);}
       }
@@ -155,11 +155,11 @@
   .as_6{ z-index:0; position:relative; overflow:hidden; width:250vw;
     .as_6_1{height:100%; position:relative; width:100vw;
       .as_6_bg_w{position:absolute; left:0; top:0; width:100vw; height:100%; filter:grayscale(0); transform:translate3d(0, 0, 0) scale(1); transform-origin:center center; will-change:filter, transform;
-        img{width:unset; height:100%; max-width:unset; aspect-ratio: 26 / 15; object-fit:cover; object-position:center;position:absolute;
-          &:nth-child(1){ bottom:50%; right:50%;}
+        img{width:100%; height:100%; max-width:unset; object-fit:cover; object-position:center;position:absolute;
+          /*&:nth-child(1){ bottom:50%; right:50%;}
           &:nth-child(2){ bottom:50%; left:50%;}
           &:nth-child(3){ top:50%; right:50%;}
-          &:nth-child(4){ top:50%; left:50%;}
+          &:nth-child(4){ top:50%; left:50%;}*/
         }
         @media (min-aspect-ratio: 26 / 15){
           img{

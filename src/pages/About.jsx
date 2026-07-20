@@ -252,9 +252,6 @@ function About() {
             </div>
             <div className="as_6_bg_w">
               <img className="as_6_bg_el" src="/img/about_6.jpg" />
-              <img className="as_6_bg_el" src="/img/about_6.jpg" />
-              <img className="as_6_bg_el" src="/img/about_6.jpg" />
-              <img className="as_6_bg_el" src="/img/about_6.jpg" />
             </div>
           </div>
 
