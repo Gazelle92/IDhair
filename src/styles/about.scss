@@ -368,7 +368,7 @@
 
   .about_intro{padding: 62.778vw 5.556vw 27.778vw;
     h1{padding: 5.556vw 0 0; margin-bottom: 5.556vw; text-wrap:balance;}
-    .b-t.b-4::before{height: 0.556vw;}
+    .b-t.b-4::before{height: 2px;}
     .years_w{bottom: 100px; left: 5.556vw; width: calc(100% - 11.111vw);
       .years_num{opacity: 1;
         h2{font-size: 4.444vw;}
@@ -378,6 +378,11 @@
     &.intro_start{clip-path: polygon(0 0, 0 0, 100% 0, 100% 0);}
     .intro_video_w{width: calc(100% - 33.333vw); top:57.5%}
     
+    h1{padding: 20px 0 0 ; margin-bottom: 20px;
+      span{font-size: 48px;}
+    }
+    .mob_wrap{top: 50%; transform: translateY(-80%);}
+    .intro_video_w{width: 240px; height: 160px; top: 50%; transform: translate(-50%, -8%);}
   }
 
   section{width: 100%!important; min-height: 100vh; min-width: unset!important; height: unset; overflow-x: hidden;}

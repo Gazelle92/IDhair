@@ -62,7 +62,7 @@ function About() {
       <div className="about_intro ">
         <div className="mob_wrap">
           <div className="b-t b-4 b-c-white ani" data-about-intro-ani></div>
-          <h1 className="display-l fw-l"><span className="apprael">ABOUT ID HAIR</span></h1>
+          <h1 className="display-l fw-l"><span className="apprael">ABOUT <br className="mob"/>ID HAIR</span></h1>
           <div className="b-t b-1 b-c-white dotted ani" data-about-intro-ani></div>
         </div>
         <div className="years_w head-m fw-sb">
