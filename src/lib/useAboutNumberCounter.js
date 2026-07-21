@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 
-const COUNTER_SCOPE_SELECTOR = ".as_7_2";
-const COUNTER_TRIGGER_SELECTOR = ".ani_x";
-const COUNTER_NUMBER_SELECTOR = "h1";
-const COUNTER_DURATION = 1000;
+const COUNTER_SCOPE_SELECTOR = ".page_about";
+const NESTED_COUNTER_TRIGGER_SELECTOR = ".as_7_2 .ani_x";
+const NESTED_COUNTER_NUMBER_SELECTOR = "h1";
+const DIRECT_COUNTER_SELECTOR = ".as_4 .number_count";
+const COUNTER_DURATION = 1500;
 
 function easeOut(value) {
   return 1 - Math.pow(1 - value, 3);
@@ -70,18 +71,26 @@ export default function useAboutNumberCounter() {
     }
 
     function startCounter(trigger) {
-      trigger.querySelectorAll(COUNTER_NUMBER_SELECTOR).forEach(animateNumber);
+      trigger.querySelectorAll(NESTED_COUNTER_NUMBER_SELECTOR).forEach(animateNumber);
     }
 
     function checkActiveTriggers() {
-      scope.querySelectorAll(COUNTER_TRIGGER_SELECTOR).forEach((trigger) => {
+      scope.querySelectorAll(NESTED_COUNTER_TRIGGER_SELECTOR).forEach((trigger) => {
         if (trigger.classList.contains("active")) {
           startCounter(trigger);
         }
       });
+
+      scope.querySelectorAll(DIRECT_COUNTER_SELECTOR).forEach((counter) => {
+        if (counter.classList.contains("active")) {
+          animateNumber(counter);
+        }
+      });
     }
 
-    scope.querySelectorAll(COUNTER_NUMBER_SELECTOR).forEach(prepareNumber);
+    scope
+      .querySelectorAll(`${NESTED_COUNTER_TRIGGER_SELECTOR} ${NESTED_COUNTER_NUMBER_SELECTOR}, ${DIRECT_COUNTER_SELECTOR}`)
+      .forEach(prepareNumber);
     checkActiveTriggers();
 
     const observer = new MutationObserver(checkActiveTriggers);

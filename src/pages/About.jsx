@@ -190,7 +190,7 @@ function About() {
             <img src="/img/about_4_card_2.jpg" />
           </div>
           <div className="as_4_2 t_m_w">
-            <h1 className="display-l fw-l t_m_2 apprael mob_ani me_1">1988</h1>
+            <h1 className="display-l fw-l t_m_2 apprael mob_ani ani_x me_1 number_count">1988</h1>
             <div className="body-m as_text_1 t_m_1 ani_x">
               <span className="apprael_ani ls_s delay-1">1988년 작은 미용실 '미스파마'에서 두 명의 스타일리스트로</span>
               <span className="apprael_ani ls_s delay-2">시작한 아이디헤어는, 이제 대한민국을 대표하는 프로페셔널</span>
@@ -203,7 +203,7 @@ function About() {
           </div>
 
           <div className="as_4_3 t_m_w">
-            <h1 className="display-l fw-l t_m_2 apprael mob_ani me_1">39</h1>
+            <h1 className="display-l fw-l t_m_2 apprael mob_ani ani_x me_1 number_count">39</h1>
 
 
 
