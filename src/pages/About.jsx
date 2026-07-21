@@ -60,9 +60,11 @@ function About() {
           <img src="/img/about_bg_1.png" />
         </div>
       <div className="about_intro ">
-        <div className="b-t b-4 b-c-white ani" data-about-intro-ani></div>
-        <h1 className="display-l fw-l"><span className="apprael">ABOUT ID HAIR</span></h1>
-        <div className="b-t b-1 b-c-white dotted ani" data-about-intro-ani></div>
+        <div className="mob_wrap">
+          <div className="b-t b-4 b-c-white ani" data-about-intro-ani></div>
+          <h1 className="display-l fw-l"><span className="apprael">ABOUT ID HAIR</span></h1>
+          <div className="b-t b-1 b-c-white dotted ani" data-about-intro-ani></div>
+        </div>
         <div className="years_w head-m fw-sb">
           <div className="years_num">
             <h2>1988</h2>
