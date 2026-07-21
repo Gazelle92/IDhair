@@ -61,6 +61,7 @@ function Header() {
       <div className="logo_w">
         <TransitionLink to="/" className="logo">
           <img src="/img/h_logo.svg" alt="IDhair" />
+          <img src="/img/logo_sub.svg"/>
         </TransitionLink>
       </div>
 

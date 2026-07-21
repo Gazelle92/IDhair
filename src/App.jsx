@@ -8,6 +8,7 @@ import CursorFollower from "./hook/CursorFollower";
 import useFadeSlice from "./hook/useFadeSlice";
 import Main from "./pages/Main";
 import About from "./pages/About";
+import Academy from "./pages/Academy";
 import Magazine from "./pages/Magazine";
 import MagazineDetail from "./pages/MagazinePost";
 import "./styles/common.scss";
@@ -46,6 +47,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/about" element={<About />} />
+        <Route path="/academy" element={<Academy />} />
         <Route path="/magazine" element={<Navigate to="/magazine/our-picks" replace />} />
         <Route path="/magazine/:category" element={<Magazine />} />
         <Route path="/magazine/:category/post/:id" element={<MagazineDetail />} />

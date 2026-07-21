@@ -133,6 +133,10 @@ function initFadeSliceAll() {
   document.querySelectorAll(".fade-slice").forEach((el) => {
     const original = el.dataset.description || el.innerHTML || "";
 
+    if (!el.hasAttribute("data-description")) {
+      el.dataset.description = original;
+    }
+
     fadeSliceOriginalTexts.set(el, original);
     applyFadeSlice(el, original);
   });
