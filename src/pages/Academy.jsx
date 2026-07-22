@@ -12,6 +12,12 @@ function Academy() {
     const workItems = workSection ? [...workSection.querySelectorAll(".right li")] : [];
     const workList = workSection?.querySelector(".right");
     const workVisual = workSection?.querySelector(".left");
+    const teamSection = document.querySelector(".page_academy .ac_2");
+    const teamImageWrap = teamSection?.querySelector(".img_w");
+    const teamCounter = teamImageWrap?.querySelector(".number_count");
+    const teamCounterNumber = teamCounter?.querySelector("b");
+    const teamList = teamSection?.querySelector(".right");
+    const teamItems = teamList ? [...teamList.querySelectorAll("li")] : [];
 
     if (!section || !videoGrowthTrack || !videoWrap) return undefined;
 
@@ -54,17 +60,17 @@ function Academy() {
         const activeIndex = Math.round(workPosition);
         const visualHeight = workVisual?.getBoundingClientRect().height || 0;
         const titleHeight = workItems[0]?.querySelector(".l_t")?.getBoundingClientRect().height || 0;
+        const itemStyle = getComputedStyle(workItems[0]);
+        const itemPaddingBlock =
+          (Number.parseFloat(itemStyle.paddingTop) || 0)
+          + (Number.parseFloat(itemStyle.paddingBottom) || 0);
+        const itemStep = titleHeight + itemPaddingBlock;
         const expandedItemHeight = Math.max(
-          ...workItems.map((item) => {
-            const title = item.querySelector(".l_t");
-            const detail = item.querySelector(".l_b");
-
-            return (title?.getBoundingClientRect().height || 0) + (detail?.scrollHeight || 0);
-          }),
+          ...workItems.map((item) => item.scrollHeight),
         );
         const listHeight = Math.max(
           visualHeight,
-          expandedItemHeight + (workItems.length - 1) * titleHeight,
+          expandedItemHeight + (workItems.length - 1) * itemStep,
         );
 
         if (workList) {
@@ -84,7 +90,7 @@ function Academy() {
             : Math.max(
               0,
               listHeight
-                - pendingItemCount * titleHeight,
+                - pendingItemCount * itemStep,
             );
           const expandedY = index * titleHeight;
           const itemY = collapsedY + (expandedY - collapsedY) * revealProgress;
@@ -95,11 +101,55 @@ function Academy() {
         });
 
         workImages.forEach((image, index) => {
-          const imageProgress = Math.max(0, 1 - Math.abs(index - workPosition));
+          const revealProgress = index === 0
+            ? 1
+            : Math.min(1, Math.max(0, workPosition - (index - 1)));
+          const topInset = (1 - revealProgress) * 100;
 
           image.classList.toggle("active", index === activeIndex);
-          image.style.opacity = String(imageProgress);
+          image.style.opacity = "1";
+          image.style.zIndex = String(index + 1);
+          image.style.willChange = "clip-path";
+          image.style.clipPath = `inset(${topInset}% 0% 0% 0%)`;
         });
+      }
+
+      if (teamSection && teamImageWrap && teamCounter && teamItems.length) {
+        const teamRect = teamSection.getBoundingClientRect();
+        const teamRange = Math.max(1, teamRect.height - window.innerHeight);
+        const teamProgress = Math.min(1, Math.max(0, -teamRect.top / teamRange));
+        const teamPosition = teamProgress * (teamItems.length - 1);
+        const activeTeamIndex = Math.min(
+          teamItems.length - 1,
+          Math.round(teamPosition),
+        );
+        const listRect = teamList.getBoundingClientRect();
+        const totalItemHeight = teamItems.reduce((height, item) => {
+          const itemStyle = getComputedStyle(item);
+
+          return height
+            + item.offsetHeight
+            + (Number.parseFloat(itemStyle.marginTop) || 0)
+            + (Number.parseFloat(itemStyle.marginBottom) || 0);
+        }, 0);
+        const titleTravel = Math.max(0, listRect.height - totalItemHeight);
+        const counterTravel = Math.max(
+          0,
+          teamImageWrap.clientHeight - teamCounter.offsetHeight,
+        );
+
+        teamItems.forEach((item, index) => {
+          const itemProgress = Math.min(1, Math.max(0, teamPosition - index));
+
+          item.classList.toggle("active", index === activeTeamIndex);
+          item.style.transform = `translate3d(0, ${-titleTravel * itemProgress}px, 0)`;
+        });
+
+        teamCounter.style.transform = `translate3d(0, ${counterTravel * teamProgress}px, 0)`;
+
+        if (teamCounterNumber) {
+          teamCounterNumber.textContent = String(activeTeamIndex + 1).padStart(2, "0");
+        }
       }
     };
 
@@ -218,7 +268,52 @@ function Academy() {
       </section>
 
       <section className="ac_2">
-
+        <div className="flex">
+          <div className="left">
+            <h1 className="title b-b b-2 body-m fw-sb">트렌드와 현장 경험을 연결한 교육을 통해<br/>디자이너의 성장과 경쟁력을 함께 완성합니다.</h1>
+            <div className="img_w">
+              <div className="number_count"><b>01</b><span>/ 08</span></div>
+              <div className="img">
+                <img src="/img/ac_2_1.jpg"/>
+              </div>
+            </div>
+            
+          </div>
+          <ul className="right">
+            <li>
+              <h4 className="body-l fw-b">Creative Cut Director</h4>
+              <span className="head-l">안 정 준</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Global Color Educator</h4>
+              <span className="head-l">윤 훈</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Signature Perm Specialist</h4>
+              <span className="head-l">이 설 아</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Salon Branding Mentor</h4>
+              <span className="head-l">이 수 진</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Men’s Grooming Expert</h4>
+              <span className="head-l">이 은 혜</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Luxury Styling Director</h4>
+              <span className="head-l">이 정 빈</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Scalp &amp; Care Consultant</h4>
+              <span className="head-l">진 영 준</span>
+            </li>
+            <li>
+              <h4 className="body-l fw-b">Trend Content Creator</h4>
+              <span className="head-l">최 연 승</span>
+            </li>
+          </ul>
+        </div>
       </section>
     </main>
 
