@@ -53,10 +53,11 @@
         }
         .right{width: calc((100% / 12) * 7); min-height: 0; position: relative;
           li{padding: 0 0px 92px;  position: absolute; left: 0; top: 0; width: 100%; transform: translate3d(0, var(--work-item-y, 100%), 0); will-change: transform;
+            &::after{content: ''; display: block; width: 100%; top: -1px; left: 0;background-color: #000; height: 1px; position: absolute;}
             .l_t{display: flex; justify-content: space-between; align-items: flex-start; padding:24px 32px; background-color: #fff;
               span{font-size: 14px; font-weight: 600; line-height: 1.7;}
               h1{font-size: 40px; line-height: 1.2; font-family: 'GT Walsheim', 'Pretendard', serif; font-weight:400;}
-              &::before{border-top: 1px dashed rgba(0, 0, 0, 0.25); background-color: unset;}
+              &::before{border-top: 1px dashed rgba(0, 0, 0, 0.25); background-color: unset; bottom: -2px;}
             }
             .l_b{padding: 97px 32px 32px; display: flex; justify-content: space-between; align-items: flex-start; background-color: #fff;
               b{line-height: 1.7; font-size: 16px; font-weight: 600;}
