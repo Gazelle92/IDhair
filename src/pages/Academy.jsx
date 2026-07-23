@@ -416,7 +416,7 @@ function Academy() {
               <img src="/img/ac_3_1.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">1 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">1 김 서 윤&nbsp;<p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
@@ -428,7 +428,7 @@ function Academy() {
               <img src="/img/ac_3_2.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">2 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">2 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
@@ -440,7 +440,7 @@ function Academy() {
               <img src="/img/ac_3_3.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">3 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">3 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
@@ -452,7 +452,7 @@ function Academy() {
               <img src="/img/ac_3_4.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">4 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">4 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
@@ -464,7 +464,7 @@ function Academy() {
               <img src="/img/ac_3_5.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">5 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">5 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
@@ -476,7 +476,7 @@ function Academy() {
               <img src="/img/ac_3_6.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">6 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">6 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
@@ -488,7 +488,7 @@ function Academy() {
               <img src="/img/ac_3_7.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">7 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">7 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
                   기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
                   수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
