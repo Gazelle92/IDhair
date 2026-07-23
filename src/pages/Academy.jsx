@@ -1,5 +1,6 @@
 
 import { useEffect } from "react";
+import { gsap } from "gsap";
 import "../styles/academy.scss";
 
 function Academy() {
@@ -26,10 +27,32 @@ function Academy() {
     const teamItems = teamList ? [...teamList.querySelectorAll("li")] : [];
     const academyOutro = document.querySelector(".page_academy .ac_3");
     const backgroundChecker = academyOutro?.querySelector(".bg_checker");
+    const sectionNameItems = [
+      ...document.querySelectorAll(".page_academy .section_name li"),
+    ];
+    const sectionNameSpans = sectionNameItems.map((item) => [
+      ...item.querySelectorAll("span"),
+    ]);
+    const allSectionNameSpans = sectionNameSpans.flat();
+    const sectionNameTriggers = [
+      section.querySelector(".ac_1_2 article"),
+      section.querySelector(".ac_1_3"),
+      teamSection,
+      academyOutro?.querySelector(".img_map"),
+    ];
 
     if (!section || !videoGrowthTrack || !videoWrap) return undefined;
 
     let frameId = null;
+    let activeSectionNameIndex = -1;
+
+    gsap.set(allSectionNameSpans, {
+      y: 20,
+      autoAlpha: 0,
+      rotationX: -90,
+      transformOrigin: "50% 50%",
+      transformPerspective: 500,
+    });
 
     const updateVideoClip = () => {
       frameId = null;
@@ -189,6 +212,56 @@ function Academy() {
         academyOutro.style.backgroundColor = backgroundColor;
         teamSection?.style.setProperty("background-color", backgroundColor);
       }
+
+      if (sectionNameItems.length) {
+        const nextSectionNameIndex = sectionNameTriggers.reduce(
+          (activeIndex, trigger, index) => (
+            trigger && trigger.getBoundingClientRect().top <= window.innerHeight * 0.5
+              ? index
+              : activeIndex
+          ),
+          -1,
+        );
+
+        if (nextSectionNameIndex !== activeSectionNameIndex) {
+          const previousItem = sectionNameItems[activeSectionNameIndex];
+          const nextItem = sectionNameItems[nextSectionNameIndex];
+          const previousSpans = sectionNameSpans[activeSectionNameIndex];
+          const nextSpans = sectionNameSpans[nextSectionNameIndex];
+
+          if (previousItem) {
+            gsap.killTweensOf(previousSpans);
+            previousItem.classList.remove("active");
+            gsap.to(previousSpans, {
+              y: -20,
+              autoAlpha: 0,
+              rotationX: 90,
+              duration: 0.4,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          }
+
+          if (nextItem) {
+            gsap.killTweensOf(nextSpans);
+            nextItem.classList.add("active");
+            gsap.fromTo(
+              nextSpans,
+              { y: 20, autoAlpha: 0, rotationX: -90 },
+              {
+                y: 0,
+                autoAlpha: 1,
+                rotationX: 0,
+                duration: 0.4,
+                ease: "power2.out",
+                overwrite: true,
+              },
+            );
+          }
+
+          activeSectionNameIndex = nextSectionNameIndex;
+        }
+      }
     };
 
     const requestClipUpdate = () => {
@@ -207,6 +280,8 @@ function Academy() {
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId);
       }
+
+      gsap.killTweensOf(allSectionNameSpans);
     };
   }, []);
 
@@ -499,6 +574,15 @@ function Academy() {
           </ul>
         </div>
       </section>
+      <div className="section_name head-l fw-sb">
+        <ul>
+          <li className="sn_1"><span>About Academy</span><span>About Academy</span></li>
+          <li className="sn_2"><span>Curriculum</span><span>Curriculum</span></li>
+          <li className="sn_3"><span>Instructor</span><span>Instructor</span></li>
+          <li className="sn_4"><span>Case Study</span><span>Case Study</span></li>
+          </ul>
+      </div>
+      
     </main>
 
   );
