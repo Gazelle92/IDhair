@@ -39,7 +39,7 @@
       }
     }
     .ac_1_2{padding-top: 80vh; position: relative; display: flex; justify-content: center;
-      article{height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; width: 500px;
+      article{height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; white-space: nowrap;
         &> h1{}
         & > span{}
         .mg{margin: 80px 0 40px;}
