@@ -236,7 +236,7 @@
     }
   }
 
-  .section_name{pointer-events: none; z-index: 1;  position: relative;
+  .section_name{pointer-events: none; z-index: 1; 
     
     li{position: fixed; top: 50%; left: 0; width: 100%; transform: translateY(-50%); display: flex; justify-content: space-between;
       &.sn_1, &.sn_2{mix-blend-mode: difference;}
