@@ -16,8 +16,16 @@ function Academy() {
     const teamImageWrap = teamSection?.querySelector(".img_w");
     const teamCounter = teamImageWrap?.querySelector(".number_count");
     const teamCounterNumber = teamCounter?.querySelector("b");
+    const teamImages = teamImageWrap
+      ? [...teamImageWrap.querySelectorAll(".img img")]
+      : [];
+    const teamDetailItems = teamImageWrap
+      ? [...teamImageWrap.querySelectorAll(":scope > ul > li")]
+      : [];
     const teamList = teamSection?.querySelector(".right");
     const teamItems = teamList ? [...teamList.querySelectorAll("li")] : [];
+    const academyOutro = document.querySelector(".page_academy .ac_3");
+    const backgroundChecker = academyOutro?.querySelector(".bg_checker");
 
     if (!section || !videoGrowthTrack || !videoWrap) return undefined;
 
@@ -118,10 +126,11 @@ function Academy() {
         const teamRect = teamSection.getBoundingClientRect();
         const teamRange = Math.max(1, teamRect.height - window.innerHeight);
         const teamProgress = Math.min(1, Math.max(0, -teamRect.top / teamRange));
-        const teamPosition = teamProgress * (teamItems.length - 1);
+        const titleProgress = Math.min(1, teamProgress / 0.9);
+        const teamPosition = titleProgress * teamItems.length;
         const activeTeamIndex = Math.min(
           teamItems.length - 1,
-          Math.round(teamPosition),
+          Math.floor(teamPosition),
         );
         const listRect = teamList.getBoundingClientRect();
         const totalItemHeight = teamItems.reduce((height, item) => {
@@ -145,11 +154,40 @@ function Academy() {
           item.style.transform = `translate3d(0, ${-titleTravel * itemProgress}px, 0)`;
         });
 
+        teamDetailItems.forEach((item, index) => {
+          item.classList.toggle("active", index === activeTeamIndex);
+        });
+
+        teamImages.forEach((image, index) => {
+          const revealProgress = index === 0
+            ? 1
+            : Math.min(1, Math.max(0, teamPosition - (index - 1)));
+          const topInset = (1 - revealProgress) * 100;
+
+          image.classList.toggle("active", index === activeTeamIndex);
+          image.style.zIndex = String(index + 1);
+          image.style.willChange = "clip-path";
+          image.style.clipPath = `inset(${topInset}% 0% 0% 0%)`;
+        });
+
         teamCounter.style.transform = `translate3d(0, ${counterTravel * teamProgress}px, 0)`;
 
         if (teamCounterNumber) {
           teamCounterNumber.textContent = String(activeTeamIndex + 1).padStart(2, "0");
         }
+      }
+
+      if (academyOutro && backgroundChecker) {
+        const checkerRect = backgroundChecker.getBoundingClientRect();
+        const backgroundProgress = Math.min(
+          1,
+          Math.max(0, (window.innerHeight - checkerRect.top) / window.innerHeight),
+        );
+
+        const backgroundColor = `rgb(237 237 237 / ${backgroundProgress * 100}%)`;
+
+        academyOutro.style.backgroundColor = backgroundColor;
+        teamSection?.style.setProperty("background-color", backgroundColor);
       }
     };
 
@@ -275,7 +313,56 @@ function Academy() {
               <div className="number_count"><b>01</b><span>/ 08</span></div>
               <div className="img">
                 <img src="/img/ac_2_1.jpg"/>
+                <img src="/img/about_3_card_2.jpg"/>
+                <img src="/img/about_3_card_3.jpg"/>
+                <img src="/img/about_3_card_1.jpg"/>
+                <img src="/img/ac_1_3_1.jpg"/>
+                <img src="/img/ac_1_3_2.jpg"/>
+                <img src="/img/ac_1_3_3.jpg"/>
+                <img src="/img/ac_1_3_4.jpg"/>
               </div>
+              <ul>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문1</span>
+                  <span>현장 스타일링 프로세스 교육1</span>
+                  <span>프리미엄 무드 연출1</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문2</span>
+                  <span>현장 스타일링 프로세스 교육2</span>
+                  <span>프리미엄 무드 연출2</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문3</span>
+                  <span>현장 스타일링 프로세스 교육3</span>
+                  <span>프리미엄 무드 연출3</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문4</span>
+                  <span>현장 스타일링 프로세스 교육4</span>
+                  <span>프리미엄 무드 연출4</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문5</span>
+                  <span>현장 스타일링 프로세스 교육5</span>
+                  <span>프리미엄 무드 연출5</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문6</span>
+                  <span>현장 스타일링 프로세스 교육6</span>
+                  <span>프리미엄 무드 연출6</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문7</span>
+                  <span>현장 스타일링 프로세스 교육7</span>
+                  <span>프리미엄 무드 연출7</span>
+                </li>
+                <li>
+                  <span>레이어드 컷 / 숏컷 디자인 전문8</span>
+                  <span>현장 스타일링 프로세스 교육8</span>
+                  <span>프리미엄 무드 연출8</span>
+                </li>
+              </ul>
             </div>
             
           </div>
@@ -311,6 +398,91 @@ function Academy() {
             <li>
               <h4 className="body-l fw-b">Trend Content Creator</h4>
               <span className="head-l">최 연 승</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section className="ac_3">
+        <div className="bg_checker"></div>
+        <div className="img_map">
+          <h1 className="display-l apprael">ID STYLE WORK</h1>
+          <ul className="img_w">
+            <li>
+              <img src="/img/ac_3_1.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">1 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
+            </li>
+            <li>
+              <img src="/img/ac_3_2.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">2 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
+            </li>
+            <li>
+              <img src="/img/ac_3_3.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">3 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
+            </li>
+            <li>
+              <img src="/img/ac_3_4.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">4 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
+            </li>
+            <li>
+              <img src="/img/ac_3_5.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">5 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
+            </li>
+            <li>
+              <img src="/img/ac_3_6.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">6 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
+            </li>
+            <li>
+              <img src="/img/ac_3_7.png" alt="" />
+              <div className="txt_w">
+                <div className="top"><h4 className="body-l">7 김 서 윤 <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="bottom body-s">
+                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
+                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
+                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                </div>
+              </div>
             </li>
           </ul>
         </div>

@@ -69,12 +69,22 @@
     }   
   }
   .ac_2{background-color: #fff; height: 400vh; width: 100%; position: relative;
-    .flex{height: 100vh; position: sticky; top: 0; display: flex; padding: 80px 60px 0;
+    .flex{height: 100vh; position: sticky; top: 0; display: flex; padding: 128px 60px 60px;
       .left{width: 50%; padding-left: calc(100% / 12);
         .title{position: relative; padding-bottom: 20px; margin-bottom: 60px;}
         .img_w{position: relative; padding: 0 20%;
-          .img{width: 100%; aspect-ratio: 360 / 450; }
+          .img{width: 100%; aspect-ratio: 360 / 450; position: relative;
+            img{position: absolute; width: 100%; height: 100%; object-fit: cover;}
+          }
           .number_count{position: absolute; top: 0; left: 0;}
+          ul{position: absolute; top: calc(100% + 40px); left: 0; padding: 0 20%; width: 100%;
+            li{display: none; flex-direction: column; gap: 4px;
+              span{display: flex; justify-content: space-between; align-items: center; position: relative;
+                &::before{content: '#'; display: block;}
+              }
+              &.active{display: flex;}
+            }
+          }
         }
       }
       .right{width: 50%; height: 100%; padding-right: 40px; padding-left: calc(100% / 12); display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden;
@@ -86,5 +96,82 @@
       }
     }
 
+  }
+  .ac_3{background-color: rgb(237 237 237 / 0%); will-change: background-color;
+    .bg_checker{height: 500px;} 
+    .img_map{display: flex; align-items: center; justify-content: center;
+      h1{position: absolute;}
+      .img_w{position: relative; width: 100%; height: unset; aspect-ratio: 1560 / 900;
+        li{position: absolute; cursor: pointer;
+          .txt_w{opacity: 0; transition: ease 0.3s opacity; pointer-events: none; padding: 32px; border-radius: 12px; background-color: #fff; display: block;
+            .top{display: flex; align-items: center; justify-content: space-between;
+              h4{display: flex; align-items: flex-end;}
+            }
+            .bottom{}
+          }
+          &:hover {
+            .txt_w{opacity: 1;}
+          }
+          img{}
+          /*&:nth-child(1) {top: 263px; left: 146px;
+            img {height: 182px;}
+          }
+          &:nth-child(2) {top: 337px; left: 484px;
+            img {height: 191px;}
+          }
+          &:nth-child(3) {top: 178px; left: 925px;
+            img {height: 170px;}
+          }
+          &:nth-child(4) {top: 275px; right: 127px;
+            img {height: 170px;}
+          }
+          &:nth-child(5) {top: 565px; left: 261px;
+            img {height: 175px;}
+          }
+          &:nth-child(6) {top: 654px; left: 752px;
+            img {height: 172px;}
+          }
+          &:nth-child(7) {top: 473px; right: 398px;
+            img {height: 165px;}
+          }*/
+          &:nth-child(1) {left: 9.359%; top: 29.222%;
+            img {height: 11.667vw;}
+          }
+          &:nth-child(2) {left: 31.026%; top: 37.444%;
+            img {height: 12.244vw;}
+          }
+          &:nth-child(3) {left: 59.295%; top: 19.778%;
+            img {height: 10.897vw;}
+          }
+          &:nth-child(4) {left: 87.885%; top: 30.556%;
+            img {height: 10.897vw;}
+          }
+          &:nth-child(5) {left: 16.731%; top: 62.778%;
+            img {height: 11.218vw;}
+          }
+          &:nth-child(6) {left: 48.205%; top: 72.667%;
+            img {height: 11.026vw;}
+          }
+          &:nth-child(7) {left: 71.346%; top: 52.556%;
+            img {height: 10.577vw;}
+          }
+
+        }
+      }
+    }
+  }
+
+  @media (min-aspect-ratio: 1560 / 900) {
+    .ac_3 .img_map .img_w { width: unset; height: 100vh;
+      li {
+        &:nth-child(1) img{height: 20.222vh;}
+        &:nth-child(2) img{height: 21.222vh;}
+        &:nth-child(3) img{height: 18.889vh;}
+        &:nth-child(4) img{height: 18.889vh;}
+        &:nth-child(5) img{height: 19.444vh;}
+        &:nth-child(6) img{height: 19.111vh;}
+        &:nth-child(7) img{height: 18.333vh;}
+      }
+    }
   }
 }
