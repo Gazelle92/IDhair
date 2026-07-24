@@ -326,7 +326,7 @@
     .ac_2{
       .flex{flex-direction: column ; padding: 60px 20px 20px;
         .b-l{display: none;}
-        .left{width: 100%; padding-left: 0; padding-bottom: 20px; margin-bottom: 20px;
+        .left{width: 100%; padding-left: 0; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px dashed #000;
           .title{padding-bottom: 16px; margin-bottom: 40px;}
           .img_w{display: flex; padding: 0;
             .number_count{transform:unset!important;}
