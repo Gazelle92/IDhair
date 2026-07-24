@@ -62,12 +62,21 @@ function Academy() {
       const growthRange = Math.max(1, growthRect.height - window.innerHeight);
       const progress = Math.min(1, Math.max(0, -growthRect.top / growthRange));
       const remaining = 1 - progress;
-      const initialSize = window.innerHeight * 0.53333;
-      const initialTop = window.innerHeight * 0.352;
-      const viewportWidth = document.documentElement.clientWidth;
-      const initialSide = Math.max(0, (viewportWidth - initialSize) / 2);
-      const initialBottom = Math.max(0, window.innerHeight - initialTop - initialSize);
+      const viewportWidth = window.innerWidth;
+      const isMobileLayout = viewportWidth <= 1024;
       const titleRect = videoWrap.parentElement.getBoundingClientRect();
+      const titleOffsetTop = titleRect.top - sectionRect.top;
+      const initialWidth = isMobileLayout
+        ? 106
+        : window.innerHeight * 0.53333;
+      const initialHeight = isMobileLayout
+        ? 240
+        : window.innerHeight * 0.53333;
+      const initialTop = isMobileLayout
+        ? titleOffsetTop + 53
+        : window.innerHeight * 0.352;
+      const initialSide = Math.max(0, (viewportWidth - initialWidth) / 2);
+      const initialBottom = Math.max(0, window.innerHeight - initialTop - initialHeight);
       const offsetY = sectionRect.top > 0
         ? sectionRect.top
         : Math.min(0, sectionRect.bottom - window.innerHeight);
@@ -271,10 +280,14 @@ function Academy() {
 
     updateVideoClip();
     window.addEventListener("scroll", requestClipUpdate, { passive: true });
+    window.addEventListener("touchmove", requestClipUpdate, { passive: true });
+    window.addEventListener("touchend", requestClipUpdate, { passive: true });
     window.addEventListener("resize", requestClipUpdate);
 
     return () => {
       window.removeEventListener("scroll", requestClipUpdate);
+      window.removeEventListener("touchmove", requestClipUpdate);
+      window.removeEventListener("touchend", requestClipUpdate);
       window.removeEventListener("resize", requestClipUpdate);
 
       if (frameId !== null) {
@@ -314,12 +327,12 @@ function Academy() {
           <article className="body-m txt-white">
             <h1 className="head-l apprael_ani ls_s delay-1 ani">온/오프라인을<br/>아우르는 독자적 교육 프로그램</h1>
             <span className="mg apprael_ani ls_s delay-2 ani">
-              id STYLE WORK 디플로마는 2년 4개월간 총 56개의 헤어 작품을 이수하면<br/>
-              정식 자격을 부여하는 미용업계 최초의 체계적 헤어 기술 프로그램입니다.
+              id STYLE WORK 디플로마는 2년 4개월간 <br className="mob"/>총 56개의 헤어 작품을 이수하면<br className="pc"/>
+              정식 자격을 부여하는 <br className="mob"/>미용업계 최초의 체계적 헤어 기술 프로그램입니다.
             </span>
             <span className="apprael_ani ls_s delay-3 ani">
-              온라인 플랫폼 &lt;seezier	&gt;를 통해 최신 살롱 스타일까지 학습할 수 있으며,<br/>
-              각 매장에서 현장 실전 감각을 익히는 맞춤형 과정인 Id skill mastery까지 함께 제공됩니다.
+              온라인 플랫폼 &lt;seezier	&gt;를 통해 최신 살롱 스타일까지 <br className="mob"/>학습할 수 있으며,<br className="pc"/>
+              각 매장에서 현장 실전 감각을 익히는 맞춤형 <br className="mob"/>과정인 Id skill mastery까지 함께 제공됩니다.
             </span>
           </article>
         </div>
