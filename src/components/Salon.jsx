@@ -292,10 +292,12 @@ function Salon({ open, onClose }) {
                         <dt>(Hours)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
                         <dd>{detailStore.hours}</dd>
                       </div>
-                      <div>
-                        <dt>(Off)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                        <dd>{detailStore.off}</dd>
-                      </div>
+                      {detailStore.off?.trim() && (
+                        <div>
+                          <dt>(Off)&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                          <dd>{detailStore.off}</dd>
+                        </div>
+                      )}
                     </dl>
                   </div>
                   <div className="store_links ">

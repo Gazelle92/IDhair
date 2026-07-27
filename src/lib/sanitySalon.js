@@ -52,7 +52,7 @@ const toStore = (store) => ({
 export const fetchSalonRegions = async () => {
   const stores = await runQuery(`
     *[_type == "salonLocation" && (!defined(isHidden) || isHidden != true)]
-      | order(order asc, _createdAt desc) {
+      | order(order asc, name asc) {
         _id,
         name,
         region,

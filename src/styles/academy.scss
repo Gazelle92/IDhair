@@ -30,11 +30,17 @@
         }
         
       }
-      .title_b{position: absolute; font-size: 14.222vh; line-height: 1; display: flex; align-items: flex-end; left: 0; bottom: 0; padding: 0 6.667vh 4.444vh; width: 100%; justify-content: space-between;
+      .title_b{position: absolute; font-size: 14.222vh; line-height: 1; display: flex; align-items: flex-end; left: 0; bottom: 0; padding: 0 6.667vh 4.444vh; width: 100%; justify-content: space-between; clip-path: inset(0 50% 0 50%); 
+        *{letter-spacing:1vw;}
         .cross{position: relative; display: flex; align-items: center; justify-content: center; width: 1.667vh; height: 1.667vh; margin-bottom: 4.667vh;
           &::before, &::after{content: ''; display: block; position: absolute; background-color: #fd3d32; transform: translate(-50%, -50%); left: 50%; top: 50%;}
           &::before{width: 0.333vh; height: 100%;}
           &::after{height: 0.333vh; width: 100%;}
+        }
+      }
+      &.active{
+        .title_b{ clip-path: inset(0);  
+          *{letter-spacing:0vw;}
         }
       }
     }
@@ -141,7 +147,7 @@
 
   }
   .ac_3{background-color: rgb(237 237 237 / 0%); will-change: background-color;
-    .bg_checker{height: 500px;} 
+    .bg_checker{height: 100px;} 
     .img_map{display: flex; align-items: center; justify-content: center; min-height: 100vh;
       h1{position: absolute;}
       .img_w{position: relative; width: 100%; height: unset; aspect-ratio: 1560 / 900;
@@ -262,12 +268,12 @@
         --ac-video-clip-bottom: 45.3333vh;
         */
       }
-      .ac_1_wrap{padding: calc(50vh - 180px) 20px;
+      .ac_1_wrap{padding: calc(50svh - 180px) 20px;
         .title{padding-top:20px ;
           &::before{height: 2px;}
           .title_txt{font-size: 48px; line-height: 1.1; padding-bottom: 20px;}
         }
-        .title_b{font-size: 40px; padding: 0 20px; bottom: calc(50vh - 180px); justify-content: center; gap: 18px;
+        .title_b{font-size: 40px; padding: 0 20px; bottom: calc(50lvh - 180px); justify-content: center; gap: 18px;
           .cross{margin-bottom: 14px; width: 6px; height: 6px;
             &::before{width: 2px;}
             &::after{height: 2px;}
@@ -306,7 +312,7 @@
       }*/
       .ac_1_3{height: 200vh;
         .flex{flex-direction: column; padding: 6.667vh 0; height: unset; height: 100vh; justify-content: center;
-          .left{width: unset; height: 13.333vh;}
+          .left{width: unset; height: /*13.333vh*/ 26vh;}
           .right{transform: unset!important; width: calc(100% - 4.444vh); padding: 0 2.222vh;
             li{padding: 0 0 3.556vh;
               .l_t{padding: 1.778vh 1.778vh 1.333vh;
