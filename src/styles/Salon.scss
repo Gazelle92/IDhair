@@ -177,7 +177,7 @@
   }
 
   .salon_close{position:absolute; top:1.282vw; right:1.282vw; width:3.846vw; height:3.846vw; cursor:pointer; z-index:1;
-    span{position:absolute; top:50%; left:50%; width:140%; height:.061vw; background-color:#fff;
+    span{position:absolute; top:50%; left:50%; width:140%; height:1px; background-color:#fff;
       &:nth-child(1){transform:translate(-50%, -50%) rotate(45deg);}
       &:nth-child(2){transform:translate(-50%, -50%) rotate(-45deg);}
     }
