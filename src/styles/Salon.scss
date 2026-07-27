@@ -289,7 +289,7 @@
   @media(max-width:1024px){
     .salon_close{top:4.444vw; right:4.444vw; width:5.556vw; height:5.556vw;}
 
-    .salon_popup_page{padding:5.556vw 4.444vw 0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+    .salon_popup_page{padding:5.556vw 4.444vw 0; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; height: 100svh;
       &::-webkit-scrollbar{width:4px;}
       &::-webkit-scrollbar-thumb{border-radius:10px; background-color:rgb(255, 255, 255, .25);}
       &::-webkit-scrollbar-track{background:rgba(220, 20, 60, 0);}
