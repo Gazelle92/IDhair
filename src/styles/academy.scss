@@ -441,7 +441,7 @@
     }
     .section_name{
       ul{
-        li{ 
+        li{top: unset; transform: translateY(50%); bottom: 50%;
           span{font-size: 12px;}
         }
       }

@@ -26,7 +26,7 @@ const runQuery = async (query) => {
 };
 
 const getSalonImageUrl = (image) => {
-  if (!image) return "/img/salon_1.jpg";
+  if (!image?.asset?._ref && !image?.asset?._id) return "";
 
   return urlForSanityImage(image)
     .width(1600)
@@ -44,7 +44,9 @@ const toStore = (store) => ({
   off: store.off || "",
   instagramUrl: store.instagramUrl || "",
   reservationUrl: store.reservationUrl || "",
-  images: (store.images || []).map(getSalonImageUrl),
+  images: (store.images || [])
+    .map(getSalonImageUrl)
+    .filter(Boolean),
 });
 
 export const fetchSalonRegions = async () => {

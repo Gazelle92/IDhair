@@ -71,7 +71,17 @@ export default defineType({
           ],
         }),
       ],
-      validation: (rule) => rule.min(1),
+      validation: (rule) => (
+        rule
+          .required()
+          .min(1)
+          .custom((images) => (
+            images?.every((image) => image?.asset?._ref)
+              ? true
+              : "매장 이미지를 등록해 주세요"
+          ))
+          .error("매장 이미지를 등록해 주세요")
+      ),
     }),
     defineField({
       name: "order",
