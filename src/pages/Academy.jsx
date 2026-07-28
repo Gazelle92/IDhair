@@ -71,7 +71,7 @@ function Academy() {
       const titleRect = videoWrap.parentElement.getBoundingClientRect();
       const titleOffsetTop = titleRect.top - sectionRect.top;
       const initialWidth = isMobileLayout
-        ? 106
+        ? 120
         : viewportHeight * 0.53333;
       const initialHeight = isMobileLayout
         ? 240
