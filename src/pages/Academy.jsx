@@ -63,24 +63,26 @@ function Academy() {
       const progress = Math.min(1, Math.max(0, -growthRect.top / growthRange));
       const remaining = 1 - progress;
       const viewportWidth = window.innerWidth;
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
       const isMobileLayout = viewportWidth <= 1024;
       const titleRect = videoWrap.parentElement.getBoundingClientRect();
       const titleOffsetTop = titleRect.top - sectionRect.top;
       const initialWidth = isMobileLayout
         ? 106
-        : window.innerHeight * 0.53333;
+        : viewportHeight * 0.53333;
       const initialHeight = isMobileLayout
         ? 240
-        : window.innerHeight * 0.53333;
+        : viewportHeight * 0.53333;
       const initialTop = isMobileLayout
         ? titleOffsetTop + 53
-        : window.innerHeight * 0.352;
+        : viewportHeight * 0.352;
       const initialSide = Math.max(0, (viewportWidth - initialWidth) / 2);
-      const initialBottom = Math.max(0, window.innerHeight - initialTop - initialHeight);
+      const initialBottom = Math.max(0, viewportHeight - initialTop - initialHeight);
       const offsetY = sectionRect.top > 0
         ? sectionRect.top
-        : Math.min(0, sectionRect.bottom - window.innerHeight);
+        : Math.min(0, sectionRect.bottom - viewportHeight);
 
+      videoWrap.style.setProperty("--ac-video-height", `${viewportHeight}px`);
       videoWrap.style.setProperty("--ac-video-clip-top", `${initialTop * remaining}px`);
       videoWrap.style.setProperty("--ac-video-clip-side", `${initialSide * remaining}px`);
       videoWrap.style.setProperty("--ac-video-clip-bottom", `${initialBottom * remaining}px`);
@@ -283,12 +285,14 @@ function Academy() {
     window.addEventListener("touchmove", requestClipUpdate, { passive: true });
     window.addEventListener("touchend", requestClipUpdate, { passive: true });
     window.addEventListener("resize", requestClipUpdate);
+    window.visualViewport?.addEventListener("resize", requestClipUpdate);
 
     return () => {
       window.removeEventListener("scroll", requestClipUpdate);
       window.removeEventListener("touchmove", requestClipUpdate);
       window.removeEventListener("touchend", requestClipUpdate);
       window.removeEventListener("resize", requestClipUpdate);
+      window.visualViewport?.removeEventListener("resize", requestClipUpdate);
 
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId);

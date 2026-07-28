@@ -2,7 +2,7 @@
   section{position: relative;}
   .ac_1{width: 100%; overflow: clip;
     .ac_1_bg_height{position: absolute; left: 0; top: 0; width: 100%; height: 200vh;}
-    .video_w{width: var(--ac-video-width, 100vw); height: 100vh; position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; transform: translate3d(var(--ac-video-x, 0), var(--ac-video-y, 0), 0); will-change: clip-path, transform; clip-path: inset(var(--ac-video-clip-top, 35.2vh) var(--ac-video-clip-side, calc((100vw - 53.333vh) / 2)) var(--ac-video-clip-bottom, 11.467vh));
+    .video_w{width: var(--ac-video-width, 100vw); height: var(--ac-video-height, 100dvh); position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; transform: translate3d(var(--ac-video-x, 0), var(--ac-video-y, 0), 0); will-change: clip-path, transform; clip-path: inset(var(--ac-video-clip-top, 35.2vh) var(--ac-video-clip-side, calc((100vw - 53.333vh) / 2)) var(--ac-video-clip-bottom, 11.467vh));
       video{width: 100%; height: 100%; object-fit: cover; display: block;}
       &::after{content: ''; display: block; position: absolute; inset: 0; z-index: 1; background-color: #18161ECC; opacity: var(--ac-video-overlay-opacity, 0); will-change: opacity;}
     }
@@ -335,7 +335,7 @@
         .left{width: 100%; padding-left: 0; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px dashed #000;
           .title{padding-bottom: 16px; margin-bottom: 40px;}
           .img_w{display: flex; padding: 0;
-            .number_count{transform:unset!important;}
+            .number_count{transform:unset!important; left: unset; right: 0;}
             .img{width: calc(100% / 3);}
             ul{width: calc((100% / 3) * 2); position: unset; padding: 0 0 0 26px; align-items: flex-end; display: flex;
               li{width: 100%; font-size: 11px;}
@@ -356,8 +356,8 @@
         }
         &.active{
           div{
-            &:nth-child(1){width: 56px;}
-            &:nth-child(2){height: 56px;}
+            &:nth-child(1){width: 23px;}
+            &:nth-child(2){height: 23px;}
           }
         }
       }
