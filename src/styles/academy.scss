@@ -76,7 +76,7 @@
     }   
   }
   .ac_2{background-color: #fff; height: 400vh; width: 100%; position: relative; z-index: 0;
-    .ac_2_b_ani{position: absolute; left: 60px; bottom: 40px; width: calc(100% - 120px); display: flex; align-items: center; justify-content: center;
+    .ac_2_b_ani{position: absolute; left: 60px; bottom: 00px; width: calc(100% - 120px); display: flex; align-items: center; justify-content: center;
       &::before{border-bottom: 1px dashed #000; background-color: unset; transform: translateX(-50%); left: 50%; position: absolute; transition-delay: 0.4s;}
       div{position: absolute; background-color: #000; transition: 0.8s ease all; transform: translate(-50%, -50%); left: calc(50% + 41px); top: 50%; opacity: 0;
         &:nth-child(1){width: 0; height: 3px;}
@@ -92,6 +92,7 @@
     }
     .b-l{position: absolute; left: calc(50% + 40px); width: 1px; top: 40px; height: calc(100% - 80px);
       &::before{border-right: 1px dashed #000; background-color: unset;}
+      &.extend-border{height: calc(100% - 80px + var(--extend-border-extra, 0px));}
     }
     .ac_2_b_w{height: 100%; position: relative;
       .inner{height: 100svh; position: sticky; top: 0; left: 0;
@@ -338,7 +339,8 @@
     }
 
     .ac_2{
-      .flex{flex-direction: column ; padding: 60px 20px 20px;
+      
+      .flex_w .flex{flex-direction: column ; padding: 60px 20px 20px;
         .b-l{display: none;}
         .left{width: 100%; padding-left: 0; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px dashed #000;
           .title{padding-bottom: 16px; margin-bottom: 40px;}
@@ -364,8 +366,8 @@
         }
         &.active{
           div{
-            &:nth-child(1){width: 23px;}
-            &:nth-child(2){height: 23px;}
+            &:nth-child(1){width: 30px;}
+            &:nth-child(2){height: 30px;}
           }
         }
       }
@@ -452,6 +454,7 @@
           }
         }
       }
+      .mob_caption{padding: 4px; background-color: #fff; font-size: 2.5vw;   position: absolute; left: 50%; top: calc(76%); transform: translateX(-50%);}
     }
     .section_name{
       ul{

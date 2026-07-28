@@ -25,6 +25,9 @@ function Academy() {
       : [];
     const teamList = teamSection?.querySelector(".right");
     const teamItems = teamList ? [...teamList.querySelectorAll("li")] : [];
+    const teamFlexWrap = teamSection?.querySelector(".flex_w");
+    const teamFlex = teamFlexWrap?.querySelector(".flex");
+    const extendBorder = teamFlex?.querySelector(".extend-border");
     const academyOutro = document.querySelector(".page_academy .ac_3");
     const backgroundChecker = academyOutro?.querySelector(".bg_checker");
     const sectionNameItems = [
@@ -209,6 +212,21 @@ function Academy() {
         if (teamCounterNumber) {
           teamCounterNumber.textContent = String(activeTeamIndex + 1).padStart(2, "0");
         }
+      }
+
+      if (teamSection && teamFlexWrap && teamFlex && extendBorder) {
+        const teamRect = teamSection.getBoundingClientRect();
+        const flexWrapRect = teamFlexWrap.getBoundingClientRect();
+        const extensionRange = Math.max(0, teamRect.height - flexWrapRect.height);
+        const extension = Math.min(
+          extensionRange,
+          Math.max(0, teamFlex.offsetHeight - flexWrapRect.bottom),
+        );
+
+        extendBorder.style.setProperty(
+          "--extend-border-extra",
+          `${extension}px`,
+        );
       }
 
       if (academyOutro && backgroundChecker) {
@@ -398,9 +416,10 @@ function Academy() {
       </section>
 
       <section className="ac_2 ">
+        
         <div className="flex_w">
           <div className="flex ani">
-            <div className="b-l b-delay-6 mob"></div>
+            <div className="b-l b-delay-6 extend-border"></div>
             
             <div className="left">
               
@@ -498,12 +517,7 @@ function Academy() {
             </ul>
           </div>
         </div>
-        <div className="ac_2_b_w">
-          <div className="inner">
-            <div className="b-l b-delay-6 pc"></div>
-          </div>
-          
-        </div>
+        
         <div className="ac_2_b_ani b-b ani b-delay-8"><div></div><div></div></div>
       </section>
       <section className="ac_3">
@@ -597,6 +611,7 @@ function Academy() {
             </li>
           </ul>
         </div>
+        <div className="mob_caption mob txt-gray">인물을 터치해 주세요 &#61;&#41;</div>
       </section>
       <div className="section_name head-l fw-sb">
         <ul>
