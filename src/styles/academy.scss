@@ -415,7 +415,7 @@
       
       }*/
 
-      .img_map {
+      .img_map {padding-bottom: 10svl;
         h1{font-size: 13.333vw; text-align: center; color: var(--txt-gray);}
         .img_w{aspect-ratio: 360 / 720;
           li{
@@ -454,7 +454,7 @@
           }
         }
       }
-      .mob_caption{padding: 4px; background-color: #fff; font-size: 2.5vw;   position: absolute; left: 50%; top: calc(76%); transform: translateX(-50%);}
+      .mob_caption{padding: 4px; background-color: #fff; font-size: 2.5vw;   position: absolute; left: 50%; top: calc(70%); transform: translateX(-50%);}
     }
     .section_name{
       ul{
