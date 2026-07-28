@@ -398,104 +398,111 @@ function Academy() {
       </section>
 
       <section className="ac_2 ">
-        
-        <div className="flex ani">
-          <div className="b-l b-delay-6"></div>
-          
-          <div className="left">
+        <div className="flex_w">
+          <div className="flex ani">
+            <div className="b-l b-delay-6 mob"></div>
             
-            <h1 className="title b-b b-2 body-m fw-sb">트렌드와 현장 경험을 연결한 교육을 통해<br/>디자이너의 성장과 경쟁력을 함께 완성합니다.</h1>
-            <div className="img_w">
-              <div className="number_count"><b>01</b><span>/ 08</span></div>
-              <div className="img">
-                <img src="/img/ac_2_1.jpg"/>
-                <img src="/img/ac_2_2.jpg"/>
-                <img src="/img/ac_2_3.jpg"/>
-                <img src="/img/ac_2_4.jpg"/>
-                <img src="/img/ac_2_5.jpg"/>
-                <img src="/img/ac_2_6.jpg"/>
-                <img src="/img/ac_2_7.jpg"/>
-                <img src="/img/ac_2_8.jpg"/>
+            <div className="left">
+              
+              <h1 className="title b-b b-2 body-m fw-sb">트렌드와 현장 경험을 연결한 교육을 통해<br/>디자이너의 성장과 경쟁력을 함께 완성합니다.</h1>
+              <div className="img_w">
+                <div className="number_count"><b>01</b><span>/ 08</span></div>
+                <div className="img">
+                  <img src="/img/ac_2_1.jpg"/>
+                  <img src="/img/ac_2_2.jpg"/>
+                  <img src="/img/ac_2_3.jpg"/>
+                  <img src="/img/ac_2_4.jpg"/>
+                  <img src="/img/ac_2_5.jpg"/>
+                  <img src="/img/ac_2_6.jpg"/>
+                  <img src="/img/ac_2_7.jpg"/>
+                  <img src="/img/ac_2_8.jpg"/>
+                </div>
+                <ul>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문1</span>
+                    <span>현장 스타일링 프로세스 교육1</span>
+                    <span>프리미엄 무드 연출1</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문2</span>
+                    <span>현장 스타일링 프로세스 교육2</span>
+                    <span>프리미엄 무드 연출2</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문3</span>
+                    <span>현장 스타일링 프로세스 교육3</span>
+                    <span>프리미엄 무드 연출3</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문4</span>
+                    <span>현장 스타일링 프로세스 교육4</span>
+                    <span>프리미엄 무드 연출4</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문5</span>
+                    <span>현장 스타일링 프로세스 교육5</span>
+                    <span>프리미엄 무드 연출5</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문6</span>
+                    <span>현장 스타일링 프로세스 교육6</span>
+                    <span>프리미엄 무드 연출6</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문7</span>
+                    <span>현장 스타일링 프로세스 교육7</span>
+                    <span>프리미엄 무드 연출7</span>
+                  </li>
+                  <li>
+                    <span>레이어드 컷 / 숏컷 디자인 전문8</span>
+                    <span>현장 스타일링 프로세스 교육8</span>
+                    <span>프리미엄 무드 연출8</span>
+                  </li>
+                </ul>
               </div>
-              <ul>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문1</span>
-                  <span>현장 스타일링 프로세스 교육1</span>
-                  <span>프리미엄 무드 연출1</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문2</span>
-                  <span>현장 스타일링 프로세스 교육2</span>
-                  <span>프리미엄 무드 연출2</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문3</span>
-                  <span>현장 스타일링 프로세스 교육3</span>
-                  <span>프리미엄 무드 연출3</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문4</span>
-                  <span>현장 스타일링 프로세스 교육4</span>
-                  <span>프리미엄 무드 연출4</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문5</span>
-                  <span>현장 스타일링 프로세스 교육5</span>
-                  <span>프리미엄 무드 연출5</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문6</span>
-                  <span>현장 스타일링 프로세스 교육6</span>
-                  <span>프리미엄 무드 연출6</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문7</span>
-                  <span>현장 스타일링 프로세스 교육7</span>
-                  <span>프리미엄 무드 연출7</span>
-                </li>
-                <li>
-                  <span>레이어드 컷 / 숏컷 디자인 전문8</span>
-                  <span>현장 스타일링 프로세스 교육8</span>
-                  <span>프리미엄 무드 연출8</span>
-                </li>
-              </ul>
+              
             </div>
-            
+            <ul className="right">
+              <li>
+                <h4 className="body-l fw-b">Creative Cut Director</h4>
+                <span className="head-l">안 정 준</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Global Color Educator</h4>
+                <span className="head-l">윤 훈</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Signature Perm Specialist</h4>
+                <span className="head-l">이 설 아</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Salon Branding Mentor</h4>
+                <span className="head-l">이 수 진</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Men's Grooming Expert</h4>
+                <span className="head-l">이 은 혜</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Luxury Styling Director</h4>
+                <span className="head-l">이 정 빈</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Scalp &amp; Care Consultant</h4>
+                <span className="head-l">진 영 준</span>
+              </li>
+              <li>
+                <h4 className="body-l fw-b">Trend Content Creator</h4>
+                <span className="head-l">최 연 승</span>
+              </li>
+            </ul>
           </div>
-          <ul className="right">
-            <li>
-              <h4 className="body-l fw-b">Creative Cut Director</h4>
-              <span className="head-l">안 정 준</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Global Color Educator</h4>
-              <span className="head-l">윤 훈</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Signature Perm Specialist</h4>
-              <span className="head-l">이 설 아</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Salon Branding Mentor</h4>
-              <span className="head-l">이 수 진</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Men's Grooming Expert</h4>
-              <span className="head-l">이 은 혜</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Luxury Styling Director</h4>
-              <span className="head-l">이 정 빈</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Scalp &amp; Care Consultant</h4>
-              <span className="head-l">진 영 준</span>
-            </li>
-            <li>
-              <h4 className="body-l fw-b">Trend Content Creator</h4>
-              <span className="head-l">최 연 승</span>
-            </li>
-          </ul>
+        </div>
+        <div className="ac_2_b_w">
+          <div className="inner">
+            <div className="b-l b-delay-6 pc"></div>
+          </div>
+          
         </div>
         <div className="ac_2_b_ani b-b ani b-delay-8"><div></div><div></div></div>
       </section>
