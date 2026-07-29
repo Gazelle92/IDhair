@@ -164,7 +164,6 @@ function Recruit() {
     const grid = gridRef.current;
     const title = content?.querySelector(".rs_2_content_title");
     const description = content?.querySelector(".rs_2_content_description");
-    const button = content?.querySelector(".rs_2_content_button");
     const items = grid
       ? [...grid.querySelectorAll(".rs_2_grid_item")]
       : [];
@@ -176,7 +175,6 @@ function Recruit() {
       || !grid
       || !title
       || !description
-      || !button
       || !items.length
     ) {
       return undefined;
@@ -204,7 +202,7 @@ function Recruit() {
       if (cancelled) return;
 
       gsapContext = gsap.context(() => {
-        gsap.set([description, button], {
+        gsap.set([description], {
           opacity: 0,
           pointerEvents: "none",
         });
@@ -294,7 +292,7 @@ function Recruit() {
               ease: "power2.inOut",
             })
             .to(
-              [description, button],
+              [description],
               {
                 opacity: isVisible ? 1 : 0,
                 duration: 0.4,
@@ -409,14 +407,12 @@ function Recruit() {
         <div className="rs_2_sticky" ref={gridWrapperRef}>
           <div className="rs_2_content txt-ac" ref={gridContentRef}>
             <h2 className="rs_2_content_title apprael">
-              YOUR idENTITY, OUR idHAIR
+              ID FAMILY
             </h2>
             <p className="rs_2_content_description">
-              GROW WITH idHAIR
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br/>
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. 
             </p>
-            <button className="rs_2_content_button" type="button">
-              VIEW OPEN POSITIONS
-            </button>
           </div>
           <div className="rs_2_gallery">
             <ul className="rs_2_grid" ref={gridRef}>
