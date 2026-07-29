@@ -1,5 +1,14 @@
 import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/recruit.scss";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const recruitGridImages = Array.from(
+  { length: 12 },
+  (_, index) => `/img/rs_grid_${(index % 9) + 1}.jpg`,
+);
 
 function Recruit() {
   const progressTrackRef = useRef(null);
@@ -7,6 +16,10 @@ function Recruit() {
   const maskOriginRef = useRef(null);
   const maskImageRef = useRef(null);
   const downPageRef = useRef(null);
+  const gridSectionRef = useRef(null);
+  const gridWrapperRef = useRef(null);
+  const gridRef = useRef(null);
+  const gridContentRef = useRef(null);
 
   useEffect(() => {
     const progressTrack = progressTrackRef.current;
@@ -144,6 +157,181 @@ function Recruit() {
     };
   }, []);
 
+  useEffect(() => {
+    const block = gridSectionRef.current;
+    const wrapper = gridWrapperRef.current;
+    const content = gridContentRef.current;
+    const grid = gridRef.current;
+    const title = content?.querySelector(".rs_2_content_title");
+    const description = content?.querySelector(".rs_2_content_description");
+    const button = content?.querySelector(".rs_2_content_button");
+    const items = grid
+      ? [...grid.querySelectorAll(".rs_2_grid_item")]
+      : [];
+
+    if (
+      !block
+      || !wrapper
+      || !content
+      || !grid
+      || !title
+      || !description
+      || !button
+      || !items.length
+    ) {
+      return undefined;
+    }
+
+    const images = items.map((item) => item.querySelector("img"));
+    const columns = Array.from({ length: 3 }, () => []);
+    let gsapContext = null;
+    let cancelled = false;
+
+    items.forEach((item, index) => {
+      columns[index % columns.length].push(item);
+    });
+
+    const imageReady = images.map((image) => {
+      if (image.complete) return Promise.resolve();
+
+      return new Promise((resolve) => {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", resolve, { once: true });
+      });
+    });
+
+    Promise.all(imageReady).then(() => {
+      if (cancelled) return;
+
+      gsapContext = gsap.context(() => {
+        gsap.set([description, button], {
+          opacity: 0,
+          pointerEvents: "none",
+        });
+
+        const dy = (content.offsetHeight - title.offsetHeight) / 2;
+        const titleOffsetY = (dy / content.offsetHeight) * 100;
+
+        gsap.set(title, { yPercent: titleOffsetY });
+
+        gsap.from(wrapper, {
+          yPercent: -100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: block,
+            start: "top bottom",
+            end: "top top",
+            scrub: true,
+          },
+        });
+
+        gsap.from(title, {
+          opacity: 0,
+          duration: 0.7,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: block,
+            start: "top 57%",
+            toggleActions: "play none none reset",
+          },
+        });
+
+        const gridRevealTimeline = () => {
+          const timeline = gsap.timeline();
+          const wh = window.innerHeight;
+          const revealY = wh - (wh - grid.offsetHeight) / 2;
+
+          columns.forEach((column, columnIndex) => {
+            const fromTop = columnIndex % 2 === 0;
+
+            timeline.from(
+              column,
+              {
+                y: revealY * (fromTop ? -1 : 1),
+                stagger: {
+                  each: 0.06,
+                  from: fromTop ? "end" : "start",
+                },
+                ease: "power1.inOut",
+              },
+              "grid-reveal",
+            );
+          });
+
+          return timeline;
+        };
+
+        const gridZoomTimeline = () => {
+          const timeline = gsap.timeline({
+            defaults: {
+              duration: 1,
+              ease: "power3.inOut",
+            },
+          });
+
+          timeline.to(grid, { scale: 2.05 });
+          timeline.to(columns[0], { xPercent: -40 }, "<");
+          timeline.to(columns[2], { xPercent: 40 }, "<");
+          timeline.to(
+            columns[1],
+            {
+              yPercent: (index) =>
+                (index < Math.floor(columns[1].length / 2) ? -1 : 1) * 40,
+              duration: 0.5,
+              ease: "power1.inOut",
+            },
+            "-=0.5",
+          );
+
+          return timeline;
+        };
+
+        const toggleContent = (isVisible = true) => {
+          gsap.timeline({ defaults: { overwrite: true } })
+            .to(title, {
+              yPercent: isVisible ? 0 : titleOffsetY,
+              duration: 0.7,
+              ease: "power2.inOut",
+            })
+            .to(
+              [description, button],
+              {
+                opacity: isVisible ? 1 : 0,
+                duration: 0.4,
+                ease: `power1.${isVisible ? "inOut" : "out"}`,
+                pointerEvents: isVisible ? "all" : "none",
+              },
+              isVisible ? "-=90%" : "<",
+            );
+        };
+
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: block,
+            start: "top 25%",
+            end: "bottom bottom",
+            scrub: true,
+          },
+        });
+
+        timeline
+          .add(gridRevealTimeline())
+          .add(gridZoomTimeline(), "-=0.6")
+          .add(
+            () => toggleContent(timeline.scrollTrigger.direction === 1),
+            "-=0.32",
+          );
+      }, block);
+
+      ScrollTrigger.refresh();
+    });
+
+    return () => {
+      cancelled = true;
+      gsapContext?.revert();
+    };
+  }, []);
+
   return (
     <main className="page_recruit">
       <section className="rs_head ani">
@@ -217,8 +405,33 @@ function Recruit() {
         </div>
 
       </section>
-      <section className="rs_2">
-
+      <section className="rs_2" ref={gridSectionRef}>
+        <div className="rs_2_sticky" ref={gridWrapperRef}>
+          <div className="rs_2_content txt-ac" ref={gridContentRef}>
+            <h2 className="rs_2_content_title apprael">
+              YOUR idENTITY, OUR idHAIR
+            </h2>
+            <p className="rs_2_content_description">
+              GROW WITH idHAIR
+            </p>
+            <button className="rs_2_content_button" type="button">
+              VIEW OPEN POSITIONS
+            </button>
+          </div>
+          <div className="rs_2_gallery">
+            <ul className="rs_2_grid" ref={gridRef}>
+              {recruitGridImages.map((src, index) => (
+                <li className="rs_2_grid_item" key={`${src}-${index}`}>
+                  <img
+                    className="rs_2_grid_image"
+                    src={src}
+                    alt={`idHAIR recruit ${index + 1}`}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </section>
 
       <div className="rs_nav_w">
