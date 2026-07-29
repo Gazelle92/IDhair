@@ -217,21 +217,23 @@ function Recruit() {
         </div>
 
       </section>
+      <section className="rs_2">
 
-      <nav className="body-m rs_nav">
-        <div className="rs_nav_1">
-          <span>E-mail</span>
-          <h4>idhair1988@naver.com</h4>
-          <p>/</p>
-          <span>Instagram</span>
-          <h4>idhair_hello</h4>
-        </div>
-        <div className="rs_nav_2 txt-ac">입사지원서 다운로드</div>
-        <div className="rs_nav_3">자주하는 질문</div>
+      </section>
 
-        
-
-      </nav>
+      <div className="rs_nav_w">
+        <nav className="body-m rs_nav">
+          <div className="rs_nav_1">
+            <span>E-mail</span>
+            <h4>idhair1988@naver.com</h4>
+            <p>/</p>
+            <span>Instagram</span>
+            <h4>idhair_hello</h4>
+          </div>
+          <div className="rs_nav_2 txt-ac">입사지원서 다운로드</div>
+          <div className="rs_nav_3">자주하는 질문</div>
+        </nav>
+      </div>
     </main>
   );
 }
