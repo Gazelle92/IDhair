@@ -337,7 +337,7 @@ function Recruit() {
         <div className="rc_title b-t b-2">
           <h1 className="display-l apprael  apprael_all apprael_ani" >RECRUIT</h1>
           <div className="b-b b-delay-0"></div>
-          <div className="body-s scroll apprael_ani ls_s">[ SCROLL ]</div>
+          <div className="body-s scroll apprael_ani ls_s ">[ SCROLL ]</div>
         </div>
         <div className="middle ani">
           <span className="body-l fw-sb apprael_ani ls_s">idHAIR와 함께 성장할 인재를 찾습니다.</span>
