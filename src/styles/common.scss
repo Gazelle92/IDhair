@@ -316,7 +316,7 @@ button{background-color: unset; border: unset; cursor: pointer;}
   }
 
   @for $i from 1 through 30 {
-    .b-delay-#{$i}::before{transition-delay: $i * 0.1s;}
+    &.b-delay-#{$i}::before, .b-delay-#{$i}::before{transition-delay: $i * 0.1s;}
   }
   
 }

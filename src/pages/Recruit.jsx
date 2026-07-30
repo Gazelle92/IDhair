@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/recruit.scss";
@@ -11,6 +11,7 @@ const recruitGridImages = Array.from(
 );
 
 function Recruit() {
+  const [isNavPopupOpen, setIsNavPopupOpen] = useState(false);
   const progressTrackRef = useRef(null);
   const maskTrackRef = useRef(null);
   const maskOriginRef = useRef(null);
@@ -428,40 +429,58 @@ function Recruit() {
           </div>
         </div>
       </section>
-      <section className="rs_3 txt-white ani">
-        <div className="top b-b b-dash">
-          <b className="head-m fw-b">직무소개</b>
-          <h1 className="display-m apprael ">Job Description</h1>
+      <section className="rs_3 txt-white">
+        <div className="top b-b b-dash b-delay-4 ani">
+          <b className="head-m fw-b apprael_ani">직무소개</b>
+          <h1 className="display-m apprael apprael_ani">Job Description</h1>
         </div>
-        <ul className="b-b b-dash">
-          <li className="b-l">
+        <ul className="rs_3_2 b-b b-dash ani b-delay-6">
+          <li className="b-l apprael_ani ls_s rs_3_2_1">
             <span className="body-s">(디자이너)</span>
             <h4 className="display-xs apprael">Designer</h4>
             <p className="body-m">
               매장·고객·동료에게 행복을 전해주고,<br/>함께 성장하는 스타 디자이너
             </p>
+            <ul>
+              <li>대/내외 스타 디자이너 초청 특강</li>
+              <li>직급별/매출별 성장여행</li>
+              <li>하이퍼포머 특별 해외연수</li>
+              <li>개별 디자이너 매출 성장 코칭</li>
+            </ul>
           </li>
 
-          <li className="b-l">
+          <li className="b-l b-delay-2 apprael_ani ls_s delay-2 rs_3_2_2">
             <span className="body-s">(관리자)</span>
             <h4 className="display-xs apprael">Administrator</h4>
             <p className="body-m">
               매장을 관리/운영하며,<br/>함께하는 동료들을 성공으로 이끄는 경영자
             </p>
+            <ul>
+              <li>대/내외 경영 리더십 교육</li>
+              <li>멘토 코칭 교육</li>
+              <li>전체 경영회의 참석</li>
+            </ul>
           </li>
 
-          <li className="b-l">
+          <li className="b-l b-delay-4 apprael_ani ls_s delay-4 rs_3_2_3">
             <span className="body-s">(파트너)</span>
             <h4 className="display-xs apprael">Partner</h4>
             <p className="body-m">
               함께 성공하고자 하는 동료이자<br/>헤어디자이너를 준비하는 예비 스타 디자이너
             </p>
+            <ul>
+              <li>사내 아카데미 보유</li>
+              <li>전 매장 기숙사 보유</li>
+              <li>입사 시, 일대일 멘토 지정</li>
+              <li>각종 이벤트 데이</li>
+              <li>최고의 기술력을 전해주는 스타일워크 교육</li>
+            </ul>
           </li>
           
 
         </ul>
-        <div className="b-b b-dash process_w">
-          <div className="left">
+        <div className="b-b b-dash b-delay-4 process_w ani">
+          <div className="left apprael_ani ls_s">
             <span className="body-s">(채용절차)</span>
             <h1 className="apprael display-xs">Hiring Process</h1>
             <p className="body-m">상시 채용</p>
@@ -502,8 +521,55 @@ function Recruit() {
             <span>Instagram</span>
             <h4>idhair_hello</h4>
           </div>
-          <div className="rs_nav_2 txt-ac">입사지원서 다운로드</div>
-          <div className="rs_nav_3">자주하는 질문</div>
+          <a href="#" className="rs_nav_2 txt-ac">입사지원서 다운로드</a>
+          <div
+            className="rs_nav_3"
+            role="button"
+            tabIndex={0}
+            aria-expanded={isNavPopupOpen}
+            onClick={() => setIsNavPopupOpen((isOpen) => !isOpen)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setIsNavPopupOpen((isOpen) => !isOpen);
+              }
+            }}
+          >
+            자주하는 질문
+          </div>
+          <div className={`rs_nav_popup_w${isNavPopupOpen ? " show" : ""}`}>
+            <div className="rs_nav_popup" data-lenis-prevent>
+              <h1>자주하는 질문</h1>
+              <b>면접은 어떻게 진행되나요?</b>
+              <span>면접은 일반적으로 서류 심사 후 개별 연락을 통해 일정 및 장소가 조율됩니다. 면접 시에는 본인의 개성을 살릴 수 있는 복장과 자신감 있는 태도를 준비해 오시면 됩니다.</span>
+              <b>매장은 어디로 배정되나요?</b>
+              <span>각 매장의 필요 인원과 지원자 개인의 성향과 희망 매장을 서로 조율하여 최종 근무지가 결정됩니다. 아이디헤어에서는 여러분이 가장 잘 성장하고 즐겁게 일할 수 있는 매장을 찾기 위해 성향 매칭 시스템을 운영 중입니다.</span>
+              <b>결과는 언제쯤 알 수 있을까요?</b>
+              <span>면접 후 일주일 이내 개별 통보됩니다.</span>
+              <b>나이/성별 제한 있나요?</b>
+              <span>아이디헤어는 미용에 열정을 가진 모든 인재를 환영합니다. (법적 근무가 가능한 만 19세 이상)</span>
+              <b>기숙사를 사용할 수 있나요?</b>
+              <span>아이디헤어의 대부분 매장은 기숙사를 보유 중이며, 파트너 직급의 직원들은 해당 시설을 저렴한 가격으로 이용 가능합니다.</span>
+              <b>필수 자격조건이 있나요?</b>
+              <span>미용사 면허증(또는 자격증) 소지자들은 디자이너/파트너 직군 근무가 가능합니다. 관리자 직군은 서비스 마인드를 가진 인재들이면 누구나 입사 지원 가능합니다.</span>
+              <b>승급 기간은 얼마나 되나요?</b>
+              <span>아이디 아카데미 입학 후 약 2년간의 교육을 이수하면 디자이너로 활동할 수 있는 디플로마가 수여됩니다.</span>
+            </div>
+            <div
+              className="rs_nav_close body-s"
+              role="button"
+              tabIndex={0}
+              onClick={() => setIsNavPopupOpen(false)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setIsNavPopupOpen(false);
+                }
+              }}
+            >
+              Close
+            </div>
+          </div>
         </nav>
       </div>
     </main>
