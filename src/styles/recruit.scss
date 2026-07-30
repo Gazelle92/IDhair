@@ -52,7 +52,7 @@
   .rs_2{width: calc(100% + 7.272vw); height: 425vh; margin-left: -3.636vw; position: relative; background-color: #eeedef;
     .rs_2_sticky{height: 100vh; padding: 0 1.667vw; position: sticky; top: 0; overflow: hidden; will-change: transform;
       .rs_2_content{width: 100%; height: 100vh; position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center;
-        .rs_2_content_title{ font-size: 7.222vw; line-height: 1.15; letter-spacing: -0.02em;}
+        .rs_2_content_title{ font-size: 7.222vw; line-height: 1.15; letter-spacing: -0.02em; opacity: 1!important;}
         .rs_2_content_description{ margin-top: 1.667vw; font-size: 0.972vw; line-height: 1.3; text-transform: uppercase;}
         
       }
@@ -60,6 +60,31 @@
         .rs_2_grid{display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 2.222vw; row-gap: 2.778vw; will-change: transform;
           .rs_2_grid_item{width: 100%; aspect-ratio: 1; overflow: hidden; will-change: transform;
             .rs_2_grid_image{width: 100%; height: 100%; display: block; object-fit: cover;}
+          }
+        }
+      }
+    }
+  }
+  .rs_3{min-height: 100vh; background-image: url(/public/img/rs_3.jpg); background-attachment: fixed; width: calc(100% + 7.272vw); margin-left: -3.636vw; padding: 160px 60px 180px; background-position: center center; background-size: cover; background-repeat: no-repeat;
+    .top{text-align: center; padding: 0 0 120px;}
+    ul{padding: 40px 0; display: flex;
+      li{width: 100%; padding: 20px 40px;
+        &:not(:first-child)::before{background-color: unset; border-left:1px #fff dashed;}
+        h4{margin: 8px 0 32px;}
+      }
+    }
+    .b-dash{
+      &::before{background-color: unset; border-top: 1px #fff dashed;}
+    }
+    .process_w {display: flex; padding: 0 40px;
+      .left{padding: 40px 0; width: calc((100% / 12) * 4);
+        h1{margin: 8px 0 32px;}
+      }
+      .right{width: calc((100% / 12) * 8); padding: 112px 0 164px;
+        ol{display: flex; text-align: center; justify-content: space-around;
+          li{position: relative; display: flex; align-items: center; flex-direction: column;
+            &::before{content: ''; display: block; width: 12px; height: 12px; border: 1px solid #fff; transform: rotate(45deg);}
+            h4{margin: 12px 0;}
           }
         }
       }

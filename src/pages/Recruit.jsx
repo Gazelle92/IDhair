@@ -223,8 +223,7 @@ function Recruit() {
           },
         });
 
-        gsap.from(title, {
-          opacity: 0,
+        /*gsap.from(title, {
           duration: 0.7,
           ease: "power1.out",
           scrollTrigger: {
@@ -232,7 +231,7 @@ function Recruit() {
             start: "top 57%",
             toggleActions: "play none none reset",
           },
-        });
+        });*/
 
         const gridRevealTimeline = () => {
           const timeline = gsap.timeline();
@@ -364,9 +363,9 @@ function Recruit() {
         <div className="down_p" ref={downPageRef}>
           <div className="sticky_w">
             <div className="rolling apprael_all display-m">
-              <h1>MY idENTITY  MY idHAIR  </h1>
-              <h1>MY idENTITY  MY idHAIR  </h1>
-              <h1>MY idENTITY  MY idHAIR  </h1>
+              <h1 className="display-m">MY idENTITY  MY idHAIR  </h1>
+              <h1 className="display-m">MY idENTITY  MY idHAIR  </h1>
+              <h1 className="display-m">MY idENTITY  MY idHAIR  </h1>
             </div>
             <ul className="">
               <li>
@@ -426,6 +425,70 @@ function Recruit() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </section>
+      <section className="rs_3 txt-white ani">
+        <div className="top b-b b-dash">
+          <b className="head-m fw-b">직무소개</b>
+          <h1 className="display-m apprael ">Job Description</h1>
+        </div>
+        <ul className="b-b b-dash">
+          <li className="b-l">
+            <span className="body-s">(디자이너)</span>
+            <h4 className="display-xs apprael">Designer</h4>
+            <p className="body-m">
+              매장·고객·동료에게 행복을 전해주고,<br/>함께 성장하는 스타 디자이너
+            </p>
+          </li>
+
+          <li className="b-l">
+            <span className="body-s">(관리자)</span>
+            <h4 className="display-xs apprael">Administrator</h4>
+            <p className="body-m">
+              매장을 관리/운영하며,<br/>함께하는 동료들을 성공으로 이끄는 경영자
+            </p>
+          </li>
+
+          <li className="b-l">
+            <span className="body-s">(파트너)</span>
+            <h4 className="display-xs apprael">Partner</h4>
+            <p className="body-m">
+              함께 성공하고자 하는 동료이자<br/>헤어디자이너를 준비하는 예비 스타 디자이너
+            </p>
+          </li>
+          
+
+        </ul>
+        <div className="b-b b-dash process_w">
+          <div className="left">
+            <span className="body-s">(채용절차)</span>
+            <h1 className="apprael display-xs">Hiring Process</h1>
+            <p className="body-m">상시 채용</p>
+          </div>
+          <div className="right">
+            <ol>
+              <li>
+                <h4 className="apprael display-xs">01</h4>
+                <span className="body-m fw-sb">홈페이지 내<br/>입사 지원서 다운로드</span>
+              </li>
+
+              <li>
+                <h4 className="apprael display-xs">02</h4>
+                <span className="body-m fw-sb">입사지원서 작성</span>
+              </li>
+
+              <li>
+                <h4 className="apprael display-xs">03</h4>
+                <span className="body-m fw-sb">메일로 지원서 제출</span>
+              </li>
+
+              <li>
+                <h4 className="apprael display-xs">04</h4>
+                <span className="body-m fw-sb">면접 후 합격자<br/>개별 유선 연락</span>
+              </li>
+
+            </ol>
           </div>
         </div>
       </section>
