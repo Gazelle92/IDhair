@@ -28,6 +28,7 @@ function Recruit() {
     const maskOrigin = maskOriginRef.current;
     const maskImage = maskImageRef.current;
     const downPage = downPageRef.current;
+    const downSticky = downPage?.querySelector(":scope > .sticky_w");
     const downItems = downPage
       ? [...downPage.querySelectorAll(":scope > .sticky_w > ul > li")]
       : [];
@@ -39,6 +40,7 @@ function Recruit() {
       || !maskOrigin
       || !maskImage
       || !downPage
+      || !downSticky
       || !recruitHeader
     ) {
       return undefined;
@@ -104,6 +106,10 @@ function Recruit() {
       );
 
       const downRect = downPage.getBoundingClientRect();
+      downSticky.classList.toggle(
+        "float",
+        downRect.top >= viewportHeight * (5 / 6),
+      );
       const downRange = Math.max(1, downRect.height - viewportHeight);
       const downProgress = Math.min(
         1,
@@ -203,6 +209,16 @@ function Recruit() {
       if (cancelled) return;
 
       gsapContext = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: block,
+          start: "top top",
+          onEnter: () => wrapper.classList.remove("float"),
+          onLeaveBack: () => wrapper.classList.add("float"),
+          onRefresh: (self) => {
+            wrapper.classList.toggle("float", window.scrollY < self.start);
+          },
+        });
+
         gsap.set([description], {
           opacity: 0,
           pointerEvents: "none",
@@ -212,17 +228,6 @@ function Recruit() {
         const titleOffsetY = (dy / content.offsetHeight) * 100;
 
         gsap.set(title, { yPercent: titleOffsetY });
-
-        gsap.from(wrapper, {
-          yPercent: -100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: block,
-            start: "top bottom",
-            end: "top top",
-            scrub: true,
-          },
-        });
 
         /*gsap.from(title, {
           duration: 0.7,
@@ -362,12 +367,13 @@ function Recruit() {
         </div>
 
         <div className="down_p" ref={downPageRef}>
-          <div className="sticky_w">
+          <div className="sticky_w ani float">
             <div className="rolling apprael_all display-m">
               <h1 className="display-m">MY idENTITY  MY idHAIR  </h1>
               <h1 className="display-m">MY idENTITY  MY idHAIR  </h1>
               <h1 className="display-m">MY idENTITY  MY idHAIR  </h1>
             </div>
+
             <ul className="">
               <li>
                 <div className="edge_w">
@@ -404,28 +410,30 @@ function Recruit() {
 
       </section>
       <section className="rs_2" ref={gridSectionRef}>
-        <div className="rs_2_sticky" ref={gridWrapperRef}>
-          <div className="rs_2_content txt-ac" ref={gridContentRef}>
-            <h2 className="rs_2_content_title apprael">
-              ID FAMILY
-            </h2>
-            <p className="rs_2_content_description">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br/>
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            </p>
-          </div>
-          <div className="rs_2_gallery">
-            <ul className="rs_2_grid" ref={gridRef}>
-              {recruitGridImages.map((src, index) => (
-                <li className="rs_2_grid_item" key={`${src}-${index}`}>
-                  <img
-                    className="rs_2_grid_image"
-                    src={src}
-                    alt={`idHAIR recruit ${index + 1}`}
-                  />
-                </li>
-              ))}
-            </ul>
+        <div className="rs_2_sticky">
+          <div className="rs_2_sticky_inner float" ref={gridWrapperRef}>
+            <div className="rs_2_content txt-ac" ref={gridContentRef}>
+              <h2 className="rs_2_content_title apprael">
+                ID FAMILY
+              </h2>
+              <p className="rs_2_content_description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br/>
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+              </p>
+            </div>
+            <div className="rs_2_gallery">
+              <ul className="rs_2_grid" ref={gridRef}>
+                {recruitGridImages.map((src, index) => (
+                  <li className="rs_2_grid_item" key={`${src}-${index}`}>
+                    <img
+                      className="rs_2_grid_image"
+                      src={src}
+                      alt={`idHAIR recruit ${index + 1}`}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
