@@ -389,7 +389,7 @@ function Recruit() {
                 </div>
                 <DotLottieReact
                   className="value-lottie"
-                  src="/lottie/rings-of-fire-loader.lottie"
+                  src="/lottie/Rings-of-fire-loader.lottie"
                   loop
                   autoplay
                   aria-hidden="true"
@@ -403,7 +403,13 @@ function Recruit() {
                 <div className="edge_w">
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
-                <img src="/img/rs_1_2.svg" alt="" />
+                <DotLottieReact
+                  className="value-lottie"
+                  src="/lottie/Sacred-Loader-Snake.lottie"
+                  loop
+                  autoplay
+                  aria-hidden="true"
+                />
                 <h1 className="display-xs gt fw-r">warmth</h1>
                 <b className="body-s fw-sb">( 따뜻함 )</b>
                 <span className="body-s fw-r">모두를 가족처럼 대하는 따뜻한 마음</span>
@@ -413,7 +419,13 @@ function Recruit() {
                 <div className="edge_w">
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
-                <img src="/img/rs_1_3.svg" alt="" />
+                <DotLottieReact
+                  className="value-lottie"
+                  src="/lottie/Loader-Linear-Diamond-Spin.lottie"
+                  loop
+                  autoplay
+                  aria-hidden="true"
+                />
                 <h1 className="display-xs gt fw-r">integrity</h1>
                 <b className="body-s fw-sb">( 성숙함 )</b>
                 <span className="body-s fw-r">선한 영향력을 줄 수 있는 성숙한 태도</span>
