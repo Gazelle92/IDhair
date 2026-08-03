@@ -553,7 +553,7 @@ function Recruit() {
           </div>
           <a href="#" className="rs_nav_2 txt-ac">입사지원서 <br className="mob"/>다운로드</a>
           <div
-            className="rs_nav_3"
+            className={`rs_nav_3${isNavPopupOpen ? " active" : ""}`}
             role="button"
             tabIndex={0}
             aria-expanded={isNavPopupOpen}
