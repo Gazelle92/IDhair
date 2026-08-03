@@ -338,19 +338,20 @@ function Recruit() {
   return (
     <main className="page_recruit">
       <section className="rs_head ani">
+        <div className="body-s scroll apprael_ani ls_s mob">[ SCROLL ]</div>
         <div className="rs_progress" ref={progressTrackRef}></div>
         <div className="rc_title b-t b-2">
           <h1 className="display-l apprael  apprael_all apprael_ani" >RECRUIT</h1>
           <div className="b-b b-delay-0"></div>
-          <div className="body-s scroll apprael_ani ls_s ">[ SCROLL ]</div>
+          <div className="body-s scroll apprael_ani ls_s pc">[ SCROLL ]</div>
         </div>
         <div className="middle ani">
           <span className="body-l fw-sb apprael_ani ls_s">idHAIR와 함께 성장할 인재를 찾습니다.</span>
           <div className="title_b txt-ac apprael_ani delay-2 gt_all">
             <span className="display-m">let&#39;s</span>
             <img src="/img/recruit_cross.svg"/>
-            <span className="display-m">work</span>
-            <img src="/img/recruit_cross.svg"/>
+            <span className="display-m">work</span><br className="mob"/>
+            <img className="pc" src="/img/recruit_cross.svg"/>
             <span className="display-m">together</span>
           </div>
         </div>
@@ -358,9 +359,15 @@ function Recruit() {
         <div className="mask_w" ref={maskTrackRef}>
           <div className="mask_sticky">
             <img
-              className="mask_el"
+              className="mask_el pc"
               ref={maskImageRef}
               src="/img/recruit_1.jpg"
+              alt=""
+            />
+            <img
+              className="mask_el mob"
+              ref={maskImageRef}
+              src="/img/recruit_1_mob.png"
               alt=""
             />
           </div>
