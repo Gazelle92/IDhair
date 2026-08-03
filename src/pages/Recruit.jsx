@@ -28,6 +28,7 @@ function Recruit() {
     const maskOrigin = maskOriginRef.current;
     const maskImage = maskImageRef.current;
     const downPage = downPageRef.current;
+    const gridSection = gridSectionRef.current;
     const downSticky = downPage?.querySelector(":scope > .sticky_w");
     const downItems = downPage
       ? [...downPage.querySelectorAll(":scope > .sticky_w > ul > li")]
@@ -40,6 +41,7 @@ function Recruit() {
       || !maskOrigin
       || !maskImage
       || !downPage
+      || !gridSection
       || !downSticky
       || !recruitHeader
     ) {
@@ -106,10 +108,12 @@ function Recruit() {
       );
 
       const downRect = downPage.getBoundingClientRect();
+      const gridRect = gridSection.getBoundingClientRect();
       downSticky.classList.toggle(
         "float",
         downRect.top >= viewportHeight * (5 / 6),
       );
+      downSticky.classList.toggle("over", gridRect.top <= viewportHeight);
       const downRange = Math.max(1, downRect.height - viewportHeight);
       const downProgress = Math.min(
         1,
@@ -157,6 +161,7 @@ function Recruit() {
       window.removeEventListener("touchend", requestMaskUpdate);
       window.removeEventListener("resize", requestMaskUpdate);
       window.visualViewport?.removeEventListener("resize", requestMaskUpdate);
+      downSticky.classList.remove("over");
 
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId);

@@ -207,8 +207,8 @@
         &.float{ 
           .rolling{clip-path: polygon(100% 0, 100% 100%, 100% 100%, 100% 0);}
         }
-        &.active{
-          
+        &.over{
+          .rolling{position:absolute;}
         }
         .hide{opacity: 0; pointer-events: none;}
         .rolling{width: max-content; position: fixed; display: flex; flex-wrap: nowrap; overflow: hidden; width: 100%; clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0); transition: clip-path 1s ease; will-change: clip-path; top: 0; left: 0;
@@ -414,8 +414,50 @@
     }
   }
 
+  .rs_3{padding: 80px 20px 106px; width: calc(100% + 40px); margin-left: -20px;
+    .top{padding: 0 0 60px;
+      b{font-size: 11px;}
+      h1{font-size: 40px; margin-top:8px}
+    }
+
+    .rs_3_2{flex-direction: column; padding:0;
+      &::before{display:none;}
+      & > li{padding:40px 12px;
+        &::before{background-color: unset; border-bottom:1px #fff dashed; width: 100%; height: 1px; position: absolute; left: 0; bottom: 0; top:unset;}
+
+        h4{font-size: 32px; margin:8px 0 20px;}
+        *{opacity: 1!important;}
+        ul{position:unset; height:unset;
+          li{position:unset; font-size: 10px; padding: 6px 12px; opacity: 1; transform: translateY(0); display:inline-block; margin:12px 12px 0 0;}
+        }
+      }
+    }
+    .process_w{flex-direction: column; padding:40px 12px;
+      .left{width: 100%; padding: 0 0 60px;}
+      .right{width: 100%; padding: 0;
+        ol{flex-direction: column; gap: 46px;
+          li{flex-direction:unset; gap:32px; justify-content: flex-end; align-items: center;
+            &::before{width:6px; height:6px;}
+            &:not(:last-child)::after{width:1px; height:59px;}
+            h4{margin:0; padding-right:124px; width:28px; box-sizing: unset; text-align: left;}
+            span{position:absolute; right:0; top:6px; text-align: left;}
+          }
+        }
+      }
+      &.active{
+        .right ol li:not(:last-child)::after{width:1px;}
+      }
+    }
+  }
+
     
-    .rs_nav_w{position: relative; height: unset;}
+  .rs_nav_w{position: absolute; height: unset; margin-top:0; top:unset; bottom:20px; left:20px; width:calc(100% - 40px); 
+   .rs_nav{position:unset; transform:unset;
+      .rs_nav_1{display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px;
+        p{display:none;}
+      }
+    }
+  }
   } 
 }
 @keyframes recruit-rolling{
