@@ -389,11 +389,11 @@ function Recruit() {
                 </div>
                 <DotLottieReact
                   className="value-lottie"
-                  src="/lottie/Rings-of-fire-loader.lottie"
+                  src="/lottie/Loader-Linear-Diamond-Spin.lottie"
                   loop
                   autoplay
                   aria-hidden="true"
-                />
+                />                
                 <h1 className="display-xs gt fw-r">honest</h1>
                 <b className="body-s fw-sb">( 정직함 )</b>
                 <span className="body-s fw-r">공정한 노력을 통한 정직한 성공</span>
@@ -403,9 +403,10 @@ function Recruit() {
                 <div className="edge_w">
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
+                
                 <DotLottieReact
                   className="value-lottie"
-                  src="/lottie/Sacred-Loader-Snake.lottie"
+                  src="/lottie/Rings-of-fire-loader.lottie"
                   loop
                   autoplay
                   aria-hidden="true"
@@ -421,7 +422,7 @@ function Recruit() {
                 </div>
                 <DotLottieReact
                   className="value-lottie"
-                  src="/lottie/Loader-Linear-Diamond-Spin.lottie"
+                  src="/lottie/Sacred-Loader-Snake.lottie"
                   loop
                   autoplay
                   aria-hidden="true"
