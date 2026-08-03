@@ -406,8 +406,8 @@ function Recruit() {
                 
                 <DotLottieReact
                   className="value-lottie"
-                  src="/lottie/animations/tmpxpz7btew.json"
-                  segment={[10, 65]}
+                  src="/lottie/Rings-of-fire-loader.lottie"
+                  animationId="tmpxpz7btew"
                   loop
                   autoplay
                   aria-hidden="true"
