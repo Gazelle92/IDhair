@@ -33,7 +33,7 @@
         }
         ul{display: flex; gap: calc(100% / 12); justify-content: center; margin-top: 68px; position: relative;
           li{position: relative; background-color: #fff; padding: 80px 0 64px; display: flex; justify-content: center; align-items: center; flex-direction: column; width: 320px; opacity: var(--recruit-item-progress, 0); transform: translate3d(0, var(--recruit-item-y, 65vh), 0); will-change: opacity, transform;
-            & > img{width: 120px;}
+            & > img, & > .value-lottie{width: 120px; height: 120px; display: block;}
             .edge_w{position: absolute; top: 8px; left: 8px; width: calc(100% - 16px); height: calc(100% - 16px);
               img{width: 16px; height: 16px; position: absolute;
                 &:nth-child(1){left: 0; top: 0;}
@@ -216,7 +216,7 @@
         }
         ul{display: flex; gap: calc(100% / 12); justify-content: center; margin-bottom: 4.359vw; position: relative; width: 100%;
           li{position: relative; background-color: #fff; padding: 5.128vw 0 4.103vw; display: flex; justify-content: center; align-items: center; flex-direction: column; width: 20.513vw; opacity: var(--recruit-item-progress, 0); transform: translate3d(0, var(--recruit-item-y, 65vh), 0); will-change: opacity, transform;
-            & > img{width: 7.692vw;}
+            & > img, & > .value-lottie{width: 7.692vw; height: 7.692vw; display: block;}
             .edge_w{position: absolute; top: 0.513vw; left: 0.513vw; width: calc(100% - 1.026vw); height: calc(100% - 1.026vw);
               img{width: 1.026vw; height: 1.026vw; position: absolute;
                 &:nth-child(1){left: 0; top: 0;}
@@ -391,7 +391,7 @@
           li{width:51.944vw; padding:11.111vw 0 8.889vw;
             &:nth-child(1){position:absolute; bottom:50%; left:20px;}
             &:nth-child(3){position:absolute; top:50%; right:20px;}
-            & > img{width:19.722vw;}
+            & > img, & > .value-lottie{width:19.722vw; height:19.722vw; display:block;}
             .edge_w{width:calc(100% - 2.222vw); height:calc(100% - 2.222vw); left:1.111vw; top:1.111vw;
               img{width:3.333vw; height:3.333vw;}
             }
@@ -401,7 +401,7 @@
             li{width:30vh; padding:5.556vh 0 4.444vh;
               &:nth-child(1){position:absolute; bottom:50%; left:unset; right:50%;}
               &:nth-child(3){position:absolute; top:50%; right:unset; left:50%;}
-              & > img{width:9.861vh;}
+              & > img, & > .value-lottie{width:9.861vh; height:9.861vh; display:block;}
               .edge_w{width:calc(100% - 1.111vh); height:calc(100% - 1.111vh); left:0.556vh; top:0.556vh;
                 img{width:1.667vh; height:1.667vh;}
               }

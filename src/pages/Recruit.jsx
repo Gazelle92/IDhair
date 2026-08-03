@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/recruit.scss";
@@ -386,7 +387,13 @@ function Recruit() {
                 <div className="edge_w">
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
-                <img src="/img/rs_1_1.svg" alt="" />
+                <DotLottieReact
+                  className="value-lottie"
+                  src="/lottie/rings-of-fire-loader.lottie"
+                  loop
+                  autoplay
+                  aria-hidden="true"
+                />
                 <h1 className="display-xs gt fw-r">honest</h1>
                 <b className="body-s fw-sb">( 정직함 )</b>
                 <span className="body-s fw-r">공정한 노력을 통한 정직한 성공</span>
