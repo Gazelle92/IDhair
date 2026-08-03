@@ -547,10 +547,11 @@ function Recruit() {
             <span>E-mail</span>
             <h4>idhair1988@naver.com</h4>
             <p>/</p>
+            <br className="mob"/>
             <span>Instagram</span>
             <h4>idhair_hello</h4>
           </div>
-          <a href="#" className="rs_nav_2 txt-ac">입사지원서 다운로드</a>
+          <a href="#" className="rs_nav_2 txt-ac">입사지원서 <br className="mob"/>다운로드</a>
           <div
             className="rs_nav_3"
             role="button"
@@ -564,7 +565,7 @@ function Recruit() {
               }
             }}
           >
-            자주하는 질문
+            자주하는 <br className="mob"/>질문
           </div>
           <div className={`rs_nav_popup_w${isNavPopupOpen ? " show" : ""}`}>
             <div className="rs_nav_popup" data-lenis-prevent>
