@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../styles/recruit.scss";
@@ -387,13 +386,14 @@ function Recruit() {
                 <div className="edge_w">
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
-                <DotLottieReact
+                {/*<DotLottieReact
                   className="value-lottie"
                   src="/lottie/Loader-Linear-Diamond-Spin.lottie"
                   loop
                   autoplay
                   aria-hidden="true"
-                />                
+                /> */    }           
+                <img src="/img/rs_1_1.svg" alt="" />
                 <h1 className="display-xs gt fw-r">honest</h1>
                 <b className="body-s fw-sb">( 정직함 )</b>
                 <span className="body-s fw-r">공정한 노력을 통한 정직한 성공</span>
@@ -404,14 +404,8 @@ function Recruit() {
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
                 
-                <DotLottieReact
-                  className="value-lottie"
-                  src="/lottie/Rings-of-fire-loader.lottie"
-                  animationId="tmpxpz7btew"
-                  loop
-                  autoplay
-                  aria-hidden="true"
-                />
+                <img src="/img/rs_1_2.svg" alt="" />
+                
                 <h1 className="display-xs gt fw-r">warmth</h1>
                 <b className="body-s fw-sb">( 따뜻함 )</b>
                 <span className="body-s fw-r">모두를 가족처럼 대하는 따뜻한 마음</span>
@@ -421,13 +415,7 @@ function Recruit() {
                 <div className="edge_w">
                   <img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/><img src="/img/edge_2.svg"/>
                 </div>
-                <DotLottieReact
-                  className="value-lottie"
-                  src="/lottie/Sacred-Loader-Snake.lottie"
-                  loop
-                  autoplay
-                  aria-hidden="true"
-                />
+                <img src="/img/rs_1_3.svg" alt="" />
                 <h1 className="display-xs gt fw-r">integrity</h1>
                 <b className="body-s fw-sb">( 성숙함 )</b>
                 <span className="body-s fw-r">선한 영향력을 줄 수 있는 성숙한 태도</span>
