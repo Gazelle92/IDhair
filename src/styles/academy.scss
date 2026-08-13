@@ -170,13 +170,14 @@
                 &:nth-child(4){right: 0; bottom: 0; transform: rotate(180deg);}
               }
             }
-            .top{display: flex; align-items: center; justify-content: space-between;
-              h4{display: flex; align-items: flex-end;
+            .top{display: flex; align-items: flex-end; justify-content: space-between;
+              h4{display: flex; align-items: flex-end; 
                 p{line-height: 2;}
               }
+              span{padding-bottom: 0.2vw;}
 
             }
-            .bottom{white-space: nowrap;}
+            .bottom{white-space: nowrap;margin-top: 1.6vw;}
           }
           &:hover {
             .txt_w{opacity: 1;}
@@ -425,7 +426,8 @@
                 h4{
                   p{}
                 }
-                span{font-size: 2.5vw;}
+                
+                span{font-size: 2.5vw; padding-bottom: 0.4vw;}
               }
               .bottom{margin-top: 5.556vw;}
             }
@@ -440,7 +442,7 @@
               .txt_w{bottom: unset; left: unset; right: 0; top: 100%;}
             }
             &:nth-child(4) {left: 43.056vw; top: 107.5vw;
-              .txt_w{bottom: unset; right: -300%; top: 110%;}
+              .txt_w{bottom: unset; right: -200%; top: 110%;}
             }
             &:nth-child(5) {left: unset; top: unset; bottom: 15.278vw; right: 18.889vw;
               .txt_w{bottom: 110%; left: unset; right: -40%; top: unset;}
