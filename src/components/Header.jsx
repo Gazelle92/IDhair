@@ -116,7 +116,12 @@ function Header() {
           </button>
 
           <div className="h_nav_group_1 gt_all display-xs">
-            <a onClick={() => setSalonOpen(true)}>Salon</a>
+            <a
+              onClick={() => {
+                setNavOpen(false);
+                setSalonOpen(true);
+              }}
+            >Salon</a>
             <TransitionLink to="/about" onClick={() => setNavOpen(false)}>id Hair</TransitionLink>
             <TransitionLink to="/academy" onClick={() => setNavOpen(false)}>id Academy</TransitionLink>
             <TransitionLink to="/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>

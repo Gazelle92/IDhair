@@ -63,8 +63,8 @@ function About() {
     const updateSwitchImage = () => {
       frameId = null;
 
-      const rect = switchElement.getBoundingClientRect();
       const isVertical = window.matchMedia("(max-width: 1024px)").matches;
+      const rect = switchElement.getBoundingClientRect();
       let progress;
 
       if (isVertical) {
@@ -80,8 +80,8 @@ function About() {
           0,
           (track?.scrollWidth ?? viewportWidth) - viewportWidth,
         );
-        const elementTrackLeft = rect.left + horizontalX;
-        const entryX = elementTrackLeft - viewportWidth;
+        const elementTrackRight = rect.right + horizontalX;
+        const entryX = elementTrackRight - viewportWidth;
         const availableRange = Math.max(1, maxHorizontalX - entryX);
 
         progress = Math.min(

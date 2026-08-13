@@ -180,7 +180,7 @@
     }
 
     .h_nav_group_1{display: flex; flex-direction: column; gap: 0.242vw; align-items: flex-start;
-      a{font-weight: 300;
+      a{font-weight: 300; cursor: pointer;
         &:nth-child(1){margin-bottom: 3.394vw;}
       }
     }
