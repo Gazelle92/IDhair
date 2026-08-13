@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAboutIntroAnimation from "../lib/useAboutIntroAnimation";
 import useAboutNumberCounter from "../lib/useAboutNumberCounter";
 import useAboutSmoothScroll from "../lib/useAboutSmoothScroll";
@@ -9,6 +9,7 @@ const FALLBACK_INTRO_VIDEO_URL = "/video/About_intro.mp4";
 
 function About() {
   const [introVideoUrl, setIntroVideoUrl] = useState("");
+  const switchRef = useRef(null);
 
   useAboutIntroAnimation(introVideoUrl);
   useAboutNumberCounter();
@@ -47,6 +48,83 @@ function About() {
       preloadLink.remove();
     };
   }, [introVideoUrl]);
+
+  useEffect(() => {
+    const switchElement = switchRef.current;
+    const images = switchElement
+      ? [...switchElement.querySelectorAll(":scope > .t_m_1")]
+      : [];
+
+    if (!switchElement || images.length === 0) return undefined;
+
+    let frameId = null;
+    let horizontalX = 0;
+
+    const updateSwitchImage = () => {
+      frameId = null;
+
+      const rect = switchElement.getBoundingClientRect();
+      const isVertical = window.matchMedia("(max-width: 1024px)").matches;
+      let progress;
+
+      if (isVertical) {
+        const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+        progress = Math.min(
+          1,
+          Math.max(0, (viewportHeight - rect.top) / Math.max(1, viewportHeight)),
+        );
+      } else {
+        const track = document.querySelector("[data-about-horizontal-track]");
+        const viewportWidth = document.documentElement.clientWidth;
+        const maxHorizontalX = Math.max(
+          0,
+          (track?.scrollWidth ?? viewportWidth) - viewportWidth,
+        );
+        const elementTrackLeft = rect.left + horizontalX;
+        const entryX = elementTrackLeft - viewportWidth;
+        const availableRange = Math.max(1, maxHorizontalX - entryX);
+
+        progress = Math.min(
+          1,
+          Math.max(0, (horizontalX - entryX) / availableRange),
+        );
+      }
+      const activeIndex = Math.min(
+        images.length - 1,
+        Math.floor(progress * images.length),
+      );
+
+      images.forEach((image, index) => {
+        image.classList.toggle("active", index === activeIndex);
+      });
+    };
+
+    const requestSwitchUpdate = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(updateSwitchImage);
+    };
+
+    const handleHorizontalScroll = (event) => {
+      horizontalX = Number(event.detail?.x) || 0;
+      requestSwitchUpdate();
+    };
+
+    updateSwitchImage();
+    window.addEventListener("about-horizontal-scroll", handleHorizontalScroll);
+    window.addEventListener("scroll", requestSwitchUpdate, { passive: true });
+    window.addEventListener("resize", requestSwitchUpdate);
+    window.visualViewport?.addEventListener("resize", requestSwitchUpdate);
+
+    return () => {
+      window.removeEventListener("about-horizontal-scroll", handleHorizontalScroll);
+      window.removeEventListener("scroll", requestSwitchUpdate);
+      window.removeEventListener("resize", requestSwitchUpdate);
+      window.visualViewport?.removeEventListener("resize", requestSwitchUpdate);
+
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+      images.forEach((image) => image.classList.remove("active"));
+    };
+  }, []);
 
   return (
     <main
@@ -317,8 +395,12 @@ function About() {
           </div>
           <div className="as_8_2 ani_x t_m_w">
             <div className="img_w">
-              <img className="t_m_1" src="/img/as_7_4_1.jpg"/>
-              <img className="t_m_1" src="/img/as_7_4_2.jpg"/>
+              <div className="switch_w" ref={switchRef}>
+                <img className="t_m_1" src="/img/as_7_3_1.jpg"/>
+                <img className="t_m_1" src="/img/as_7_3_2.jpg"/>
+                <img className="t_m_1" src="/img/as_7_3_3.jpg"/>
+                <img className="t_m_1" src="/img/as_7_3_4.jpg"/>
+              </div>
               <div className="as_text body-m">
                 <img className="t_m_2" src="/img/as_7_4_3.png"/>
                 <span className="magin_text t_m_3">&#123; 세컨드 하이엔드 브랜드 &#125;</span>

@@ -27,7 +27,7 @@
       .intro_video{ position: absolute; opacity: 1; width:100%;
         video{width: 100%; height: 100%; object-fit: cover;}
       }
-      
+
     }
     &.intro_start{clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
       /*.intro_video_w{ opacity:0; width:20%;
@@ -206,7 +206,12 @@
     }
     .as_8_2{padding: 0 26.6667vw 0 20.5128vw; display: flex; align-items: center; flex-direction: column; justify-content: center;  position: relative;
       .img_w{height: 28.8vw; aspect-ratio: 720 / 450; display:flex; overflow:hidden;
-        > img{display:block; width:60%; height:100%; object-fit: cover; max-width:unset; will-change:transform;}
+        .switch_w{width: 100%; height: 100%; position: relative;
+          > img{display:none; position: absolute; width:110%; height:100%; object-fit: cover; max-width:unset; will-change:transform; left: 0; top: 0;
+            &.active{display:block;}
+          }
+        }
+
       }
       .as_text{display:flex;  position: absolute; top:100%;
         img{width:11.9231vw; margin-top: 2.0513vw;}
@@ -535,7 +540,10 @@
 
     .as_8_2{display: block; padding: 0 0 72.222vw; position: relative;
       .img_w{height: unset; overflow: unset; aspect-ratio: unset;
-        > img{width: 29.722vw; height: unset;}
+        .switch_w{width: 59.444vw; height: unset; position: relative; aspect-ratio: 800 / 450;
+          > img{width: 100%; height: 100%;}
+        }
+        
       }
 
       .as_text{position: unset; display: flex; flex-direction: column; position: absolute; top: 42.778vw; justify-content: center; align-items: center; left: 50%; transform: translateX(-50%); text-align: center;
