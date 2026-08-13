@@ -78,6 +78,7 @@
   .md_body{padding:4.848vw 0 0; position: relative;
     article{min-width: 43.636vw; max-width: 50%; margin: auto; font-size: 0.970vw; font-weight: 400; line-height: 1.7; padding-bottom: 4.848vw;
       &>*:not(:last-child){margin-bottom: 2.424vw;}
+      strong{font-weight: 700;}
       img{width: 100%;}
     }
     .md_body_nav_w{position: absolute; left:0; top: 0; height: 100%; width: 100%; pointer-events: none;
