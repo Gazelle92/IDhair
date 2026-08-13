@@ -217,7 +217,7 @@
   }
 
 
-  .as_3 .as_3_2 .card_w, .as_3 .as_3_3 .card_w, .as_4 .card_w.card_w_s{padding-top: 0; margin-top: 11.5385vw; height: calc(100% - 11.5385vw); aspect-ratio: 480 / 720; width: unset;}
+  .as_3 .as_3_2 .card_w, .as_3 .as_3_3 .card_w, .as_4 .card_w.card_w_s{padding-top: 0; margin-top: 11.5385vw; height: calc(100% - 11.5385vw); aspect-ratio: /*480 / 720*/768 / 1440; width: unset;}
 
   @media (min-width: 1025px){
     margin-bottom: 0!important;

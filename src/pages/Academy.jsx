@@ -529,11 +529,11 @@ function Academy() {
               <img src="/img/ac_3_1.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">1 김 서 윤&nbsp;<p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">과천점 이 유 나&nbsp;<p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  기초부터 차근차근 배울 수 있어 좋았고, <br/>
+                  다양한 작품을 만들며 여러 기술을 익힐 수 있었습니다.<br/>
+                  감사합니다.
                 </div>
               </div>
             </li>
@@ -541,11 +541,11 @@ function Academy() {
               <img src="/img/ac_3_2.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">2 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">광교중앙 양 지 원&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  아카데미 교육을 들으면서 회차마다 각 선생님들마다<br/> 
+                  다른 스타일의 컷트교육을 해주셔서 다양한 기술을<br/> 
+                  배울 수 있어서 좋았습니다.                 
                 </div>
               </div>
             </li>
@@ -553,11 +553,12 @@ function Academy() {
               <img src="/img/ac_3_3.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">3 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">동탄목동 김 혜 미&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  
+                  기본기의 중요성을 다시 한번 느낄 수 있었고,<br/>
+                  배운 내용을 실제로 친구 머리에 적용해 볼 수 있어 <br/>
+                  더욱 뜻깊은 교육이었습니다.
                 </div>
               </div>
             </li>
@@ -565,11 +566,12 @@ function Academy() {
               <img src="/img/ac_3_4.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">4 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">올림픽둔촌 황 은 설&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  교육이 체계적으로 구성되어 있어서 이해하기 쉬웠고,<br/>
+                  디테일한 부분까지 꼼꼼하게 배울 수 있어 좋았습니다.<br/>
+                  살롱에서 바로 적용할 수 있는 실전 노하우를 많이<br/>
+                  알려주셔서 도움이 많이 됐습니다.
                 </div>
               </div>
             </li>
@@ -577,11 +579,10 @@ function Academy() {
               <img src="/img/ac_3_5.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">5 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">용인수지 김 준 우&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  아카데미 교육을 통해 기본기를 더욱 탄탄하게 다질 수 있었고<br/>
+                  실무에 바로 적용할 수 있는 기술과 노하우들을 많이 배웠습니다!
                 </div>
               </div>
             </li>
@@ -589,11 +590,12 @@ function Academy() {
               <img src="/img/ac_3_6.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">6 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">원마운트 이 채 원&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  강사님들의 꼼꼼하고 세심한 지도 덕분에<br/>
+                  처음 배우는 사람도 쉽게 이해할 수 있었으며,<br/>
+                  커트의 기본기와 최신 헤어 트렌드까지 함께 배울 수 있어<br/>
+                  더욱 흥미롭고 유익한 교육이었습니다. ✨
                 </div>
               </div>
             </li>
@@ -601,11 +603,11 @@ function Academy() {
               <img src="/img/ac_3_7.png" alt="" />
               <div className="txt_w">
                 <div className="edge_w"><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/><img src="/img/edge.svg"/></div>
-                <div className="top"><h4 className="body-l">7 김 서 윤&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
+                <div className="top"><h4 className="body-l">지축점 김 연 지&nbsp; <p className="body-s"> 님</p></h4><span className="caption-m txt-gray">2025년도 수료</span></div>
                 <div className="bottom body-s">
-                  기술은 물론 고객 상담 방식까지 완전히 달라졌어요.<br/>
-                  수료 후 바로 살롱 현장에서 재방문 고객이 늘면서<br/>
-                  제 시그니처 스타일이 생겼다는 자신감이 생겼습니다.<br/>
+                  기본기부터 실무 기술까지 체계적으로 배울 수 있었으며,<br/>
+                  다양한 원장님과 점장님을 만나 미용인으로서의 자세와<br/>
+                  방향성을 되돌아볼 수 있는 뜻깊은 교육이었습니다. ✨
                 </div>
               </div>
             </li>
