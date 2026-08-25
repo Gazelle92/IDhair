@@ -53,11 +53,9 @@ function MainStoryPanel({ story, index }) {
       </div>
       <div className="main_story_shade" aria-hidden="true" />
 
-      <div className="main_story_copy apprael_all" aria-hidden="true">
-        <span>MY</span>
-        <span>IDENTITY</span>
-        <span>MY</span>
-        <span>id HAIR</span>
+      <div className="main_story_copy apprael_all display-l" aria-hidden="true">
+        <span>MY<br/>IDENTITY</span>
+        <span>MY<br/>id HAIR</span>
       </div>
 
       <div className="main_story_cards">
@@ -202,6 +200,8 @@ function Main() {
       ];
 
       panels.forEach((panel, index) => {
+        if (panel.classList.contains("main_news_panel_1")) return;
+
         const [start, end] = ranges[index];
         const revealProgress = reducedMotion.matches
           ? sectionProgress >= start ? 1 : 0

@@ -2,18 +2,21 @@
   .main_story{height:1200vh; height:1200svh; position:relative; background:#fff;
     .main_story_stage{height:100vh; height:100svh; position:sticky; top:0; overflow:hidden; isolation:isolate; background:#fff;}
     .main_story_panel{position:absolute; inset:0; overflow:hidden; background:#fff; will-change:clip-path, transform;
-      &.main_story_panel_1{z-index:1;}
-      &.main_story_panel_2{z-index:2; clip-path:inset(0 0 0 100%); transform:translate3d(18vw,0,0);}
+      &.main_story_panel_1{z-index:1;
+        .main_story_copy span:nth-child(1){top:30%; left:32px;}
+        .main_story_copy span:nth-child(2){top:51%; right: 32px;  text-align: right;}
+      }
+      &.main_story_panel_2{z-index:2; clip-path:inset(0 0 0 100%); transform:translate3d(18vw,0,0);
+        .main_story_copy span:nth-child(1){left:32px; bottom:0;}
+        .main_story_copy span:nth-child(2){right:32px; bottom:0; text-align: right;}
+      }
       .main_story_background{position:absolute; inset:-1.5%; z-index:0; overflow:hidden;
         img{width:100%; height:100%; max-width:none; object-fit:cover; transform:scale(1); filter:blur(0) brightness(1); will-change:filter, transform;}
       }
       .main_story_shade{position:absolute; inset:0; z-index:1; background:#000; opacity:0; pointer-events:none; will-change:opacity;}
-      .main_story_copy{position:absolute; inset:0; z-index:2; color:var(--txt-ac); pointer-events:none; font-size:8.485vw; font-weight:300; line-height:.86; letter-spacing:-.035em;
+      .main_story_copy{position:absolute; inset:0; z-index:2; color:var(--txt-ac); pointer-events:none; 
         span{position:absolute; white-space:nowrap;}
-        span:nth-child(1){left:3.333vw; top:30%;}
-        span:nth-child(2){left:3.333vw; top:51%;}
-        span:nth-child(3){right:4.242vw; top:57%;}
-        span:nth-child(4){right:3.333vw; top:75%;}
+        
       }
       .main_story_cards{position:absolute; inset:0; z-index:3; pointer-events:none;}
       .main_story_card_slot{position:absolute; width:33.333vw; aspect-ratio:1; transform:translate(-50%,-50%);
@@ -48,6 +51,7 @@
     }
     .main_news_panels{position:relative; z-index:1; width:58.182vw; height:11.515vw; min-height:9.7rem;}
     .main_news_panel{position:absolute; inset:0; display:flex; margin:0; padding:.364vw; overflow:hidden; background:#fff; clip-path:inset(100% 0 0 0); will-change:clip-path;
+      &.main_news_panel_1{clip-path: unset!important;}
       @for $i from 1 through 3{
         &.main_news_panel_#{$i}{z-index:$i;}
       }

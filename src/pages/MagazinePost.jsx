@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
 import PortableNewsContent from "../components/PortableNewsContent";
-import { fetchMagazinePost, formatNewsDate, getNewsImageUrl, getPostTypeForCategory } from "../lib/sanityNews";
+import { fetchMagazinePost, formatNewsDate, getPostTypeForCategory } from "../lib/sanityNews";
 import { refreshFadeSlice } from "../hook/useFadeSlice";
 import "../styles/MagazinePost.scss";
 
@@ -108,7 +108,6 @@ function MagazinePost() {
         <section className="md_body">
           <div className="md_body_inner">
             <article>
-              {post.thumbnail && <img className="ani fade-img" src={getNewsImageUrl(post.thumbnail, 1280)} alt="" />}
               <div>
                 <PortableNewsContent value={post.content} />
               </div>

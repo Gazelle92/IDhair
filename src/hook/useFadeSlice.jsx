@@ -11,6 +11,7 @@ function getFadeSliceText(description, target) {
   return source
     .replace(/<br\s*\/?>/gi, ` ${BR_TOKEN} `)
     .replace(/<\/?[^>]+>/g, "")
+    .replace(/\r?\n/g, ` ${BR_TOKEN} `)
     .replace(/[^\S\r\n]+/g, " ")
     .trim();
 }

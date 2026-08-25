@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { getNewsImageUrl } from "../lib/sanityNews";
 
 const getBlockText = (block) =>
@@ -62,7 +63,7 @@ const renderBlock = (block) => {
   const fadeProps = hasInlineFormatting
     ? {}
     : {
-        className: "fade-slice fadeX ani",
+        className: "fadeX ani",
         "data-description": description,
       };
 
@@ -80,7 +81,7 @@ const renderBlock = (block) => {
 function PortableNewsContent({ value = [] }) {
   if (!value.length) return null;
 
-  return value.map((block) => {
+  return value.map((block, index) => {
     if (block._type === "image") {
       return (
         <figure className="news_content_image" key={block._key}>
@@ -91,7 +92,14 @@ function PortableNewsContent({ value = [] }) {
     }
 
     if (block._type === "block") {
-      return renderBlock(block);
+      const nextBlock = value[index + 1];
+
+      return (
+        <Fragment key={block._key}>
+          {renderBlock(block)}
+          {nextBlock?._type === "block" && <br />}
+        </Fragment>
+      );
     }
 
     return null;
