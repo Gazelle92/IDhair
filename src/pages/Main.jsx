@@ -62,9 +62,9 @@ function MainStoryPanel({ story, index }) {
       </div>
       <div className="main_story_shade" aria-hidden="true" />
 
-      <div className="main_story_copy apprael_all display-l" aria-hidden="true">
-        <span>MY<br/>IDENTITY</span>
-        <span>MY<br/>id HAIR</span>
+      <div className="main_story_copy apprael_all display-l ani apprael_ani" aria-hidden="true">
+        <span className="">MY<br/>IDENTITY</span>
+        <span className="">MY<br/>id HAIR</span>
       </div>
 
       <div className="main_story_cards">
