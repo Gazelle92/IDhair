@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import TransitionLink from "../components/TransitionLink";
-import { fetchGalleryPosts, getNewsImageUrl } from "../lib/sanityNews";
+import {
+  fetchGalleryPosts,
+  fetchNewsPosts,
+  formatNewsDate,
+  getNewsImageUrl,
+} from "../lib/sanityNews";
 import "../styles/main.scss";
 
 const MAIN_STORIES = [
@@ -24,18 +29,21 @@ const MAIN_NEWS = [
     dateTime: "2026-03-10",
     image: "/img/mg_list_1.jpg",
     title: <>새로운 브랜드 캠페인을 통해 선보이는<br />아이디헤어의 방향성과 감각</>,
+    url: "/magazine/id-news",
   },
   {
     date: "2026.02.20",
     dateTime: "2026-02-20",
     image: "/img/mg_list_2.jpg",
     title: <>아이디헤어가 새롭게 제안하는<br />2026 시즌 헤어 트렌드</>,
+    url: "/magazine/id-news",
   },
   {
     date: "2026.01.15",
     dateTime: "2026-01-15",
     image: "/img/mg_list_3.jpg",
     title: <>일상 속 아름다움을 완성하는<br />아이디헤어의 새로운 이야기</>,
+    url: "/magazine/id-news",
   },
 ];
 
@@ -78,19 +86,18 @@ function MainStoryPanel({ story, index }) {
       {index === 0 && (
         <div className="main_story_notice">
           <div>
-            <strong>2026 상반기 신입 디자이너 채용</strong>
-            <span>2026 아이디헤어와 함께<br />새로운 시선으로 변화를 만들 디자이너를 기다립니다.</span>
+            <strong className="body-m fw-sb">2026 상반기 신입 디자이너 채용</strong>
+            <span className="caption-m fw-r">2026 아이디헤어와 함께<br />새로운 시선으로 변화를 만들 디자이너를 기다립니다.</span>
           </div>
           <div className="main_story_notice_arrow" aria-hidden="true">
-            <span>→</span>
-            <span>←</span>
+            <img src="./img/arrow_right_s.svg"/>
+            <img src="./img/arrow_right_s.svg"/>
           </div>
         </div>
       )}
 
       <div className="main_story_scroll body-s" aria-hidden="true">
         <span>[ SCROLL ]</span>
-        <i />
       </div>
     </div>
   );
@@ -103,6 +110,31 @@ function Main() {
     image: "/img/main_3_bg.jpg",
     title: "id GALLERY",
   });
+  const [mainNews, setMainNews] = useState(MAIN_NEWS);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchNewsPosts()
+      .then((posts) => {
+        if (!isMounted || !posts.length) return;
+
+        setMainNews(posts.slice(0, 3).map((post) => ({
+          date: formatNewsDate(post.publishedAt),
+          dateTime: post.publishedAt || "",
+          image: getNewsImageUrl(post.thumbnail, 960),
+          title: post.title,
+          url: `/magazine/id-news/post/${post._id}`,
+        })));
+      })
+      .catch((error) => {
+        console.error("Failed to load latest news posts on main", error);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -281,19 +313,19 @@ function Main() {
           </div>
 
           <div className="main_news_panels">
-            {MAIN_NEWS.map((news, index) => (
-              <article className={`main_news_panel main_news_panel_${index + 1}`} key={news.image}>
+            {mainNews.map((news, index) => (
+              <article className={`main_news_panel main_news_panel_${index + 1}`} key={`main-news-${index}`}>
                 <div className="main_news_thumbnail">
                   <img src={news.image} alt="id NEWS" />
                 </div>
 
                 <div className="main_news_content">
-                  <time dateTime={news.dateTime}>{news.date}</time>
-                  <h2 className="gt_all">id NEWS</h2>
-                  <p>{news.title}</p>
-                  <TransitionLink className="main_news_more" to="/magazine/id-news">
-                    <span>VIEW MORE</span>
-                    <i aria-hidden="true">→</i>
+                  <time className="caption-m" dateTime={news.dateTime}>{news.date}</time>
+                  <h2 className="display-xs fw-r gt_all">id NEWS</h2>
+                  <p className="head-s fw-sb">{news.title}</p>
+                  <TransitionLink className="main_news_more" to={news.url}>
+                    <span className="body-s fw-b">VIEW MORE</span>
+                    <img src="./img/arrow_right_l.svg"/>
                   </TransitionLink>
                 </div>
               </article>
