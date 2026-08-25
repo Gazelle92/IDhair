@@ -63,7 +63,7 @@ const renderBlock = (block) => {
   const fadeProps = hasInlineFormatting
     ? {}
     : {
-        className: "fadeX ani",
+        className: "",
         "data-description": description,
       };
 
@@ -92,12 +92,10 @@ function PortableNewsContent({ value = [] }) {
     }
 
     if (block._type === "block") {
-      const nextBlock = value[index + 1];
-
       return (
         <Fragment key={block._key}>
           {renderBlock(block)}
-          {nextBlock?._type === "block" && <br />}
+          {value[index + 1]?._type === "block" && <br />}
         </Fragment>
       );
     }
