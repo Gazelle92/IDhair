@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import TransitionLink from "../components/TransitionLink";
+import { fetchGalleryPosts, getNewsImageUrl } from "../lib/sanityNews";
 import "../styles/main.scss";
 
 const MAIN_STORIES = [
@@ -98,6 +99,36 @@ function MainStoryPanel({ story, index }) {
 function Main() {
   const sceneRef = useRef(null);
   const newsRevealRef = useRef(null);
+  const [collectionPosting, setCollectionPosting] = useState({
+    image: "/img/main_3_bg.jpg",
+    title: "id GALLERY",
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+
+    fetchGalleryPosts()
+      .then(([featuredPost]) => {
+        if (!isMounted || !featuredPost) return;
+
+        const coverImage = featuredPost.thumbnail || featuredPost.images?.[0];
+        const image = getNewsImageUrl(coverImage, 1280);
+
+        if (image) {
+          setCollectionPosting({
+            image,
+            title: featuredPost.title || "id GALLERY",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to load featured gallery post on main", error);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -182,7 +213,6 @@ function Main() {
     if (!section) return undefined;
 
     const panels = [...section.querySelectorAll(".main_news_panel")];
-    const background = section.querySelector(".main_news_background img");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frameId = null;
 
@@ -211,7 +241,6 @@ function Main() {
         panel.style.clipPath = `inset(${topInset}% 0% 0% 0%)`;
       });
 
-      background.style.transform = `scale(${1.06 - sectionProgress * 0.06})`;
     };
 
     const requestNewsUpdate = () => {
@@ -248,7 +277,7 @@ function Main() {
       <section className="main_news_reveal" ref={newsRevealRef}>
         <div className="main_news_stage">
           <div className="main_news_background" aria-hidden="true">
-            <img src="/img/main_2_1.jpg" alt="" />
+            <img src="/img/main_2_bg.jpg" alt="" />
           </div>
 
           <div className="main_news_panels">
@@ -271,6 +300,23 @@ function Main() {
             ))}
           </div>
         </div>
+      </section>
+      <section className="main_collection">
+        <div className="inner">
+          <img className="bg" src="./img/main_3_bg.jpg"/>
+          <TransitionLink
+            className="posting"
+            to="/magazine/id-gallery"
+          >
+            <img src={collectionPosting.image} alt={collectionPosting.title}/>
+          </TransitionLink>
+          <h1 className="txt-ac display-l apprael title_txt fw-l">2026 S/S<br/>COLLECTION</h1>
+        </div>
+        
+
+      </section>
+      <section className="main_collection_fake">
+            
       </section>
     </main>
   );

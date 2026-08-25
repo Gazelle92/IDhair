@@ -1,5 +1,5 @@
-.page_main{width:100%; font-size:0; overflow:clip;
-  .main_story{height:1200vh; height:1200svh; position:relative; background:#fff;
+.page_main{width:100%; font-size:0; overflow:clip; position: relative;
+  .main_story{height:1200vh; height:1200svh; position:relative; background:#fff; z-index: 1;
     .main_story_stage{height:100vh; height:100svh; position:sticky; top:0; overflow:hidden; isolation:isolate; background:#fff;}
     .main_story_panel{position:absolute; inset:0; overflow:hidden; background:#fff; will-change:clip-path, transform;
       &.main_story_panel_1{z-index:1;
@@ -43,11 +43,11 @@
       }
     }
   }
-  .main_news_reveal{height:520vh; height:520svh; position:relative; background:#f3f3f3;
+  .main_news_reveal{height:300svh; position:relative; background:#f3f3f3; z-index: 1;
     .main_news_stage{height:100vh; height:100svh; position:sticky; top:0; display:flex; align-items:center; justify-content:center; overflow:hidden; isolation:isolate;}
     .main_news_background{position:absolute; inset:0; z-index:0; overflow:hidden;
       &::after{content:""; position:absolute; inset:0; background:rgba(255,255,255,.08); pointer-events:none;}
-      img{display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center 43%; transform:scale(1.06); will-change:transform;}
+      img{display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center 43%;}
     }
     .main_news_panels{position:relative; z-index:1; width:58.182vw; height:11.515vw; min-height:9.7rem;}
     .main_news_panel{position:absolute; inset:0; display:flex; margin:0; padding:.364vw; overflow:hidden; background:#fff; clip-path:inset(100% 0 0 0); will-change:clip-path;
@@ -68,6 +68,17 @@
       i{font-size:1.152vw; font-style:normal; font-weight:300; line-height:1;}
     }
   }
+
+  .main_collection{position: absolute; top: 0; left: 0; height: 100%; width: 100%;
+    .inner{position: sticky; left: 0; top: 0; width: 100%; height: 100svh;
+      .bg{width: 100%; height: 100%; object-fit: cover;}
+      h1{position: absolute;bottom: 0; width: 100%; text-align: center;}
+      .posting{top: 50%; transform: translateY(-50%); right: 3.636vw; aspect-ratio: 1 / 1; height: 53svh; position: absolute;
+        img{width: 100%; height: 100%; object-fit: cover;}
+      }
+    }
+  }
+  .main_collection_fake{position: relative; height: 100svh; width: 100%; pointer-events: none;}
 }
 
 @media(max-width:1024px){
