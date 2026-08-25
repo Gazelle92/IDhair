@@ -432,7 +432,6 @@ function Academy() {
                   <img src="/img/ac_2_3.jpg"/>
                   <img src="/img/ac_2_4.jpg"/>
                   <img src="/img/ac_2_5.jpg"/>
-                  <img src="/img/ac_2_6.jpg"/>
                   <img src="/img/ac_2_7.jpg"/>
                   <img src="/img/ac_2_8.jpg"/>
                 </div>
@@ -472,11 +471,7 @@ function Academy() {
                     <span>현장 스타일링 프로세스 교육7</span>
                     <span>프리미엄 무드 연출7</span>
                   </li>
-                  <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문8</span>
-                    <span>현장 스타일링 프로세스 교육8</span>
-                    <span>프리미엄 무드 연출8</span>
-                  </li>
+
                 </ul>
               </div>
               
@@ -502,10 +497,7 @@ function Academy() {
                 <h4 className="body-l fw-b">Men's Grooming Expert</h4>
                 <span className="head-l">이 은 혜</span>
               </li>
-              <li>
-                <h4 className="body-l fw-b">Luxury Styling Director</h4>
-                <span className="head-l">이 정 빈</span>
-              </li>
+
               <li>
                 <h4 className="body-l fw-b">Scalp &amp; Care Consultant</h4>
                 <span className="head-l">진 영 준</span>
