@@ -7,15 +7,15 @@ const getBlockText = (block) =>
     .join("")
     .trim() || "";
 
-const renderTextSpan = (child, markDefs = []) => {
+const renderTextChild = (child, markDefs = []) => {
   if (!child?.text) return null;
 
   const childKey = child._key || "span";
-  let content = child.text.split("\n").map((line, index, lines) => (
-    <span key={`${childKey}-${index}`}>
-      {line}
-      {index < lines.length - 1 && <br />}
-    </span>
+  const lines = child.text.split("\n");
+  let content = lines.flatMap((line, index) => (
+    index < lines.length - 1
+      ? [line, <br key={`${childKey}-br-${index}`} />]
+      : [line]
   ));
 
   child.marks?.forEach((mark, index) => {
@@ -52,36 +52,28 @@ const renderTextSpan = (child, markDefs = []) => {
     }
   });
 
-  return <span key={childKey}>{content}</span>;
+  return <Fragment key={childKey}>{content}</Fragment>;
 };
 
 const renderBlock = (block) => {
-  const children = block.children?.map((child) => renderTextSpan(child, block.markDefs));
+  const children = block.children?.map((child) => renderTextChild(child, block.markDefs));
   const key = block._key;
-  const description = getBlockText(block);
-  const hasInlineFormatting = block.children?.some((child) => child.marks?.length);
-  const fadeProps = hasInlineFormatting
-    ? {}
-    : {
-        className: "",
-        "data-description": description,
-      };
 
   if (block.listItem) {
-    return <li key={key} {...fadeProps}>{children}</li>;
+    return <li key={key}>{children}</li>;
   }
 
-  if (block.style === "h2") return <h2 key={key} {...fadeProps}>{children}</h2>;
-  if (block.style === "h3") return <h3 key={key} {...fadeProps}>{children}</h3>;
-  if (block.style === "blockquote") return <blockquote key={key} {...fadeProps}>{children}</blockquote>;
+  if (block.style === "h2") return <h2 key={key}>{children}</h2>;
+  if (block.style === "h3") return <h3 key={key}>{children}</h3>;
+  if (block.style === "blockquote") return <blockquote key={key}>{children}</blockquote>;
 
-  return <p key={key} {...fadeProps}>{children}</p>;
+  return <p key={key}>{children}</p>;
 };
 
 function PortableNewsContent({ value = [] }) {
   if (!value.length) return null;
 
-  return value.map((block, index) => {
+  return value.map((block) => {
     if (block._type === "image") {
       return (
         <figure className="news_content_image" key={block._key}>
@@ -92,12 +84,7 @@ function PortableNewsContent({ value = [] }) {
     }
 
     if (block._type === "block") {
-      return (
-        <Fragment key={block._key}>
-          {renderBlock(block)}
-          {value[index + 1]?._type === "block" && <br />}
-        </Fragment>
-      );
+      return getBlockText(block) ? renderBlock(block) : <br key={block._key} />;
     }
 
     return null;
