@@ -12,6 +12,7 @@
         .main_story_scroll{display: none;}
       }
       .main_story_background{position:absolute; inset:-1.5%; z-index:0; overflow:hidden; pointer-events: none;
+        picture{display:block; width:100%; height:100%;}
         img{width:100%; height:100%; max-width:none; object-fit:cover; transform:scale(1); filter:blur(0) brightness(1); will-change:filter, transform;}
       }
       .main_story_shade{position:absolute; inset:0; z-index:1; background:#000; opacity:0; pointer-events:none; will-change:opacity;}
@@ -86,6 +87,10 @@
   .page_main{
     .main_story{
       .main_story_panel{
+        A.main_story_copy span:nth-child(1){top:80px; left:unset; right: 12px;text-align: right;}
+        .main_story_copy span:nth-child(2){top:unset; bottom: 12px; right: unset; left: 12px;  text-align: left;}
+        &:not(.main_story_panel_1) .main_story_copy span:nth-child(1){bottom: unset; top:80px; left:unset; right: 12px; text-align: right;}
+        &:not(.main_story_panel_1) .main_story_copy span:nth-child(2){text-align: left;}
         &.main_story_panel_1{z-index:1;
           .main_story_copy span:nth-child(1){top:80px; left:unset; right: 12px;text-align: right;}
           .main_story_copy span:nth-child(2){top:unset; bottom: 120px; right: unset; left: 12px;  text-align: left;}
@@ -102,11 +107,30 @@
 
         .main_story_card_slot{width: 133px;
           &.main_story_card_slot_1{left: 20px;}
-          &.main_story_card_slot_2{}
+          &.main_story_card_slot_2{top:58%;}
           &.main_story_card_slot_3{right: 20px;}
         }
       }
       
+    }
+    .main_news_reveal{ 
+      .main_news_panel{flex-direction: column; width: calc(100% - 40px); left: 20px; 
+        .main_news_thumbnail{width: unset; padding: 12px;
+          img{width: 57.5%;}
+        }
+        .main_news_content{width: 100%; padding:0 12px 12px 12px; position: unset; gap: 0;
+          .main_news_more{position: unset; gap: 8px;
+            img{width: 26px;}
+          }
+          h2{top: 12px; right: 12px;}
+          p{padding: 4px 0 20px;}
+        }
+      }
+    }
+    .main_collection {
+      .inner{ 
+        .posting{width: 214px;height: unset; aspect-ratio: 1 / 1; transform: translate(-50%, -50%); left: 50%;}
+      }
     }
 
   }

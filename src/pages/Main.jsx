@@ -17,12 +17,14 @@ const MAIN_STORIES = [
   },
   {
     background: "/img/main_1_2_bg.jpg",
+    mobileBackground: "/img/main_1_2_bg_mob.jpg",
     backgroundAlt: "LOOK BETTER, FEEL BETTER",
     cards: ["/img/main_1_2_1.jpg", "/img/main_1_2_2.jpg", "/img/main_1_2_3.jpg"],
     theme: "green",
   },
   {
     background: "/img/main_1_3_bg.jpg",
+    mobileBackground: "/img/main_1_3_bg_mob.jpg",
     backgroundAlt: "id HAIR MY IDENTITY white campaign",
     cards: ["/img/main_1_3_1.jpg", "/img/main_1_3_2.jpg", "/img/main_1_3_3.jpg"],
     theme: "white",
@@ -43,7 +45,12 @@ function MainStoryPanel({ story, index }) {
       style={{ zIndex: index + 1 }}
     >
       <div className="main_story_background">
-        <img src={story.background} alt={story.backgroundAlt} />
+        <picture>
+          {story.mobileBackground && (
+            <source media="(max-width: 1024px)" srcSet={story.mobileBackground} />
+          )}
+          <img src={story.background} alt={story.backgroundAlt} />
+        </picture>
       </div>
       <div className="main_story_shade" aria-hidden="true" />
 
@@ -321,7 +328,8 @@ function Main() {
       <section className="main_news_reveal" ref={newsRevealRef}>
         <div className="main_news_stage">
           <div className="main_news_background" aria-hidden="true">
-            <img src="/img/main_2_bg.jpg" alt="" />
+            <img className="pc" src="/img/main_2_bg.jpg" alt="" />
+            <img className="mob" src="/img/main_2_bg_mob.jpg" alt="" />
           </div>
 
           <div className="main_news_panels">
@@ -347,7 +355,8 @@ function Main() {
       </section>
       <section className="main_collection">
         <div className="inner">
-          <img className="bg" src="./img/main_3_bg.jpg"/>
+          <img className="bg pc" src="./img/main_3_bg.jpg"/>
+          <img className="bg mob" src="./img/main_3_bg_mob.jpg"/>
           <TransitionLink
             className="posting"
             to="/magazine/id-gallery"
