@@ -85,6 +85,54 @@
 
 @media(max-width:1024px){
   .page_main{
+  .main_story{
+    .main_story_panel{
+      .main_story_scroll{top: 70vw; right: 0;}
+      A.main_story_copy span:nth-child(1){top:22.222vw; left:unset; right:3.333vw; text-align:right;}
+      .main_story_copy span:nth-child(2){top:unset; bottom:3.333vw; right:unset; left:3.333vw; text-align:left;}
+      &:not(.main_story_panel_1) .main_story_copy span:nth-child(1){bottom:unset; top:22.222vw; left:unset; right:3.333vw; text-align:right;}
+      &:not(.main_story_panel_1) .main_story_copy span:nth-child(2){text-align:left;}
+      &.main_story_panel_1{z-index:1;
+        .main_story_copy span:nth-child(1){top:22.222vw; left:unset; right:3.333vw; text-align:right;}
+        .main_story_copy span:nth-child(2){top:unset; bottom:33.333vw; right:unset; left:3.333vw; text-align:left;}
+      }
+      .main_story_notice{width:76.389vw; left:3.333vw; bottom:3.333vw;
+        &::after{width:8.056vw; top:2.222vw; left:-1.389vw;}
+        & > div:first-child{padding:4.444vw 5.556vw 5.556vw;
+          span{margin-top:2.222vw;}
+        }
+        .main_story_notice_arrow{
+          img{width:3.333vw; height:3.333vw; padding:4.444vw 1.111vw;}
+        }
+      }
+      .main_story_card_slot{width:36.944vw;
+        &.main_story_card_slot_1{left:5.556vw;}
+        &.main_story_card_slot_2{top:58%;}
+        &.main_story_card_slot_3{right:5.556vw;}
+      }
+    }
+  }
+  .main_news_reveal{
+    .main_news_panel{flex-direction:column; width:calc(100% - 11.111vw); left:5.556vw;
+      .main_news_thumbnail{width:unset; padding:3.333vw;
+        img{width:57.5%;}
+      }
+      .main_news_content{width:100%; padding:0 3.333vw 3.333vw 3.333vw; position:unset; gap:0;
+        .main_news_more{position:unset; gap:2.222vw;
+          img{width:7.222vw;}
+        }
+        h2{top:3.333vw; right:3.333vw;}
+        p{padding:1.111vw 0 5.556vw;}
+      }
+    }
+  }
+  .main_collection{
+    .inner{
+      .posting{width:59.444vw; height:unset; aspect-ratio:1 / 1; transform:translate(-50%, -50%); left:50%;}
+    }
+  }
+}
+  /*.page_main{
     .main_story{
       .main_story_panel{
         A.main_story_copy span:nth-child(1){top:80px; left:unset; right: 12px;text-align: right;}
@@ -133,7 +181,10 @@
       }
     }
 
-  }
+  }*/
+  
+  
+  
   /*
   .page_main{
     .main_story{height:680vh; height:680svh;
