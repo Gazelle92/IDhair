@@ -12,38 +12,20 @@ const MAIN_STORIES = [
   {
     background: "/img/main_1_1_bg.jpg",
     backgroundAlt: "id HAIR MY IDENTITY campaign",
-    cards: ["/img/main_1_1.jpg", "/img/main_1_2.jpg", "/img/main_1_3.jpg"],
+    cards: ["/img/main_1_1_1.jpg", "/img/main_1_1_2.jpg", "/img/main_1_1_3.jpg"],
     theme: "green",
   },
   {
     background: "/img/main_1_2_bg.jpg",
+    backgroundAlt: "LOOK BETTER, FEEL BETTER",
+    cards: ["/img/main_1_2_1.jpg", "/img/main_1_2_2.jpg", "/img/main_1_2_3.jpg"],
+    theme: "green",
+  },
+  {
+    background: "/img/main_1_3_bg.jpg",
     backgroundAlt: "id HAIR MY IDENTITY white campaign",
-    cards: ["/img/main_2_1.jpg", "/img/main_2_2.jpg", "/img/main_2_3.jpg"],
+    cards: ["/img/main_1_3_1.jpg", "/img/main_1_3_2.jpg", "/img/main_1_3_3.jpg"],
     theme: "white",
-  },
-];
-
-const MAIN_NEWS = [
-  {
-    date: "2026.03.10",
-    dateTime: "2026-03-10",
-    image: "/img/mg_list_1.jpg",
-    title: <>새로운 브랜드 캠페인을 통해 선보이는<br />아이디헤어의 방향성과 감각</>,
-    url: "/magazine/id-news",
-  },
-  {
-    date: "2026.02.20",
-    dateTime: "2026-02-20",
-    image: "/img/mg_list_2.jpg",
-    title: <>아이디헤어가 새롭게 제안하는<br />2026 시즌 헤어 트렌드</>,
-    url: "/magazine/id-news",
-  },
-  {
-    date: "2026.01.15",
-    dateTime: "2026-01-15",
-    image: "/img/mg_list_3.jpg",
-    title: <>일상 속 아름다움을 완성하는<br />아이디헤어의 새로운 이야기</>,
-    url: "/magazine/id-news",
   },
 ];
 
@@ -56,15 +38,27 @@ const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
 
 function MainStoryPanel({ story, index }) {
   return (
-    <div className={`main_story_panel main_story_panel_${index + 1} theme_${story.theme}`}>
+    <div
+      className={`main_story_panel main_story_panel_${index + 1} theme_${story.theme}`}
+      style={{ zIndex: index + 1 }}
+    >
       <div className="main_story_background">
         <img src={story.background} alt={story.backgroundAlt} />
       </div>
       <div className="main_story_shade" aria-hidden="true" />
 
       <div className="main_story_copy apprael_all display-l ani apprael_ani" aria-hidden="true">
-        <span className="">MY<br/>IDENTITY</span>
-        <span className="">MY<br/>id HAIR</span>
+        {index === 1 ? (
+          <>
+            <span>LOOK<br/>BETTER,</span>
+            <span>FEEL<br/>BETTER</span>
+          </>
+        ) : (
+          <>
+            <span>MY<br/>IDENTITY</span>
+            <span>MY<br/>id HAIR</span>
+          </>
+        )}
       </div>
 
       <div className="main_story_cards">
@@ -110,7 +104,7 @@ function Main() {
     image: "/img/main_3_bg.jpg",
     title: "id GALLERY",
   });
-  const [mainNews, setMainNews] = useState(MAIN_NEWS);
+  const [mainNews, setMainNews] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -207,15 +201,33 @@ function Main() {
       const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
       const scrollRange = Math.max(1, rect.height - viewportHeight);
       const progress = clamp(-rect.top / scrollRange);
-      const firstProgress = getRangeProgress(progress, 0, 0.43);
-      const transitionProgress = easeOutCubic(getRangeProgress(progress, 0.43, 0.67));
-      const secondProgress = getRangeProgress(progress, 0.67, 0.98);
+      const contentWeight = 1;
+      const transitionWeight = 0.55;
+      const timelineEnd = 0.98;
+      const totalWeight = panels.length * contentWeight + Math.max(0, panels.length - 1) * transitionWeight;
+      let timelineCursor = 0;
 
-      updatePanel(panels[0], firstProgress);
-      updatePanel(panels[1], secondProgress);
+      panels.forEach((panel, index) => {
+        const contentStart = (timelineCursor / totalWeight) * timelineEnd;
+        const contentEnd = ((timelineCursor + contentWeight) / totalWeight) * timelineEnd;
+        const panelProgress = getRangeProgress(progress, contentStart, contentEnd);
 
-      panels[1].style.clipPath = `inset(0 0 0 ${100 - transitionProgress * 100}%)`;
-      panels[1].style.transform = `translate3d(${(1 - transitionProgress) * 18}vw, 0, 0)`;
+        updatePanel(panel, panelProgress);
+        timelineCursor += contentWeight;
+
+        const nextPanel = panels[index + 1];
+        if (!nextPanel) return;
+
+        const transitionStart = (timelineCursor / totalWeight) * timelineEnd;
+        const transitionEnd = ((timelineCursor + transitionWeight) / totalWeight) * timelineEnd;
+        const transitionProgress = reducedMotion.matches
+          ? progress >= transitionEnd ? 1 : 0
+          : easeOutCubic(getRangeProgress(progress, transitionStart, transitionEnd));
+
+        nextPanel.style.clipPath = `inset(0 0 0 ${100 - transitionProgress * 100}%)`;
+        nextPanel.style.transform = `translate3d(${(1 - transitionProgress) * 18}vw, 0, 0)`;
+        timelineCursor += transitionWeight;
+      });
     };
 
     const requestSceneUpdate = () => {
@@ -294,7 +306,7 @@ function Main() {
 
       if (frameId !== null) window.cancelAnimationFrame(frameId);
     };
-  }, []);
+  }, [mainNews.length]);
 
   return (
     <main className="page_main">
