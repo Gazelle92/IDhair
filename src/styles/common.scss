@@ -136,7 +136,8 @@ img{max-width: 100%;}
 .gt{font-family: 'GT Walsheim', 'Pretendard', serif; font-weight:400;}
 .gt_all, .gt_all *{font-family: 'GT Walsheim', 'Pretendard', serif;}
 
-body{ min-height: 100vh;}
+body{ min-height: 100svh;}
+#root{min-height: 100svh;}
 main{background-color: #fff; margin-bottom: var(--footer-height); position: relative;}
 button{background-color: unset; border: unset; cursor: pointer;}
 :root{

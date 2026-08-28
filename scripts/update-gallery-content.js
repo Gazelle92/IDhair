@@ -17,7 +17,7 @@ const main = async () => {
     const content = `나다움을 마주하는 계절의 시작 ${index + 1}`;
 
     await client.patch(post._id).set({ content }).commit();
-    console.log(`Updated ${post._id}: ${content}`);
+    //console.log(`Updated ${post._id}: ${content}`);
   }
 };
 

@@ -64,7 +64,7 @@
     .main_news_content{position:relative; flex:1; min-width:0; padding:0.769vw 0 1.282vw 1.795vw; color:#18161E; display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start; gap:0.513vw; width:37.692vw;
       time{color:#9E9E9E;}
       h2{position:absolute; right:1.282vw; top:0.769vw;}
-      p{}
+      p{text-wrap: balance; width: calc(100% - 10vw); word-break: keep-all;}
     }
     .main_news_more{position:absolute; right:1.282vw; bottom:1.282vw; display:flex; align-items:center; gap:0.769vw;
       img{width:2.372vw;}
@@ -122,7 +122,7 @@
           img{width:7.222vw;}
         }
         h2{top:3.333vw; right:3.333vw;}
-        p{padding:1.111vw 0 5.556vw;}
+        p{padding:1.111vw 0 5.556vw; width: 100%;}
       }
     }
   }

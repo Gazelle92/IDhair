@@ -864,7 +864,7 @@ function OurPicks() {
       const isActive = currentScroll >= sectionStart;
       const isBottom = currentScroll > sectionEnd;
 
-      console.log("Current Scroll:", currentScroll, "Section Range:", sectionStart, sectionEnd, "Active:", isActive);
+      //console.log("Current Scroll:", currentScroll, "Section Range:", sectionStart, sectionEnd, "Active:", isActive);
       section.classList.toggle("active", isActive);
       section.classList.toggle("bottom", isBottom);
     };
@@ -1041,7 +1041,7 @@ function OurPicks() {
       </section>
 
       <section className="ourpicks_news ourpicks_play ani">
-        <div className="ourpicks_section_head">
+        <div className="ourpicks_section_head ani b-b b-2 b-c-gray b-delay-4">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id PLAY</h2>
             <p className="body-s txt-gray ">인스타그램과 유튜브 등 다양한 SNS 콘텐츠를 한곳에서 보여주는 id PLAY</p>
@@ -1052,7 +1052,7 @@ function OurPicks() {
           </TransitionLink>
         </div>
 
-        <div className="ourpicks_play_slider ani b-t b-2 b-c-gray b-delay-4">
+        <div className="ourpicks_play_slider ">
           <Swiper
             className="ourpicks_play_swiper"
             slidesPerView="auto"

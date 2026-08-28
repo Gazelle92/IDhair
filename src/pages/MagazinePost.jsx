@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransitionLink from "../components/TransitionLink";
 import PortableNewsContent from "../components/PortableNewsContent";
-import { fetchMagazinePost, formatNewsDate, getPostTypeForCategory } from "../lib/sanityNews";
+import { fetchMagazinePost, formatNewsDate, getNewsImageUrl, getPostTypeForCategory } from "../lib/sanityNews";
 import { refreshFadeSlice } from "../hook/useFadeSlice";
 import "../styles/MagazinePost.scss";
 
@@ -24,6 +24,7 @@ function MagazinePost() {
   const isSanityMagazinePost = Boolean(getPostTypeForCategory(category) && id);
   const currentPostKey = isSanityMagazinePost ? `${category}:${id}` : "";
   const [loadedPostKey, setLoadedPostKey] = useState("");
+  const showThumbnail = category === "id-news" || category === "id-event";
 
   useEffect(() => {
     if (!isSanityMagazinePost) {
@@ -108,6 +109,13 @@ function MagazinePost() {
         <section className="md_body">
           <div className="md_body_inner">
             <article>
+              {showThumbnail && post.thumbnail && (
+                <img
+                  className="ani fade-img"
+                  src={getNewsImageUrl(post.thumbnail, 1280)}
+                  alt={post.title || ""}
+                />
+              )}
               <div>
                 <PortableNewsContent value={post.content} />
               </div>

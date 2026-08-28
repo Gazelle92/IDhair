@@ -50,7 +50,7 @@ const main = async () => {
     });
 
     await patch.commit();
-    console.log(`Updated ${post._id}: ${pattern.join(", ")}`);
+    //console.log(`Updated ${post._id}: ${pattern.join(", ")}`);
   }
 };
 
