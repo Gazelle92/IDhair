@@ -8,9 +8,10 @@ const regionLabels = {
   seoul: "서울",
   gyeonggi: "경기",
   local: "지방",
+  atelier: "아틀리에",
 };
 
-const regionOrder = ["seoul", "gyeonggi", "local"];
+const regionOrder = ["seoul", "gyeonggi", "local", "atelier"];
 
 const runQuery = async (query) => {
   const searchParams = new URLSearchParams({ query });

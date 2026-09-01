@@ -210,7 +210,7 @@
             }
             li.active, li:hover{opacity:1;}
           }
-          .arc_logo{display:flex; align-items:center; justify-content:center; padding:1.795vw 1.282vw 1.795vw 0; position:relative;
+          .arc_logo{display:flex; align-items:center; justify-content:center; padding:1.795vw 1.282vw 1.795vw 0; position:relative; width:100%;
             &::before, &::after{content:''; display:block; width:calc(100% - 1.282vw); height:1px; background-color:#fff; position:absolute; left:0; opacity:.25;}
             &::before{top:0;}
             &::after{bottom:0;}

@@ -8,6 +8,7 @@ const defaultSalonRegions = [
   { id: "seoul", name: "서울", stores: [] },
   { id: "gyeonggi", name: "경기", stores: [] },
   { id: "local", name: "지방", stores: [] },
+  { id: "atelier", name: "아틀리에", stores: [] },
 ];
 
 const emptyStore = {
@@ -102,6 +103,12 @@ function Salon({ open, onClose }) {
     changeStoreDetail(region.stores[0] ?? emptyStore);
   };
 
+  const handleAtelierClick = () => {
+    const atelierRegion = salonRegions.find((region) => region.id === "atelier");
+
+    if (atelierRegion) handleRegionClick(atelierRegion);
+  };
+
   const handleSearchSubmit = () => {
     if (detailTimerRef.current) {
       clearTimeout(detailTimerRef.current);
@@ -154,7 +161,7 @@ function Salon({ open, onClose }) {
 
         setSalonRegions(regions);
 
-        const firstRegionWithStore = regions.find((region) => region.stores.length > 0);
+        const firstRegionWithStore = regions.find((region) => region.id !== "atelier" && region.stores.length > 0);
         const firstStore = firstRegionWithStore?.stores[0] ?? emptyStore;
 
         setSelectedRegionId(firstRegionWithStore?.id ?? regions[0]?.id ?? defaultSalonRegions[0].id);
@@ -220,7 +227,7 @@ function Salon({ open, onClose }) {
           <div className="body_left">
             <div className="b_l_l">
               <ol className="head-m">
-                {salonRegions.map((region) => (
+                {salonRegions.filter((region) => region.id !== "atelier").map((region) => (
                   <li key={region.id} className={!hasSubmittedSearch && region.id === selectedRegion.id ? "active" : ""}>
                     <button type="button" className="head-m" onClick={() => handleRegionClick(region)}>
                       {region.name}
@@ -228,7 +235,15 @@ function Salon({ open, onClose }) {
                   </li>
                 ))}
               </ol>
-              <a className="arc_logo"><img src="/img/arc.png" alt="" /></a>
+              <button
+                type="button"
+                className={`arc_logo ${!hasSubmittedSearch && selectedRegion.id === "atelier" ? "active" : ""}`}
+                onClick={handleAtelierClick}
+                aria-label="아틀리에 매장 보기"
+                aria-pressed={!hasSubmittedSearch && selectedRegion.id === "atelier"}
+              >
+                <img src="/img/arc.png" alt="" />
+              </button>
               <a className="find_store" href={naverMapDefaultUrl} target="_blank" rel="noreferrer"><img src="/img/icon_find.png"/><span className="fw-sb body-l">가까운 매장찾기</span></a>
             </div>
 

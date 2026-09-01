@@ -10,6 +10,7 @@ const salonItems = [
   { id: "salonLocationSeoul", title: "SALON - 서울", region: "seoul", templateId: "salonLocation-seoul" },
   { id: "salonLocationGyeonggi", title: "SALON - 경기", region: "gyeonggi", templateId: "salonLocation-gyeonggi" },
   { id: "salonLocationLocal", title: "SALON - 지방", region: "local", templateId: "salonLocation-local" },
+  { id: "salonLocationAtelier", title: "SALON - 아틀리에", region: "atelier", templateId: "salonLocation-atelier" },
 ];
 
 export const deskStructure = (S) =>

@@ -109,6 +109,7 @@ export default defineType({
         seoul: "서울",
         gyeonggi: "경기",
         local: "지방",
+        atelier: "아틀리에",
       }[region];
 
       return {

@@ -37,6 +37,14 @@ export default defineConfig({
           region: "local",
         },
       },
+      {
+        id: "salonLocation-atelier",
+        title: "SALON - 아틀리에",
+        schemaType: "salonLocation",
+        value: {
+          region: "atelier",
+        },
+      },
     ],
   },
 });
