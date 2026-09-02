@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { fetchSalonRegions } from "../lib/sanitySalon";
 import "../styles/Salon.scss";
@@ -275,9 +276,15 @@ function Salon({ open, onClose }) {
                   <Swiper
                     key={detailStore.id}
                     className="img_w"
+                    modules={[Autoplay]}
                     loop
                     speed={600}
                     slidesPerView={1}
+                    autoplay={detailImages.length > 1 ? {
+                      delay: 2000,
+                      disableOnInteraction: true,
+                    } : false}
+
                     onSwiper={(swiper) => {
                       imageSwiperRef.current = swiper;
                       swiper.slideToLoop(0, 0);

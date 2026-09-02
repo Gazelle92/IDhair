@@ -214,7 +214,10 @@
             &::before, &::after{content:''; display:block; width:calc(100% - 1.282vw); height:1px; background-color:#fff; position:absolute; left:0; opacity:.25;}
             &::before{top:0;}
             &::after{bottom:0;}
-            img{width:7.692vw;}
+            &.active, &:hover{
+              img{opacity:1;}
+            }
+            img{width:7.692vw; opacity:0.5; transition:ease 0.3s opacity;}
           }
           .find_store{position:absolute; bottom:1.282vw; left:0; display:flex; align-items:center; justify-content:center; width:calc(100% - 1.282vw); aspect-ratio:220 / 72; background-color:var(--bg-ac-1); border-radius:.256vw; gap:.769vw; padding:1.282vw 0;
             span{line-height:1.1; color:#fff;}
@@ -323,7 +326,8 @@
             .arc_logo{padding:5.278vw 7.778vw 4.167vw 5vw;
               &::before{width:calc(100% - 3.333vw);}
               &::after{width:calc(100% - 3.333vw); display:none;}
-              img{width:18.333vw;}
+              
+              img{width:18.333vw; }
             }
           }
 

@@ -438,8 +438,8 @@ function Recruit() {
                 ID FAMILY
               </h2>
               <p className="rs_2_content_description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br/>
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                오랜 시간 이어온 'id 패밀리즘'은 구성원의 유대와 고객의 신뢰를 쌓아온<br/> 아이디헤어의 가장 강력한 원동력입니다.<br/><br/>
+                정직한 성공과 따뜻한 마음을 바탕으로 동료와 고객 모두가<br/> 행복한 진정한 동반 성장의 문화를 만들어갑니다.
               </p>
             </div>
             <div className="rs_2_gallery">
@@ -551,7 +551,7 @@ function Recruit() {
             <span>Instagram</span>
             <h4>idhair_hello</h4>
           </div>
-          <a href="#" className="rs_nav_2 txt-ac">입사지원서 <br className="mob"/>다운로드</a>
+          <a download href="/file/idhair_resume.hwp" className="rs_nav_2 txt-ac">입사지원서 <br className="mob"/>다운로드</a>
           <div
             className={`rs_nav_3${isNavPopupOpen ? " active" : ""}`}
             role="button"
