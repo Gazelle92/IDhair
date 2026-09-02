@@ -66,7 +66,7 @@ function Header() {
       </div>
 
       <div className="gnb body-l">
-        <TransitionLink to="/about"><span>ABOUT</span></TransitionLink>
+        <TransitionLink to="/about"><span>id HAIR</span></TransitionLink>
         <TransitionLink to="/academy"><span>id ACADEMY</span></TransitionLink>
         <TransitionLink to="/magazine"><span>id MAGAZINE</span></TransitionLink>
         <TransitionLink to="/recruit"><span>RECRUIT</span></TransitionLink>
