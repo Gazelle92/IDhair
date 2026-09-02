@@ -133,7 +133,7 @@ function Header() {
           </div>
 
           <div className="h_nav_group_3">
-            <TransitionLink className="gt display-xs" to="/magazine/id-news" onClick={() => setNavOpen(false)}>id Magazine</TransitionLink>
+            <TransitionLink className="gt display-xs" to="/magazine/our-picks" onClick={() => setNavOpen(false)}>id Magazine</TransitionLink>
             <ul className="body-s">
               <li><TransitionLink to="/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
               <li><TransitionLink to="/magazine/id-event" onClick={() => setNavOpen(false)}>id EVENT</TransitionLink></li>
