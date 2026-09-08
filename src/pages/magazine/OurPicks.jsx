@@ -22,9 +22,9 @@ const PLAY_CATEGORY = "id-play";
 
 const tabs = [
   { name: "Our PICKS", path: "our-picks" },
-  { name: "id NEWS", path: "id-news" },
   { name: "id EVENT", path: "id-event" },
   { name: "id FAMILY", path: "id-family" },
+  { name: "id NEWS", path: "id-news" },
   { name: "id GALLERY", path: "id-gallery" },
   { name: "id PLAY", path: "id-play" },
 ];
@@ -896,6 +896,54 @@ function OurPicks() {
           ))}
         </ul>
       </div>
+      
+
+      <section className="ourpicks_news ani ">
+        <div className="ourpicks_section_head">
+          <div className="ourpicks_section_title fadeX-1">
+            <h2 className="display-xs gt ">id EVENT</h2>
+            <p className="body-s txt-gray ">아이디헤어에서 진행하는 다양한 이벤트와 특별한 혜택을 만나볼 수 있는 공간</p>
+          </div>
+          <TransitionLink to="/magazine/id-event" className="ourpicks_view_all body-m fadeX-5">
+            <span>VIEW ALL</span>
+            <span aria-hidden="true"></span>
+          </TransitionLink>
+        </div>
+
+        <ul className="mg_list mg_list_event ani  b-t b-2 b-delay-4">
+          {eventItemsList.map((item) => (
+            <li className="mg_li ani" key={item.id}>
+              <TransitionLink to={`/magazine/${EVENT_CATEGORY}/post/${item.id}`} className="mg_a">
+                <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
+              </TransitionLink>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="ourpicks_news ani">
+        <div className="ourpicks_section_head">
+          <div className="ourpicks_section_title fadeX-1">
+            <h2 className="display-xs gt ">id FAMILY</h2>
+            <p className="body-s txt-gray ">아이디헤어를 만들어가는 사람들의 진솔한 이야기</p>
+          </div>
+          <TransitionLink to="/magazine/id-family" className="ourpicks_view_all body-m fadeX-5">
+            <span>VIEW ALL</span>
+            <span aria-hidden="true"></span>
+          </TransitionLink>
+        </div>
+
+        <ul className="mg_list mg_list_family ani b-t b-2 b-delay-4">
+          {familyItemsList.map((item) => (
+            <li className="mg_li ani" key={item.id}>
+              <TransitionLink to={`/magazine/${FAMILY_CATEGORY}/post/${item.id}`} className="mg_a">
+                <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
+              </TransitionLink>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className="ourpicks_news ani">
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
@@ -941,57 +989,11 @@ function OurPicks() {
         </div>
       </section>
 
-      <section className="ourpicks_news ani">
-        <div className="ourpicks_section_head">
-          <div className="ourpicks_section_title fadeX-1">
-            <h2 className="display-xs gt ">id EVENT</h2>
-            <p className="body-s txt-gray ">아이디헤어에서 진행하는 다양한 혜택과 특별한 이벤트를 만나볼 수 있는 공간</p>
-          </div>
-          <TransitionLink to="/magazine/id-event" className="ourpicks_view_all body-m fadeX-5">
-            <span>VIEW ALL</span>
-            <span aria-hidden="true"></span>
-          </TransitionLink>
-        </div>
-
-        <ul className="mg_list mg_list_event ani b-t b-2 b-delay-4">
-          {eventItemsList.map((item) => (
-            <li className="mg_li ani" key={item.id}>
-              <TransitionLink to={`/magazine/${EVENT_CATEGORY}/post/${item.id}`} className="mg_a">
-                <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
-              </TransitionLink>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="ourpicks_news ani">
-        <div className="ourpicks_section_head">
-          <div className="ourpicks_section_title fadeX-1">
-            <h2 className="display-xs gt ">id FAMILY</h2>
-            <p className="body-s txt-gray ">아이디헤어 스태프들의 이야기를 전하는 인터뷰 콘텐츠</p>
-          </div>
-          <TransitionLink to="/magazine/id-family" className="ourpicks_view_all body-m fadeX-5">
-            <span>VIEW ALL</span>
-            <span aria-hidden="true"></span>
-          </TransitionLink>
-        </div>
-
-        <ul className="mg_list mg_list_family ani b-t b-2 b-delay-4">
-          {familyItemsList.map((item) => (
-            <li className="mg_li ani" key={item.id}>
-              <TransitionLink to={`/magazine/${FAMILY_CATEGORY}/post/${item.id}`} className="mg_a">
-                <img src={item.img} alt="Magazine Image" loading="lazy" decoding="async" />
-              </TransitionLink>
-            </li>
-          ))}
-        </ul>
-      </section>
-
       <section className="ourpicks_news ourpicks_gallery ani" ref={gallerySectionRef}>
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id GALLERY</h2>
-            <p className="body-s txt-gray ">시즌별 헤어 룩북을 통해 아이디헤어의 스타일과 방향성을 보여주는 갤러리</p>
+            <p className="body-s txt-gray ">아이디헤어가 제안하는 시즌별 헤어 트렌드를 만나보는 룩북 갤러리</p>
           </div>
           <TransitionLink to="/magazine/id-gallery" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
@@ -1044,7 +1046,7 @@ function OurPicks() {
         <div className="ourpicks_section_head ani b-b b-2 b-c-gray b-delay-4">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id PLAY</h2>
-            <p className="body-s txt-gray ">인스타그램과 유튜브 등 다양한 SNS 콘텐츠를 한곳에서 보여주는 id PLAY</p>
+            <p className="body-s txt-gray ">아이디헤어의 다채로운 순간을 영상 콘텐츠로 만다는 id PLAY</p>
           </div>
           <TransitionLink to="/magazine/id-play" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>

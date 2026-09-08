@@ -149,7 +149,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
         &.active::before, &:hover::before{height: 100%;}
         &.active span, &:hover span{color: #fff;}
       }
-      .btn_all{position: absolute; left: 0.485vw; top: 0.485vw;}
+      .btn_all{position: absolute; left: 0.485vw; top: 0.485vw;display:none;}
     }
     .mg_nav{position:sticky; transform: translateY(-100%); top: calc(100% - 40px); pointer-events: auto; opacity: 0; transition: opacity 0.3s ease;}
     &.active .mg_nav{opacity: 1;}

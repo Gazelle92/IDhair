@@ -127,9 +127,9 @@ function Header() {
             <TransitionLink to="/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>
           </div>
 
-          <div className="h_nav_group_2 body-m">
-            <a href="https://www.instagram.com" target="_blank" rel="noreferrer">INSTAGRAM</a>
-            <a href="https://www.youtube.com" target="_blank" rel="noreferrer">YOUTUBE</a>
+          <div className="h_nav_group_2">
+            <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
+            <a target="_blank" href="https://www.youtube.com/@idhairbrand"><img src="/img/icon_youtube.svg"/></a>
           </div>
 
           <div className="h_nav_group_3">

@@ -18,9 +18,9 @@ import "../styles/ourpicks.scss";
 function Magazine() {
   const tabs = [
     { name: "Our PICKS", path: "our-picks" },
-    { name: "id NEWS", path: "id-news" },
     { name: "id EVENT", path: "id-event" },
     { name: "id FAMILY", path: "id-family" },
+    { name: "id NEWS", path: "id-news" },
     { name: "id GALLERY", path: "id-gallery" },
     { name: "id PLAY", path: "id-play" },
   ];
@@ -42,9 +42,9 @@ function Magazine() {
 
   const listComponents = {
     "our-picks": <OurPicks currentPage={currentPage} />,
-    "id-news": <IdNews currentPage={currentPage} />,
     "id-event": <IdEvent currentPage={currentPage} />,
     "id-family": <IdFamily currentPage={currentPage} />,
+    "id-news": <IdNews currentPage={currentPage} />,
     "id-gallery": <IdGallery currentPage={currentPage} />,
     "id-play": <IdPlay currentPage={currentPage} />,
   };

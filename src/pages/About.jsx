@@ -165,14 +165,14 @@ function About() {
           <div className="as_text ">
             <h1 className="display-l fw-l apprael t_m_1">Beyond</h1>
             <h1 className="display-l fw-l apprael t_m_2">Style,</h1>
-            <h1 className="display-l fw-l apprael_all t_m_3"><span>Be</span><span>You</span></h1>
+            <h1 className="display-l fw-l apprael_all t_m_3"><span>Be&nbsp;</span><span>You</span></h1>
           </div>
           <div className="as_1_text_2 head-s ani_x">
             <span className=" delay-1">
             행복을 디자인합니다.
             </span>
             <span className=" delay-3">
-            행복 스타일 리스트.
+            행복 스타일리스트.
             </span>
             </div>
           <div className="scroll_indicator">
@@ -260,7 +260,7 @@ function About() {
                   <strong className="fw-b">Establishment Date</strong><p>1988년, 1호점 오픈</p>
                 </li>
                 <li className="body-m apprael_ani delay-3 ls_s">
-                  <strong className="fw-b">Founder</strong><p>위운미 (Wi Unmi)</p>
+                  <strong className="fw-b">Founder</strong><p>위운미 (We Woon Me)</p>
                 </li>
               </ul>
             </div>

@@ -338,11 +338,11 @@ function Academy() {
             <div className="body-s scroll_right">[ SCROLL ]</div>
           </div>
           <div className="title_b txt-ac apprael_ani delay-2">
-            <span>meet</span>
+            <span>Meet</span>
             <div className="cross"></div>
-            <span>the</span>
+            <span>The</span>
             <div className="cross"></div>
-            <span>team</span>
+            <span>Experts</span>
           </div>
         </div>
         <div className="ac_1_2">
@@ -353,8 +353,8 @@ function Academy() {
               정식 자격을 부여하는 <br className="mob"/>미용업계 최초의 체계적 헤어 기술 프로그램입니다.
             </span>
             <span className="apprael_ani ls_s delay-3">
-              온라인 플랫폼 &lt;seezier	&gt;를 통해 최신 살롱 스타일까지 <br className="mob"/>학습할 수 있으며,<br className="pc"/>
-              각 매장에서 현장 실전 감각을 익히는 맞춤형 <br className="mob"/>과정인 Id skill mastery까지 함께 제공됩니다.
+              온라인 플랫폼 &lt;seezier&gt;를 통해 최신 살롱 스타일까지 <br className="mob"/>학습할 수 있으며,<br className="pc"/>
+              각 매장에서 현장 실전 감각을 익히는 맞춤형 <br className="mob"/>과정인 id skill mastery까지 함께 제공됩니다.
             </span>
           </article>
         </div>
@@ -383,7 +383,7 @@ function Academy() {
                   <h1>start work</h1>
                 </div>
                 <div className="l_b">
-                  <b>/    스타일 워크</b>
+                  <b>/    스타트 워크</b>
                   <span>얼굴형·무드 분석을 기반으로 트렌드 스타일을 해석하며<br/>고객별 맞춤 디자인 감각과 표현력을 집중적으로 익히는 과정입니다.</span>
                 </div>
               </li>
@@ -393,7 +393,7 @@ function Academy() {
                   <h1>salon work</h1>
                 </div>
                 <div className="l_b">
-                  <b>/    스타일 워크</b>
+                  <b>/    살롱 워크</b>
                   <span>얼굴형·무드 분석을 기반으로 트렌드 스타일을 해석하며<br/>고객별 맞춤 디자인 감각과 표현력을 집중적으로 익히는 과정입니다.</span>
                 </div>
               </li>
@@ -404,7 +404,7 @@ function Academy() {
                   <h1>technic work</h1>
                 </div>
                 <div className="l_b">
-                  <b>/    스타일 워크</b>
+                  <b>/    테크닉 워크</b>
                   <span>얼굴형·무드 분석을 기반으로 트렌드 스타일을 해석하며<br/>고객별 맞춤 디자인 감각과 표현력을 집중적으로 익히는 과정입니다.</span>
                 </div>
               </li>
