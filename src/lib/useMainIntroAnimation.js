@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 
 const INTRO_SCALE_DURATION = 1000;
+const INTRO_OPEN_DELAY = 800;
+const INTRO_TEXT_START_SCALE = 0.4;
 
 export default function useMainIntroAnimation(sceneRef, ready) {
   useEffect(() => {
@@ -13,6 +15,8 @@ export default function useMainIntroAnimation(sceneRef, ready) {
     const controller = new AbortController();
     const { signal } = controller;
     let scaleAnimation;
+    let openTimer;
+    let frameId;
 
     function waitForEvent(target, events) {
       return new Promise((resolve) => {
@@ -43,16 +47,28 @@ export default function useMainIntroAnimation(sceneRef, ready) {
         [{ transform: "scale(0.3)" }, { transform: "scale(1)" }],
         { duration: reducedMotion ? 0 : INTRO_SCALE_DURATION, easing: "ease", fill: "forwards" },
       );
-      await scaleAnimation.finished.catch(() => {});
-      if (signal.aborted) return;
+      function checkScale() {
+        if (signal.aborted) return;
+        const progress = scaleAnimation.effect.getComputedTiming().progress ?? 0;
+        const scale = 0.3 + (1 - 0.3) * progress;
 
-      text.classList.add("active");
-      panel.classList.add("open");
+        if (scale >= INTRO_TEXT_START_SCALE) {
+          text.classList.add("active");
+          openTimer = window.setTimeout(() => {
+            if (!signal.aborted) panel.classList.add("open");
+          }, INTRO_OPEN_DELAY);
+          return;
+        }
+        frameId = window.requestAnimationFrame(checkScale);
+      }
+      frameId = window.requestAnimationFrame(checkScale);
     }
 
     start();
     return () => {
       controller.abort();
+      window.clearTimeout(openTimer);
+      window.cancelAnimationFrame(frameId);
       scaleAnimation?.cancel();
       text.classList.remove("active");
       panel.classList.remove("open");
