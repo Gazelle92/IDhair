@@ -65,6 +65,7 @@ export default function useMainIntroAnimation(sceneRef, ready) {
 
         if (scale >= INTRO_TEXT_START_SCALE) {
           text.classList.add("active");
+          window.dispatchEvent(new Event("main-intro-text-start"));
           openTimer = window.setTimeout(() => {
             if (!signal.aborted) panel.classList.add("open");
           }, INTRO_OPEN_DELAY);

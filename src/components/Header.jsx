@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import TransitionLink from "./TransitionLink";
 import Salon from "./Salon";
@@ -14,7 +14,20 @@ function Header() {
   const [navHide, setNavHide] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
   const location = useLocation();
+  const [mainIntroRevealedKey, setMainIntroRevealedKey] = useState(null);
+  const mainIntroHidden = location.pathname === "/" && mainIntroRevealedKey !== location.key;
   const aboutHorizontalXRef = useRef(0);
+
+  useLayoutEffect(() => {
+    if (location.pathname !== "/") return;
+
+    const revealHeader = () => {
+      setMainIntroRevealedKey(location.key);
+      setNavHide(false);
+    };
+    window.addEventListener("main-intro-text-start", revealHeader);
+    return () => window.removeEventListener("main-intro-text-start", revealHeader);
+  }, [location.pathname, location.key]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,7 +70,7 @@ function Header() {
   }, [location.pathname]);
 
   return (
-    <header className={`header ani ${headerActive ? "active" : ""} ${navHide ? "nav_hide" : ""}`}>
+    <header className={`header ani ${headerActive ? "active" : ""} ${mainIntroHidden || navHide ? "nav_hide" : ""} ${mainIntroHidden ? "hide" : ""}`}>
       <div className="logo_w">
         <TransitionLink to="/" className="logo">
           <img src="/img/logo.png" alt="IDhair" />

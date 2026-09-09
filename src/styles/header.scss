@@ -1,5 +1,5 @@
 .header{
-  .logo_w{mix-blend-mode: difference; filter: invert(1); font-size:0; /*width: 18.013vw;*/ position: fixed; top: 4.1vw; left: 3.636vw; z-index: 9; transition: ease 0.5s top, ease 0.5s opacity;
+  .logo_w{mix-blend-mode: difference; filter: invert(1); font-size:0; /*width: 18.013vw;*/ position: fixed; top: 3.8vw; left: 3.636vw; z-index: 9; transition: ease 0.5s top, ease 0.5s opacity;
     a{position: unset; left: 0; top: 0; width: 100%; display: flex; gap: 1.282vw; align-items: center;
       img:nth-child(1){width: 10.897vw;}
       img:nth-child(2){width: 5.769vw; padding-top: 0.2vw; display:none;}
@@ -62,7 +62,8 @@
     .h_nav_group_3{position: absolute; left: 2.424vw; bottom: 9.091vw; 
       & > a{margin-bottom: 1.212vw; display: block; font-weight: 300;}
       ul{
-        display: flex; gap: 1.697vw;
+        display: flex; gap: 0.697vw;
+        a{border-radius: 0.2vw; padding: 0.2vw 0.6vw 0.16vw; background: #fff; width: 100%; display: flex; align-items: center; justify-content: center;}
       }
     }
     .h_nav_group_4{position: absolute; right: 2.424vw; bottom: 2.424vw; text-align: right; display:none;    }
