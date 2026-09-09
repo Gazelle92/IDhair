@@ -243,7 +243,7 @@ function About() {
           </div>
           <div className="t_m_bg_w">
             <img className="t_m_bg_el pc" src="/img/about_4_card_1.jpg" />
-            <img className="mob" src="/img/about_4_card_1_m.jpg" />
+            <img className="mob" src="/img/about_4_card_1.jpg" />
           </div>
           <div className="as_4_1 t_m_w">
             <div className="as_text as_text_1 neulis mob_ani">

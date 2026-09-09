@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import TransitionLink from "../components/TransitionLink";
+import useAboutSmoothScroll from "../lib/useAboutSmoothScroll";
+import useMainIntroAnimation from "../lib/useMainIntroAnimation";
 import {
   fetchGalleryPosts,
   fetchNewsPosts,
@@ -13,6 +15,7 @@ const MAIN_STORIES = [
     background: "/img/main_1_1_bg.jpg",
     backgroundAlt: "id HAIR MY IDENTITY campaign",
     cards: ["/img/main_1_1_1.jpg", "/img/main_1_1_2.jpg", "/img/main_1_1_3.jpg"],
+    cardsMob: ["/img/main_1_1_2.jpg", "/img/main_1_1_3.jpg"],
     theme: "green",
   },
   {
@@ -20,6 +23,7 @@ const MAIN_STORIES = [
     mobileBackground: "/img/main_1_2_bg_mob.jpg",
     backgroundAlt: "LOOK BETTER, FEEL BETTER",
     cards: ["/img/main_1_2_1.jpg", "/img/main_1_2_2.jpg", "/img/main_1_2_3.jpg"],
+    cardsMob: ["/img/main_1_2_1.jpg", "/img/main_1_2_3.jpg"],
     theme: "green",
   },
   {
@@ -27,6 +31,7 @@ const MAIN_STORIES = [
     mobileBackground: "/img/main_1_3_bg_mob.jpg",
     backgroundAlt: "id HAIR MY IDENTITY white campaign",
     cards: ["/img/main_1_3_1.jpg", "/img/main_1_3_2.jpg", "/img/main_1_3_3.jpg"],
+    cardsMob: ["/img/main_1_3_1.jpg", "/img/main_1_3_3.jpg"],
     theme: "white",
   },
 ];
@@ -37,8 +42,11 @@ const getRangeProgress = (progress, start, end) =>
   clamp((progress - start) / Math.max(0.001, end - start));
 
 const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3);
+const MOBILE_CARD_QUERY = "(max-width: 1024px)";
 
-function MainStoryPanel({ story, index }) {
+function MainStoryPanel({ story, index, isMobile }) {
+  const cards = isMobile && story.cardsMob ? story.cardsMob : story.cards;
+
   return (
     <div
       className={`main_story_panel main_story_panel_${index + 1} theme_${story.theme}`}
@@ -54,7 +62,7 @@ function MainStoryPanel({ story, index }) {
       </div>
       <div className="main_story_shade" aria-hidden="true" />
 
-      <div className="main_story_copy apprael_all display-l ani apprael_ani" aria-hidden="true">
+      <div className="main_story_copy apprael_all display-l ani apprael_ani" data-main-intro-ani={index === 0 ? "" : undefined} aria-hidden="true">
         {index === 1 ? (
           <>
             <span>LOOK<br/>BETTER,</span>
@@ -69,7 +77,7 @@ function MainStoryPanel({ story, index }) {
       </div>
 
       <div className="main_story_cards">
-        {story.cards.map((source, cardIndex) => (
+        {cards.map((source, cardIndex) => (
           <div
             className={`main_story_card_slot main_story_card_slot_${cardIndex + 1}`}
             key={source}
@@ -105,13 +113,33 @@ function MainStoryPanel({ story, index }) {
 }
 
 function Main() {
+  useAboutSmoothScroll({ verticalOnly: true });
   const sceneRef = useRef(null);
+  const [newsLoaded, setNewsLoaded] = useState(false);
+  const [galleryLoaded, setGalleryLoaded] = useState(false);
+  useMainIntroAnimation(sceneRef, newsLoaded && galleryLoaded);
   const newsRevealRef = useRef(null);
+  const [isMobileCards, setIsMobileCards] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(MOBILE_CARD_QUERY).matches;
+  });
   const [collectionPosting, setCollectionPosting] = useState({
     image: "/img/main_3_bg.jpg",
     title: "id GALLERY",
   });
   const [mainNews, setMainNews] = useState([]);
+
+  useEffect(() => {
+    const media = window.matchMedia(MOBILE_CARD_QUERY);
+    const handleChange = () => setIsMobileCards(media.matches);
+
+    handleChange();
+    media.addEventListener("change", handleChange);
+
+    return () => {
+      media.removeEventListener("change", handleChange);
+    };
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -130,6 +158,9 @@ function Main() {
       })
       .catch((error) => {
         console.error("Failed to load latest news posts on main", error);
+      })
+      .finally(() => {
+        if (isMounted) setNewsLoaded(true);
       });
 
     return () => {
@@ -156,6 +187,9 @@ function Main() {
       })
       .catch((error) => {
         console.error("Failed to load featured gallery post on main", error);
+      })
+      .finally(() => {
+        if (isMounted) setGalleryLoaded(true);
       });
 
     return () => {
@@ -197,8 +231,8 @@ function Main() {
         card.style.transform = `translate3d(0, ${translateY}vh, 0)`;
       });
 
-      if (notice) notice.style.opacity = String(1 - getRangeProgress(progress, 0.08, 0.24));
-      scrollIndicator.style.opacity = String(1 - getRangeProgress(progress, 0.08, 0.22));
+      /*if (notice) notice.style.opacity = String(1 - getRangeProgress(progress, 0.08, 0.24));
+      scrollIndicator.style.opacity = String(1 - getRangeProgress(progress, 0.08, 0.22));*/
     };
 
     const updateScene = () => {
@@ -256,7 +290,7 @@ function Main() {
 
       if (frameId !== null) window.cancelAnimationFrame(frameId);
     };
-  }, []);
+  }, [isMobileCards]);
 
   useEffect(() => {
     const section = newsRevealRef.current;
@@ -320,7 +354,7 @@ function Main() {
       <section className="main_story" ref={sceneRef}>
         <div className="main_story_stage">
           {MAIN_STORIES.map((story, index) => (
-            <MainStoryPanel story={story} index={index} key={story.background} />
+            <MainStoryPanel story={story} index={index} isMobile={isMobileCards} key={story.background} />
           ))}
         </div>
       </section>

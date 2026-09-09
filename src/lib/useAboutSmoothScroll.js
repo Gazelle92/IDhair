@@ -110,7 +110,7 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
-export default function useAboutSmoothScroll() {
+export default function useAboutSmoothScroll({ verticalOnly = false } = {}) {
   const [isMobileVertical, setIsMobileVertical] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia(MOBILE_VERTICAL_QUERY).matches;
@@ -167,6 +167,7 @@ export default function useAboutSmoothScroll() {
     }
 
     function getTrack() {
+      if (verticalOnly) return null;
       const element = document.querySelector(TRACK_SELECTOR);
       if (!element) return null;
 
@@ -473,6 +474,12 @@ export default function useAboutSmoothScroll() {
       if (animating) return;
 
       const step = () => {
+        if (verticalOnly && window.lenis?.isStopped) {
+          queue = [];
+          animating = false;
+          frameId = null;
+          return;
+        }
         const now = Date.now();
         let scrollX = 0;
         let scrollY = 0;
@@ -548,6 +555,16 @@ export default function useAboutSmoothScroll() {
 
     function onWheel(event) {
       if (event.defaultPrevented || event.ctrlKey || isEditableElement(event.target)) return;
+      if (verticalOnly) {
+        if (window.lenis?.isStopped) return;
+        let element = event.target instanceof Element ? event.target : null;
+        while (element && element !== document.body && element !== document.documentElement) {
+          if (element.matches("[data-lenis-prevent], [data-lenis-prevent-wheel]")) return;
+          const overflowY = window.getComputedStyle(element).overflowY;
+          if (/(auto|scroll)/.test(overflowY) && element.scrollHeight > element.clientHeight) return;
+          element = element.parentElement;
+        }
+      }
 
       const { deltaX, deltaY } = normalizeWheel(event);
       const track = getTrack();
@@ -606,6 +623,17 @@ export default function useAboutSmoothScroll() {
       event.preventDefault();
       event.stopPropagation();
       smoothScroll(deltaX, deltaY);
+    }
+
+    if (verticalOnly) {
+      document.addEventListener("wheel", onWheel, { passive: false, capture: true });
+
+      return () => {
+        queue = [];
+        animating = false;
+        cancelFrame();
+        document.removeEventListener("wheel", onWheel, { capture: true });
+      };
     }
 
     if (isMobileVertical) {
@@ -693,5 +721,5 @@ export default function useAboutSmoothScroll() {
       clearSectionProgress();
       previousLenis?.start?.();
     };
-  }, [isMobileVertical]);
+  }, [isMobileVertical, verticalOnly]);
 }
