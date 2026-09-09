@@ -275,7 +275,9 @@
         }
 
         .store_links{display:flex; font-size:0; gap:.769vw;
-          .insta{padding:.385vw .769vw; border:1px solid #fff; border-radius:.256vw;}
+          .insta{padding:3vw; border:1px solid #fff; border-radius:1vw;
+            img{width:7.4vw}
+          }
           .naver{padding:.385vw 1.282vw; border:1px solid #fff; border-radius:.256vw; gap:1.282vw; display:flex; align-items:center; justify-content:center;
             span{line-height:1.1; padding-top:.128vw; color:#fff;}
           }

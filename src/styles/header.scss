@@ -1,12 +1,12 @@
 .header{
-  .logo_w{mix-blend-mode: difference; filter: invert(1); font-size:0; /*width: 18.013vw;*/ position: fixed; top: 3.8vw; left: 3.636vw; z-index: 9; transition: ease 0.5s top, ease 0.5s opacity;
+  .logo_w{mix-blend-mode: difference; filter: invert(1); font-size:0; /*width: 18.013vw;*/ position: fixed; top: 3.8vw; left: 3.636vw; z-index: 9; transition: ease 0.5s top, ease 0.5s opacity, ease 1s transform;
     a{position: unset; left: 0; top: 0; width: 100%; display: flex; gap: 1.282vw; align-items: center;
       img:nth-child(1){width: 10.897vw;}
       img:nth-child(2){width: 5.769vw; padding-top: 0.2vw; display:none;}
       span{font-size:0.7692vw; line-height:1.6; transform: translateY(16%)}
     }
   }
-  .gnb{display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 4.848vw; justify-items: start; position: fixed; right: 19.636vw; top: 3.879vw; mix-blend-mode: difference; z-index: 9;
+  .gnb{display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 4.848vw; justify-items: start; position: fixed; right: 19.636vw; top: 3.879vw; mix-blend-mode: difference; z-index: 9; transition:ease 1s transform;
     a{font-weight: bold; overflow: hidden;
       span{display: block; transform: translateY(110%); transition: ease 0.5s transform; font-weight: 400; color: #fff;
         
@@ -15,7 +15,7 @@
       &:nth-child(3) span, &:nth-child(4) span{transition-delay: 0.00s;}
     }
   }
-  .header_inner{position: fixed; top: 3.879vw; right: 3.636vw; display: flex; gap: 3.636vw; z-index: 9; transition: ease 0.5s top, ease 0.5s opacity;
+  .header_inner{position: fixed; top: 3.879vw; right: 3.636vw; display: flex; gap: 3.636vw; z-index: 9; transition: ease 0.5s top, ease 0.5s opacity, ease 1s transform;
     .lang{position: absolute; right: 0; bottom: calc(100% + 1.212vw); font-weight: 600; line-height: 1.7; display: flex; gap: 0.485vw; transition: ease 0.3s transform, ease 0.3s opacity; transform: translateY(0); opacity: 1;display:none;
       div{cursor: pointer; font-weight: 500;
         &:hover, &:active{font-weight:700;}
@@ -54,7 +54,7 @@
         &:nth-child(1){margin-bottom: 3.394vw;}
       }
     }
-    .h_nav_group_2{position: absolute; right: 2.424vw; bottom:9.091vw; display: flex; gap:0.7vw;
+    .h_nav_group_2{position: absolute; right: 2.424vw; bottom:8.8vw; display: flex; gap:0.7vw;
       a{width:3vw; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
         img{width: 100%;}
       }
@@ -80,8 +80,15 @@
       
     } 
   }
-  &.nav_hide{ 
+  
+  &:not(.hide){
+    .header_inner, .logo_w, .gnb{transform: translateY(0%);}
     
+  }
+  &.nav_hide{ 
+    &.hide{
+      .header_inner, .logo_w, .gnb{transform: translateY(-10vw); transition: ease 1.52s all;}
+    }
     @media(min-width:1025px){
       .logo_w{top:1.2vw;}  
     }
