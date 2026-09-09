@@ -456,9 +456,9 @@
           }
         }
       }
-      .mob_caption{padding: 4px; background-color: #fff; font-size: 2.5vw;   position: absolute; left: 50%; top: calc(70%); transform: translateX(-50%);}
+      .mob_caption{padding: 4px; background-color: unset; font-size: 4.44vw;   position: absolute; left: 50%; bottom: 10svh; transform: translateX(-50%); color:#000;}
     }
-    .section_name{
+    .section_name{display: none;
       ul{
         li{top: unset; transform: translateY(50%); bottom: 50svh;
           span{font-size: 12px;}

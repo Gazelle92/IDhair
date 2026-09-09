@@ -60,8 +60,9 @@ function Header() {
     <header className={`header ani ${headerActive ? "active" : ""} ${navHide ? "nav_hide" : ""}`}>
       <div className="logo_w">
         <TransitionLink to="/" className="logo">
-          <img src="/img/h_logo.svg" alt="IDhair" />
-          <img src="/img/logo_sub.svg"/>
+          <img src="/img/logo.png" alt="IDhair" />
+          <img style={{ display: "none" }} src="/img/logo_sub.svg"/>
+          <span>Look Better,<br/>Feel Better</span>
         </TransitionLink>
       </div>
 
