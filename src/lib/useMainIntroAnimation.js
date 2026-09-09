@@ -1,10 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 const INTRO_SCALE_DURATION = 1000;
 const INTRO_OPEN_DELAY = 800;
 const INTRO_TEXT_START_SCALE = 0.4;
 
 export default function useMainIntroAnimation(sceneRef, ready) {
+  useLayoutEffect(() => {
+    const previousRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    window.lenis?.scrollTo(0, { immediate: true, force: true });
+
+    return () => {
+      window.history.scrollRestoration = previousRestoration;
+    };
+  }, []);
+
   useEffect(() => {
     if (!ready || !sceneRef.current) return;
 
