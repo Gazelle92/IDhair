@@ -390,7 +390,7 @@ function IdPlay() {
         </div>
       )}
 
-      <div className={`play_viewer ${viewerOpen ? "active" : ""} ${viewerReady ? "ready" : ""}`} aria-hidden={!viewerOpen}>
+      <div className={`play_viewer id_play_viewer ${activeAspect === "9 / 16" ? "is_portrait" : "is_landscape"} ${viewerOpen ? "active" : ""} ${viewerReady ? "ready" : ""}`} aria-hidden={!viewerOpen}>
         <button type="button" className="play_viewer_close" onClick={closeViewer} aria-label="Close">
           <span></span>
           <span></span>
@@ -399,9 +399,9 @@ function IdPlay() {
         <div className="play_viewer_stage">
           <Swiper
             className="play_viewer_swiper"
-            slidesPerView="1"
+            slidesPerView="auto"
             centeredSlides
-            direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
+            direction={window.innerWidth < 1024 ? "vertical" : "horizontal"}
             initialSlide={0}
             speed={800}
             spaceBetween={0}
@@ -410,7 +410,7 @@ function IdPlay() {
                 direction: "vertical",
                 
               },
-              1025: {
+              1024: {
                 direction: "horizontal",
                 spaceBetween: 0,
               },

@@ -507,6 +507,28 @@ body::-webkit-scrollbar-track {
     background: rgba(220, 20, 60, .1);
 }
 */
+// id PLAY: keep slide and transition frame dimensions identical.
+@media (min-width:1024px) {
+  .id_play_viewer.is_landscape {
+    .play_viewer_slide_btn iframe.play_media{height:100%;}
+    .play_viewer_stage{padding:0;}
+    .play_viewer_swiper{width:100%; height:auto;}
+    .play_viewer_slide.type-b, .play_viewer_frame{
+      width:100vw; height:56.25vw; max-height:none; flex-shrink:0;
+    }
+  }
+}
+@media (max-width:1023.98px) {
+  .id_play_viewer.is_portrait {
+    .play_viewer_slide_btn iframe.play_media{height:100%;}
+    .play_viewer_stage{padding:0;}
+    .play_viewer_swiper{width:100%; height:100%;}
+    .play_viewer_slide.type-a, .play_viewer_frame[style*="9 / 16"]{
+      width:56.25dvh; height:100dvh; max-height:none; flex-shrink:0;
+    }
+    .play_viewer_slide.type-a{align-self:center;}
+  }
+}
 .page_magazine .mg_head .mg_nav::before{display: none;}
 .page_magazine .mg_head .mg_nav a{border:1px solid #000;}
 .page_magazine .mg_head .mg_nav a.active, .page_magazine .mg_head .mg_nav a:hover{border-color: var(--bg-ac-1);}
