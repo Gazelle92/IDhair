@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect } from "react";
 
-const INTRO_SCALE_DURATION = 1000;
+const INTRO_SCALE_DURATION = 1600;
 const INTRO_OPEN_DELAY = 800;
 const INTRO_TEXT_START_SCALE = 0.4;
 
