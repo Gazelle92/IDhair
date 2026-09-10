@@ -125,7 +125,7 @@
           }
         }
         .main_story_card_slot{width:66.666vw; max-width:360px;
-          &.main_story_card_slot_1{left:5.556vw;}
+          &.main_story_card_slot_1{left:5.556vw; top:30%;}
           //&.main_story_card_slot_2{top:58%;}
           &.main_story_card_slot_2{right:5.556vw; left:unset;     transform: translateY(-50%);}
         }
