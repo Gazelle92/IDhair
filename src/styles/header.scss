@@ -86,11 +86,10 @@
     
   }
   &.nav_hide{ 
-    &.hide{
-      .header_inner, .logo_w, .gnb{transform: translateY(-10vw); transition: ease 1.52s all;}
-    }
+    
     @media(min-width:1025px){
       .logo_w{top:1.2vw;}  
+      
     }
     .gnb{
       a{
@@ -105,6 +104,16 @@
       
         .lang{transform: translateY(-110%); opacity: 0;}
       } 
+
+      
+      &.hide{
+        .header_inner, .logo_w, .gnb{transform: translateY(-12vw); transition: ease 1.52s all;}
+      }
+    }
+    @media(max-width:1024px){
+      &.hide{
+        .header_inner, .logo_w, .gnb{transform: translateY(-70px); transition: ease 1.52s all;}
+      }
     }
   }
 }

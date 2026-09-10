@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect } from "react";
 
 const INTRO_SCALE_DURATION = 1600;
+const INTRO_IMAGE_REVEAL_DURATION = 900;
 const INTRO_OPEN_DELAY = 800;
 const INTRO_TEXT_START_SCALE = 0.4;
 
@@ -22,10 +23,12 @@ export default function useMainIntroAnimation(sceneRef, ready) {
     const scene = sceneRef.current;
     const panel = scene.querySelector(".main_story_panel_1");
     const picture = panel.querySelector(".main_story_background picture");
+    const image = picture.querySelector("img");
     const text = panel.querySelector("[data-main-intro-ani]");
     const controller = new AbortController();
     const { signal } = controller;
     let scaleAnimation;
+    let imageRevealAnimation;
     let openTimer;
     let frameId;
 
@@ -54,6 +57,23 @@ export default function useMainIntroAnimation(sceneRef, ready) {
       if (signal.aborted) return;
 
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      imageRevealAnimation = image.animate(
+        [
+          { clipPath: "inset(calc(100% + 2px) -2px -2px -2px)" },
+          { clipPath: "inset(-2px)" },
+        ],
+        {
+          duration: reducedMotion ? 0 : INTRO_IMAGE_REVEAL_DURATION,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "forwards",
+        },
+      );
+      await imageRevealAnimation.finished.catch(() => {});
+      if (signal.aborted) return;
+
+      imageRevealAnimation.cancel();
+      image.style.clipPath = "none";
+
       scaleAnimation = picture.animate(
         [{ transform: "scale(0.3)" }, { transform: "scale(1)" }],
         { duration: reducedMotion ? 0 : INTRO_SCALE_DURATION, easing: "ease", fill: "forwards" },
@@ -81,7 +101,9 @@ export default function useMainIntroAnimation(sceneRef, ready) {
       controller.abort();
       window.clearTimeout(openTimer);
       window.cancelAnimationFrame(frameId);
+      imageRevealAnimation?.cancel();
       scaleAnimation?.cancel();
+      image.style.removeProperty("clip-path");
       text.classList.remove("active");
       panel.classList.remove("open");
     };
