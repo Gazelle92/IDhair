@@ -19,6 +19,13 @@ export const deskStructure = (S) =>
     .items(
       [
         S.listItem()
+          .id("mainBanner")
+          .title("메인 배너")
+          .child(S.documentTypeList("mainBanner").title("메인 배너").defaultOrdering([
+            { field: "sortOrder", direction: "asc" },
+            { field: "_createdAt", direction: "asc" },
+          ])),
+        S.listItem()
           .id("aboutSettings")
           .title("ABOUT Settings")
           .child(

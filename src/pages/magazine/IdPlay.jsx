@@ -399,12 +399,12 @@ function IdPlay() {
         <div className="play_viewer_stage">
           <Swiper
             className="play_viewer_swiper"
-            slidesPerView="auto"
+            slidesPerView="1"
             centeredSlides
             direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
             initialSlide={0}
             speed={800}
-            spaceBetween={120}
+            spaceBetween={0}
             breakpoints={{
               0: {
                 direction: "vertical",
@@ -412,7 +412,7 @@ function IdPlay() {
               },
               1025: {
                 direction: "horizontal",
-                spaceBetween: 120,
+                spaceBetween: 0,
               },
             }}
             slideToClickedSlide

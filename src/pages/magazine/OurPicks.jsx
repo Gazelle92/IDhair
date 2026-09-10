@@ -1046,7 +1046,7 @@ function OurPicks() {
         <div className="ourpicks_section_head ani b-b b-2 b-c-gray b-delay-4">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id PLAY</h2>
-            <p className="body-s txt-gray ">아이디헤어의 다채로운 순간을 영상 콘텐츠로 만다는 id PLAY</p>
+            <p className="body-s txt-gray ">아이디헤어의 다채로운 순간을 영상 콘텐츠로 만나는 id PLAY</p>
           </div>
           <TransitionLink to="/magazine/id-play" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>

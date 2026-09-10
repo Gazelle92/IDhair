@@ -60,6 +60,11 @@ const runQuery = async (query, params = {}) => {
   return data.result;
 };
 
+export const fetchMainBanners = () => runQuery(`
+  *[_type == "mainBanner" && isVisible == true && !(_id in path("drafts.**"))]
+  | order(sortOrder asc, _createdAt asc){_id, title, content, url}
+`);
+
 export const formatNewsDate = (dateValue) => {
   if (!dateValue) return "";
 

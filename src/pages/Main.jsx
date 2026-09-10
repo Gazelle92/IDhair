@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import TransitionLink from "../components/TransitionLink";
+import MainNotice from "../components/MainNotice";
 import useAboutSmoothScroll from "../lib/useAboutSmoothScroll";
 import useMainIntroAnimation from "../lib/useMainIntroAnimation";
 import {
@@ -92,18 +93,7 @@ function MainStoryPanel({ story, index, isMobile }) {
         ))}
       </div>
 
-      {index === 0 && (
-        <div className="main_story_notice">
-          <div>
-            <strong className="body-m fw-sb">2026 상반기 신입 디자이너 채용</strong>
-            <span className="caption-m fw-r">2026 아이디헤어와 함께<br />새로운 시선으로 변화를 만들 디자이너를 기다립니다.</span>
-          </div>
-          <div className="main_story_notice_arrow" aria-hidden="true">
-            <img src="./img/arrow_right_s.svg"/>
-            <img src="./img/arrow_right_s.svg"/>
-          </div>
-        </div>
-      )}
+      {index === 0 && <MainNotice />}
 
       <div className="main_story_scroll body-s" aria-hidden="true">
         <span>[ SCROLL ]</span>
