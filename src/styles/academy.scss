@@ -340,7 +340,7 @@
     }
 
     .ac_2{
-      
+      .flex_w{height: 100%;}
       .flex_w .flex{flex-direction: column ; padding: 60px 20px 20px;
         .b-l{display: none;}
         .left{width: 100%; padding-left: 0; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px dashed #000;
@@ -415,7 +415,7 @@
         }
       
       }*/
-
+      .bg_checker{height:10px;}
       .img_map {padding-bottom: 10svh;
         h1{font-size: 13.333vw; text-align: center; color: var(--txt-gray);}
         .img_w{aspect-ratio: 360 / 720;
