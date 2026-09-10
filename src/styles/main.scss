@@ -5,8 +5,12 @@
       &.main_story_panel_1{z-index:1;
         .main_story_background picture{transform:scale(0.3); transform-origin:center;}
         .main_story_background img{clip-path:inset(calc(100% + 2px) -2px -2px -2px);}
-        .main_story_copy span:nth-child(1){top:30%; left:32px;}
-        .main_story_copy span:nth-child(2){top:51%; right: 32px;  text-align: right;}
+        .main_story_copy{    transition: clip-path 2s ease, letter-spacing 2s ease;
+          span{transition: clip-path 2s ease, letter-spacing 2s ease;}
+          span:nth-child(1){top:30%; left:32px;}
+          span:nth-child(2){top:51%; right: 32px;  text-align: right;}
+        }
+        
 
          .main_story_notice{opacity:0;  transform:translateY(100%); transition:ease 0.8s opacity, ease 0.8s transform;}
          .main_story_scroll{opacity:0; transition:ease 0.8s opacity;}

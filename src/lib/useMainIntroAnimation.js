@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect } from "react";
 
 const INTRO_SCALE_DURATION = 1600;
 const INTRO_IMAGE_REVEAL_DURATION = 900;
-const INTRO_OPEN_DELAY = 800;
+const INTRO_OPEN_DELAY = 100;
 const INTRO_TEXT_START_SCALE = 0.4;
 
 export default function useMainIntroAnimation(sceneRef, ready) {
