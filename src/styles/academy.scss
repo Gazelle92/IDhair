@@ -32,7 +32,7 @@
       }
       .title_b{position: absolute; font-size: 14.222svh; line-height: 1; display: flex; align-items: flex-end; left: 0; bottom: 0; padding: 0 6.667svh 4.444svh; width: 100%; justify-content: space-between; clip-path: inset(0 50% 0 50%);
         *{letter-spacing:1vw;}
-        .cross{position: relative; display: flex; align-items: center; justify-content: center; width: 1.667svh; height: 1.667svh; margin-bottom: 4.667svh;
+        .cross{position: relative; display: flex; align-items: center; justify-content: center; width: 1.667svh; height: 1.667svh; margin-bottom: 4.667svh; display:none;
           &::before, &::after{content: ''; display: block; position: absolute; background-color: #fd3d32; transform: translate(-50%, -50%); left: 50%; top: 50%;}
           &::before{width: 0.333svh; height: 100%;}
           &::after{height: 0.333svh; width: 100%;}
