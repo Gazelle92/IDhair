@@ -515,7 +515,7 @@ function Academy() {
       <section className="ac_3">
         <div className="bg_checker"></div>
         <div className="img_map">
-          <h1 className="display-l apprael">ID STYLE WORK</h1>
+          <h1 className="display-l apprael">ID STYLE <br className="mob"/>WORK</h1>
           <ul className="img_w">
             <li>
               <img src="/img/ac_3_1.png" alt="" />
