@@ -80,6 +80,9 @@ function Academy() {
       const remaining = 1 - progress;
       const viewportWidth = window.innerWidth;
       const isMobileLayout = viewportWidth <= 1024;
+      const videoTop = isMobileLayout
+        ? Number.parseFloat(getComputedStyle(videoWrap).top) || 0
+        : 0;
       const sectionOffset = getLayoutOffset(section);
       const titleOffset = getLayoutOffset(videoWrap.parentElement);
       const titleOffsetTop = titleOffset.top - sectionOffset.top;
@@ -90,11 +93,11 @@ function Academy() {
         ? 240
         : videoViewportHeight * 0.53333;
       const initialTop = isMobileLayout
-        ? titleOffsetTop + 53
+        ? titleOffsetTop + 53 - videoTop
         : videoViewportHeight * 0.352;
       const initialSide = Math.max(0, (viewportWidth - initialWidth) / 2);
       const initialBottom = Math.max(0, videoViewportHeight - initialTop - initialHeight);
-      const videoTravel = Math.max(0, section.offsetHeight - videoViewportHeight);
+      const videoTravel = Math.max(0, section.offsetHeight - videoViewportHeight - videoTop);
       const videoTravelProgress = videoTravel > 0
         ? Math.min(1, Math.max(0, (window.scrollY - sectionOffset.top) / videoTravel))
         : 0;
@@ -109,6 +112,12 @@ function Academy() {
       videoWrap.style.setProperty("--ac-video-y", `${videoYRatio * 100}%`);
       videoWrap.style.setProperty("--ac-video-width", `${viewportWidth}px`);
       videoWrap.style.setProperty("--ac-video-overlay-opacity", String(progress));
+      // Release the mobile reveal mask entirely once the oversized video is open.
+      if (isMobileLayout && progress >= 1) {
+        videoWrap.style.clipPath = "none";
+      } else {
+        videoWrap.style.removeProperty("clip-path");
+      }
 
       if (workSection && workItems.length) {
         const workRect = workSection.getBoundingClientRect();
