@@ -50,6 +50,17 @@ function Academy() {
     let frameId = null;
     let activeSectionNameIndex = -1;
 
+    // Layout coordinates stay independent of browser toolbar/visual viewport changes.
+    const getLayoutOffset = (element) => {
+      let top = 0;
+      let left = 0;
+      for (let node = element; node; node = node.offsetParent) {
+        top += node.offsetTop;
+        left += node.offsetLeft;
+      }
+      return { top, left };
+    };
+
     gsap.set(allSectionNameSpans, {
       y: 20,
       autoAlpha: 0,
@@ -61,7 +72,6 @@ function Academy() {
     const updateVideoClip = () => {
       frameId = null;
 
-      const sectionRect = section.getBoundingClientRect();
       const growthRect = videoGrowthTrack.getBoundingClientRect();
       const viewportHeight = academyViewport?.offsetHeight || window.innerHeight;
       const videoViewportHeight = videoWrap.offsetHeight || viewportHeight;
@@ -70,8 +80,9 @@ function Academy() {
       const remaining = 1 - progress;
       const viewportWidth = window.innerWidth;
       const isMobileLayout = viewportWidth <= 1024;
-      const titleRect = videoWrap.parentElement.getBoundingClientRect();
-      const titleOffsetTop = titleRect.top - sectionRect.top;
+      const sectionOffset = getLayoutOffset(section);
+      const titleOffset = getLayoutOffset(videoWrap.parentElement);
+      const titleOffsetTop = titleOffset.top - sectionOffset.top;
       const initialWidth = isMobileLayout
         ? 120
         : videoViewportHeight * 0.53333;
@@ -83,15 +94,19 @@ function Academy() {
         : videoViewportHeight * 0.352;
       const initialSide = Math.max(0, (viewportWidth - initialWidth) / 2);
       const initialBottom = Math.max(0, videoViewportHeight - initialTop - initialHeight);
-      const offsetY = sectionRect.top > 0
-        ? sectionRect.top
-        : Math.min(0, sectionRect.bottom - videoViewportHeight);
+      const videoTravel = Math.max(0, section.offsetHeight - videoViewportHeight);
+      const videoTravelProgress = videoTravel > 0
+        ? Math.min(1, Math.max(0, (window.scrollY - sectionOffset.top) / videoTravel))
+        : 0;
+      const videoTravelRatio = videoTravel / videoViewportHeight;
+      const videoYRatio = videoTravelRatio * videoTravelProgress
+        - titleOffsetTop / videoViewportHeight;
 
-      videoWrap.style.setProperty("--ac-video-clip-top", `${initialTop * remaining}px`);
+      videoWrap.style.setProperty("--ac-video-clip-top", `${initialTop / videoViewportHeight * remaining * 100}%`);
       videoWrap.style.setProperty("--ac-video-clip-side", `${initialSide * remaining}px`);
-      videoWrap.style.setProperty("--ac-video-clip-bottom", `${initialBottom * remaining}px`);
-      videoWrap.style.setProperty("--ac-video-x", `${-titleRect.left}px`);
-      videoWrap.style.setProperty("--ac-video-y", `${-titleRect.top + offsetY}px`);
+      videoWrap.style.setProperty("--ac-video-clip-bottom", `${initialBottom / videoViewportHeight * remaining * 100}%`);
+      videoWrap.style.setProperty("--ac-video-x", `${-titleOffset.left}px`);
+      videoWrap.style.setProperty("--ac-video-y", `${videoYRatio * 100}%`);
       videoWrap.style.setProperty("--ac-video-width", `${viewportWidth}px`);
       videoWrap.style.setProperty("--ac-video-overlay-opacity", String(progress));
 
