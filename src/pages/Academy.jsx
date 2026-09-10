@@ -8,6 +8,7 @@ function Academy() {
     const section = document.querySelector(".page_academy .ac_1");
     const videoGrowthTrack = section?.querySelector(".ac_1_bg_height");
     const videoWrap = section?.querySelector(".video_w");
+    const academyViewport = section?.querySelector(".ac_1_wrap");
     const workSection = section?.querySelector(".ac_1_3");
     const workImages = workSection ? [...workSection.querySelectorAll(".left img")] : [];
     const workItems = workSection ? [...workSection.querySelectorAll(".right li")] : [];
@@ -62,30 +63,30 @@ function Academy() {
 
       const sectionRect = section.getBoundingClientRect();
       const growthRect = videoGrowthTrack.getBoundingClientRect();
-      const growthRange = Math.max(1, growthRect.height - window.innerHeight);
+      const viewportHeight = academyViewport?.offsetHeight || window.innerHeight;
+      const videoViewportHeight = videoWrap.offsetHeight || viewportHeight;
+      const growthRange = Math.max(1, growthRect.height - viewportHeight);
       const progress = Math.min(1, Math.max(0, -growthRect.top / growthRange));
       const remaining = 1 - progress;
       const viewportWidth = window.innerWidth;
-      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
       const isMobileLayout = viewportWidth <= 1024;
       const titleRect = videoWrap.parentElement.getBoundingClientRect();
       const titleOffsetTop = titleRect.top - sectionRect.top;
       const initialWidth = isMobileLayout
         ? 120
-        : viewportHeight * 0.53333;
+        : videoViewportHeight * 0.53333;
       const initialHeight = isMobileLayout
         ? 240
-        : viewportHeight * 0.53333;
+        : videoViewportHeight * 0.53333;
       const initialTop = isMobileLayout
         ? titleOffsetTop + 53
-        : viewportHeight * 0.352;
+        : videoViewportHeight * 0.352;
       const initialSide = Math.max(0, (viewportWidth - initialWidth) / 2);
-      const initialBottom = Math.max(0, viewportHeight - initialTop - initialHeight);
+      const initialBottom = Math.max(0, videoViewportHeight - initialTop - initialHeight);
       const offsetY = sectionRect.top > 0
         ? sectionRect.top
-        : Math.min(0, sectionRect.bottom - viewportHeight);
+        : Math.min(0, sectionRect.bottom - videoViewportHeight);
 
-      videoWrap.style.setProperty("--ac-video-height", `${viewportHeight}px`);
       videoWrap.style.setProperty("--ac-video-clip-top", `${initialTop * remaining}px`);
       videoWrap.style.setProperty("--ac-video-clip-side", `${initialSide * remaining}px`);
       videoWrap.style.setProperty("--ac-video-clip-bottom", `${initialBottom * remaining}px`);
@@ -96,7 +97,7 @@ function Academy() {
 
       if (workSection && workItems.length) {
         const workRect = workSection.getBoundingClientRect();
-        const workRange = Math.max(1, workRect.height - window.innerHeight);
+        const workRange = Math.max(1, workRect.height - viewportHeight);
         const workProgress = Math.min(1, Math.max(0, -workRect.top / workRange));
         const workPosition = Math.min(
           workItems.length - 1,
@@ -161,7 +162,7 @@ function Academy() {
 
       if (teamSection && teamImageWrap && teamCounter && teamItems.length) {
         const teamRect = teamSection.getBoundingClientRect();
-        const teamRange = Math.max(1, teamRect.height - window.innerHeight);
+        const teamRange = Math.max(1, teamRect.height - viewportHeight);
         const teamProgress = Math.min(1, Math.max(0, -teamRect.top / teamRange));
         const titleProgress = Math.min(1, teamProgress / 0.9);
         const teamPosition = titleProgress * teamItems.length;
@@ -233,7 +234,7 @@ function Academy() {
         const checkerRect = backgroundChecker.getBoundingClientRect();
         const backgroundProgress = Math.min(
           1,
-          Math.max(0, (window.innerHeight - checkerRect.top) / window.innerHeight),
+          Math.max(0, (viewportHeight - checkerRect.top) / viewportHeight),
         );
 
         const backgroundColor = `rgb(237 237 237 / ${backgroundProgress * 100}%)`;
@@ -245,7 +246,7 @@ function Academy() {
       if (sectionNameItems.length) {
         const nextSectionNameIndex = sectionNameTriggers.reduce(
           (activeIndex, trigger, index) => (
-            trigger && trigger.getBoundingClientRect().top <= window.innerHeight * 0.5
+            trigger && trigger.getBoundingClientRect().top <= viewportHeight * 0.5
               ? index
               : activeIndex
           ),
