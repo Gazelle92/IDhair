@@ -72,7 +72,7 @@ function Footer() {
             </ul>
             <div className="icon_w">
                 <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
-                <a target="_blank" href="https://www.youtube.com/@idhairbrand"><img src="/img/icon_youtube.svg"/></a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
             </div>
 
             <ol className="body-m">

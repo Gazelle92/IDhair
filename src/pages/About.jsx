@@ -163,9 +163,9 @@ function About() {
             <img className="mob" src="/img/about_1_m.jpg" />
           </div>
           <div className="as_text ">
-            <h1 className="display-l fw-l apprael t_m_1">Beyond</h1>
-            <h1 className="display-l fw-l apprael t_m_2">Style,</h1>
-            <h1 className="display-l fw-l apprael_all t_m_3"><span>Be&nbsp;</span><span>You</span></h1>
+            <h1 className="display-l fw-l apprael t_m_1">My identity,</h1>
+            <h1 className="display-l fw-l apprael t_m_2">My id HAIR</h1>
+            {/*<h1 className="display-l fw-l apprael_all t_m_3"><span>Be&nbsp;</span><span>You</span></h1>*/}
           </div>
           <div className="as_1_text_2 head-s ani_x">
             <span className=" delay-1">

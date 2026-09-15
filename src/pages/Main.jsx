@@ -64,15 +64,16 @@ function MainStoryPanel({ story, index, isMobile }) {
       <div className="main_story_shade" aria-hidden="true" />
 
       <div className="main_story_copy apprael_all display-l ani apprael_ani" data-main-intro-ani={index === 0 ? "" : undefined} aria-hidden="true">
-        {index === 1 ? (
-          <>
-            <span>LOOK<br/>BETTER,</span>
-            <span>FEEL<br/>BETTER</span>
-          </>
-        ) : (
+        {index === 2 ? (
           <>
             <span>MY<br/>IDENTITY</span>
             <span>MY<br/>id HAIR</span>
+          </>
+        ) : (
+          <>
+            <span>LOOK<br/>BETTER,</span>
+            <span>FEEL<br/>BETTER</span>
+            
           </>
         )}
       </div>

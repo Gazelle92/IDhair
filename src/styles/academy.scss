@@ -53,7 +53,7 @@
     }
 
     .ac_1_3{position: relative; width: 100%; height: 300svh;
-      .flex{display: flex; align-items: center; align-content: center; height: 100svh; padding: 0 100px 0 180px; gap: 80px; position: sticky; top: 0;
+      .flex{display: flex; align-items: center; align-content: center; height: 100svh; padding: 0 100px 0 180px; gap: 80px; position: sticky; top: 0; padding-bottom: 10svh;
         .left{width: calc((100% / 12) * 4); background-color: #fff; aspect-ratio: 480 / 560; position: relative;
           img{position: absolute; width: 100%; height: 100%; left: 0; top: 0; object-fit: cover; opacity: 0; will-change: opacity;}
         }
@@ -65,9 +65,9 @@
               h1{font-size: 40px; line-height: 1.2; font-family: 'GT Walsheim', 'Pretendard', serif; font-weight:400;}
               &::before{border-top: 1px dashed rgba(0, 0, 0, 0.25); background-color: unset; bottom: -2px;}
             }
-            .l_b{padding: 97px 32px 32px; display: flex; justify-content: space-between; align-items: flex-start; background-color: #fff;
-              b{line-height: 1.7; font-size: 16px; font-weight: 600;}
-              span{line-height: 1.7; font-size: 16px; text-align: right;}
+            .l_b{padding: 40px 32px 32px; display: flex; justify-content: space-between; align-items: flex-start; background-color: #fff;
+              b{line-height: 1.7; font-size: 16px; font-weight: 600; white-space: nowrap;}
+              span{line-height: 1.7; font-size: 16px; text-align: right; width: calc(100% - 84px); word-break: keep-all;}
             }
           }
         }
@@ -323,7 +323,7 @@
         }
       }*/
       .ac_1_3{height: 200svh;
-        .flex{flex-direction: column; padding: /*6.667vh 0*/16.556vw 0 10.556vw; height: unset; height: 100svh; justify-content: center;
+        .flex{flex-direction: column; padding: /*6.667vh 0*/16.556vw 0 10.556vw; height: unset; height: 100svh; justify-content: center; gap:40px;
           .left{width: unset; height: /*13.333svh*/ 26svh;}
           .right{transform: unset!important; width: calc(100% - 4.444svh); padding: 0 2.222svh;
             li{padding: 0 0 3.556svh;
@@ -333,7 +333,7 @@
               }
               .l_b{padding: 3.556svh 1.778svh 1.778svh; flex-direction: column; align-items: flex-start; justify-content: unset;
                 b{font-size: 1.222svh;}
-                span{font-size: 1.222svh; text-align: left;}
+                span{font-size: 1.222svh; text-align: left; width:100%;}
               }
             }
           }

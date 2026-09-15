@@ -74,13 +74,11 @@ function Header() {
       <div className="logo_w">
         <TransitionLink to="/" className="logo">
           <img src="/img/logo.png" alt="IDhair" />
-          <img style={{ display: "none" }} src="/img/logo_sub.svg"/>
-          <span>Look Better,<br/>Feel Better</span>
         </TransitionLink>
       </div>
 
       <div className="gnb body-l">
-        <TransitionLink to="/about"><span>id HAIR</span></TransitionLink>
+        <TransitionLink to="/about"><span>ABOUT id HAIR</span></TransitionLink>
         <TransitionLink to="/academy"><span>id ACADEMY</span></TransitionLink>
         <TransitionLink to="/magazine"><span>id MAGAZINE</span></TransitionLink>
         <TransitionLink to="/recruit"><span>RECRUIT</span></TransitionLink>
@@ -137,7 +135,7 @@ function Header() {
               }}
             >Salon</a>
             <div className="mob menu_line"></div>
-            <TransitionLink to="/about" onClick={() => setNavOpen(false)}>id Hair</TransitionLink>
+            <TransitionLink to="/about" onClick={() => setNavOpen(false)}>About id HAIR</TransitionLink>
             <TransitionLink to="/academy" onClick={() => setNavOpen(false)}>id Academy</TransitionLink>
             <TransitionLink to="/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>
             <div className="mob menu_line"></div>
@@ -145,15 +143,15 @@ function Header() {
 
           <div className="h_nav_group_2">
             <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
-            <a target="_blank" href="https://www.youtube.com/@idhairbrand"><img src="/img/icon_youtube.svg"/></a>
+            <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
           </div>
 
           <div className="h_nav_group_3">
             <TransitionLink className="gt display-xs" to="/magazine/our-picks" onClick={() => setNavOpen(false)}>id Magazine</TransitionLink>
             <ul className="body-s">
-              <li><TransitionLink to="/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
               <li><TransitionLink to="/magazine/id-event" onClick={() => setNavOpen(false)}>id EVENT</TransitionLink></li>
               <li><TransitionLink to="/magazine/id-family" onClick={() => setNavOpen(false)}>id FAMILY</TransitionLink></li>
+              <li><TransitionLink to="/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
               <li><TransitionLink to="/magazine/id-gallery" onClick={() => setNavOpen(false)}>id GALLERY</TransitionLink></li>
               <li><TransitionLink to="/magazine/id-play" onClick={() => setNavOpen(false)}>id PLAY</TransitionLink></li>
             </ul>
