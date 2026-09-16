@@ -106,6 +106,9 @@
   .page_main{
     .main_story{
       .main_story_panel{
+        .main_story_background{ 
+          picture{height: 105lvh;}
+        }
         .main_story_scroll{top: 70vw; right: 0;}
         A.main_story_copy span:nth-child(1){top:80px; left:unset; right:3.333vw; text-align:right;}
         .main_story_copy span:nth-child(2){top:unset; bottom:3.333vw; right:unset; left:3.333vw; text-align:left;}
