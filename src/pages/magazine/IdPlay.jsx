@@ -254,7 +254,10 @@ function IdPlay() {
 
         requestAnimationFrame(() => {
           const targetSlide = viewerSlideRefs.current[0];
-          const targetRect = targetSlide?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
+          const useCenteredFrame = window.matchMedia("(max-width: 1023.98px)").matches
+            && targetSlide?.classList.contains("type-a");
+          const target = useCenteredFrame ? viewerFrameRef.current : targetSlide;
+          const targetRect = target?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
 
           if (!targetRect) return;
 

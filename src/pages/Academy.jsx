@@ -461,12 +461,13 @@ function Academy() {
                 <div className="number_count"><b>01</b><span>/ 07</span></div>
                 <div className="img">
                   <img src="/img/ac_2_1.jpg"/>
+                  <img src="/img/ac_2_1.jpg"/>
                   <img src="/img/ac_2_2.jpg"/>
                   <img src="/img/ac_2_3.jpg"/>
                   <img src="/img/ac_2_4.jpg"/>
                   <img src="/img/ac_2_5.jpg"/>
+                  <img src="/img/ac_2_6.jpg"/>
                   <img src="/img/ac_2_7.jpg"/>
-                  <img src="/img/ac_2_8.jpg"/>
                 </div>
                 <ul>
                   <li>

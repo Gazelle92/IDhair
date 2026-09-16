@@ -376,7 +376,7 @@ body.gallery-backdrop-active main.page_magazine::after{background-color: #ededed
 /*.gallery-viewer-open .gallery_viewer{background-color: #ededed;}*/
 
 .gallery_transition_clone{position: fixed; z-index: 999; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height;}
-.play_transition_clone{position: fixed; z-index: 1201; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height; border:0;}
+.play_transition_clone{position: fixed; z-index: 1201; max-width:none; object-fit: cover; pointer-events: none; transform: none !important; opacity: 1 !important; will-change: left, top, width, height; border:0;}
 .play_media_youtube{pointer-events:none;}
 
 .play_viewer{position: fixed; inset: 0; z-index: 1200; display: flex; align-items: center; justify-content: center; pointer-events: none;
