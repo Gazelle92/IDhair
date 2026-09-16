@@ -3,6 +3,7 @@ import { flushSync } from "react-dom";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { animatePlayRect, resizePlayViewer } from "../../lib/playViewerMotion";
 import { fetchPlayPosts, formatNewsDate, getNewsImageUrl } from "../../lib/sanityNews";
 
 const CATEGORY = "id-play";
@@ -253,13 +254,7 @@ function IdPlay() {
         swiperRef.current?.slideTo(0, 0, false);
 
         requestAnimationFrame(() => {
-          const targetSlide = viewerSlideRefs.current[0];
-          const useCenteredFrame = window.matchMedia("(max-width: 1023.98px)").matches
-            && targetSlide?.classList.contains("type-a");
-          const target = useCenteredFrame ? viewerFrameRef.current : targetSlide;
-          const targetRect = target?.getBoundingClientRect() || viewerFrameRef.current?.getBoundingClientRect();
-
-          if (!targetRect) return;
+          if (!viewerFrameRef.current) return;
 
           timelineRef.current = gsap.timeline({
             defaults: {
@@ -274,12 +269,7 @@ function IdPlay() {
           },
           });
 
-          timelineRef.current.to(clone, {
-            left: targetRect.left,
-            top: targetRect.top,
-            width: targetRect.width,
-            height: targetRect.height,
-          });
+          animatePlayRect(timelineRef.current, clone, sourceRect, () => viewerFrameRef.current);
         });
       });
     });
@@ -300,7 +290,6 @@ function IdPlay() {
       return;
     }
 
-    const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
     const activeItem = viewerItems[activeIndex];
     const clone = activeItem ? document.createElement("img") : null;
@@ -348,12 +337,7 @@ function IdPlay() {
       },
     });
 
-    timelineRef.current.to(clone, {
-      left: sourceRect.left,
-      top: sourceRect.top,
-      width: sourceRect.width,
-      height: sourceRect.height,
-    });
+    animatePlayRect(timelineRef.current, clone, targetRect, () => sourceImage);
   };
 
   if (status === "loading") {
@@ -402,6 +386,7 @@ function IdPlay() {
         <div className="play_viewer_stage">
           <Swiper
             className="play_viewer_swiper"
+            onResize={resizePlayViewer}
             slidesPerView="auto"
             centeredSlides
             direction={window.innerWidth < 1024 ? "vertical" : "horizontal"}

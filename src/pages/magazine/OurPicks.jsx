@@ -3,6 +3,7 @@ import { flushSync } from "react-dom";
 import { gsap } from "gsap";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { animatePlayRect, resizePlayViewer } from "../../lib/playViewerMotion";
 import TransitionLink from "../../components/TransitionLink";
 import {
   fetchGalleryPosts,
@@ -658,12 +659,7 @@ function OurPicks() {
         playViewerSwiperRef.current?.update();
         playViewerSwiperRef.current?.slideTo(0, 0, false);
         requestAnimationFrame(() => {
-          const targetSlide = playViewerSlideRefs.current[0];
-          const useCenteredFrame = window.matchMedia("(max-width: 1023.98px)").matches
-            && targetSlide?.classList.contains("type-a");
-          const target = useCenteredFrame ? playViewerFrameRef.current : targetSlide;
-          const targetRect = target?.getBoundingClientRect() || playViewerFrameRef.current?.getBoundingClientRect();
-          if (!targetRect) return;
+          if (!playViewerFrameRef.current) return;
 
           playTimelineRef.current = gsap.timeline({
             defaults: { duration: PLAY_ZOOM_DURATION, ease: "expo.inOut" },
@@ -674,12 +670,7 @@ function OurPicks() {
             },
           });
 
-          playTimelineRef.current.to(clone, {
-            left: targetRect.left,
-            top: targetRect.top,
-            width: targetRect.width,
-            height: targetRect.height,
-          });
+          animatePlayRect(playTimelineRef.current, clone, sourceRect, () => playViewerFrameRef.current);
         });
       });
     });
@@ -700,7 +691,6 @@ function OurPicks() {
       return;
     }
 
-    const sourceRect = sourceImage.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
     const activeItem = playViewerItems[activePlayIndex];
     const clone = activeItem ? document.createElement("img") : null;
@@ -738,12 +728,7 @@ function OurPicks() {
       },
     });
 
-    playTimelineRef.current.to(clone, {
-      left: sourceRect.left,
-      top: sourceRect.top,
-      width: sourceRect.width,
-      height: sourceRect.height,
-    });
+    animatePlayRect(playTimelineRef.current, clone, targetRect, () => sourceImage);
   };
 
   useEffect(() => {
@@ -1184,6 +1169,7 @@ function OurPicks() {
         <div className="play_viewer_stage">
           <Swiper
             className="play_viewer_swiper"
+            onResize={resizePlayViewer}
             slidesPerView="auto"
             centeredSlides
             direction={window.innerWidth < 1024 ? "vertical" : "horizontal"}
