@@ -119,7 +119,7 @@ const getYoutubeEmbedUrl = (url) => {
 
   if (!id) return "";
 
-  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0`;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=0&autohide=1&playsinline=1&loop=1&playlist=${id}&controls=1&rel=0&modestbranding=1&disablekb=0&fs=0&iv_load_policy=3&cc_load_policy=0`;
 };
 
 const getPlayVideoUrl = (item) => item?.youtubeUrl || item?.videoUrl || item?.url || "";
@@ -659,7 +659,10 @@ function OurPicks() {
         playViewerSwiperRef.current?.slideTo(0, 0, false);
         requestAnimationFrame(() => {
           const targetSlide = playViewerSlideRefs.current[0];
-          const targetRect = targetSlide?.getBoundingClientRect() || playViewerFrameRef.current?.getBoundingClientRect();
+          const useCenteredFrame = window.matchMedia("(max-width: 1023.98px)").matches
+            && targetSlide?.classList.contains("type-a");
+          const target = useCenteredFrame ? playViewerFrameRef.current : targetSlide;
+          const targetRect = target?.getBoundingClientRect() || playViewerFrameRef.current?.getBoundingClientRect();
           if (!targetRect) return;
 
           playTimelineRef.current = gsap.timeline({
@@ -1172,7 +1175,7 @@ function OurPicks() {
         </div>
       </div>}
 
-      {shouldRenderPlayViewer && <div className={`play_viewer ${playViewerOpen ? "active" : ""} ${playViewerReady ? "ready" : ""}`} aria-hidden={!playViewerOpen}>
+      {shouldRenderPlayViewer && <div className={`play_viewer id_play_viewer ${activePlayAspect === "9 / 16" ? "is_portrait" : "is_landscape"} ${playViewerOpen ? "active" : ""} ${playViewerReady ? "ready" : ""}`} aria-hidden={!playViewerOpen}>
         <button type="button" className="play_viewer_close" onClick={closePlayViewer} aria-label="Close">
           <span></span>
           <span></span>
@@ -1183,17 +1186,17 @@ function OurPicks() {
             className="play_viewer_swiper"
             slidesPerView="auto"
             centeredSlides
-            direction={window.innerWidth <= 1024 ? "vertical" : "horizontal"}
+            direction={window.innerWidth < 1024 ? "vertical" : "horizontal"}
             initialSlide={0}
             speed={800}
-            spaceBetween={120}
+            spaceBetween={0}
             breakpoints={{
               0: {
                 direction: "vertical",
               },
-              1025: {
+              1024: {
                 direction: "horizontal",
-                spaceBetween: 120,
+                spaceBetween: 0,
               },
             }}
             slideToClickedSlide
