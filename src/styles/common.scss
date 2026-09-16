@@ -457,6 +457,7 @@ body main::before{content: ''; display: block; opacity: 0; transition: ease 0.3s
 }
 
 @media (max-width:1024px){
+  main{margin-bottom: 0;}
   .hover_btn{width: 36.667vw; height: 9.444vw;
     img{width: 4.444vw; height: 4.444vw;}
     span{padding-top: 0.556vw;}

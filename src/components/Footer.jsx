@@ -16,7 +16,9 @@ function Footer() {
     const wrapper = document.querySelector("main");
     if (!wrapper) return;
 
-    wrapper.style.setProperty("--footer-height", `${footer.offsetHeight}px`);
+    const height = `${footer.offsetHeight}px`;
+    wrapper.style.setProperty("--footer-height", height);
+    footer.style.setProperty("--footer-height", height);
   };
 
   const checkFooterActive = () => {
