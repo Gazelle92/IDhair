@@ -54,12 +54,12 @@
         &:nth-child(1){margin-bottom: 3.394vw;}
       }
     }
-    .h_nav_group_2{position: absolute; right: 2.424vw; bottom:8.8vw; display: flex; gap:0.7vw;
+    .h_nav_group_2{position: absolute; right: 2.424vw; bottom:4.5vw; display: flex; gap:0.7vw;
       a{width:3vw; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
         img{width: 100%;}
       }
     }
-    .h_nav_group_3{position: absolute; left: 2.424vw; bottom: 9.091vw; 
+    .h_nav_group_3{position: absolute; left: 2.424vw; bottom: 4.5vw; 
       & > a{margin-bottom: 1.212vw; display: block; font-weight: 500;}
       ul{
         display: flex; gap: 0.697vw;
