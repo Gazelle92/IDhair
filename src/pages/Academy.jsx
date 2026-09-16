@@ -84,7 +84,7 @@ function Academy() {
         ? Number.parseFloat(getComputedStyle(videoWrap).top) || 0
         : 0;
       const sectionOffset = getLayoutOffset(section);
-      const titleOffset = getLayoutOffset(videoWrap.parentElement);
+      const titleOffset = getLayoutOffset(academyViewport.querySelector(".title"));
       const titleOffsetTop = titleOffset.top - sectionOffset.top;
       const initialWidth = isMobileLayout
         ? 120
@@ -102,14 +102,13 @@ function Academy() {
         ? Math.min(1, Math.max(0, (window.scrollY - sectionOffset.top) / videoTravel))
         : 0;
       const videoTravelRatio = videoTravel / videoViewportHeight;
-      const videoYRatio = videoTravelRatio * videoTravelProgress
-        - titleOffsetTop / videoViewportHeight;
+      const videoYRatio = videoTravelRatio * videoTravelProgress;
 
       videoWrap.style.setProperty("--ac-video-clip-top", `${initialTop / videoViewportHeight * remaining * 100}%`);
       videoWrap.style.setProperty("--ac-video-clip-side", `${initialSide * remaining}px`);
       videoWrap.style.setProperty("--ac-video-clip-bottom", `${initialBottom / videoViewportHeight * remaining * 100}%`);
-      videoWrap.style.setProperty("--ac-video-x", `${-titleOffset.left}px`);
-      videoWrap.style.setProperty("--ac-video-y", `${videoYRatio * 100}%`);
+      // Mobile positioning is handled by sticky, not scroll-event transforms.
+      videoWrap.style.setProperty("--ac-video-y", isMobileLayout ? "0px" : `${videoYRatio * 100}%`);
       videoWrap.style.setProperty("--ac-video-width", `${viewportWidth}px`);
       videoWrap.style.setProperty("--ac-video-overlay-opacity", String(progress));
       // Release the mobile reveal mask entirely once the oversized video is open.
@@ -349,12 +348,14 @@ function Academy() {
     <main className="page_academy">
       <section className="ac_1 bg-gray-1">
         <div className="ac_1_bg_height"></div>
+        <div className="ac_video_track">
+          <div className="video_w">
+            <video src="/video/academy_1.mp4" autoPlay muted loop playsInline preload="auto" />
+          </div>
+        </div>
         <div className="ac_1_wrap ani">
           <div className="title b-t b-4">
             <div className="b-b"></div>
-            <div className="video_w">
-              <video src="/video/academy_1.mp4" autoPlay muted loop playsInline preload="auto" />
-            </div>
             <div className="display-l apprael title_txt apprael_ani">ID ACADEMY</div>
             
           </div>
