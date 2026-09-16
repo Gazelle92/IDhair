@@ -39,7 +39,7 @@ const getYoutubeEmbedUrl = (url) => {
 
   if (!id) return "";
 
-  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&autohide=1&playsinline=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0`;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=0&autohide=1&playsinline=1&loop=1&playlist=${id}&controls=1&rel=0&modestbranding=1&disablekb=0&fs=0&iv_load_policy=3&cc_load_policy=0`;
 };
 
 const getPlayVideoUrl = (item) => item?.youtubeUrl || item?.videoUrl || item?.url || "";

@@ -19,7 +19,7 @@
           &::before{content: ''; display: block; width: 0.727vw; height: 0.727vw; border-radius: 100%; background-color: var(--bg-ac-1); margin-right: 1.212vw;}
         }
 
-        .txt{width: 24.242vw; font-weight: 500;
+        .txt{width: 24.242vw; font-weight: 500; text-wrap: balance; word-break: keep-all; width: 70%;
           .inner{width: 24.242vw;}
         }
       }
@@ -465,7 +465,7 @@ body.play-viewer-animating .play_viewer .play_viewer_swiper{opacity: 0;}
     --play-slide-width: calc(100% - 0px);
     --play-max-height: calc(100vh - 160px);
     .play_viewer_close{top: 5.556vw; right: 5.556vw; left: auto; transform: none;}
-    .play_viewer_stage{align-items: center; justify-content: center; padding: 0 5.556vw 0; box-sizing: border-box;}
+    .play_viewer_stage{align-items: center; justify-content: center; padding: 0 0 0; box-sizing: border-box;}
     .play_viewer_swiper{width: 100%; height: 100%; overflow: visible;}
     .play_viewer_swiper .swiper-wrapper{align-items: center;}
     .play_viewer_slide{width: min(var(--play-slide-width), calc(var(--play-max-height) * 16 / 9)); height: auto;}
@@ -508,6 +508,7 @@ body::-webkit-scrollbar-track {
 }
 */
 // id PLAY: keep slide and transition frame dimensions identical.
+.id_play_viewer .play_viewer_slide_btn iframe.play_media{height:100%; pointer-events:auto;}
 @media (min-width:1024px) {
   .id_play_viewer.is_landscape {
     .play_viewer_slide_btn iframe.play_media{height:100%;}
@@ -519,6 +520,12 @@ body::-webkit-scrollbar-track {
   }
 }
 @media (max-width:1023.98px) {
+  .id_play_viewer.is_landscape {
+    .play_viewer_slide_btn iframe.play_media{height:100%;}
+    .play_viewer_slide.type-b, .play_viewer_frame{
+      width:100%; height:56.25vw; max-height:none; flex-shrink:0;
+    }
+  }
   .id_play_viewer.is_portrait {
     .play_viewer_slide_btn iframe.play_media{height:100%;}
     .play_viewer_stage{padding:0;}

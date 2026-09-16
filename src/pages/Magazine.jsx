@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { gsap } from "gsap";
 import Splitting from "splitting";
@@ -17,12 +17,12 @@ import "../styles/ourpicks.scss";
 
 function Magazine() {
   const tabs = [
-    { name: "Our PICKS", path: "our-picks" },
-    { name: "id EVENT", path: "id-event" },
-    { name: "id FAMILY", path: "id-family" },
-    { name: "id NEWS", path: "id-news" },
-    { name: "id GALLERY", path: "id-gallery" },
-    { name: "id PLAY", path: "id-play" },
+    { name: "Our PICKS", path: "our-picks", description: ["id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해<br/>라이프스타일을 담은 이야기를 전합니다."] },
+    { name: "id EVENT", path: "id-event", description: ["아이디헤어에서 진행하는 다양한 이벤트와 특별한 혜택을 만나볼 수 있는 공간"] },
+    { name: "id FAMILY", path: "id-family", description: ["아이디헤어를 만들어가는 사람들의<br/>진솔한 이야기"] },
+    { name: "id NEWS", path: "id-news", description: ["아이디헤어의 새로운 소식과 주요<br/>이야기를 전하는 뉴스 콘텐츠"] },
+    { name: "id GALLERY", path: "id-gallery", description: ["아이디헤어가 제안하는 시즌별 헤어<br/>트렌드를 만나보는 룩북 갤러리"] },
+    { name: "id PLAY", path: "id-play", description: ["아이디헤어의 다채로운 순간을 영상<br/>콘텐츠로 만나는 id PLAY"] },
   ];
 
   const location = useLocation();
@@ -35,7 +35,7 @@ function Magazine() {
   const [sanityTotalPages, setSanityTotalPages] = useState({});
   const totalPages = sanityTotalPages[currentCategory] || getTotalPages(currentCategory);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
-  const currentTabName = tabs.find((tab) => tab.path === currentCategory)?.name || tabs[0].name;
+  const currentTab = tabs.find((tab) => tab.path === currentCategory) || tabs[0];
   const showPagination = currentCategory !== "id-play";
   const [isTitleTabOut, setIsTitleTabOut] = useState(false);
   const tabMoveTimerRef = useRef(null);
@@ -199,9 +199,17 @@ function Magazine() {
         <div className="mg_title b-b b-delay-0 ">
           <h1 className="display-l apprael  apprael_all apprael_ani" >ID MAGAZINE</h1>
           <div className={`mg_title_right ${isTitleTabOut ? "tab_out" : ""}`}>
-            <h4 className="gt display-xs fadeX-2">{currentTabName}</h4>
-            <div className="body-m fadeX-3 txt">id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해</div>
-            <div className="body-m fadeX-4 txt">라이프스타일을 담은 이야기를 전합니다.</div>
+            <h4 className="gt display-xs fadeX-2">{currentTab.name}</h4>
+            {currentTab.description.map((line, index) => (
+              <div className={`body-m fadeX-${3 + index} txt`} key={index}>
+                {line.split(/<br\s*\/?\s*>/i).map((text, lineIndex) => (
+                  <Fragment key={lineIndex}>
+                    {lineIndex > 0 && <br />}
+                    {text}
+                  </Fragment>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
 

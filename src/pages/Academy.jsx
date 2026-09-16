@@ -469,7 +469,7 @@ function Academy() {
               
               <h1 className="title b-b b-2 body-m fw-sb">트렌드와 현장 경험을 연결한 교육을 통해<br/>디자이너의 성장과 경쟁력을 함께 완성합니다.</h1>
               <div className="img_w">
-                <div className="number_count"><b>01</b><span>/ 08</span></div>
+                <div className="number_count"><b>01</b><span>/ 07</span></div>
                 <div className="img">
                   <img src="/img/ac_2_1.jpg"/>
                   <img src="/img/ac_2_2.jpg"/>
@@ -484,44 +484,60 @@ function Academy() {
                     <span>2026 Genius Project [G-Project] 교육</span>
                     <span>아이디헤어 아현역대점 대표</span>
                     <span>아이디헤어 교육총괄이사</span>
-                    <span>아이디헤어 교육프로그램 'Style Work' 기획·개발 및 창시</span>
+                    <span>아이디헤어 교육프로그램 ‘Style Work’ 기획·개발 및 창시</span>
                     <span>현장 실무 중심의 커트 및 디자인 교육 시스템 구축</span>
                     <span>Peek-a-boo 다카자와 부사장 마스터클래스 직접 사사</span>
-                    <span>대한민국 최대 헤어쇼 'The Show' 메인 디렉터</span>
+                    <span>대한민국 최대 헤어쇼 ‘The Show’ 메인 디렉터</span>
                     <span>일본 오사카 ‘미도스지 컬렉션’ 대한민국 최초 대표 메인 디렉터</span>
-                    <span>idHair & Peek-a-boo 헤어쇼 'Super Live' 메인 디렉터</span>
+                    <span>idHair &amp; Peek-a-boo 헤어쇼 ‘Super Live’ 메인 디렉터</span>
                     <span>2011~2022년 비달사순 런던 마스터클래스 10년 연속 참가</span>
                     <span>SACO 및 Toni&guy 마스터클래스 수료</span>
                   </li>
                   <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문2</span>
-                    <span>현장 스타일링 프로세스 교육2</span>
-                    <span>프리미엄 무드 연출2</span>
+                    <span>id Hair Academy 총괄 운영</span>
+                    <span>헤어디자인 교육과정 기획 및 개발</span>
+                    <span>디자이너 교육체계 및 커리큘럼 개발</span>
+                    <span>신입·주니어 디자이너 육성 프로그램 기획 및 운영</span>
+                    <span>id Hair 사내 교육 프로그램 운영</span>
+                    <span>교육 콘텐츠 및 실무 교육 시스템 구축</span>
                   </li>
                   <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문3</span>
-                    <span>현장 스타일링 프로세스 교육3</span>
-                    <span>프리미엄 무드 연출3</span>
+                    <span>현 세미나 및 헤어쇼 관련 기획·연출·운영 총괄</span>
+                    <span>스타일워크(Style Work) 개발 참여</span>
+                    <span>id 아카데미 운영 시스템 개발 및 운영</span>
+                    <span>2018년 「THE SHOW」 헤어쇼 무대 메인 디자이너 참여</span>
+                    <span>2018년 아시아 뷰티 엑스포 연출 참여</span>
+                    <span>2025년 OSAKA 아시아 뷰티 엑스포 연출 참여</span>
                   </li>
                   <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문4</span>
-                    <span>현장 스타일링 프로세스 교육4</span>
-                    <span>프리미엄 무드 연출4</span>
+                    <span>idHair 스타일워크(Style Work) 커트 교육 담당</span>
+                    <span>파트너 기본기 및 실무 테크닉 역량 강화 교육</span>
+                    <span>현장 적용 중심의 커트 교육 프로그램 운영 및 파트너 성장 지원</span>
                   </li>
                   <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문5</span>
-                    <span>현장 스타일링 프로세스 교육5</span>
-                    <span>프리미엄 무드 연출5</span>
+                    <span>idHAIR 오송아카데미 코어팀 강사 및 아카데미 운영·관리</span>
+                    <span>서울·경기권 외 지역 매장 커뮤니케이션 및 교육 지원</span>
+                    <span>홍대·오송아카데미 스타일워크(Style Work) 전 작품 강의</span>
+                    <span>약 2년간의 오송아카데미 현장 경험을 바탕으로 실무 중심의 교육 진행</span>
+                    <span>현장 컴플레인 요소를 최소화할 수 있는 실질적인 노하우 교육</span>
                   </li>
                   <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문6</span>
-                    <span>현장 스타일링 프로세스 교육6</span>
-                    <span>프리미엄 무드 연출6</span>
+                    <span>헤어 커트 실무 교육 중심 기술 및 디자인 교육 담당</span>
+                    <span>id ACADEMY 파트너 실무 교육 및 디자이너 교육 프로그램 기획·운영</span>
+                    <span>id ACADEMY 스타일워크(Style Work) 커트 교육 담당</span>
+                    <span>SEEZIER 온라인 아카데미 콘텐츠 제작 및 운영</span>
+                    <span>살롱워크·세미나 등 디자이너 교육 프로그램 기획 및 운영</span>
+                    <span>건국대학교 교육대학원 미용교육학과</span>
                   </li>
                   <li>
-                    <span>레이어드 컷 / 숏컷 디자인 전문7</span>
-                    <span>현장 스타일링 프로세스 교육7</span>
-                    <span>프리미엄 무드 연출7</span>
+                    <span>스타일워크(Style Work) 및 파트너 성장 교육 담당</span>
+                    <span>여성 레이어드펌·커트 중심 실무 테크닉 및 디자인 감각 교육</span>
+                    <span>섬세한 커뮤니케이션과 피드백을 통한 파트너 역량 및 성장 지원</span>
+                    <span>전 중국 청두 한국계 헤어살롱 실장</span>
+                    <span>전 중국 및 해외 다수 국가 펌 세미나 교육 진행</span>
+                    <span>전 해외 인플루언서 발굴 및 교육 프로젝트 참여</span>
+                    <span>전 idHAIR 디자이너·수석실장</span>
+                    <span>현 idHAIR 아카데미 코어팀 강사</span>
                   </li>
 
                 </ul>
@@ -534,29 +550,29 @@ function Academy() {
                 <span className="head-l">안정준 이사</span>
               </li>
               <li>
-                <h4 className="body-l fw-b">Global Color Educator</h4>
-                <span className="head-l">윤 훈</span>
+                <h4 className="body-l fw-b">id Academy Director</h4>
+                <span className="head-l">이은혜 부장</span>
               </li>
               <li>
-                <h4 className="body-l fw-b">Signature Perm Specialist</h4>
-                <span className="head-l">이 설 아</span>
+                <h4 className="body-l fw-b">id Academy Main Instructor</h4>
+                <span className="head-l">윤훈희 팀장</span>
               </li>
               <li>
-                <h4 className="body-l fw-b">Salon Branding Mentor</h4>
-                <span className="head-l">이 수 진</span>
+                <h4 className="body-l fw-b">id Academy Instructor</h4>
+                <span className="head-l">진영준 강사</span>
               </li>
               <li>
-                <h4 className="body-l fw-b">Men's Grooming Expert</h4>
-                <span className="head-l">이 은 혜</span>
+                <h4 className="body-l fw-b">id Academy Instructor</h4>
+                <span className="head-l">최연승 강사</span>
               </li>
 
               <li>
-                <h4 className="body-l fw-b">Scalp &amp; Care Consultant</h4>
-                <span className="head-l">진 영 준</span>
+                <h4 className="body-l fw-b">id Academy Instructor</h4>
+                <span className="head-l">이설아 강사</span>
               </li>
               <li>
-                <h4 className="body-l fw-b">Trend Content Creator</h4>
-                <span className="head-l">최 연 승</span>
+                <h4 className="body-l fw-b">Academy Instructor</h4>
+                <span className="head-l">제인 강사</span>
               </li>
             </ul>
           </div>

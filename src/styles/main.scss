@@ -94,8 +94,8 @@
     .inner{position: sticky; left: 0; top: 0; width: 100%; height: 100svh;
       .bg{width: 100%; height: 100%; object-fit: cover;}
       h1{position: absolute;bottom: 0; width: 100%; text-align: center;}
-      .posting{top: 50%; transform: translateY(-50%); right: 3.636vw; aspect-ratio: 1 / 1; height: 53svh; position: absolute;
-        img{width: 100%; height: 100%; object-fit: cover;}
+      .posting{top: 0; right:0; height: 100%; position: absolute; width: 100%;
+        img{width: 100%; height: 100%; object-fit: cover; display: none;}
       }
     }
   }
@@ -147,7 +147,7 @@
     }
     .main_collection{
       .inner{
-        .posting{width:59.444vw; height:unset; aspect-ratio:1 / 1; transform:translate(-50%, -50%); left:50%; display: none;}
+        /*.posting{width:59.444vw; height:unset; aspect-ratio:1 / 1; transform:translate(-50%, -50%); left:50%; display: none;}*/
       }
     }
   }
