@@ -332,8 +332,9 @@
           .img_w{display: flex; padding: 0;
             .number_count{transform:unset!important; left: unset; right: 0;}
             .img{width: calc(100% / 3);}
-            ul{width: calc((100% / 3) * 2); position: unset; padding: 40px 0 0 26px; align-items: flex-end; display: flex;
-              li{width: 100%; font-size: 3.056vw; gap:2.4vw;
+            ul{width: calc((100% / 3) * 2); position: unset; padding: 40px 0 0 26px; align-items: stretch; display: grid; grid-template-columns: minmax(0, 1fr);
+              li{width: 100%; font-size: 3.056vw; gap:2.4vw; grid-area: 1 / 1; display: flex; visibility: hidden; pointer-events: none;
+                &.active{visibility: visible; pointer-events: auto;}
                 span::before{padding-right: 3vw;}
               }
             }
