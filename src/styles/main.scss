@@ -136,6 +136,7 @@
       }
     }
     .main_news_reveal{
+      .main_news_stage{height: 100lvh;}
       .main_news_panel{flex-direction:column; width:calc(100% - 11.111vw); left:5.556vw;
         .main_news_thumbnail{width:unset; padding:3.333vw;
           img{width:57.5%;}
@@ -150,7 +151,7 @@
       }
     }
     .main_collection{
-      .inner{
+      .inner{height: 100lvh;
         /*.posting{width:59.444vw; height:unset; aspect-ratio:1 / 1; transform:translate(-50%, -50%); left:50%; display: none;}*/
       }
     }
