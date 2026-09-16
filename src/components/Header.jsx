@@ -72,9 +72,9 @@ function Header() {
   return (
     <header className={`header ani ${headerActive ? "active" : ""} ${mainIntroHidden || navHide ? "nav_hide" : ""} ${mainIntroHidden ? "hide" : ""}`}>
       <div className="logo_w">
-        <TransitionLink to="/" className="logo">
+        <a href="/" className="logo">
           <img src="/img/logo.png" alt="IDhair" />
-        </TransitionLink>
+        </a>
       </div>
 
       <div className="gnb body-l">

@@ -515,7 +515,7 @@ body::-webkit-scrollbar-track {
     .play_viewer_stage{padding:0;}
     .play_viewer_swiper{width:100%; height:auto;}
     .play_viewer_slide.type-b, .play_viewer_frame{
-      width:min(100vw, calc(100svh * 16 / 9)); height:min(56.25vw, 100svh); max-height:none; flex-shrink:0;
+      width:min(100vw, calc(100vh * 16 / 9)); height:min(56.25vw, 100svh); max-height:none; flex-shrink:0;
     }
   }
 }
@@ -523,7 +523,7 @@ body::-webkit-scrollbar-track {
   .id_play_viewer.is_landscape {
     .play_viewer_slide_btn iframe.play_media{height:100%;}
     .play_viewer_slide.type-b, .play_viewer_frame{
-      width:min(100%, calc(100svh * 16 / 9)); height:min(56.25vw, 100svh); max-height:none; flex-shrink:0;
+      width:min(100%, calc(100vh * 16 / 9)); height:min(56.25vw, 100svh); max-height:none; flex-shrink:0;
     }
   }
   .id_play_viewer.is_portrait {
