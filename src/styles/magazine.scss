@@ -508,7 +508,8 @@ body::-webkit-scrollbar-track {
 }
 */
 // id PLAY: keep slide and transition frame dimensions identical.
-.id_play_viewer .play_viewer_slide_btn iframe.play_media{height:100%; pointer-events:auto;}
+.id_play_viewer .play_viewer_slide_btn{position:relative;}
+.id_play_viewer .play_viewer_slide_btn iframe.play_media{position:absolute; inset:0; z-index:1; height:100%; pointer-events:auto;}
 @media (min-width:1024px) {
   .id_play_viewer.is_landscape {
     .play_viewer_slide_btn iframe.play_media{height:100%;}

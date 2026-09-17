@@ -85,9 +85,10 @@ const mapPlayMedia = (post, media, mediaIndex) => {
   };
 };
 
-const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => {
-  if (item.mediaType === "youtube" && shouldPlay) {
-    return (
+const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => (
+  <>
+    <img className="play_media" src={item.img} alt={alt} />
+    {item.mediaType === "youtube" && shouldPlay && (
       <iframe
         className="play_media play_media_youtube"
         src={item.embedUrl}
@@ -95,11 +96,9 @@ const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => {
         allow="autoplay; encrypted-media; picture-in-picture"
         allowFullScreen
       ></iframe>
-    );
-  }
-
-  return <img className="play_media" src={item.img} alt={alt} />;
-};
+    )}
+  </>
+);
 
 const getTypeClass = (item, index = 0) => {
   if (item?.displayType === "type-a" || item?.displayType === "type-b") {

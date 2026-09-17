@@ -165,9 +165,10 @@ const mapPlayMedia = (post, media, mediaIndex) => {
   };
 };
 
-const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => {
-  if (item.mediaType === "youtube" && shouldPlay) {
-    return (
+const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => (
+  <>
+    <img className="play_media" src={item.img} alt={alt} loading="lazy" decoding="async" />
+    {item.mediaType === "youtube" && shouldPlay && (
       <iframe
         className="play_media play_media_youtube"
         src={item.embedUrl}
@@ -175,11 +176,9 @@ const renderPlayMedia = (item, alt = "Magazine Image", shouldPlay = false) => {
         allow="autoplay; encrypted-media; picture-in-picture"
         allowFullScreen
       ></iframe>
-    );
-  }
-
-  return <img className="play_media" src={item.img} alt={alt} loading="lazy" decoding="async" />;
-};
+    )}
+  </>
+);
 
 const getListUrl = (category, page = 1) => {
   return page === 1 ? `/magazine/${category}` : `/magazine/${category}/list-${page}`;
