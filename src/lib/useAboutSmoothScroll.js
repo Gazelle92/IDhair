@@ -555,6 +555,7 @@ export default function useAboutSmoothScroll({ verticalOnly = false } = {}) {
 
     function onWheel(event) {
       if (event.defaultPrevented || event.ctrlKey || isEditableElement(event.target)) return;
+      if (event.target instanceof Element && event.target.closest(".salon_popup")) return;
       if (verticalOnly) {
         if (window.lenis?.isStopped) return;
         let element = event.target instanceof Element ? event.target : null;
@@ -580,6 +581,7 @@ export default function useAboutSmoothScroll({ verticalOnly = false } = {}) {
 
     function onKeyDown(event) {
       if (event.defaultPrevented || isEditableElement(event.target)) return;
+      if (event.target instanceof Element && event.target.closest(".salon_popup")) return;
 
       let deltaX;
       let deltaY;
