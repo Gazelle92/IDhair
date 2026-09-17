@@ -73,4 +73,9 @@ footer{padding: 3.636vw; position: fixed; width: 100%; bottom: 0; left: 0; z-ind
   }
 
 }
+footer .footer_salon_btn{font:inherit; color:inherit;}
+footer .footer_copyright{text-align:right;}
+@media(max-width:1024px){
+  footer .footer_copyright{text-align:left;}
+}
 body.page-leave footer{display: none;}

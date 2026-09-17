@@ -478,7 +478,7 @@ body.play-viewer-animating .play_viewer .play_viewer_swiper{opacity: 0;}
   .page_magazine .mg_body .mg_list.mg_list_play .mg_li.active::before{display: none;}
   .gallery_viewer{
     .gallery_viewer_stage{display:flex; flex-direction: column; justify-content: center; padding: 20px 20px 36px;}
-    .gallery_viewer_left{display: block; padding:12vw 8vw 20px;}
+    .gallery_viewer_left{display: block; padding:6vw 8vw 20px;}
     .gallery_viewer_close{position: fixed; top: 5.556vw; left: 5.556vw; z-index: 5;}
     .gallery_viewer_title{/*font-size: 15vw;*/ align-self: end; padding:0; text-align: center;}
     .gallery_viewer_hint{position: fixed; left: 50%; bottom: 35px; transform: translateX(-50%); z-index: 5;}

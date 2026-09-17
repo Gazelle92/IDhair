@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -24,6 +24,7 @@ function FadeSliceProvider() {
 
 function AppRoutes() {
   const location = useLocation();
+  const [salonOpen, setSalonOpen] = useState(false);
   const isAdminRoute = location.pathname.startsWith("/admin");
 
   if (isAdminRoute) {
@@ -44,7 +45,7 @@ function AppRoutes() {
 
       <CursorFollower />
 
-      <Header />
+      <Header salonOpen={salonOpen} setSalonOpen={setSalonOpen} />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/about" element={<About />} />
@@ -56,7 +57,7 @@ function AppRoutes() {
         <Route path="/magazine/:category/:pageSlug" element={<Magazine />} />
         <Route path="/magazine-post" element={<MagazineDetail />} />
       </Routes>
-      <Footer />
+      <Footer onOpenSalon={() => setSalonOpen(true)} />
     </>
   );
 }

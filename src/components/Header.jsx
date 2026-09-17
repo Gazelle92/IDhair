@@ -8,9 +8,8 @@ const ABOUT_HORIZONTAL_SCROLL_EVENT = "about-horizontal-scroll";
 const ABOUT_NAV_HIDE_MIN_WIDTH = 1024;
 const NAV_HIDE_THRESHOLD = 100;
 
-function Header() {
+function Header({ salonOpen, setSalonOpen }) {
   const [navOpen, setNavOpen] = useState(false);
-  const [salonOpen, setSalonOpen] = useState(false);
   const [navHide, setNavHide] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
   const location = useLocation();
