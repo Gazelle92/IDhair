@@ -112,6 +112,7 @@
           picture{height: 105lvh;}
         }
         .main_story_scroll{top: 70vw; right: 0;}
+        .main_story_copy{height: 100svh;}
         A.main_story_copy span:nth-child(1){top:80px; left:unset; right:3.333vw; text-align:right;}
         .main_story_copy span:nth-child(2){top:unset; bottom:3.333vw; right:unset; left:3.333vw; text-align:left;}
         &:not(.main_story_panel_1) .main_story_copy span:nth-child(1){bottom:unset; top:22.222vw; left:unset; right:3.333vw; text-align:right;}
