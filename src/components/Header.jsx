@@ -20,12 +20,19 @@ function Header({ salonOpen, setSalonOpen }) {
   useLayoutEffect(() => {
     if (location.pathname !== "/") return;
 
+    let revealTimer;
     const revealHeader = () => {
-      setMainIntroRevealedKey(location.key);
-      setNavHide(false);
+      window.clearTimeout(revealTimer);
+      revealTimer = window.setTimeout(() => {
+        setMainIntroRevealedKey(location.key);
+        setNavHide(false);
+      }, 1000);
     };
     window.addEventListener("main-intro-text-start", revealHeader);
-    return () => window.removeEventListener("main-intro-text-start", revealHeader);
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.removeEventListener("main-intro-text-start", revealHeader);
+    };
   }, [location.pathname, location.key]);
 
   useEffect(() => {

@@ -13,6 +13,8 @@ const safeLink = (value) => {
 };
 
 export default function MainNotice() {
+  const previewEmptyNotice = import.meta.env.DEV
+    && new URLSearchParams(window.location.search).get("previewNotice") === "1";
   const [banners, setBanners] = useState([]);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const swiperRef = useRef(null);
@@ -28,19 +30,23 @@ export default function MainNotice() {
     return () => { active = false; motion.removeEventListener("change", updateMotion); };
   }, []);
 
-  if (!banners.length) return null;
+  const visibleBanners = previewEmptyNotice
+    ? [{ _id: "local-preview", title: "\u00a0", content: "\u00a0" }]
+    : banners;
+
+  if (!visibleBanners.length) return null;
 
   return (
     <div className="main_story_notice" role="region" aria-label="메인 공지 배너"
       onFocusCapture={() => swiperRef.current?.autoplay?.stop()}
       onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget) && !reducedMotion && banners.length > 1) swiperRef.current?.autoplay?.start();
+        if (!event.currentTarget.contains(event.relatedTarget) && !reducedMotion && visibleBanners.length > 1) swiperRef.current?.autoplay?.start();
       }}>
       <Swiper className="main_notice_slider" modules={[A11y, Autoplay]}
         onSwiper={(swiper) => { swiperRef.current = swiper; }}
-        slidesPerView={1} loop={banners.length > 1} speed={reducedMotion ? 0 : 1500}
-        autoplay={!reducedMotion && banners.length > 1 ? { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true } : false}>
-        {banners.map((banner) => {
+        slidesPerView={1} loop={visibleBanners.length > 1} speed={reducedMotion ? 0 : 1500}
+        autoplay={!reducedMotion && visibleBanners.length > 1 ? { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true } : false}>
+        {visibleBanners.map((banner) => {
           const href = safeLink(banner.url);
           const Tag = href ? "a" : "div";
           return <SwiperSlide key={banner._id}>
