@@ -138,7 +138,7 @@ img{max-width: 100%;}
 
 body{ min-height: 100svh;}
 #root{min-height: 100svh;}
-main{background-color: #fff; margin-bottom: var(--footer-height); position: relative;}
+main{background-color: #fff; margin-bottom:calc(var(--footer-height) - 2px); position: relative;}
 button{background-color: unset; border: unset; cursor: pointer;}
 :root{
   --txt-black: #000000;

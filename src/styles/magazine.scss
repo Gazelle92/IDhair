@@ -19,7 +19,7 @@
           &::before{content: ''; display: block; width: 0.727vw; height: 0.727vw; border-radius: 100%; background-color: var(--bg-ac-1); margin-right: 1.212vw;}
         }
 
-        .txt{width: 24.242vw; font-weight: 500; text-wrap: balance; word-break: keep-all; width: 70%;
+        .txt{width: 24.242vw; font-weight: 500; text-wrap: balance; word-break: keep-all;
           .inner{width: 24.242vw;}
         }
       }
@@ -515,7 +515,7 @@ body::-webkit-scrollbar-track {
     .play_viewer_stage{padding:0;}
     .play_viewer_swiper{width:100%; height:auto;}
     .play_viewer_slide.type-b, .play_viewer_frame{
-      width:min(100vw, calc(100svh * 16 / 9)); height:min(56.25vw, 100svh); max-height:none; flex-shrink:0;
+      width:min(calc(100% - 220px), calc((100vh - 220px) * 16 / 9)); height:auto; aspect-ratio:16 / 9; max-width:calc(100% - 220px); max-height:calc(100vh - 220px); flex-shrink:0;
     }
   }
 }
@@ -537,7 +537,7 @@ body::-webkit-scrollbar-track {
   }
 }
 // Fill the visible height after rotating a phone, including browser toolbar changes.
-@media (orientation: landscape) and (max-width:1023.98px), (orientation: landscape) and (pointer:coarse) {
+@media (orientation: landscape) and (max-width:1023.98px) {
   .id_play_viewer.is_landscape {
     .play_viewer_slide.type-b, .play_viewer_frame {
       width:calc(100dvh * 16 / 9); height:100dvh; max-height:none;
