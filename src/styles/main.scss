@@ -116,7 +116,7 @@
         .main_story_copy span:nth-child(2){top:unset; bottom:3.333vw; right:unset; left:3.333vw; text-align:left;}
         &:not(.main_story_panel_1) .main_story_copy span:nth-child(1){bottom:unset; top:22.222vw; left:unset; right:3.333vw; text-align:right;}
         &:not(.main_story_panel_1) .main_story_copy span:nth-child(2){text-align:left; bottom:32px;}
-        &.main_story_panel_1{z-index:1; height: 100svh; overflow: unset;
+        &.main_story_panel_1{z-index:1; height: 100vh; overflow: unset;
           .main_story_background{height: 100lvh; inset: unset;}
           .main_story_copy span:nth-child(1){top:80px; left:unset; right:3.333vw; text-align:right;}
           .main_story_copy span:nth-child(2){top:unset; bottom:120px; right:unset; left:3.333vw; text-align:left;}
