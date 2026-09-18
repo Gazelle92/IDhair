@@ -565,7 +565,7 @@ function Recruit() {
               }
             }}
           >
-            자주하는 <br className="mob"/>질문
+            자주 하는 <br className="mob"/>질문
           </div>
           <div className={`rs_nav_popup_w${isNavPopupOpen ? " show" : ""}`}>
             <div className="rs_nav_popup" data-lenis-prevent>

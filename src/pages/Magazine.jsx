@@ -20,9 +20,9 @@ function Magazine() {
     { name: "Our PICKS", path: "our-picks", description: ["id HAIR가 큐레이션한 트렌드, 브랜드 소식을 통해<br/>라이프스타일을 담은 이야기를 전합니다."] },
     { name: "id EVENT", path: "id-event", description: ["아이디헤어에서 진행하는 다양한 이벤트와 특별한 혜택을 만나볼 수 있는 공간"] },
     { name: "id FAMILY", path: "id-family", description: ["아이디헤어를 만들어가는 사람들의<br/>진솔한 이야기"] },
-    { name: "id NEWS", path: "id-news", description: ["아이디헤어의 새로운 소식과 주요<br/>이야기를 전하는 뉴스 콘텐츠"] },
-    { name: "id GALLERY", path: "id-gallery", description: ["아이디헤어가 제안하는 시즌별 헤어<br/>트렌드를 만나보는 룩북 갤러리"] },
-    { name: "id PLAY", path: "id-play", description: ["아이디헤어의 다채로운 순간을 영상<br/>콘텐츠로 만나는 id PLAY"] },
+    { name: "id NEWS", path: "id-news", description: ["아이디헤어의 새로운 소식과<br/>주요 이야기를 전하는 뉴스 콘텐츠"] },
+    { name: "id GALLERY", path: "id-gallery", description: ["아이디헤어가 제안하는<br/>시즌별 헤어 트렌드를 만나보는 룩북 갤러리"] },
+    { name: "id PLAY", path: "id-play", description: ["아이디헤어의 다채로운 순간을<br/>영상 콘텐츠로 만나는 id PLAY"] },
   ];
 
   const location = useLocation();
