@@ -555,8 +555,8 @@
   }
 
   .as_7, .as_8{overflow: hidden; min-height: unset;}
-  .page_about .as_3 .as_3_2 .as_text .t_2, .page_about .as_3 .as_3_3 .as_text .t_2{display: none;}
-.page_about .as_3 .as_3_2 .as_text, .page_about .as_3 .as_3_3 .as_text{padding-left: 0; justify-content: center; text-align: center;}
+  .as_3 .as_3_2 .as_text .t_2, .page_about .as_3 .as_3_3 .as_text .t_2{display: none;}
+  .as_3 .as_3_2 .as_text, .page_about .as_3 .as_3_3 .as_text{padding-left: 0; justify-content: center; text-align: center;}
   }
 
   @keyframes about-scroll-indicator-bar {
