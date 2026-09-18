@@ -186,7 +186,7 @@ function About() {
             <h1 className="as_title fw-r t_m_2 me_2">Story</h1>
           </div>
           <div className="as_text_2 head-s ani_x t_m_3">
-            <b className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는<br className="mob"/> 당신의 정체성, 바로 'Identity'를 뜻합니다.</b>
+            <b className="apprael_ani ls_s delay-1">아이디헤어(id HAIR)의 'id'는<br className="mob"/> 당신의 정체성, 바로 'identity'를 뜻합니다.</b>
             <span className="apprael_ani ls_s delay-2">
               우리는 고객 한 분 한 분이 가진 고유한 뷰티 아이덴티티를 섬세하게<br/>
               디자인하여, 세상에 단 하나뿐인 '가장 나다운 아름다움'을 완성합니다.
@@ -203,7 +203,7 @@ function About() {
             </div>
             <div className="as_text as_text_1 neulis t_m_w mob_ani">
               <h1 className="as_title fw-r t_m_1 me_1">Our</h1>
-              <h1 className="as_title fw-r t_m_2 me_2">Identity</h1>
+              <h1 className="as_title fw-r t_m_2 me_2">identity</h1>
             </div>
           </div>
 
@@ -216,8 +216,8 @@ function About() {
               <span className="body-m t_2 t_m_2">( a )</span>
               <div className="body-m as_text_1 t_m_3">
                 <span className="apprael_ani ls_s  delay-1">고객의 고유한 아름다움을 찾아주는 든든한 뷰티 파트너로서,</span>
-                <span className="apprael_ani ls_s delay-2">구성원과 함께 동반 성장하며 K-뷰티의 새로운 역사를</span>
-                <span className="apprael_ani ls_s delay-3">쓰는 위대한 기업으로 도약하겠습니다.</span>
+                <span className="apprael_ani ls_s delay-2">구성원과 함께 동반 성장하며 K-뷰티의 새로운 역사를 쓰는</span>
+                <span className="apprael_ani ls_s delay-3">위대한 기업으로 도약하겠습니다.</span>
               </div>
             </div>
           </div>
@@ -273,8 +273,8 @@ function About() {
             <h1 className="display-l fw-l t_m_2 apprael mob_ani ani_x me_1 number_count">1988</h1>
             <div className="body-m as_text_1 t_m_1 ani_x">
               <span className="apprael_ani ls_s delay-1">1988년 작은 미용실 '미스파마'에서 두 명의 스타일리스트로</span>
-              <span className="apprael_ani ls_s delay-2">시작한 아이디헤어는, 이제 대한민국을 대표하는 프로페셔널</span>
-              <span className="apprael_ani ls_s delay-3">헤어 브랜드로 성장했습니다. </span>
+              <span className="apprael_ani ls_s delay-2">시작한 아이디헤어는, 이제 대한민국을 대표하는</span>
+              <span className="apprael_ani ls_s delay-3">프로페셔널 헤어 브랜드로 성장했습니다. </span>
             </div>
           </div>
 
@@ -294,8 +294,9 @@ function About() {
             </div>*/}
             <div className="body-m as_text_1 t_m_1 ani_x pc">
               <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어 고객의 행복을 디자인하는</span>
-              <span className="apprael_ani ls_s delay-2">'행복 스타일리스트'로 달려왔습니다. '함께 성공하는 것'이라는 변치 않는</span>
-              <span className="apprael_ani ls_s delay-3">사명 아래, 앞으로도 고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
+              <span className="apprael_ani ls_s delay-2">'행복 스타일리스트'로 달려왔습니다. </span>
+              <span className="apprael_ani ls_s delay-3">'함께 성공하는 것'이라는 변치 않는 사명 아래,</span>
+              <span className="apprael_ani ls_s delay-3">앞으로도 고객과 동료, 사회와 함께 아름다움의 여정을 이어가겠습니다.</span>
             </div>
             <div className="body-m as_text_1 t_m_1 ani_x mob">
               <span className="apprael_ani ls_s delay-1">지난 39년간 우리는 단순한 기술자를 넘어</span>

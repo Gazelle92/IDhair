@@ -935,7 +935,7 @@ function OurPicks() {
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id NEWS</h2>
-            <p className="body-s txt-gray ">아이디헤어의 새로운 소식과 주요 이야기를 전하는 뉴스 콘텐츠</p>
+            <p className="body-s txt-gray ">아이디헤어의 새로운 소식과 <br className="mob"/>주요 이야기를 전하는 뉴스 콘텐츠</p>
           </div>
           <TransitionLink to="/magazine/id-news" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
@@ -980,7 +980,7 @@ function OurPicks() {
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id GALLERY</h2>
-            <p className="body-s txt-gray ">아이디헤어가 제안하는 시즌별 헤어 트렌드를 만나보는 룩북 갤러리</p>
+            <p className="body-s txt-gray ">아이디헤어가 제안하는  <br className="mob"/>시즌별 헤어 트렌드를 만나보는 룩북 갤러리</p>
           </div>
           <TransitionLink to="/magazine/id-gallery" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
@@ -1033,7 +1033,7 @@ function OurPicks() {
         <div className="ourpicks_section_head ani b-b b-2 b-c-gray b-delay-4">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id PLAY</h2>
-            <p className="body-s txt-gray ">아이디헤어의 다채로운 순간을 영상 콘텐츠로 만나는 id PLAY</p>
+            <p className="body-s txt-gray ">아이디헤어의 다채로운 순간을  <br className="mob"/>영상 콘텐츠로 만나는 id PLAY</p>
           </div>
           <TransitionLink to="/magazine/id-play" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
