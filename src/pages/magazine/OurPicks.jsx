@@ -980,7 +980,7 @@ function OurPicks() {
         <div className="ourpicks_section_head">
           <div className="ourpicks_section_title fadeX-1">
             <h2 className="display-xs gt ">id GALLERY</h2>
-            <p className="body-s txt-gray ">아이디헤어가 제안하는  <br className="mob"/>시즌별 헤어 트렌드를 만나보는 룩북 갤러리</p>
+            <p className="body-s txt-gray ">아이디헤어가 제안하는  <br className="mob"/>시즌별 헤어 트렌드 룩북</p>
           </div>
           <TransitionLink to="/magazine/id-gallery" className="ourpicks_view_all body-m fadeX-5">
             <span>VIEW ALL</span>
