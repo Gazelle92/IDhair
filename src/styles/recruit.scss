@@ -511,7 +511,7 @@
             &::before{width:1.667vw; height:1.667vw;}
             &:not(:last-child)::after{width:1px; height: 15.2vw; left: 0.90vw; top: 6.5vw;}
             h4{margin:0; padding-right:34.444vw; width:7.778vw; box-sizing:unset; text-align:left;}
-            span{position:absolute; right:0; top:1.667vw; text-align:left;}
+            span{position:absolute; right:0; top:1.667vw; text-align:left; width: 50%; white-space: nowrap;}
           }
         }
       }

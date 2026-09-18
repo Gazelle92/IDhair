@@ -66,7 +66,7 @@ function Footer({ onOpenSalon }) {
         <div className="footer_inner">
             <TransitionLink className="footer_logo" to="/"><img src="/img/f_logo.svg"/></TransitionLink>
             <ul className="f_link head-m">
-                <li><TransitionLink to="/about">ABOUT</TransitionLink></li>
+                <li><TransitionLink to="/about">ABOUT id HAIR</TransitionLink></li>
                 <li><button type="button" className="footer_salon_btn" onClick={onOpenSalon}>SALON</button></li>
                 <li><TransitionLink to="/magazine">id MAGAZINE</TransitionLink></li>
                 <li><TransitionLink to="/academy">id ACADEMY</TransitionLink></li>
@@ -90,7 +90,7 @@ function Footer({ onOpenSalon }) {
 
               <li>
                 <div><h4>Address</h4></div>
-                <div><span>서울특별시 마포구 연희로 11 한국특허정보원 6층, (주)아이디뷰티</span></div>
+                <div><span>서울특별시 마포구 연희로 11 한국기술진흥원 6층, 3층 일부 ㈜아이디뷰티</span></div>
               </li>
 
               <small className="body-m">

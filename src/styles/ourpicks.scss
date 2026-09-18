@@ -32,7 +32,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     }
   }
 
-  .ourpicks_section_head {width: 100%; margin-left:0; display: flex; align-items: flex-end; justify-content: space-between; gap: 2.424vw; padding-bottom: 1.091vw;}
+  .ourpicks_section_head {width: 100%; margin-left:0; display: flex; align-items: flex-end; justify-content: space-between; gap: 2.424vw; padding-bottom: 1.091vw; z-index: 1;}
   .ourpicks_play{
     .ourpicks_section_head {width: calc(100% - 3.636vw - 3.636vw); margin-left: 3.636vw; display: flex; align-items: flex-end; justify-content: space-between; gap: 2.424vw; padding-bottom: 1.091vw;}
   }
@@ -143,7 +143,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     &.bottom{
       .mg_nav{position: sticky;}
     } 
-    .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden; pointer-events: all;
+    .mg_nav{display: flex; justify-content: flex-end; font-size: 0; padding: 0.485vw; position: relative; gap: 0.485vw; position: relative; overflow-y: hidden; pointer-events: all; display:none!important;
       &::before{content: ''; display: block; position: absolute; left: 0; top: 0; width: 0%; height: 100%; background-color: rgb(237 237 237 / 10%); backdrop-filter: blur(20px); border-radius: 0.242vw;}
       
       a{background-color: #fff; border-radius: 0.242vw; padding: 0.303vw 1.212vw 0.182vw; cursor: pointer; transition: ease 0.3s all; position: relative; overflow: hidden; display: flex;
@@ -173,7 +173,7 @@ body.ourpicks-gallery-active .page_magazine {color: #fff;
     }
     .ourpicks_play{width: 100%; margin-left: 0;}
     .ourpicks_section_head{position: relative; padding-bottom: 3.333vw; 
-      .ourpicks_view_all{position: absolute; top: calc(100% + 5.556vw); right: 0; padding-bottom: 0;}
+      .ourpicks_view_all{position: absolute; top: calc(100% + 2.556vw); padding:3vw 0 3vw; right: 0;}
       .ourpicks_section_title{justify-content: space-between;
         h2{white-space: nowrap;}
         p{text-wrap: balance; word-break: keep-all; text-align: right; width: 60%; line-height: 1.6;}

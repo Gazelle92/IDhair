@@ -425,7 +425,7 @@ function Academy() {
                 <div className="l_b">
                   <b>/    살롱 워크</b>
                   <span>
-                    idHAIR 내부에서 풍부한 현장 경험과 노하우를 가진 디자이너와 다양한 분야의 외부 전문 디자이너를 초청하여, 실제 살롱에서 직접 활용하고 있는 커트·펌·염색 등 다양한 테크닉과 시술 노하우를 강의 또는 세미나 형태로 공유합니다.
+                    id HAIR 내부에서 풍부한 현장 경험과 노하우를 가진 디자이너와 다양한 분야의 외부 전문 디자이너를 초청하여, 실제 살롱에서 직접 활용하고 있는 커트·펌·염색 등 다양한 테크닉과 시술 노하우를 강의 또는 세미나 형태로 공유합니다.
                   </span>
                 </div>
               </li>
@@ -512,9 +512,9 @@ function Academy() {
                   <li>
                     <span>스타일워크 여성 레이어드펌·커트 테크닉 및 디자인 교육</span>
                     <span>파트너 역량 및 성장 지원</span>
-                    <span>현 idHAIR 아카데미 코어팀 강사</span>
+                    <span>현 id HAIR 아카데미 코어팀 강사</span>
                     <span>해외 펌 세미나 교육 및 해외 인플루언서 교육 진행</span>
-                    <span>전 idHAIR 수석실장 및 중국 청두 한국계 헤어살롱 실장</span>
+                    <span>전 id HAIR 수석실장 및 중국 청두 한국계 헤어살롱 실장</span>
                   </li>
 
                 </ul>
@@ -548,7 +548,7 @@ function Academy() {
                 <span className="head-l">이설아 강사</span>
               </li>
               <li>
-                <h4 className="body-l fw-b">Academy Instructor</h4>
+                <h4 className="body-l fw-b">id Academy Instructor</h4>
                 <span className="head-l">제인 강사</span>
               </li>
             </ul>
