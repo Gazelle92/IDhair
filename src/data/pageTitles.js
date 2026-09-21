@@ -1,5 +1,5 @@
 export const pageTitles = {
-  '/': '아이디헤어',
+  '/': 'id HAIR | 아이디헤어',
   '/about': 'ABOUT id HAIR',
   '/academy': 'id ACADEMY',
   '/recruit': 'RECRUIT',
