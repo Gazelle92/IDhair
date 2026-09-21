@@ -1,5 +1,15 @@
 {
   "rewrites": [
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/academy", "destination": "/academy/index.html" },
+    { "source": "/recruit", "destination": "/recruit/index.html" },
+    { "source": "/magazine", "destination": "/magazine/index.html" },
+    { "source": "/magazine/our-picks", "destination": "/magazine/our-picks/index.html" },
+    { "source": "/magazine/id-news", "destination": "/magazine/id-news/index.html" },
+    { "source": "/magazine/id-event", "destination": "/magazine/id-event/index.html" },
+    { "source": "/magazine/id-family", "destination": "/magazine/id-family/index.html" },
+    { "source": "/magazine/id-gallery", "destination": "/magazine/id-gallery/index.html" },
+    { "source": "/magazine/id-play", "destination": "/magazine/id-play/index.html" },
     {
       "source": "/sanity-data/(.*)",
       "destination": "https://9pry8zdk.api.sanity.io/v2025-02-19/data/$1"

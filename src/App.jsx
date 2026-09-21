@@ -1,4 +1,5 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { getPageTitle } from "./data/pageTitles";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -26,6 +27,13 @@ function AppRoutes() {
   const location = useLocation();
   const [salonOpen, setSalonOpen] = useState(false);
   const isAdminRoute = location.pathname.startsWith("/admin");
+  useEffect(() => {
+    if (isAdminRoute) return;
+    const title = getPageTitle(location.pathname);
+    document.title = title;
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+    document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://www.idhair.com${location.pathname}`);
+  }, [location.pathname, isAdminRoute]);
 
   if (isAdminRoute) {
     return (
