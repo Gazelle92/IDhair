@@ -79,7 +79,7 @@ function Header({ salonOpen, setSalonOpen }) {
     <header className={`header ani ${headerActive ? "active" : ""} ${mainIntroHidden || navHide ? "nav_hide" : ""} ${mainIntroHidden ? "hide" : ""}`}>
       <div className="logo_w">
         <a href="/" className="logo">
-          <img src="/img/logo.png" alt="IDhair" />
+          <img src="/img/logo_h.png" alt="IDhair" />
         </a>
       </div>
 
