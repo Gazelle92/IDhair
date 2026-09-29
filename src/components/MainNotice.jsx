@@ -12,7 +12,7 @@ const safeLink = (value) => {
   } catch { return undefined; }
 };
 
-export default function MainNotice() {
+export default function MainNotice({ language = "ko" }) {
   const previewEmptyNotice = import.meta.env.DEV
     && new URLSearchParams(window.location.search).get("previewNotice") === "1";
   const [banners, setBanners] = useState([]);
@@ -21,14 +21,14 @@ export default function MainNotice() {
 
   useEffect(() => {
     let active = true;
-    fetchMainBanners().then((items) => {
+    fetchMainBanners(language).then((items) => {
       if (active) setBanners(Array.isArray(items) ? items : []);
     }).catch((error) => console.error("Failed to load main banners", error));
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const updateMotion = () => setReducedMotion(motion.matches);
     motion.addEventListener("change", updateMotion);
     return () => { active = false; motion.removeEventListener("change", updateMotion); };
-  }, []);
+  }, [language]);
 
   const visibleBanners = previewEmptyNotice
     ? [{ _id: "local-preview", title: "\u00a0", content: "\u00a0" }]

@@ -7,4 +7,13 @@ import newsPost from "./newsPost";
 import playPost from "./playPost";
 import salonLocation from "./salonLoca";
 
-export const schemaTypes = [mainBanner, aboutSettings, newsPost, eventPost, familyPost, galleryPost, playPost, salonLocation];
+const koreanSchemaTypes = [mainBanner, aboutSettings, newsPost, eventPost, familyPost, galleryPost, playPost, salonLocation];
+
+// Share field definitions, but store English content as separate document types.
+const englishSchemaTypes = koreanSchemaTypes.map((schema) => ({
+  ...schema,
+  name: `${schema.name}En`,
+  title: `${schema.title} (EN)`,
+}));
+
+export const schemaTypes = [...koreanSchemaTypes, ...englishSchemaTypes];

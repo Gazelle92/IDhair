@@ -14,11 +14,13 @@ function Header({ salonOpen, setSalonOpen }) {
   const [headerActive, setHeaderActive] = useState(false);
   const location = useLocation();
   const [mainIntroRevealedKey, setMainIntroRevealedKey] = useState(null);
-  const mainIntroHidden = location.pathname === "/" && mainIntroRevealedKey !== location.key;
+  const isEnglishPage = /^\/en(?:\/|$)/.test(location.pathname);
+  const isMainPage = ["/", "/en", "/en/"].includes(location.pathname);
+  const mainIntroHidden = isMainPage && mainIntroRevealedKey !== location.key;
   const aboutHorizontalXRef = useRef(0);
 
   useLayoutEffect(() => {
-    if (location.pathname !== "/") return;
+    if (!isMainPage) return;
 
     let revealTimer;
     const revealHeader = () => {
@@ -33,7 +35,7 @@ function Header({ salonOpen, setSalonOpen }) {
       window.clearTimeout(revealTimer);
       window.removeEventListener("main-intro-text-start", revealHeader);
     };
-  }, [location.pathname, location.key]);
+  }, [isMainPage, location.key]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -78,7 +80,7 @@ function Header({ salonOpen, setSalonOpen }) {
   return (
     <header className={`header ani ${headerActive ? "active" : ""} ${mainIntroHidden || navHide ? "nav_hide" : ""} ${mainIntroHidden ? "hide" : ""}`}>
       <div className="logo_w">
-        <a href="/" className="logo">
+        <a href={isEnglishPage ? "/en" : "/"} className="logo">
           <img src="/img/logo_h.png" alt="IDhair" />
         </a>
       </div>

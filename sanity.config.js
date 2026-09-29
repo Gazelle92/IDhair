@@ -13,6 +13,17 @@ export default defineConfig({
     types: schemaTypes,
     templates: (prev) => [
       ...prev,
+      ...[
+        ["seoul", "서울"],
+        ["gyeonggi", "경기"],
+        ["local", "지방"],
+        ["atelier", "아틀리에"],
+      ].map(([region, label]) => ({
+        id: `salonLocationEn-${region}`,
+        title: `SALON - ${label} (EN)`,
+        schemaType: "salonLocationEn",
+        value: { region },
+      })),
       {
         id: "salonLocation-seoul",
         title: "SALON - 서울",

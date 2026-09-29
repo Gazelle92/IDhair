@@ -8,6 +8,7 @@ import AniProvider from "./hook/Aniprovider";
 import CursorFollower from "./hook/CursorFollower";
 import useFadeSlice from "./hook/useFadeSlice";
 import Main from "./pages/Main";
+import MainEn from "./pagesEn/Main";
 import About from "./pages/About";
 import Academy from "./pages/Academy";
 import Recruit from "./pages/Recruit";
@@ -56,6 +57,7 @@ function AppRoutes() {
       <Header salonOpen={salonOpen} setSalonOpen={setSalonOpen} />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/en" element={<MainEn />} />
         <Route path="/about" element={<About />} />
         <Route path="/academy" element={<Academy />} />
         <Route path="/recruit" element={<Recruit />} />

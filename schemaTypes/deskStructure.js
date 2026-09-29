@@ -13,35 +13,34 @@ const salonItems = [
   { id: "salonLocationAtelier", title: "SALON - 아틀리에", region: "atelier", templateId: "salonLocation-atelier" },
 ];
 
-export const deskStructure = (S) =>
-  S.list()
-    .title("Content")
-    .items(
-      [
+const languageItems = (S, suffix = "") => {
+  const type = (name) => `${name}${suffix}`;
+  const title = (name) => suffix ? `${name} (EN)` : name;
+  return [
         S.listItem()
-          .id("mainBanner")
+          .id(type("mainBanner"))
           .title("메인 배너")
-          .child(S.documentTypeList("mainBanner").title("메인 배너").defaultOrdering([
+          .child(S.documentTypeList(type("mainBanner")).title(title("메인 배너")).defaultOrdering([
             { field: "sortOrder", direction: "asc" },
             { field: "_createdAt", direction: "asc" },
           ])),
         S.listItem()
-          .id("aboutSettings")
+          .id(type("aboutSettings"))
           .title("ABOUT Settings")
           .child(
             S.document()
-              .id("aboutSettings")
-              .schemaType("aboutSettings")
-              .documentId("aboutSettings")
-              .title("ABOUT Settings")
+              .id(type("aboutSettings"))
+              .schemaType(type("aboutSettings"))
+              .documentId(type("aboutSettings"))
+              .title(title("ABOUT Settings"))
           ),
         ...magazinePostItems.map((item) =>
           S.listItem()
-            .id(item.id)
+            .id(type(item.id))
             .title(item.title)
             .child(
-              S.documentTypeList(item.type)
-                .title(item.title)
+              S.documentTypeList(type(item.type))
+                .title(title(item.title))
                 .defaultOrdering([
                   { field: "publishedAt", direction: "desc" },
                   { field: "_createdAt", direction: "desc" },
@@ -50,21 +49,29 @@ export const deskStructure = (S) =>
         ),
         ...salonItems.map((item) =>
           S.listItem()
-            .id(item.id)
+            .id(type(item.id))
             .title(item.title)
             .child(
               S.documentList()
-                .id(item.id)
-                .title(item.title)
-                .schemaType("salonLocation")
-                .filter('_type == "salonLocation" && region == $region')
-                .params({ region: item.region })
+                .id(type(item.id))
+                .title(title(item.title))
+                .schemaType(type("salonLocation"))
+                .filter('_type == $type && region == $region')
+                .params({ type: type("salonLocation"), region: item.region })
                 .defaultOrdering([
                   { field: "order", direction: "asc" },
                   { field: "_createdAt", direction: "desc" },
                 ])
-                .initialValueTemplates([S.initialValueTemplateItem(item.templateId)])
+                .initialValueTemplates([S.initialValueTemplateItem(suffix ? `salonLocationEn-${item.region}` : item.templateId)])
             )
         ),
-      ]
-    );
+      ];
+};
+
+export const deskStructure = (S) =>
+  S.list().id("languageSelection").title("언어선택").items([
+    S.listItem().id("ko").title("KR")
+      .child(S.list().id("koContent").title("KR").items(languageItems(S))),
+    S.listItem().id("en").title("EN")
+      .child(S.list().id("enContent").title("EN").items(languageItems(S, "En"))),
+  ]);

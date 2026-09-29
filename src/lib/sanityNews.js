@@ -60,10 +60,10 @@ const runQuery = async (query, params = {}) => {
   return data.result;
 };
 
-export const fetchMainBanners = () => runQuery(`
-  *[_type == "mainBanner" && isVisible == true && !(_id in path("drafts.**"))]
+export const fetchMainBanners = (language = "ko") => runQuery(`
+  *[_type == $bannerType && isVisible == true && !(_id in path("drafts.**"))]
   | order(sortOrder asc, _createdAt asc){_id, title, content, url}
-`);
+`, { bannerType: language === "en" ? "mainBannerEn" : "mainBanner" });
 
 export const formatNewsDate = (dateValue) => {
   if (!dateValue) return "";
