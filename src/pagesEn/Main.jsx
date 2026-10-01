@@ -8,7 +8,7 @@ import {
   fetchNewsPosts,
   formatNewsDate,
   getNewsImageUrl,
-} from "../lib/sanityNews";
+} from "../lib/sanityNewsEn";
 import "../styles/main.scss";
 
 const MAIN_STORIES = [
@@ -144,7 +144,7 @@ function Main() {
           dateTime: post.publishedAt || "",
           image: getNewsImageUrl(post.thumbnail, 960),
           title: post.title,
-          url: `/magazine/id-news/post/${post._id}`,
+          url: `/en/magazine/id-news/post/${post._id}`,
         })));
       })
       .catch((error) => {
@@ -384,7 +384,7 @@ function Main() {
           <img className="bg mob" src="/img/main_3_bg_mob.jpg"/>
           <TransitionLink
             className="posting"
-            to="/magazine/id-gallery"
+            to="/en/magazine/id-gallery"
           >
             <img src={collectionPosting.image} alt={collectionPosting.title}/>
           </TransitionLink>

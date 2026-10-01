@@ -41,6 +41,10 @@ export default defineType({
       title: "휴무일",
       type: "string",
     }),
+    defineField({ name: "nameEn", title: "매장명(en)", type: "string" }),
+    defineField({ name: "addressEn", title: "주소(en)", type: "string" }),
+    defineField({ name: "hoursEn", title: "영업시간(en)", type: "string" }),
+    defineField({ name: "offEn", title: "휴무일(en)", type: "string" }),
     defineField({
       name: "instagramUrl",
       title: "인스타그램 URL",

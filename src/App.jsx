@@ -9,6 +9,11 @@ import CursorFollower from "./hook/CursorFollower";
 import useFadeSlice from "./hook/useFadeSlice";
 import Main from "./pages/Main";
 import MainEn from "./pagesEn/Main";
+import AboutEn from "./pagesEn/About";
+import AcademyEn from "./pagesEn/Academy";
+import RecruitEn from "./pagesEn/Recruit";
+import MagazineEn from "./pagesEn/Magazine";
+import MagazinePostEn from "./pagesEn/MagazinePost";
 import About from "./pages/About";
 import Academy from "./pages/Academy";
 import Recruit from "./pages/Recruit";
@@ -58,6 +63,14 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/en" element={<MainEn />} />
+        <Route path="/en/about" element={<AboutEn />} />
+        <Route path="/en/academy" element={<AcademyEn />} />
+        <Route path="/en/recruit" element={<RecruitEn />} />
+        <Route path="/en/magazine" element={<Navigate to="/en/magazine/our-picks" replace />} />
+        <Route path="/en/magazine/:category" element={<MagazineEn />} />
+        <Route path="/en/magazine/:category/post/:id" element={<MagazinePostEn />} />
+        <Route path="/en/magazine/:category/:pageSlug" element={<MagazineEn />} />
+        <Route path="/en/magazine-post" element={<MagazinePostEn />} />
         <Route path="/about" element={<About />} />
         <Route path="/academy" element={<Academy />} />
         <Route path="/recruit" element={<Recruit />} />

@@ -13,8 +13,12 @@ export const pageTitles = {
   '/magazine/id-play': 'id PLAY',
 };
 
+Object.entries(pageTitles).forEach(([path, title]) => {
+  if (path !== '/' && !path.startsWith('/en')) pageTitles['/en' + path] = title;
+});
+
 export function getPageTitle(pathname) {
-  const path = pathname.replace(/\/$/, '') || '/';
+  const path = pathname.replace(/^\/en(?=\/|$)/, '').replace(/\/$/, '') || '/';
   return pageTitles[path] ||
     (path.startsWith('/magazine/') ? pageTitles[path.split('/').slice(0, 3).join('/')] || 'id MAGAZINE' : '아이디헤어');
 }

@@ -27,7 +27,7 @@ const emptyStore = {
 const naverMapSearchKeyword = "id헤어";
 const naverMapDefaultUrl = `https://map.naver.com/p/search/${encodeURIComponent(naverMapSearchKeyword)}`;
 
-function Salon({ open, onClose }) {
+function Salon({ open, onClose, language = "ko" }) {
   const [salonRegions, setSalonRegions] = useState(defaultSalonRegions);
   const [selectedRegionId, setSelectedRegionId] = useState(defaultSalonRegions[0].id);
   const [selectedStoreId, setSelectedStoreId] = useState("");
@@ -156,7 +156,7 @@ function Salon({ open, onClose }) {
   useEffect(() => {
     let isMounted = true;
 
-    fetchSalonRegions()
+    fetchSalonRegions(language)
       .then((regions) => {
         if (!isMounted) return;
 
@@ -176,7 +176,7 @@ function Salon({ open, onClose }) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [language]);
 
   useEffect(() => (
     () => {

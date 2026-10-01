@@ -36,13 +36,16 @@ const getSalonImageUrl = (image) => {
     .url();
 };
 
-const toStore = (store) => ({
+const localizedText = (store, field, language) =>
+  (language === "en" && store[`${field}En`]?.trim()) || store[field] || "";
+
+const toStore = (store, language) => ({
   id: store._id,
-  name: store.name || "매장명 없음",
-  address: store.address || "",
+  name: localizedText(store, "name", language) || "매장명 없음",
+  address: localizedText(store, "address", language),
   phone: store.phone || "",
-  hours: store.hours || "",
-  off: store.off || "",
+  hours: localizedText(store, "hours", language),
+  off: localizedText(store, "off", language),
   instagramUrl: store.instagramUrl || "",
   reservationUrl: store.reservationUrl || "",
   images: (store.images || [])
@@ -50,7 +53,7 @@ const toStore = (store) => ({
     .filter(Boolean),
 });
 
-export const fetchSalonRegions = async () => {
+export const fetchSalonRegions = async (language = "ko") => {
   const stores = await runQuery(`
     *[_type == "salonLocation" && (!defined(isHidden) || isHidden != true)]
       | order(order asc, name asc) {
@@ -61,6 +64,10 @@ export const fetchSalonRegions = async () => {
         phone,
         hours,
         off,
+        nameEn,
+        addressEn,
+        hoursEn,
+        offEn,
         instagramUrl,
         reservationUrl,
         images
@@ -72,6 +79,6 @@ export const fetchSalonRegions = async () => {
     name: regionLabels[regionId],
     stores: stores
       .filter((store) => store.region === regionId)
-      .map(toStore),
+      .map((store) => toStore(store, language)),
   }));
 };

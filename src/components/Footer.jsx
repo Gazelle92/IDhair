@@ -1,10 +1,14 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import TransitionLink from "./TransitionLink";
+import useFooterViewportClass from "../hook/useFooterViewportClass";
 import "../styles/footer.scss";
 
 function Footer({ onOpenSalon }) {
   const location = useLocation();
+  const isEnglishPage = /^\/en(?:\/|$)/.test(location.pathname);
+  const footerRef = useRef(null);
+  useFooterViewportClass(footerRef, location.pathname);
 
 
   useLayoutEffect(() => {
@@ -62,43 +66,87 @@ function Footer({ onOpenSalon }) {
 }, [location.pathname]);
 
   return (
-    <footer className="bg-ac-1 ani">
-        <div className="footer_inner">
-            <TransitionLink className="footer_logo" to="/"><img src="/img/f_logo.svg"/></TransitionLink>
-            <ul className="f_link head-m">
-                <li><TransitionLink to="/about">ABOUT id HAIR</TransitionLink></li>
-                <li><button type="button" className="footer_salon_btn" onClick={onOpenSalon}>SALON</button></li>
-                <li><TransitionLink to="/magazine">id MAGAZINE</TransitionLink></li>
-                <li><TransitionLink to="/academy">id ACADEMY</TransitionLink></li>
-                <li><TransitionLink to="/recruit">RECRUIT</TransitionLink></li>
-            </ul>
-            <div className="icon_w">
-                <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
-                <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
+    <footer ref={footerRef} className="bg-ac-1 ani">
+      {/* 영문 / 국문 마크업은 각 영역에서 따로 수정합니다. */}
+      {isEnglishPage ? (
+        <>
+            <div className="footer_inner">
+                <TransitionLink className="footer_logo" to="/en"><img src="/img/f_logo.svg"/></TransitionLink>
+                <ul className="f_link head-m">
+                    <li><TransitionLink to="/en/about">ABOUT id HAIR</TransitionLink></li>
+                    <li><button type="button" className="footer_salon_btn" onClick={onOpenSalon}>SALON</button></li>
+                    <li><TransitionLink to="/en/magazine">id MAGAZINE</TransitionLink></li>
+                    <li><TransitionLink to="/en/academy">id ACADEMY</TransitionLink></li>
+                    <li><TransitionLink to="/en/recruit">RECRUIT</TransitionLink></li>
+                </ul>
+                <div className="icon_w">
+                    <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
+                    <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
+                </div>
+    
+                <ol className="body-m">
+                  <li>
+                    <div><h4>Email</h4></div>
+                    <div><span>idhairkorea@gmail.com</span></div>
+                  </li>
+    
+                  <li>
+                    <div><h4>Phone</h4></div>
+                    <div><span>+82 2 2039 3301 ㅣ 10am - 5pm</span></div>
+                  </li>
+    
+                  <li>
+                    <div><h4>Address</h4></div>
+                    <div><span>서울특별시 마포구 연희로 11 한국기술진흥원 6층, 3층 일부 ㈜아이디뷰티</span></div>
+                  </li>
+    
+                  <small className="body-m">
+                  <div className="footer_copyright">idHAIR © 2026</div>
+                  <div>Website made by <a style={{textDecoration: "underline"}} href="https://hummman.com/" target="_blank">hummman</a></div>
+                  </small>
+                </ol>
             </div>
-
-            <ol className="body-m">
-              <li>
-                <div><h4>Email</h4></div>
-                <div><span>idhairkorea@gmail.com</span></div>
-              </li>
-
-              <li>
-                <div><h4>Phone</h4></div>
-                <div><span>+82 2 2039 3301 ㅣ 10am - 5pm</span></div>
-              </li>
-
-              <li>
-                <div><h4>Address</h4></div>
-                <div><span>서울특별시 마포구 연희로 11 한국기술진흥원 6층, 3층 일부 ㈜아이디뷰티</span></div>
-              </li>
-
-              <small className="body-m">
-              <div className="footer_copyright">idHAIR © 2026</div>
-              <div>Website made by <a style={{textDecoration: "underline"}} href="https://hummman.com/" target="_blank">hummman</a></div>
-              </small>
-            </ol>
-        </div>
+        </>
+      ) : (
+        <>
+            <div className="footer_inner">
+                <TransitionLink className="footer_logo" to="/"><img src="/img/f_logo.svg"/></TransitionLink>
+                <ul className="f_link head-m">
+                    <li><TransitionLink to="/about">ABOUT id HAIR</TransitionLink></li>
+                    <li><button type="button" className="footer_salon_btn" onClick={onOpenSalon}>SALON</button></li>
+                    <li><TransitionLink to="/magazine">id MAGAZINE</TransitionLink></li>
+                    <li><TransitionLink to="/academy">id ACADEMY</TransitionLink></li>
+                    <li><TransitionLink to="/recruit">RECRUIT</TransitionLink></li>
+                </ul>
+                <div className="icon_w">
+                    <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
+                    <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
+                </div>
+    
+                <ol className="body-m">
+                  <li>
+                    <div><h4>Email</h4></div>
+                    <div><span>idhairkorea@gmail.com</span></div>
+                  </li>
+    
+                  <li>
+                    <div><h4>Phone</h4></div>
+                    <div><span>+82 2 2039 3301 ㅣ 10am - 5pm</span></div>
+                  </li>
+    
+                  <li>
+                    <div><h4>Address</h4></div>
+                    <div><span>서울특별시 마포구 연희로 11 한국기술진흥원 6층, 3층 일부 ㈜아이디뷰티</span></div>
+                  </li>
+    
+                  <small className="body-m">
+                  <div className="footer_copyright">idHAIR © 2026</div>
+                  <div>Website made by <a style={{textDecoration: "underline"}} href="https://hummman.com/" target="_blank">hummman</a></div>
+                  </small>
+                </ol>
+            </div>
+        </>
+      )}
     </footer>
   );
 }

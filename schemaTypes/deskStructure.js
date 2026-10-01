@@ -24,7 +24,7 @@ const languageItems = (S, suffix = "") => {
             { field: "sortOrder", direction: "asc" },
             { field: "_createdAt", direction: "asc" },
           ])),
-        S.listItem()
+        ...(!suffix ? [S.listItem()
           .id(type("aboutSettings"))
           .title("ABOUT Settings")
           .child(
@@ -33,8 +33,8 @@ const languageItems = (S, suffix = "") => {
               .schemaType(type("aboutSettings"))
               .documentId(type("aboutSettings"))
               .title(title("ABOUT Settings"))
-          ),
-        ...magazinePostItems.map((item) =>
+          )] : []),
+        ...magazinePostItems.filter((item) => !suffix || !["galleryPost", "playPost"].includes(item.type)).map((item) =>
           S.listItem()
             .id(type(item.id))
             .title(item.title)
@@ -47,7 +47,7 @@ const languageItems = (S, suffix = "") => {
                 ])
             )
         ),
-        ...salonItems.map((item) =>
+        ...(suffix ? [] : salonItems).map((item) =>
           S.listItem()
             .id(type(item.id))
             .title(item.title)

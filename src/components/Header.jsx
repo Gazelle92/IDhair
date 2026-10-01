@@ -13,8 +13,8 @@ function Header({ salonOpen, setSalonOpen }) {
   const [navHide, setNavHide] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
   const location = useLocation();
-  const [mainIntroRevealedKey, setMainIntroRevealedKey] = useState(null);
   const isEnglishPage = /^\/en(?:\/|$)/.test(location.pathname);
+  const [mainIntroRevealedKey, setMainIntroRevealedKey] = useState(null);
   const isMainPage = ["/", "/en", "/en/"].includes(location.pathname);
   const mainIntroHidden = isMainPage && mainIntroRevealedKey !== location.key;
   const aboutHorizontalXRef = useRef(0);
@@ -46,7 +46,7 @@ function Header({ salonOpen, setSalonOpen }) {
   }, []);
 
   useEffect(() => {
-    const isAboutPage = location.pathname === "/about";
+    const isAboutPage = ["/about", "/en/about"].includes(location.pathname.replace(/\/$/, ""));
     const shouldUseAboutHorizontal = () => isAboutPage && window.innerWidth >= ABOUT_NAV_HIDE_MIN_WIDTH;
     const updateNavHide = () => {
       const scrollValue = shouldUseAboutHorizontal() ? aboutHorizontalXRef.current : window.scrollY;
@@ -79,100 +79,198 @@ function Header({ salonOpen, setSalonOpen }) {
 
   return (
     <header className={`header ani ${headerActive ? "active" : ""} ${mainIntroHidden || navHide ? "nav_hide" : ""} ${mainIntroHidden ? "hide" : ""}`}>
-      <div className="logo_w">
-        <a href={isEnglishPage ? "/en" : "/"} className="logo">
-          <img src="/img/logo_h.png" alt="IDhair" />
-        </a>
-      </div>
-
-      <div className="gnb body-l">
-        <TransitionLink to="/about"><span>ABOUT id HAIR</span></TransitionLink>
-        <TransitionLink to="/academy"><span>id ACADEMY</span></TransitionLink>
-        <TransitionLink to="/magazine"><span>id MAGAZINE</span></TransitionLink>
-        <TransitionLink to="/recruit"><span>RECRUIT</span></TransitionLink>
-      </div>
-      
-      <div className="header_inner test">
-        
-
-        <div className="lang body-s">
-          <span>(</span>
-          <div className="active">KR</div>
-          <div>EN</div>
-          <span>)</span>
-        </div>
-
-        <div className="right_w bg-gray-3">
-          <button
-            type="button"
-            className="menu_btn h_nav_open"
-            onClick={() => setNavOpen(true)}
-          >
-            <span></span>
-            <span></span>
-          </button>
-
-          <button
-            type="button"
-            className="salon_btn bg-ac-1 body-m"
-            onClick={() => setSalonOpen(true)}
-          >
-            SALON
-          </button>
-        </div>
-      </div>
-
-      <nav className={`h_nav ${navOpen ? "active" : ""}`}>
-        <div className="h_nav_bg"></div>
-
-        <div className="h_nav_inner bg-gray-1">
-          <button
-            type="button"
-            className="h_nav_close"
-            onClick={() => setNavOpen(false)}
-          >
-            <span></span>
-            <span></span>
-          </button>
-
-          <div className="h_nav_group_1 gt_all display-xs">
-            <a
-              onClick={() => {
-                setNavOpen(false);
-                setSalonOpen(true);
-              }}
-            >Salon</a>
-            <div className="mob menu_line"></div>
-            <TransitionLink to="/about" onClick={() => setNavOpen(false)}>About id HAIR</TransitionLink>
-            <TransitionLink to="/academy" onClick={() => setNavOpen(false)}>id Academy</TransitionLink>
-            <TransitionLink to="/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>
-            <div className="mob menu_line"></div>
+      {isEnglishPage ? (
+        <>
+          <div className="logo_w">
+            <a href="/en" className="logo">
+              <img src="/img/logo_h.png" alt="IDhair" />
+            </a>
           </div>
-
-          <div className="h_nav_group_2">
-            <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
-            <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
+    
+          <div className="gnb body-l">
+            <TransitionLink to="/en/about"><span>ABOUT id HAIR</span></TransitionLink>
+            <TransitionLink to="/en/academy"><span>id ACADEMY</span></TransitionLink>
+            <TransitionLink to="/en/magazine"><span>id MAGAZINE</span></TransitionLink>
+            <TransitionLink to="/en/recruit"><span>RECRUIT</span></TransitionLink>
           </div>
-
-          <div className="h_nav_group_3">
-            <TransitionLink className="gt display-xs" to="/magazine/our-picks" onClick={() => setNavOpen(false)}>id Magazine</TransitionLink>
-            <ul className="body-s">
-              <li><TransitionLink to="/magazine/id-event" onClick={() => setNavOpen(false)}>id EVENT</TransitionLink></li>
-              <li><TransitionLink to="/magazine/id-family" onClick={() => setNavOpen(false)}>id FAMILY</TransitionLink></li>
-              <li><TransitionLink to="/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
-              <li><TransitionLink to="/magazine/id-gallery" onClick={() => setNavOpen(false)}>id GALLERY</TransitionLink></li>
-              <li><TransitionLink to="/magazine/id-play" onClick={() => setNavOpen(false)}>id PLAY</TransitionLink></li>
-            </ul>
+          
+          <div className="header_inner test">
+            
+    
+            <div className="lang body-s">
+              <span>(</span>
+              <div>KR</div>
+              <div className="active">EN</div>
+              <span>)</span>
+            </div>
+    
+            <div className="right_w bg-gray-3">
+              <button
+                type="button"
+                className="menu_btn h_nav_open"
+                onClick={() => setNavOpen(true)}
+              >
+                <span></span>
+                <span></span>
+              </button>
+    
+              <button
+                type="button"
+                className="salon_btn bg-ac-1 body-m"
+                onClick={() => setSalonOpen(true)}
+              >
+                SALON
+              </button>
+            </div>
           </div>
-
-          <div className="h_nav_group_4 txt-gray caption-m">
-            서울특별시 마포구 연희로 11 한국특허정보원 6층,<br />
-            (주)아이디뷰티
+    
+          <nav className={`h_nav ${navOpen ? "active" : ""}`}>
+            <div className="h_nav_bg"></div>
+    
+            <div className="h_nav_inner bg-gray-1">
+              <button
+                type="button"
+                className="h_nav_close"
+                onClick={() => setNavOpen(false)}
+              >
+                <span></span>
+                <span></span>
+              </button>
+    
+              <div className="h_nav_group_1 gt_all display-xs">
+                <a
+                  onClick={() => {
+                    setNavOpen(false);
+                    setSalonOpen(true);
+                  }}
+                >Salon</a>
+                <div className="mob menu_line"></div>
+                <TransitionLink to="/en/about" onClick={() => setNavOpen(false)}>About id HAIR</TransitionLink>
+                <TransitionLink to="/en/academy" onClick={() => setNavOpen(false)}>id Academy</TransitionLink>
+                <TransitionLink to="/en/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>
+                <div className="mob menu_line"></div>
+              </div>
+    
+              <div className="h_nav_group_2">
+                <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
+              </div>
+    
+              <div className="h_nav_group_3">
+                <TransitionLink className="gt display-xs" to="/en/magazine/our-picks" onClick={() => setNavOpen(false)}>id Magazine</TransitionLink>
+                <ul className="body-s">
+                  <li><TransitionLink to="/en/magazine/id-event" onClick={() => setNavOpen(false)}>id EVENT</TransitionLink></li>
+                  <li><TransitionLink to="/en/magazine/id-family" onClick={() => setNavOpen(false)}>id FAMILY</TransitionLink></li>
+                  <li><TransitionLink to="/en/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
+                  <li><TransitionLink to="/en/magazine/id-gallery" onClick={() => setNavOpen(false)}>id GALLERY</TransitionLink></li>
+                  <li><TransitionLink to="/en/magazine/id-play" onClick={() => setNavOpen(false)}>id PLAY</TransitionLink></li>
+                </ul>
+              </div>
+    
+              <div className="h_nav_group_4 txt-gray caption-m">
+                서울특별시 마포구 연희로 11 한국특허정보원 6층,<br />
+                (주)아이디뷰티
+              </div>
+            </div>
+          </nav>
+        </>
+      ) : (
+        <>
+          <div className="logo_w">
+            <a href="/" className="logo">
+              <img src="/img/logo_h.png" alt="IDhair" />
+            </a>
           </div>
-        </div>
-      </nav>
-
-      <Salon open={salonOpen} onClose={() => setSalonOpen(false)} />
+    
+          <div className="gnb body-l">
+            <TransitionLink to="/about"><span>ABOUT id HAIR</span></TransitionLink>
+            <TransitionLink to="/academy"><span>id ACADEMY</span></TransitionLink>
+            <TransitionLink to="/magazine"><span>id MAGAZINE</span></TransitionLink>
+            <TransitionLink to="/recruit"><span>RECRUIT</span></TransitionLink>
+          </div>
+          
+          <div className="header_inner test">
+            
+    
+            <div className="lang body-s">
+              <span>(</span>
+              <div className="active">KR</div>
+              <div>EN</div>
+              <span>)</span>
+            </div>
+    
+            <div className="right_w bg-gray-3">
+              <button
+                type="button"
+                className="menu_btn h_nav_open"
+                onClick={() => setNavOpen(true)}
+              >
+                <span></span>
+                <span></span>
+              </button>
+    
+              <button
+                type="button"
+                className="salon_btn bg-ac-1 body-m"
+                onClick={() => setSalonOpen(true)}
+              >
+                SALON
+              </button>
+            </div>
+          </div>
+    
+          <nav className={`h_nav ${navOpen ? "active" : ""}`}>
+            <div className="h_nav_bg"></div>
+    
+            <div className="h_nav_inner bg-gray-1">
+              <button
+                type="button"
+                className="h_nav_close"
+                onClick={() => setNavOpen(false)}
+              >
+                <span></span>
+                <span></span>
+              </button>
+    
+              <div className="h_nav_group_1 gt_all display-xs">
+                <a
+                  onClick={() => {
+                    setNavOpen(false);
+                    setSalonOpen(true);
+                  }}
+                >Salon</a>
+                <div className="mob menu_line"></div>
+                <TransitionLink to="/about" onClick={() => setNavOpen(false)}>About id HAIR</TransitionLink>
+                <TransitionLink to="/academy" onClick={() => setNavOpen(false)}>id Academy</TransitionLink>
+                <TransitionLink to="/recruit" onClick={() => setNavOpen(false)}>Recruit</TransitionLink>
+                <div className="mob menu_line"></div>
+              </div>
+    
+              <div className="h_nav_group_2">
+                <a target="_blank" href="https://www.instagram.com/idhair.official"><img src="/img/icon_instagram.svg"/></a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCBMpTq6Z8P646L0UM6URIHA"><img src="/img/icon_youtube.svg"/></a>
+              </div>
+    
+              <div className="h_nav_group_3">
+                <TransitionLink className="gt display-xs" to="/magazine/our-picks" onClick={() => setNavOpen(false)}>id Magazine</TransitionLink>
+                <ul className="body-s">
+                  <li><TransitionLink to="/magazine/id-event" onClick={() => setNavOpen(false)}>id EVENT</TransitionLink></li>
+                  <li><TransitionLink to="/magazine/id-family" onClick={() => setNavOpen(false)}>id FAMILY</TransitionLink></li>
+                  <li><TransitionLink to="/magazine/id-news" onClick={() => setNavOpen(false)}>id NEWS</TransitionLink></li>
+                  <li><TransitionLink to="/magazine/id-gallery" onClick={() => setNavOpen(false)}>id GALLERY</TransitionLink></li>
+                  <li><TransitionLink to="/magazine/id-play" onClick={() => setNavOpen(false)}>id PLAY</TransitionLink></li>
+                </ul>
+              </div>
+    
+              <div className="h_nav_group_4 txt-gray caption-m">
+                서울특별시 마포구 연희로 11 한국특허정보원 6층,<br />
+                (주)아이디뷰티
+              </div>
+            </div>
+          </nav>
+        </>
+      )}
+      <Salon key={isEnglishPage ? "en" : "ko"} language={isEnglishPage ? "en" : "ko"} open={salonOpen} onClose={() => setSalonOpen(false)} />
     </header>
   );
 }
