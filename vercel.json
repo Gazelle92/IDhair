@@ -1,9 +1,9 @@
 {
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "idhair.com" }],
-      "destination": "https://www.idhair.com/:path*",
+      "destination": "https://www.idhair.com/$1",
       "statusCode": 301
     }
   ],
