@@ -39,6 +39,13 @@ function AppRoutes() {
     document.title = title;
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://www.idhair.com${location.pathname}`);
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = `https://www.idhair.com${location.pathname}`;
   }, [location.pathname, isAdminRoute]);
 
   if (isAdminRoute) {
