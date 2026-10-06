@@ -459,13 +459,13 @@ function Academy() {
               
               <h1 className="title b-b b-2 body-m fw-sb">트렌드와 현장 경험을 연결한 교육을 통해<br/>디자이너의 성장과 경쟁력을 함께 완성합니다.</h1>
               <div className="img_w">
-                <div className="number_count"><b>01</b><span>/ 06</span></div>
+                <div className="number_count"><b>01</b><span>/ 07</span></div>
                 <div className="img">
                   <img src="/img/ac_2_1.jpg"/>
                   <img src="/img/ac_2_1.jpg"/>
                   <img src="/img/ac_2_2.jpg"/>
                   <img src="/img/ac_2_3.jpg"/>
-                  {/*<img src="/img/ac_2_4.jpg"/>*/}
+                  <img src="/img/ac_2_4.jpg"/>
                   <img src="/img/ac_2_5.jpg"/>
                   <img src="/img/ac_2_6.jpg"/>
                   <img src="/img/ac_2_7.jpg"/>
@@ -491,11 +491,11 @@ function Academy() {
                     <span>2025년, 2018년 OSAKA 아시아 뷰티 엑스포 연출 참여</span>
                     <span>2018년 「THE SHOW」 헤어쇼 무대 메인 디자이너 참여</span>
                   </li>
-                  {/*<li>
+                  <li>
                     <span>스타일워크 커트 교육 담당</span>
                     <span>파트너 기본기 및 실무 테크닉 역량 강화 교육</span>
                     <span>커트 교육 프로그램 운영 및 파트너 성장 지원</span>
-                  </li>*/}
+                  </li>
                   <li>
                     <span>오송 아카데미 코어팀 강사 및 아카데미 운영·관리</span>
                     <span>서울·경기권 외 지역 매장 커뮤니케이션 및 교육 지원</span>
@@ -534,10 +534,10 @@ function Academy() {
                 <h4 className="body-l fw-b">id Academy Main Instructor</h4>
                 <span className="head-l">윤훈희 팀장</span>
               </li>
-              {/*<li>
+              <li>
                 <h4 className="body-l fw-b">id Academy Instructor</h4>
                 <span className="head-l">진영준 강사</span>
-              </li>*/}
+              </li>
               <li>
                 <h4 className="body-l fw-b">id Academy Instructor</h4>
                 <span className="head-l">최연승 강사</span>
