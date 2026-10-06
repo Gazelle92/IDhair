@@ -459,7 +459,7 @@ function Academy() {
               
               <h1 className="title b-b b-2 body-m fw-sb">트렌드와 현장 경험을 연결한 교육을 통해<br/>디자이너의 성장과 경쟁력을 함께 완성합니다.</h1>
               <div className="img_w">
-                <div className="number_count"><b>01</b><span>/ 07</span></div>
+                <div className="number_count"><b>01</b><span>/ 06</span></div>
                 <div className="img">
                   <img src="/img/ac_2_1.jpg"/>
                   <img src="/img/ac_2_1.jpg"/>
