@@ -528,11 +528,11 @@ function Academy() {
               </li>
               <li>
                 <h4 className="body-l fw-b">id Academy Director</h4>
-                <span className="head-l">이은혜 부장</span>
+                <span className="head-l">이은혜 교장</span>
               </li>
               <li>
                 <h4 className="body-l fw-b">id Academy Main Instructor</h4>
-                <span className="head-l">윤훈희 팀장</span>
+                <span className="head-l">윤훈희 교감</span>
               </li>
               <li>
                 <h4 className="body-l fw-b">id Academy Instructor</h4>
