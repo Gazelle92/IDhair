@@ -5,7 +5,23 @@
       "has": [{ "type": "host", "value": "idhair.com" }],
       "destination": "https://www.idhair.com/$1",
       "statusCode": 301
-    }
+    },
+    { "source": "/shop", "destination": "/salon", "statusCode": 301 },
+    { "source": "/shop/(.*)", "destination": "/salon", "statusCode": 301 },
+    {
+      "source": "/bbs/(link|board).php",
+      "has": [{ "type": "query", "key": "bo_table", "value": "salon" }],
+      "destination": "/salon",
+      "statusCode": 301
+    },
+    {
+      "source": "/bbs/board.php",
+      "has": [{ "type": "query", "key": "bo_table", "value": "news" }],
+      "destination": "/magazine/id-news",
+      "statusCode": 301
+    },
+    { "source": "/bbs/(.*)", "destination": "/", "statusCode": 301 },
+    { "source": "/file/2021recurit.doc", "destination": "/recruit", "statusCode": 301 }
   ],
   "rewrites": [
     { "source": "/about", "destination": "/about/index.html" },

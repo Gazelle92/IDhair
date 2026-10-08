@@ -1,0 +1,16 @@
+.page_notfound{min-height: 100svh; display: flex; align-items: center; justify-content: center; padding: 9.091vw 3.636vw; text-align: center;
+  .notfound_code{color: var(--txt-ac);}
+  .notfound_desc{margin-top: 0.606vw;}
+  .notfound_btns{display: flex; justify-content: center; gap: 1.212vw; margin-top: 2.424vw;
+    .hover_btn{width: 12.121vw; margin: 0;}
+  }
+}
+
+@media (max-width:1024px){
+  .page_notfound{padding: 27.778vw 5.556vw;
+    .notfound_desc{margin-top: 1.667vw;}
+    .notfound_btns{gap: 2.778vw; margin-top: 8.333vw;
+      .hover_btn{width: 36.667vw;}
+    }
+  }
+}

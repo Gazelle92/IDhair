@@ -4,6 +4,7 @@ export const pageTitles = {
   '/about': 'ABOUT id HAIR | 아이디헤어',
   '/academy': 'id ACADEMY | 아이디헤어',
   '/recruit': 'RECRUIT | 아이디헤어',
+  '/salon': 'SALON | 아이디헤어',
   '/magazine': 'id MAGAZINE | 아이디헤어',
   '/magazine/our-picks': 'id MAGAZINE | 아이디헤어',
   '/magazine/id-news': 'id NEWS | 아이디헤어',
@@ -16,6 +17,11 @@ export const pageTitles = {
 Object.entries(pageTitles).forEach(([path, title]) => {
   if (path !== '/' && !path.startsWith('/en')) pageTitles['/en' + path] = title;
 });
+
+export const notFoundTitles = {
+  ko: '페이지를 찾을 수 없습니다 | 아이디헤어',
+  en: 'Page not found | 아이디헤어',
+};
 
 export function getPageTitle(pathname) {
   const path = pathname.replace(/^\/en(?=\/|$)/, '').replace(/\/$/, '') || '/';
